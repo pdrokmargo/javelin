@@ -1,0 +1,66 @@
+<!-- <section class="container-fluid with-maxwidth chapter"> -->
+
+  <article class="article">
+    <h2 class="article-title">Material Camilo Input</h2>
+
+    <div class="box box-default">
+      <div class="box-body">
+
+        <form>
+          <div class="form-group">
+            <md-input-container class="full-width">
+              <input mdInput placeholder="Company (disabled)" disabled value="Google">
+            </md-input-container>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-6">
+              <md-input-container class="full-width md-icon-left">
+                <md-icon class="material-icons">perm_identity</md-icon>
+                <input mdInput placeholder="First name">
+              </md-input-container>
+            </div>
+            <div class="col-6">
+              <md-input-container class="full-width"> <input mdInput placeholder="Long Last Name That Will Be Truncated And 3 Dots (Ellipsis) Will Appear At The End"> </md-input-container>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <md-input-container class="full-width">
+              <textarea mdInput placeholder="Address" value="1600 Amphitheatre Pkway"></textarea>
+            </md-input-container>
+            <md-input-container class="full-width">
+              <textarea mdInput placeholder="Address 2"></textarea>
+            </md-input-container>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-4">
+              <md-input-container class="full-width" dividerColor="primary"> <input mdInput placeholder="City" value="Mountain View"> </md-input-container>
+            </div>
+            <div class="col-4">
+              <md-input-container class="full-width" dividerColor="accent"> <input mdInput placeholder="State"> </md-input-container>
+            </div>
+            <div class="col-4">
+              <md-input-container class="full-width" dividerColor="warn"> <input mdInput #postalCode maxlength="5" placeholder="Postal Code" value="94043"> <md-hint align="end">{{postalCode.value.length}} / 5</md-hint> </md-input-container>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <md-input-container class="full-width">
+              <textarea mdInput #biography placeholder="Biography" maxlength="150" rows="5" value="Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!"></textarea>
+              <md-hint align="end">{{biography.value.length}} / 150</md-hint>
+            </md-input-container>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </article>
+
+<!-- </section> -->
+
+
+

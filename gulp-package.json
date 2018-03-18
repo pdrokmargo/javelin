@@ -1,0 +1,23 @@
+{
+  "name": "shared",
+  "private": true,
+  "version": "1.0.0",
+  "main": "",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.2.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^3.3.0",
+    "gulp-task-listing": "~1.0.0",
+    "gulp-util": "^3.0.7",
+    "gulp-open": "~2.0.0",
+    "yargs": "^7.1.0"
+  },
+  "engines": {
+    "node": ">=6.9.0",
+    "npm": ">= 3"
+  }
+}

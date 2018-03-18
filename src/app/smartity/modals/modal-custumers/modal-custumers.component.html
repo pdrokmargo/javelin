@@ -1,0 +1,26 @@
+<h1 md-dialog-title>{{ data.title }}</h1>
+
+<md-dialog-content>
+
+    <div class='col-sm-12 col-md-12'>
+        <div class="box-body">
+            <p>
+                <md-radio-group class="md-radio-group-spacing" [(ngModel)]="radio.option">
+                    <md-radio-button value="1">Buscar</md-radio-button>
+                    <md-radio-button value="2">Crear</md-radio-button>
+                </md-radio-group>
+            </p>
+        </div>
+    </div>
+    <stakeholders-action-cmp *ngIf="radio.option==='2'" [noaction]="true" [type]="'custumers'" (select)="select($event)"></stakeholders-action-cmp>
+    <div class="col-sm-12">
+        <stakeholders-list-cmp *ngIf="radio.option==='1'" [noaction]="true" [type]="'custumers'" (select)="select($event)"></stakeholders-list-cmp>
+    </div>
+</md-dialog-content>
+<md-dialog-actions>
+    <div class="flex full-width">
+        <span class="flex-spacer"></span>
+        <button class="ml-5" color="primary" md-button type="button" [disabled]="!model" (click)="add()" *ngIf="radio.option === '1'">Seleccionar</button>
+        <button md-dialog-close md-button type="button">Cerrar</button>
+    </div>
+</md-dialog-actions>

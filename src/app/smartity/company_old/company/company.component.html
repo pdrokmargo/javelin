@@ -1,0 +1,241 @@
+<section class="chapter">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Empresas</h1>
+        </div>
+        <p class="hero-tagline">A través de esta opción, usted podrá crear las empresa de las cuales son necesarias para...</p>
+    </section>
+    <article class="article padding-lg-v article-dark article-bordered">
+        <div class="container-fluid with-maxwidth">
+            <div class="box box-default">
+                <div class="box-body">
+                   
+                    <!-- FORM -->
+                    
+                        <form #companyForm="ngForm" autocomplete="off">
+
+                            <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
+                                <a md-raised-button color="secundary" routerLink="/app/company-list" class="btn-w-md no-margin-left">Regresar</a>
+                            </div>                            
+                            
+                            <!-- name -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="name" name="name" [(ngModel)]="model.name" mdInput placeholder="Nombre">
+                                    </md-input-container>
+                                </div>
+                            </div>
+
+                            <!-- nit -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="nit" name="nit" [(ngModel)]="model.nit" mdInput placeholder="Nit">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            
+                            <!-- description -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción">
+                                    </md-input-container>
+                                </div>
+                            </div>  
+
+                            <!-- email -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="email" name="email" [(ngModel)]="model.email" mdInput placeholder="Correo Eletrónico">
+                                    </md-input-container>
+                                </div>
+                            </div>                                    
+                            
+                            <!--country -->
+                            <div class='col-sm-12 col-md-4'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id"
+                                    (change)="getDepartments()" id="country_id">
+                                        <md-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</md-option>
+                                    </md-select>  
+                                </div>
+                            </div>  
+
+                            <!-- department -->
+                            <div class='col-sm-12 col-md-4'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department_id"
+                                    (change)="getCities()" id="department_id">
+                                        <md-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</md-option>
+                                    </md-select>  
+                                </div>
+                            </div>
+
+                                <!--city -->
+                            <div class='col-sm-12 col-md-4'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id"
+                                    id="city_id">
+                                        <md-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</md-option>
+                                    </md-select>  
+                                </div>    
+                            </div>
+                        
+                            <!-- address -->
+                            <div class='col-sm-12 col-md-12'>
+                                <div class="box-body">                              
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="address" name="address" [(ngModel)]="model.address" mdInput placeholder="Dirección">
+                                    </md-input-container>                               
+                                </div>
+                            </div>
+                                                
+                            <!-- website -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="website" name="website" [(ngModel)]="model.website" mdInput placeholder="Sitio web">
+                                    </md-input-container>
+                                </div>
+                            </div>
+
+                            <!-- phone number -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
+                                    </md-input-container>
+                                </div>                                
+                            </div>
+
+                            <div class="col-sm-12 col-md-12">
+                                <!-- economic activity -->
+                                <div class='col-sm-12 col-md-6'>
+                                    <div class="box-body">
+                                        <md-input-container class="full-width">
+                                            <input required type="text" id="economic_activity" name="economic_activity" [(ngModel)]="model.economic_activity" mdInput placeholder="Actividad económica">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+                                <!-- tax regimen -->
+                                <div class='col-sm-12 col-md-6'>
+                                    <div class="box-body">
+                                        <md-select class="full-width" placeholder="Tipo de régimen" [(ngModel)]="model.tax_regime_id" name="tax_regime_id"
+                                            id="tax_regime_id">
+                                            <md-option *ngFor="let item of tax_regime" [value]="item.id">{{item.value}}</md-option>
+                                        </md-select>    
+                                    </div>                                    
+                                </div>                            
+                            </div>  
+
+                            <!-- withholding_income_sales_id -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Reterenta en Ventas" [(ngModel)]="model.withholding_income_sales_id" name="withholding_income_sales_id"
+                                        id="withholding_income_sales_id">
+                                        <md-option *ngFor="let i of withholding" [value]="i.id">{{i.value}}</md-option>
+                                    </md-select>    
+                                </div>
+                            </div>
+
+                            <!-- withholding_income_purchases_id -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Reterenta en compras" [(ngModel)]="model.withholding_income_purchases_id" name="withholding_income_purchases_id"
+                                        id="withholding_income_purchases_id">
+                                        <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
+                                    </md-select>    
+                                </div>                            
+                            </div>
+                            
+                            <!-- withholding_vat_sales_id -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Reteiva en Ventas" [(ngModel)]="model.withholding_vat_sales_id" name="withholding_vat_sales_id"
+                                        id="withholding_vat_sales_id">
+                                        <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
+                                    </md-select>    
+                                </div>
+                            </div>
+
+                            <!-- withholding_vat_purchases_id -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Reteiva en compras" [(ngModel)]="model.withholding_vat_purchases_id" name="withholding_vat_purchases_id"
+                                        id="withholding_vat_purchases_id">
+                                        <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
+                                    </md-select>    
+                                </div>                            
+                            </div>                           
+                            
+                            <!-- withholding_vat_sales_id -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Reteica en Ventas" [(ngModel)]="model.withholding_ica_sales_id" name="withholding_ica_sales_id"
+                                        id="withholding_ica_sales_id">
+                                        <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
+                                    </md-select>    
+                                </div>
+                            </div>
+
+                            <!-- withholding_vat_purchases_id -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-select class="full-width" placeholder="Reteica en compras" [(ngModel)]="model.withholding_ica_purchases_id" name="withholding_ica_purchases_id"
+                                        id="withholding_ica_purchases_id">
+                                        <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
+                                    </md-select>    
+                                </div>                            
+                            </div>                    
+                            
+                            <!-- big_contributor -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-slide-toggle [labelPosition]="after" id="big_contributor" name="big_contributor" [(ngModel)]="model.big_contributor">Gran contribuyente</md-slide-toggle>
+                                </div>
+                            </div>
+
+                            <!-- selfholder -->
+                            <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-slide-toggle [labelPosition]="after" id="selfholder" name="selfholder" [(ngModel)]="model.selfholder">Autoretenedor</md-slide-toggle>
+                                </div>                            
+                            </div>                            
+                            
+                            <!-- big_contributor_resolution -->
+                            <div class='col-sm-12 col-md-6' *ngIf="model.big_contributor">
+                                <div class="box-body">
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="big_contributor_resolution" name="big_contributor_resolution" [(ngModel)]="model.big_contributor_resolution" mdInput placeholder="Resolución No.">
+                                    </md-input-container>                                        
+                                </div>
+                            </div>
+
+                            <!-- selfholder_resolution -->
+                            <!-- <div class='col-sm-12 col-md-6'>
+                                <div class="box-body">
+                                    <md-input-container class="full-width" [hidden]="!model.selfholder">
+                                        <input type="text" id="selfholder_resolution" name="selfholder_resolution" [(ngModel)]="model.selfholder_resolution" mdInput placeholder="Resolución No.">
+                                    </md-input-container>
+                                </div>                                    
+                            </div>                            -->
+                            
+                            <div class="col-sm-12" [class.btn-action-container]="booActive">
+
+                                <button [disabled]="action_active ? false : !companyForm.form.valid" md-raised-button color="primary"
+                                class="btn-w-md no-margin-left btn-right" (click)="save()">{{str_action}}</button>
+                                
+                            </div>
+                            
+                        </form>
+                   
+                </div>
+                <div class="box-loader" [class.active]="booActive"></div>
+            </div>
+        </div>
+    </article>
+</section>

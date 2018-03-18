@@ -1,0 +1,44 @@
+<div class="page-auth">
+  <div class="main-body">
+    <div class="card card-white">
+      <div class="card-content">
+        <div class="logo">
+          <a [routerLink]="['/']">Sign Up</a>
+        </div>
+
+        <form name="material_signup_form" class="md-form-auth">
+          <fieldset>
+            <div class="form-group">
+              <md-input-container class="full-width md-icon-left">
+                <md-icon class="material-icons">perm_identity</md-icon>
+                <input required mdInput type="text" name="name" placeholder="Username">
+              </md-input-container>
+            </div>
+
+            <div class="form-group">
+              <md-input-container class="full-width md-icon-left">
+                <md-icon class="material-icons">mail_outline</md-icon>
+                <input required mdInput type="email" name="email" placeholder="Email">
+              </md-input-container>
+            </div>
+
+            <div class="form-group">
+              <md-input-container class="full-width md-icon-left no-margin-bottom">
+                <md-icon class="material-icons">lock_outline</md-icon>
+                <input required mdInput type="password" name="password" placeholder="Password">
+              </md-input-container>
+            </div>
+            <p class="text-small no-margin" style="padding-left: 36px;">By clicking on sign up, you agree to <a href="javascript:;"><i>terms</i></a> and <a href="javascript:;"><i>privacy policy</i></a></p>
+
+            <div class="divider divider-md"></div>
+            <button [routerLink]="['/']" md-raised-button type="button" color="primary" class="float-right">Sign Up</button>
+          </fieldset>
+        </form>
+
+        <div class="additional-info">
+          <a [routerLink]="['/extra/login']">Login</a>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>

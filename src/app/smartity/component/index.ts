@@ -1,0 +1,1 @@
+export * from './input-file/input-file.component';

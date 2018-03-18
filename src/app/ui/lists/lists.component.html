@@ -1,0 +1,112 @@
+<section class="container-fluid with-maxwidth chapter">
+
+  <article class="article">
+    <h2 class="article-title">Material List</h2>
+
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="box box-default">
+          <div class="box-header">Simple list</div>
+          <div class="box-body">
+            <md-list>
+              <md-list-item> Pepper </md-list-item>
+              <md-list-item> Salt </md-list-item>
+              <md-list-item> Paprika </md-list-item>
+            </md-list>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="box box-default">
+          <div class="box-header">Dense lists</div>
+          <div class="box-body">
+            <md-list dense>
+              <md-list-item> Pepper </md-list-item>
+              <md-list-item> Salt </md-list-item>
+              <md-list-item> Paprika </md-list-item>
+            </md-list>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="box box-default">
+          <div class="box-header">Two line list</div>
+          <div class="box-body">
+            <md-list>
+              <md-list-item *ngFor="let message of messages">
+                <h3 md-line> {{message.from}} </h3>
+                <p md-line>
+                  <span> {{message.subject}} </span>
+                  <span class="demo-2"> -- {{message.content}} </span>
+                </p>
+              </md-list-item>
+            </md-list>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="box box-default">
+          <div class="box-header">Three line list</div>
+          <div class="box-body">
+            <md-list dense>
+              <md-list-item *ngFor="let message of messages">
+                <h3 md-line> {{message.from}} </h3>
+                <p md-line> {{message.subject}} </p>
+                <p md-line class="demo-2"> {{message.content}} </p>
+              </md-list-item>
+            </md-list>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="box box-default">
+          <div class="box-header">Lists with avatars</div>
+          <div class="box-body">
+            <md-list>
+              <md-list-item *ngFor="let message of messages">
+                <img md-list-avatar [src]="message.avatar" alt="avatar">
+                <h3 md-line> {{message.from}} </h3>
+                <p md-line>
+                  <span> {{message.subject}} </span>
+                  <span class="demo-2"> -- {{message.content}} </span>
+                </p>
+              </md-list-item>
+            </md-list>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="box box-default">
+          <div class="box-header">Lists with multiple sections</div>
+          <div class="box-body">
+            <md-list dense>
+               <h3 md-subheader>Folders</h3>
+               <md-list-item *ngFor="let folder of folders">
+                  <md-icon md-list-avatar>folder</md-icon>
+                  <h4 md-line>{{folder.name}}</h4>
+                  <p md-line class="demo-2"> {{folder.updated}} </p>
+               </md-list-item>
+               <md-divider></md-divider>
+               <h3 md-subheader>Notes</h3>
+               <md-list-item *ngFor="let note of notes">
+                  <md-icon md-list-avatar>note</md-icon>
+                  <h4 md-line>{{note.name}}</h4>
+                  <p md-line class="demo-2"> {{note.updated}} </p>
+               </md-list-item>
+            </md-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</section>

@@ -1,0 +1,114 @@
+<form #sucursalForm="ngForm" autocomplete="off">
+    <h1 md-dialog-title>Agregar Sucursal</h1>
+    <md-dialog-content>
+      <!-- <md-form-field>
+        <input mdInput formControlName="filename" placeholder="Enter filename">
+      </md-form-field> -->
+      
+      <div class='col-sm-12 col-md-12'>
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <input required type="text" id="name" name="name" [(ngModel)]="model.name" mdInput placeholder="Nombre de sucursal">
+            </md-input-container>
+        </div>
+      </div>
+     
+      <div class='col-sm-12 col-md-4'>
+          <div class="box-body">
+              <md-select class="full-width" placeholder="Pais" [(ngModel)]="model.country" name="country"
+              (change)="getDepartments()" id="country">
+                  <md-option *ngFor="let item of countries" [value]="item">{{item.value}}</md-option>
+              </md-select>  
+          </div>
+      </div>
+
+      <div class='col-sm-12 col-md-4'>
+          <div class="box-body">
+              <md-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department" name="department"
+              (change)="getCities()" id="department">
+                  <md-option *ngFor="let item of departments" [value]="item">{{item.value}}</md-option>
+              </md-select>  
+          </div>
+      </div>
+
+      <div class='col-sm-12 col-md-4'>
+          <div class="box-body">
+              <md-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city" name="city"
+              id="customer.branch_offices.city">
+                  <md-option *ngFor="let item of cities" [value]="item">{{item.value}}</md-option>
+              </md-select>  
+          </div>    
+      </div>      
+    
+      <!-- address -->
+      <div class='col-sm-12 col-md-12'>
+          <div class="box-body">                              
+              <md-input-container class="full-width">
+                  <input required type="text" id="address" name="address" [(ngModel)]="model.address" mdInput placeholder="Dirección de la sucursal">
+              </md-input-container>                               
+          </div>
+      </div>
+
+      <!-- phone number -->
+      <div class='col-sm-12 col-md-6'>
+          <div class="box-body">
+              <md-input-container class="full-width">
+                  <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono de la sucursal">
+              </md-input-container>
+          </div>                                
+      </div>
+
+      <!-- phone number -->
+      <div class='col-sm-12 col-md-6'>
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <input required type="text" id="email" name="email" [(ngModel)]="model.email" mdInput placeholder="Correo de la sucursal">
+            </md-input-container>
+        </div>                                
+    </div>
+
+      <!-- contact_name -->
+      <div class='col-sm-12 col-md-6'>
+          <div class="box-body">
+              <md-input-container class="full-width">
+                  <input required type="text" id="contact_person_name" name="contact_person_name" [(ngModel)]="model.contact_person_name" mdInput placeholder="Nombre del contacto">
+              </md-input-container>
+          </div>
+      </div>  
+    
+      <!-- contact_charge -->
+      <div class='col-sm-12 col-md-6'>
+          <div class="box-body">
+              <md-input-container class="full-width">
+                  <input required type="text" id="contact_person_charge" name="contact_person_charge" [(ngModel)]="model.contact_person_charge" mdInput placeholder="Cargo del contacto">
+              </md-input-container>
+          </div>
+      </div>  
+
+      <!-- contact_phone number -->
+      <div class='col-sm-12 col-md-6'>
+          <div class="box-body">
+              <md-input-container class="full-width">
+                  <input required type="text" id="contact_person_phone_number" name="contact_person_phone_number" [(ngModel)]="model.contact_personphone_number" mdInput placeholder="Teléfono del contacto">
+              </md-input-container>
+          </div>
+      </div>  
+
+      <!-- contact_email -->
+      <div class='col-sm-12 col-md-6'>
+          <div class="box-body">
+              <md-input-container class="full-width">
+                  <input required type="text" id="contact_person_email" name="contact_person_email" [(ngModel)]="model.contact_person_email" mdInput placeholder="Correo eletrónico del contacto">
+              </md-input-container>
+          </div>
+      </div>
+
+    </md-dialog-content>
+    <md-dialog-actions>
+      <button md-button type="submit" [disabled]="action_active ? false : !sucursalForm.form.valid" (click)="add()">Agregar</button>     
+      <button md-button type="button" md-dialog-close>Cerrar</button>
+    </md-dialog-actions>
+    
+  </form>
+
+  

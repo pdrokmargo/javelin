@@ -1,0 +1,14 @@
+<article class="article">
+  <h2 class="article-title">Material Datepicker</h2>
+
+  <div class="box box-default">
+    <div class="box-header">Basic Datepicker</div>
+    <div class="box-body">
+      <md-input-container>
+        <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+        <button mdSuffix [mdDatepickerToggle]="picker"></button>
+      </md-input-container>
+      <md-datepicker #picker></md-datepicker>
+    </div>
+  </div>
+</article>

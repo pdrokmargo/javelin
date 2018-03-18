@@ -1,0 +1,111 @@
+<form #modelForm="ngForm" autocomplete="off">
+    
+    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
+        <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+    </div>                            
+    
+    <!-- name -->
+    <div class='col-sm-12 col-md-4'>
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <input required type="text" id="name" name="name" [(ngModel)]="model.name" mdInput placeholder="Nombre del centro de operaciones">
+            </md-input-container>
+        </div>
+    </div>   
+
+    <!-- codigo -->
+    <div class='col-sm-12 col-md-4'>
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <input type="text" id="codigo" name="codigo" [(ngModel)]="model.code" mdInput placeholder="Código" readonly>
+            </md-input-container>
+        </div>
+    </div>
+
+    <!-- estado -->
+    <div class='col-sm-12 col-md-4'>
+        <div class="box-body">
+            <md-slide-toggle [labelPosition]="after" id="state" name="state" [(ngModel)]="model.state">Estado</md-slide-toggle>
+        </div>
+    </div>
+
+    <!-- description -->
+    <div class='col-sm-12 col-md-12'>
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <textarea type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción">
+                </textarea>
+            </md-input-container>
+        </div>
+    </div>
+
+    <!--country -->
+    <div class='col-sm-12 col-md-4'>
+        <div class="box-body">
+            <md-select class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id"
+            (change)="getDepartments()" id="country_id">
+                <md-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</md-option>
+            </md-select>  
+        </div>
+    </div>
+
+    <!-- department -->
+    <div class='col-sm-12 col-md-4'>
+        <div class="box-body">
+            <md-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department_id"
+            (change)="getCities()" id="department_id">
+                <md-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</md-option>
+            </md-select>  
+        </div>
+    </div>
+
+    <!--city -->
+    <div class='col-sm-12 col-md-4'>
+        <div class="box-body">
+            <md-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id"
+            id="city_id">
+                <md-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</md-option>
+            </md-select>  
+        </div> 
+    </div>                                              
+
+    <!-- address -->
+    <div class='col-sm-12 col-md-12'>
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <input required type="text" id="address" name="address" [(ngModel)]="model.address" mdInput placeholder="Dirección">
+            </md-input-container>
+        </div>
+    </div>
+
+    <!-- phone -->
+    <div class='col-sm-12 col-md-6'>
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <input required type="text" id="phone" name="phone" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
+            </md-input-container>
+        </div>                            
+    </div>
+    
+    <!-- withholding_income_sales_id -->
+    <div class='col-sm-12 col-md-6'>
+        <div class="box-body">                                
+            <md-select class="full-width" placeholder="Grupo de Centro de Operaciones" [(ngModel)]="model.operationscentregroup_id" name="operationscentregroup_id"
+            id="operationscentregroup_id">
+                <md-option *ngFor="let item of operations_centre_groups" [value]="item.id">{{item.value}}</md-option>
+            </md-select>    
+        </div>                                                                    
+    </div>
+                                                                                        
+    <div class="col-sm-12" [class.btn-action-container]="booActive">
+            
+        <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary"
+        class="btn-w-md no-margin-left btn-right" (click)="save()">{{str_action}}</button>
+        <!-- <button *ngIf="strAction==''" md-raised-button class="btn-w-md no-margin-left btn-right" (click)="DELETE()">Eliminar</button>
+        <button *ngIf="strAction==''" md-raised-button class="btn-w-md no-margin-left btn-right" (click)="EDIT()">Editar</button>
+        <button *ngIf="!(strAction=='')" [disabled]="booActive ? false : !modelForm.form.valid" md-raised-button color="primary"
+            class="btn-w-md no-margin-left btn-right" (click)="actionCrud.event()">{{strAction}}</button>
+        <button *ngIf="!(strAction=='') && !(strAction=='Guardar')" md-raised-button class="btn-w-md no-margin-left btn-right" (click)="__cancel()">Cancelar</button> -->
+    </div>
+
+</form>              

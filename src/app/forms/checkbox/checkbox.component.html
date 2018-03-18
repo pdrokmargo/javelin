@@ -1,0 +1,50 @@
+<!-- <section class="container-fluid with-maxwidth chapter"> -->
+
+  <article class="article">
+    <h2 class="article-title">Material Checkbox</h2>
+
+    <div class="box box-default">
+      <div class="box-header">Basic Usage</div>
+      <div class="box-body">
+        <p>
+          <strong style="display: inline-block; width: 100px;">Checkbox</strong>
+          <md-checkbox [checked]="true">True</md-checkbox>
+          <span class="space space-md"></span>
+          <md-checkbox [checked]="false">False</md-checkbox>
+          <span class="space space-md"></span>
+          <md-checkbox [checked]="false" [indeterminate]="true">Indeterminate (Mixed)</md-checkbox>
+        </p>
+        <p>
+          <strong style="display: inline-block; width: 100px;">Disabled</strong>
+          <md-checkbox disabled [checked]="true">True</md-checkbox>
+          <span class="space space-md"></span>
+          <md-checkbox disabled [checked]="false">False</md-checkbox>
+          <span class="space space-md"></span>
+          <md-checkbox disabled [checked]="false" [indeterminate]="true">Indeterminate (Mixed)</md-checkbox>
+        </p>
+        <p>
+          <strong style="display: inline-block; width: 100px;">Colors</strong>
+          <md-checkbox [checked]="true" color="primary">True</md-checkbox>
+          <span class="space space-md"></span>
+          <md-checkbox [checked]="true">True</md-checkbox>
+          <span class="space space-md"></span>
+          <md-checkbox [checked]="true" color="warn">True</md-checkbox>
+        </p>
+      </div>
+    </div>
+
+    <div class="box box-default">
+      <div class="box-header">Alignment</div>
+      <div class="box-body">
+        <p>
+          <md-checkbox [checked]="true"> I come before my label. </md-checkbox>
+        </p>
+        <p>
+          <md-checkbox [checked]="true" align="end"> I come after my label. </md-checkbox>
+        </p>
+      </div>
+    </div>
+
+  </article>
+
+<!-- </section> -->

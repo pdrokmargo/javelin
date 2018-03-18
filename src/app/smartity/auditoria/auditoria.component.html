@@ -1,0 +1,76 @@
+<section class="chapter">
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Auditoria</h1>
+    </div>
+        <p class="hero-tagline">
+          A través de esta opción, usted podrá monitorear las actividades realizadas por usuarios dentro del sistema.
+        </p>
+  </section>
+  <article class="article padding-lg-v article-dark article-bordered">
+      <div class="container-fluid with-maxwidth">
+          <div class="box box-default">
+              <div class="box-body">
+                  <!-- LIST -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">                                    
+                            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar"
+                            [(ngModel)]="search" (keydown)="enter($event)">
+                            <div style="width: 34px" class="input-group-addon">
+                               <a style="cursor:pointer" (click)="getAll()"><i class="fa fa-search"></i></a> 
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                                                                                              
+                      <div class="col-sm-12">
+                         
+                          <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                              
+                              <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                              <thead>
+                                  <tr>
+                                    <th (click)="sort('firstname')">Usuario
+                                        <span class="glyphicon sort-icon" *ngIf="key =='firstname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th (click)="sort('c.name')">Empresa
+                                        <span class="glyphicon sort-icon" *ngIf="key =='c.name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th (click)="sort('title')">Ventana
+                                        <span class="glyphicon sort-icon" *ngIf="key =='title'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th (click)="sort('a.action')">Acción
+                                        <span class="glyphicon sort-icon" *ngIf="key =='a.action'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th (click)="sort('a.description')">Descripción
+                                        <span class="glyphicon sort-icon" *ngIf="key =='a.description'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>
+                                    <th (click)="sort('a.created_at')">Fecha
+                                        <span class="glyphicon sort-icon" *ngIf="key =='a.created_at'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </th>                                                                                                 
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let item of list.data">
+                                      <td>{{ item.firstname + ' ' + item.lastname }}</td>
+                                      <td>{{ item.company }}</td>
+                                      <td>{{ item.view }}</td>
+                                      <td>{{ item.action }}</td>
+                                      <td>{{ item.description }}</td>
+                                      <td>{{ item.enter_date }}</td>
+                                  </tr>                                          
+                              </tbody>
+                              </table>
+                              
+                          </div>
+                          <ngb-pagination [pageSize]="pageSize" [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="maxSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>                          
+                      </div>
+                  </div>                  
+              </div>
+              <div class="box-loader" [class.active]="booActive"></div>
+          </div>
+      </div>
+  </article>
+</section>

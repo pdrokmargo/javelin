@@ -1,0 +1,20 @@
+<section class="chapter">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Bodega</h1>
+        </div>
+        <p class="hero-tagline">We provide amazing solutions that you can't miss</p>
+    </section>
+    <article class="article padding-lg-v article-dark article-bordered">
+        <div class="container-fluid with-maxwidth">
+            <div class="box box-default">
+                <div class="box-body">
+
+                    <warehouse-action-cmp [numId]="id" *ngIf="isOpenActions"></warehouse-action-cmp>
+                    <warehouse-list-cmp *ngIf="isOpenList"></warehouse-list-cmp>
+
+                </div>                 
+            </div>
+        </div>
+    </article>
+</section>                        
