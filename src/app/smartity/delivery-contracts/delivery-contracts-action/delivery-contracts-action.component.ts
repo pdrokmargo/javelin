@@ -14,6 +14,7 @@ import { filter } from 'rxjs/operators';
 import { ModalPharmaceuticalComponent } from '../../modals';
 import { ModalDeliveryPointsComponent } from '../../modals/modal-delivery-points/modal-delivery-points.component';
 import { ModalIpsNetworkComponent } from '../../modals/modal-ips-network/modal-ips-network.component';
+import { ModalGeolocationComponent } from '../../modals/modal-geolocation/modal-geolocation.component';
 
 @Component({
     selector: "delivery-contracts-action-cmp",
@@ -26,7 +27,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
     private arrPopulation_type: Array<any> = [];
     private arrPerauth_char_type: Array<any> = [];
-    
+
     private _pharmadrugs: any = [];
     private _conditional_alerts: any = [];
     private _ips: any = [];
@@ -84,9 +85,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
             let res = rs.json();
             this.arrPopulation_type = res.POPULATION_TYPE;
             this.arrPerauth_char_type = res.PREAUTH_CHAR_TYPE;
-        }, err => {
-
-        });
+        }, err => { });
     }
 
 
@@ -101,7 +100,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
 
         /** Update */
-        if (this.model.id > 0) {
+        if (this.numId != '') {
             this.loaderService.display(true);
             this.helperService.PUT(`/api/delivery-contracts/${this.numId}`, this.model)
                 .map((response: Response) => {
@@ -159,6 +158,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 this._pharmadrugs = JSON.parse(this.model.pharmadrugs);
                 this._conditional_alerts = JSON.parse(this.model.conditional_alerts);
                 this._ips = this.model.ips;
+                
                 this.objEvent = JSON.parse(this.model.event);
                 this.objPgp = JSON.parse(this.model.pgp);
                 this.objCapita = JSON.parse(this.model.capita);
@@ -183,26 +183,6 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
     private goList() {
         this.comp.openList();
-    }
-
-    private show(group: string) {
-        switch (group) {
-            case 'evento':
-                if (!this.booEvento) {
-                    this.objEvent = {};
-                }
-                break;
-            case 'capita':
-                if (!this.booCapita) {
-                    this.objCapita = {};
-                }
-                break;
-            case 'pgp':
-                if (!this.booPgp) {
-                    this.objPgp = {};
-                }
-                break;
-        }
     }
 
     private modalCostumer: MdDialogRef<ModalCustumersComponent>;
@@ -301,20 +281,68 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         });
 
         this.modalIpsNetwork.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
-            var exist = false;
-            this._ips.forEach((element, index) => {
-                if (element.value == data.value) {
-                    exist = true;
-                }
-                if (this._ips.length - 1 == index) {
-                    if (!exist) {
-                        this._ips.push(data);
+            console.log(data);
+            if (this._ips.length == 0) {
+                this._ips.push(data);
+            } else {
+                var exist = false;
+                this._ips.forEach((element, index) => {
+                    if (element.value == data.value) {
+                        exist = true;
                     }
-                }
-            });
+                    if (this._ips.length - 1 == index) {
+                        if (!exist) {
+                            this._ips.push(data);
+                        }
+                    }
+                });
+            }
+
         });
     }
     private deleteIps(item) {
         this._ips.splice(this._ips.indexOf(item), 1);
+    }
+
+    private modalGeolocation: MdDialogRef<ModalGeolocationComponent>
+    private openModalGeolocation() {
+        this.modalGeolocation = this.dialog.open(ModalGeolocationComponent, {
+            hasBackdrop: false,
+            width: '400px',
+            data: { title: 'Geolocalisación', }
+        });
+
+        this.modalGeolocation.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
+            if (this.objCapita.detailed_capita == undefined || this.objCapita.detailed_capita == null) {
+                this.objCapita.detailed_capita = [];
+                this.objCapita.detailed_capita.push(data);
+            }
+            var exist = false;
+            var isDelete = false;
+            var _data;
+
+            this.objCapita.detailed_capita.forEach((element, index) => {
+                if (element.city.id == data.city.id) {
+                    exist = true;
+                    if (!element.state) {
+                        isDelete = true;
+                        _data = element;
+                    }
+                }
+                if (this.objCapita.detailed_capita.length - 1 == index) {
+                    if (!exist) {
+                        this.objCapita.detailed_capita.push(data);
+                    }
+                    if (isDelete) {
+                        _data.state = true;
+                    }
+                }
+            });
+        });
+
+
+    }
+    private deleteDetailedCapita(item) {
+        item.state = false;
     }
 }

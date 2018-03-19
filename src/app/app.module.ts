@@ -48,25 +48,27 @@ import {
   ModalInstitucionalSaleContractComponent,
   ModalBankAccountComponent,
   ModalPharmaceuticalComponent,
-
+  ModalWarehouseComponent,
+  ModalCustumersComponent,
+  ModalUsersComponent,
+  ModalActiveIngredientsComponent,
+  ModalDeliveryPointsComponent,
+  ModalIpsNetworkComponent,
+  ModalGeolocationComponent
 } from './smartity/modals';
 import { NumberOnlyDirective } from './smartity/directive/number-only.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { InputFileComponent } from './smartity/component/index';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ModalWarehouseComponent } from './smartity/modals/modal-warehouse/modal-warehouse.component';
 import { WarehouseActionComponent } from './smartity/warehouse/warehouse-action/warehouse-action.component';
 import { WarehouseListComponent } from './smartity/warehouse/warehouse-list/warehouse-list.component';
 import { WarehouseComponent } from './smartity/warehouse/warehouse.component';
 import { StakeholdersComponent } from './smartity/stakeholders/stakeholders.component';
 import { StakeholdersActionComponent } from './smartity/stakeholders/stakeholders-action/stakeholders-action.component';
 import { StakeholdersListComponent } from './smartity/stakeholders/stakeholders-list/stakeholders-list.component';
-import { ModalCustumersComponent } from './smartity/modals/modal-custumers/modal-custumers.component';
-import { ModalUsersComponent } from './smartity/modals/modal-users/modal-users.component';
 import { UserListComponent } from './smartity/users/user-list/user-list.component';
 import { UsersComponent } from './smartity/users/users.component';
 import { UserActionComponent } from './smartity/users/user-action/user-action.component';
-import { ModalActiveIngredientsComponent } from './smartity/modals/modal-active-ingredients/modal-active-ingredients.component';
 import { ActiveIngredientsComponent } from './smartity/active-ingredients/active-ingredients.component';
 import { ActiveIngredientsListComponent } from './smartity/active-ingredients/active-ingredients-list/active-ingredients-list.component';
 import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/active-ingredients-action/active-ingredients-action.component';
@@ -76,11 +78,10 @@ import { PharmaceuticalDrugActionComponent } from './smartity/pharmaceutical-dru
 import { DeliveryPointsActionComponent } from './smartity/delivery-points/delivery-points-action/delivery-points-action.component';
 import { DeliveryPointsComponent } from './smartity/delivery-points/delivery-points.component';
 import { DeliveryPointsListComponent } from './smartity/delivery-points/delivery-points-list/delivery-points-list.component';
-import { ModalDeliveryPointsComponent } from './smartity/modals/modal-delivery-points/modal-delivery-points.component';
-import { ModalIpsNetworkComponent } from './smartity/modals/modal-ips-network/modal-ips-network.component';
 import { IpsNetworkComponent } from './smartity/ips-network/ips-network.component';
 import { IpsNetworkActionComponent } from './smartity/ips-network/ips-network-action/ips-network-action.component';
 import { IpsNetworkListComponent } from './smartity/ips-network/ips-network-list/ips-network-list.component';
+
 
 @NgModule({
   imports: [
@@ -137,6 +138,7 @@ import { IpsNetworkListComponent } from './smartity/ips-network/ips-network-list
     ModalActiveIngredientsComponent,
     ModalDeliveryPointsComponent,
     ModalIpsNetworkComponent,
+    ModalGeolocationComponent,
     InputFileComponent,
     NumberOnlyDirective,
     WarehouseActionComponent,
@@ -191,6 +193,7 @@ import { IpsNetworkListComponent } from './smartity/ips-network/ips-network-list
     ModalActiveIngredientsComponent,
     ModalDeliveryPointsComponent,
     ModalIpsNetworkComponent,
+    ModalGeolocationComponent,
     InputFileComponent,
     WarehouseActionComponent,
     WarehouseListComponent,

@@ -45,7 +45,7 @@
                 <div class="flex margin-bottom">
                     <div class="box-header no-padding-h text-center">Red adscrita</div>
                     <span class="flex-spacer"></span>
-                    <button type="button" md-raised-button class="btn-w-md" (click)="openModalIpsNetwork()">Añadir</button>
+                    <button color="primary" type="button" md-raised-button class="btn-w-md" (click)="openModalIpsNetwork()">Añadir</button>
                 </div>
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                     <table class="mdl-data-table table-bordered table-striped no-margin">
@@ -160,7 +160,7 @@
         <!--EVENTO-->
         <div class="row">
             <div class="col-sm-12 margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle [labelPosition]="'before'" id="event" name="event" [(ngModel)]="booEvento" (click)="show('evento')">Evento</md-slide-toggle>
+                <md-slide-toggle [labelPosition]="'before'" id="event" name="event" [(ngModel)]="booEvento">Evento</md-slide-toggle>
             </div>
         </div>
         <div class="row" *ngIf="booEvento">
@@ -219,14 +219,14 @@
             <div class="col-sm-12 col-md-4 col-lg-2 margin-bottom">
                 <md-select class="full-width" placeholder="Tipo de caracteres" [(ngModel)]="objEvent.perauth_char_type" name="perauth_char_type"
                     id="perauth_char_type">
-                    <md-option *ngFor="let item of arrPerauth_char_type" [value]="item.id">{{item.name}}</md-option>
+                    <md-option *ngFor="let item of arrPerauth_char_type" [value]="item.id">{{item.value}}</md-option>
                 </md-select>
             </div>
         </div>
         <!--CÁPITA-->
         <div class="row">
             <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle [labelPosition]="'before'" id="capita" name="capita" [(ngModel)]="booCapita" (click)="show('capita')">Cápita</md-slide-toggle>
+                <md-slide-toggle [labelPosition]="'before'" id="capita" name="capita" [(ngModel)]="booCapita">Cápita</md-slide-toggle>
             </div>
         </div>
         <div class="row" *ngIf="booCapita">
@@ -277,7 +277,7 @@
             <div class="col-sm-12"></div>
             <!-- Historico de afiliados -->
             <div class="col-sm-12 col-md-6 margin-bottom">
-                <div class="box-header no-padding-h" style="height: 57px;">Histórico de afiliados</div>
+                <div class="box-header no-padding-h" style="height: 67px;">Histórico de afiliados</div>
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                     <table class="mdl-data-table table-bordered table-striped no-margin">
                         <thead>
@@ -285,13 +285,15 @@
                                 <th>Ubicación</th>
                                 <th>Fecha</th>
                                 <th>Afiliados</th>
+                                <th>Valor capita</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of objCapita.affiliates_qty_history_record">
-                                <td>{{item.name}}</td>
+                                <td>{{item.department.value}}, {{item.city.value}}</td>
                                 <td>{{item.affiliates_number}}</td>
-                                <td>{{item.date}}</td>
+                                <td>{{item.affiliates_number}}</td>
+                                <td>{{item.date | date:'dd-MM-yyyy'}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -302,7 +304,7 @@
                 <div class="flex margin-bottom">
                     <div class="box-header no-padding-h">Cápita detallada</div>
                     <span class="flex-spacer"></span>
-                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left">Añadir</button>
+                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalGeolocation()">Añadir</button>
                 </div>
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                     <table class="mdl-data-table table-bordered table-striped no-margin">
@@ -311,13 +313,29 @@
                                 <th>Ubicación</th>
                                 <th>Afiliados</th>
                                 <th>Valor cápita</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr *ngFor="let item of objCapita.detailed_capita">
-                                <td>{{item.name}}</td>
-                                <td>{{item.affiliates_number}}</td>
-                                <td>{{item.capita_fare}}</td>
+                        <tbody *ngFor="let item of objCapita.detailed_capita; let index = index">
+
+                            <tr *ngIf="item.state">
+                                <td>{{item.department.value}}, {{item.city.value}}</td>
+                                <td>
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="affiliates_number{{index}}" name="affiliates_number{{index}}" [(ngModel)]="item.affiliates_number"
+                                            mdInput>
+                                    </md-input-container>
+                                </td>
+                                <td>
+                                    <md-input-container class="full-width">
+                                        <input required type="text" id="capita_fare{{index}}" name="capita_fare{{index}}" [(ngModel)]="item.capita_fare" mdInput>
+                                    </md-input-container>
+                                </td>
+                                <td class="w-40">
+                                    <button type="button" md-icon-button (click)="deleteDetailedCapita(item)">
+                                        <md-icon>delete</md-icon>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -328,7 +346,7 @@
         <!--PGP-->
         <div class="row">
             <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle [labelPosition]="'before'" id="php" name="pgp" [(ngModel)]="booPgp" (click)="show('pgp')">PGP </md-slide-toggle>
+                <md-slide-toggle [labelPosition]="'before'" id="php" name="pgp" [(ngModel)]="booPgp">PGP </md-slide-toggle>
             </div>
         </div>
         <div class="row" *ngIf="booPgp">
@@ -381,7 +399,10 @@
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                     <table class="mdl-data-table table-bordered table-striped no-margin">
                         <tbody>
-
+                            <tr *ngFor="let item of model.conditional_alers">
+                                <td>{{item.description}}</td>
+                                <td>{{item.issue_date}}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
