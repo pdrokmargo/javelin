@@ -116,9 +116,8 @@
     <div class="col-sm-12"></div>
     <!-- delivery_contract_id -->
     <div class="col-sm-12 col-md-6 margin-bottom">
-        <md-select class="full-width" placeholder="Contrato" [(ngModel)]="model.delivery_contract_id" name="delivery_contract_id"
-            id="delivery_contract_id">
-            <md-option *ngFor="let item of arrDelivery_contract" [value]="item.id">{{item.name}}</md-option>
+        <md-select class="full-width" placeholder="Contrato" [(ngModel)]="model.delivery_contract_id" name="delivery_contract_id" id="delivery_contract_id">
+            <md-option *ngFor="let item of arrDelivery_contract" [value]="item.id" (click)="loadIpsNetword(item)">{{item.name}}</md-option>
         </md-select>
     </div>
     <!-- contracts_payment_method_id -->

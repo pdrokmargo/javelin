@@ -69,7 +69,6 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
     private getCollection() {
         this.helperService.POST(`/api/collections`, [
             "TYPES_OF_DOCUMENTS",
-            "GENDER", "IPS_NETWORK",
             "CONTRACTS_PAYMENT_METHOD",
             "AFFILIATE_TYPE",
             "AFFILIATE_CONDITION",
@@ -78,7 +77,6 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
             let res = rs.json();
             this.arrDocument_type = res.TYPES_OF_DOCUMENTS;
             this.arrGender = res.GENDER;
-            this.arrIps_network = res.IPS_NETWORK;
             this.arrContracts_payment_method = res.CONTRACTS_PAYMENT_METHOD;
             this.arrAffiliate_type = res.AFFILIATE_TYPE;
             this.arrAffiliate_condition = res.AFFILIATE_CONDITION;
@@ -186,5 +184,9 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
 
     private goList() {
         this.comp.openList();
+    }
+
+    private loadIpsNetword(item){
+        this.arrIps_network = item.ips;        
     }
 }
