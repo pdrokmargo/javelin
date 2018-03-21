@@ -26,6 +26,7 @@ const routes: Routes = [
       { path: 'pharmaceutical-drug', loadChildren: 'app/smartity/pharmaceutical-drug/pharmaceutical-drug.module#PharmaceuticalDrugModule', canActivate: [PrivilegeGuard] },
       { path: 'delivery-contracts', loadChildren: 'app/smartity/delivery-contracts/delivery-contracts.module#DeliveryContractsModule', canActivate: [PrivilegeGuard] },
       { path: 'delivery-points', loadChildren: 'app/smartity/delivery-points/delivery-points.module#DeliveryPointsModule', canActivate: [PrivilegeGuard] },
+      { path: 'affiliates', loadChildren: 'app/smartity/affiliates/affiliates.module#AffiliatesModule', canActivate: [PrivilegeGuard] },
     ]
   }
 ];

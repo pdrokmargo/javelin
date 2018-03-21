@@ -1,0 +1,168 @@
+<form #modelForm="ngForm" autocomplete="off">
+    <div class="col-sm-12 margin-bottom-40" [class.btn-action-container]="booActive">
+        <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+    </div>
+    <!-- document_type_id -->
+    <div class="col-sm-12 col-md-6 margin-bottom">
+        <md-select required class="full-width" placeholder="Tipo de identificación" [(ngModel)]="model.document_type_id" name="document_type_id"
+            id="document_type_id">
+            <md-option *ngFor="let item of arrDocument_type" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <!-- document_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Identificación">
+        </md-input-container>
+    </div>
+    <!-- estado -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <md-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</md-slide-toggle>
+        </div>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- firstname -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="firstname" name="firstname" [(ngModel)]="model.firstname" mdInput placeholder="Nombres">
+        </md-input-container>
+    </div>
+    <!-- middlename -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input type="text" id="middlename" name="middlename" [(ngModel)]="model.middlename" mdInput>
+        </md-input-container>
+    </div>
+    <!-- lastname1 -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="lastname1" name="lastname1" [(ngModel)]="model.lastname1" mdInput placeholder="Appellidos">
+        </md-input-container>
+    </div>
+    <!-- lastname2 -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input type="text" id="lastname2" name="lastname2" [(ngModel)]="model.lastname2" mdInput>
+        </md-input-container>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- birthday -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="date" id="birthday" name="birthday" [(ngModel)]="model.birthday" mdInput placeholder="Fecha de nacimiento">
+        </md-input-container>
+    </div>
+    <!-- gender_id -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <md-select class="full-width" placeholder="Genero" [(ngModel)]="model.gender_id" name="gender_id" id="gender_id">
+            <md-option *ngFor="let item of arrGender" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <!-- phone_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
+        </md-input-container>
+    </div>
+    <!-- mobile_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="mobile_number" name="mobile_number" [(ngModel)]="model.mobile_number" mdInput placeholder="Celular">
+        </md-input-container>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- address -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="address" name="address" [(ngModel)]="model.address" mdInput placeholder="Dirección">
+        </md-input-container>
+    </div>
+    <!-- conutry -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <md-select [disabled]="arrDepartment.length == 0" class="full-width" placeholder="Departamento" [(ngModel)]="model.department" name="department" id="department" (change)="loadCity()">
+            <md-option *ngFor="let item of arrDepartment" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+        
+    </div>
+    <!-- conutry -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <md-select [disabled]="arrCity.length == 0" class="full-width" placeholder="Ciudad" [(ngModel)]="model.city" name="city" id="city" (change)="booGeolocation=true">
+            <md-option *ngFor="let item of arrCity" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- attendant_name -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="attendant_name" name="attendant_name" [(ngModel)]="model.attendant_name" mdInput placeholder="Nombre acudiente">
+        </md-input-container>
+    </div>
+    <!-- attendant_phone_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="attendant_phone_number" name="attendant_phone_number" [(ngModel)]="model.attendant_phone_number"
+                mdInput placeholder="Teléfono acudiente">
+        </md-input-container>
+    </div>
+    <!-- attendant_mobile_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="attendant_mobile_number" name="attendant_mobile_number" [(ngModel)]="model.attendant_mobile_number"
+                mdInput placeholder="Celular acudiente">
+        </md-input-container>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- delivery_contract_id -->
+    <div class="col-sm-12 col-md-6 margin-bottom">
+        <md-select class="full-width" placeholder="Contrato" [(ngModel)]="model.delivery_contract_id" name="delivery_contract_id"
+            id="delivery_contract_id">
+            <md-option *ngFor="let item of arrDelivery_contract" [value]="item.id">{{item.name}}</md-option>
+        </md-select>
+    </div>
+    <!-- contracts_payment_method_id -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <md-select class="full-width" placeholder="Modalidad de contratación" [(ngModel)]="model.contracts_payment_method_id" name="contracts_payment_method_id"
+            id="contracts_payment_method_id">
+            <md-option *ngFor="let item of arrContracts_payment_method" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <!-- affiliate_condition_id -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <md-select class="full-width" placeholder="Condición de afiliado" [(ngModel)]="model.affiliate_condition_id" name="affiliate_condition_id"
+            id="affiliate_condition_id">
+            <md-option *ngFor="let item of arrAffiliate_condition" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- ips_network_id -->
+    <div class="col-sm-12 col-md-6 col-lg-4 margin-bottom">
+        <md-select class="full-width" placeholder="Red adscrita" [(ngModel)]="model.ips_network_id" name="ips_network_id" id="ips_network_id">
+            <md-option *ngFor="let item of arrIps_network" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <!-- affiliate_level -->
+    <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="affiliate_level" name="affiliate_level" [(ngModel)]="model.affiliate_level" mdInput placeholder="Nivel de afiliado">
+        </md-input-container>
+    </div>
+    <!-- affiliate_type -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <md-select class="full-width" placeholder="Tipo de afiliado" [(ngModel)]="model.affiliate_type" name="affiliate_type" id="affiliate_type">
+            <md-option *ngFor="let item of arrAffiliate_type" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <!-- public_health_condition_id -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <md-select class="full-width" placeholder="Condición de salud pública" [(ngModel)]="model.public_health_condition_id" name="public_health_condition_id"
+            id="public_health_condition_id">
+            <md-option *ngFor="let item of arrPublic_health_condition" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <div class="col-sm-12" [class.btn-action-container]="booActive">
+        <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{str_action}}</button>
+    </div>
+</form>

@@ -2,45 +2,46 @@ import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from "@angu
 import { DataTableResource } from "angular-4-data-table";
 import { FormControl } from "@angular/forms";
 import "rxjs/add/operator/startWith";
-import { AuthenticationService } from "../../../auth/authentication.service";
 import { MdSnackBar, MdDialogRef, MdDialog } from "@angular/material";
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseModel } from '../../bases/base-model';
-import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
-import { ModalWarehouseComponent } from '../../modals/modal-warehouse/modal-warehouse.component';
 import { filter } from 'rxjs/operators';
-import { ModalUsersComponent } from '../../modals/modal-users/modal-users.component';
-import { IpsNetworkComponent } from '../ips-network.component';
+import { BaseModel } from '../../../bases/base-model';
+import { ModalWarehouseComponent, ModalUsersComponent } from '../..';
+import { LoaderService, HelperService } from '../../../../shared';
 
 @Component({
-    selector: "ips-network-action-cmp",
-    templateUrl: "ips-network-action.component.html",
-    styles: []
+    selector: "delivery-points-action-cmp",
+    templateUrl: "delivery-points-action.component.html"
 })
 
-export class IpsNetworkActionComponent extends BaseModel implements OnInit {
+export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
     @Output() select = new EventEmitter();
     @Input() noaction: boolean;
 
+    private arrDelivery_point_group: Array<any> = [];
     private action_active: boolean;
     private str_action: string = 'Guardar';
+    private modalWarehouse: MdDialogRef<ModalWarehouseComponent>;
+    private modalUsers: MdDialogRef<ModalUsersComponent>;
+    private warehouse: any = {};
 
     constructor(public snackBar: MdSnackBar,
         private route: ActivatedRoute,
         private router: Router,
         private loaderService: LoaderService,
         private helperService: HelperService,
-        private comp: IpsNetworkComponent,
         private dialog: MdDialog
     ) {
         super();
+
     }
 
 
     ngOnInit() {
         this.clean();
+        this.getCollection();
         if (this.numId == undefined || this.numId == null || this.numId == '') {
             this.str_action = 'Guardar';
         } else {
@@ -49,7 +50,12 @@ export class IpsNetworkActionComponent extends BaseModel implements OnInit {
         }
     }
 
-
+    private getCollection() {
+        this.helperService.POST(`/api/collections`, ["DELIVERY_POINTS_GROUPS"]).subscribe(rs => {
+            let res = rs.json();
+            this.arrDelivery_point_group = res.DELIVERY_POINTS_GROUPS;
+        }, err => { console.log(err); });
+    }
 
 
 
@@ -61,7 +67,7 @@ export class IpsNetworkActionComponent extends BaseModel implements OnInit {
             /**Create */
             this.model.delivery_contracts = '';
             this.loaderService.display(true);
-            this.helperService.POST(`/api/ips-network`, this.model)
+            this.helperService.POST(`/api/delivery-points`, this.model)
                 .subscribe(rs => {
 
                     let res = rs.json();
@@ -79,13 +85,12 @@ export class IpsNetworkActionComponent extends BaseModel implements OnInit {
 
         } else {
             this.loaderService.display(true);
-            this.helperService.PUT(`/api/ips-network/${this.numId}`, this.model).subscribe(rs => {
+            this.helperService.PUT(`/api/delivery-points/${this.numId}`, this.model).subscribe(rs => {
                 let res = rs.json();
                 if (res.update) {
                     this.snackBar.open(res.message, 'Actualización', {
                         duration: 3500,
                     });
-                    this.comp.openList();
                 }
                 if (this.noaction) {
                     this.select.emit(res.data);
@@ -101,10 +106,15 @@ export class IpsNetworkActionComponent extends BaseModel implements OnInit {
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/ips-network/${this.numId}`)
+        this.helperService.GET(`/api/delivery-points/${this.numId}`)
             .map((response: Response) => {
+                console.log(response);
+
                 let res = response.json();
                 this.model = res.data;
+                this.warehouse = this.model.warehouses;
+                this.model.operation_cost_centre_id = this.model.root == true ? 'co-' + this.model.operation_cost_centre_id : 'cc-' + this.model.operation_cost_centre_id;
+
             }).subscribe(
                 error => {
                     this.loaderService.display(false);
@@ -118,7 +128,44 @@ export class IpsNetworkActionComponent extends BaseModel implements OnInit {
         this.model.state = true;
     }
 
-    private goList() {
-        this.comp.openList();
+    
+
+    private openModalWarehouse() {
+        this.modalWarehouse = this.dialog.open(ModalWarehouseComponent, {
+            hasBackdrop: false,
+            data: {
+                title: 'Bodega',
+            }
+        });
+
+        this.modalWarehouse
+            .afterClosed()
+            .pipe(filter((data) => data))
+            .subscribe((data) => {
+                this.model.warehouse_id = data.id;
+                this.warehouse = data;
+            });
     }
+
+    private openModalUsers() {
+        this.modalUsers = this.dialog.open(ModalUsersComponent, {
+            hasBackdrop: false,
+            data: {
+                title: 'Usuarios',
+            }
+        });
+
+        this.modalUsers.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
+            if (!this.model.assigned_users) {
+                this.model.assigned_users = [];
+            }
+            this.model.assigned_users.push(data);
+            if (!this.model.users) {
+                this.model.users = [];
+            }
+            this.model.users.push({ "user_id": data.id });
+        });
+    }
+
+
 }

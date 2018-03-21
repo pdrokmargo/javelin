@@ -1,21 +1,20 @@
-import { Component, OnInit, ViewChild, Output, Input, EventEmitter } from '@angular/core';
-import { DataTableResource } from 'angular-4-data-table';
-import { FormControl } from '@angular/forms';
-import 'rxjs/add/operator/startWith';
-import { MdSnackBar } from '@angular/material';
+import { Component, OnInit, ViewChild, Output, Input, EventEmitter } from "@angular/core";
+import { DataTableResource } from "angular-4-data-table";
+import { FormControl } from "@angular/forms";
+import "rxjs/add/operator/startWith";
+import { MdSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseList } from '../../bases/base-list';
 import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
-import { IpsNetworkComponent } from '../ips-network.component';
+import { AffiliatesComponent } from '../affiliates.component';
 
 @Component({
-    selector: 'ips-network-list-cmp',
-    templateUrl: 'ips-network-list.component.html',
-    styles: []
+    selector: "affiliates-list-cmp",
+    templateUrl: "affiliates-list.component.html",
 })
 
-export class IpsNetworkListComponent extends BaseList implements OnInit {
+export class AffiliatesListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
     @Input() noaction: boolean;
@@ -23,9 +22,9 @@ export class IpsNetworkListComponent extends BaseList implements OnInit {
     constructor(public router: Router,
         public loaderService: LoaderService,
         public helperService: HelperService,
-        private comp: IpsNetworkComponent) {
+        private comp: AffiliatesComponent) {
         super(loaderService, helperService);
-        this.urlApi = '/api/ips-network';
+        this.urlApi = '/api/affiliates';
     }
 
     ngOnInit() {
@@ -34,17 +33,16 @@ export class IpsNetworkListComponent extends BaseList implements OnInit {
 
     private NEW(row: any) {
         this.comp.openActions();
-        this.comp.id = 0;
+        this.comp.id = '';
     }
 
     private view(row: any) {
         if (this.noaction) {
             this.select.emit(row);
         } else {
-            this.comp.openActions();
             this.comp.id = row.id;
+            this.comp.openActions();
         }
-
     }
 
 }

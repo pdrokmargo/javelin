@@ -9,9 +9,7 @@ const AppRoutes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
   { path: 'app', component: LayoutComponent, canActivate: [AuthGuard] },
   { path: 'auth', loadChildren: './auth/authentication.module#AuthenticationModule' },
-  { path: '**', redirectTo: '/app/dashboard', pathMatch: 'full' },
-  // { path: 'extra', loadChildren: './extra-pages/extra-pages.module#ExtraPagesModule' },
-  // { path: 'fullscreen', component: PageLayoutFullscreenComponent },
+  { path: '**', redirectTo: '/app/dashboard', pathMatch: 'full' }
 ];
 
 export const AppRoutingModule = RouterModule.forRoot(AppRoutes, { useHash: true });

@@ -53,34 +53,33 @@ import {
   ModalUsersComponent,
   ModalActiveIngredientsComponent,
   ModalDeliveryPointsComponent,
+  DeliveryPointsListComponent,
+  DeliveryPointsActionComponent,
   ModalIpsNetworkComponent,
-  ModalGeolocationComponent
+  ModalGeolocationComponent,
+  WarehouseActionComponent,
+  WarehouseListComponent,
+  UserActionComponent,
+  UserListComponent,
+  PharmaceuticalDrugActionComponent,
+  PharmaceuticalDrugListComponent,
+  IpsNetworkActionComponent,
+  IpsNetworkListComponent,
+  StakeholdersActionComponent,
+  StakeholdersListComponent
+
 } from './smartity/modals';
 import { NumberOnlyDirective } from './smartity/directive/number-only.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { InputFileComponent } from './smartity/component/index';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { WarehouseActionComponent } from './smartity/warehouse/warehouse-action/warehouse-action.component';
-import { WarehouseListComponent } from './smartity/warehouse/warehouse-list/warehouse-list.component';
-import { WarehouseComponent } from './smartity/warehouse/warehouse.component';
-import { StakeholdersComponent } from './smartity/stakeholders/stakeholders.component';
-import { StakeholdersActionComponent } from './smartity/stakeholders/stakeholders-action/stakeholders-action.component';
-import { StakeholdersListComponent } from './smartity/stakeholders/stakeholders-list/stakeholders-list.component';
-import { UserListComponent } from './smartity/users/user-list/user-list.component';
-import { UsersComponent } from './smartity/users/users.component';
-import { UserActionComponent } from './smartity/users/user-action/user-action.component';
 import { ActiveIngredientsComponent } from './smartity/active-ingredients/active-ingredients.component';
 import { ActiveIngredientsListComponent } from './smartity/active-ingredients/active-ingredients-list/active-ingredients-list.component';
 import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/active-ingredients-action/active-ingredients-action.component';
-import { PharmaceuticalDrugComponent } from './smartity/pharmaceutical-drug/pharmaceutical-drug.component';
-import { PharmaceuticalDrugListComponent } from './smartity/pharmaceutical-drug/pharmaceutical-drug-list/pharmaceutical-drug-list.component';
-import { PharmaceuticalDrugActionComponent } from './smartity/pharmaceutical-drug/pharmaceutical-drug-action/pharmaceutical-drug-action.component';
-import { DeliveryPointsActionComponent } from './smartity/delivery-points/delivery-points-action/delivery-points-action.component';
-import { DeliveryPointsComponent } from './smartity/delivery-points/delivery-points.component';
-import { DeliveryPointsListComponent } from './smartity/delivery-points/delivery-points-list/delivery-points-list.component';
-import { IpsNetworkComponent } from './smartity/ips-network/ips-network.component';
-import { IpsNetworkActionComponent } from './smartity/ips-network/ips-network-action/ips-network-action.component';
-import { IpsNetworkListComponent } from './smartity/ips-network/ips-network-list/ips-network-list.component';
+
+
+
+
 
 
 @NgModule({
@@ -137,29 +136,23 @@ import { IpsNetworkListComponent } from './smartity/ips-network/ips-network-list
     ModalUsersComponent,
     ModalActiveIngredientsComponent,
     ModalDeliveryPointsComponent,
+    DeliveryPointsListComponent,
+    DeliveryPointsActionComponent,
+    WarehouseActionComponent,
+    WarehouseListComponent,
     ModalIpsNetworkComponent,
     ModalGeolocationComponent,
     InputFileComponent,
     NumberOnlyDirective,
-    WarehouseActionComponent,
-    WarehouseListComponent,
-    WarehouseComponent,
-    StakeholdersComponent,
     StakeholdersActionComponent,
     StakeholdersListComponent,
-    UsersComponent,
     UserActionComponent,
     UserListComponent,
     ActiveIngredientsComponent,
     ActiveIngredientsListComponent,
     ActiveIngredientsActionComponent,
-    PharmaceuticalDrugComponent,
     PharmaceuticalDrugListComponent,
     PharmaceuticalDrugActionComponent,
-    DeliveryPointsComponent,
-    DeliveryPointsActionComponent,
-    DeliveryPointsListComponent,
-    IpsNetworkComponent,
     IpsNetworkActionComponent,
     IpsNetworkListComponent,
   ],
@@ -168,13 +161,7 @@ import { IpsNetworkListComponent } from './smartity/ips-network/ips-network-list
     AuthenticationService,
     PrivilegeGuard,
     LoaderService,
-    WarehouseComponent,
-    StakeholdersComponent,
     ActiveIngredientsComponent,
-    PharmaceuticalDrugComponent,
-    DeliveryPointsComponent,
-    IpsNetworkComponent,
-    UsersComponent,
     HelperService
   ],
   bootstrap: [
@@ -192,25 +179,20 @@ import { IpsNetworkListComponent } from './smartity/ips-network/ips-network-list
     ModalUsersComponent,
     ModalActiveIngredientsComponent,
     ModalDeliveryPointsComponent,
+    DeliveryPointsListComponent,
+    DeliveryPointsActionComponent,
+    WarehouseActionComponent,
+    WarehouseListComponent,
     ModalIpsNetworkComponent,
     ModalGeolocationComponent,
     InputFileComponent,
-    WarehouseActionComponent,
-    WarehouseListComponent,
-    WarehouseComponent,
-    UsersComponent,
     UserActionComponent,
     UserListComponent,
     ActiveIngredientsComponent,
     ActiveIngredientsListComponent,
     ActiveIngredientsActionComponent,
-    PharmaceuticalDrugComponent,
     PharmaceuticalDrugActionComponent,
     PharmaceuticalDrugListComponent,
-    DeliveryPointsComponent,
-    DeliveryPointsActionComponent,
-    DeliveryPointsListComponent,
-    IpsNetworkComponent,
     IpsNetworkActionComponent,
     IpsNetworkListComponent,
   ]
@@ -218,7 +200,7 @@ import { IpsNetworkListComponent } from './smartity/ips-network/ips-network-list
 
 export class AppModule {
   constructor(public appRef: ApplicationRef) { }
-  hmrOnInit(store) {}
+  hmrOnInit(store) { }
   hmrOnDestroy(store) {
     const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
     // recreate elements

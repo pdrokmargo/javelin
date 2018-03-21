@@ -9,8 +9,11 @@
         <div class="container-fluid with-maxwidth">
             <div class="box box-default">
                 <div class="box-body">
+                    
                     <delivery-points-action-cmp *ngIf="isOpenActions" [numId]="id"></delivery-points-action-cmp>
+
                     <delivery-points-list-cmp *ngIf="isOpenList"></delivery-points-list-cmp>
+                    
                 </div>
             </div>
         </div>
