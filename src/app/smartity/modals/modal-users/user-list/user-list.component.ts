@@ -2,12 +2,10 @@ import { Component, OnInit, ViewChild, Output, Input, EventEmitter } from '@angu
 import { DataTableResource } from 'angular-4-data-table';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
-import { AuthenticationService } from '../../../auth/authentication.service';
 import { MdSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseList } from '../../bases/base-list';
-import { LoaderService, HelperService } from '../../../shared';
-import { UsersComponent } from '../users.component';
+import { BaseList } from '../../../bases/base-list';
+import { LoaderService, HelperService } from '../../../../shared';
 
 @Component({
     selector: 'user-list-cmp',
@@ -17,25 +15,28 @@ import { UsersComponent } from '../users.component';
 
 export class UserListComponent extends BaseList implements OnInit {
 
+    @Output() select = new EventEmitter();
+    _type;
+    @Input() set type(str) {
+        this._type = str;
+        this.urlApi = '/api/users/type/' + this._type;
+        this.getAll();
+    }
+    numItemSelected = -1;
+
     constructor(public loaderService: LoaderService,
         public helperService: HelperService,
-        public router: Router,
-        private comp: UsersComponent) {
+        public router: Router) {
         super(loaderService, helperService);
-        this.urlApi = '/api/users';
     }
 
     ngOnInit() {
-        this.getAll();
+        //this.getAll();
     }
 
-    private NEW(row: any) {
-        this.comp.openActions();
-        this.comp.id = 0;
-    }
 
     private view(row: any) {
-        this.comp.openActions();
-        this.comp.id = row.id;
+        this.select.emit(row);
+
     }
 }

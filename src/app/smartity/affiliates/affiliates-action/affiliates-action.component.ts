@@ -8,34 +8,43 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BaseModel } from '../../bases/base-model';
 import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
-import { DeliveryPointsComponent } from '../delivery-points.component';
 import { ModalWarehouseComponent } from '../../modals/modal-warehouse/modal-warehouse.component';
 import { filter } from 'rxjs/operators';
 import { ModalUsersComponent } from '../../modals/modal-users/modal-users.component';
+import { AffiliatesComponent } from '../affiliates.component';
 
 @Component({
-    selector: "delivery-points-action-cmp",
-    templateUrl: "delivery-points-action.component.html"
+    selector: "affiliates-action-cmp",
+    templateUrl: "affiliates-action.component.html"
 })
 
-export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
+export class AffiliatesActionComponent extends BaseModel implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
+    private arrDocument_type: any = [];
+    private arrGender: any = [];
+    private arrDelivery_contract: any = [];
+    private arrContracts_payment_method: any = [];
+    private arrAffiliate_condition: any = [];
+    private arrIps_network: any = [];
+    private arrAffiliate_type: any = [];
+    private arrPublic_health_condition: any = [];
+    private arrDepartment: any = [];
+    private arrCity: any = [];
+    private booGeolocation: boolean = false;
+
+
 
     private arrDelivery_point_group: Array<any> = [];
     private action_active: boolean;
     private str_action: string = 'Guardar';
-    private modalWarehouse: MdDialogRef<ModalWarehouseComponent>;
-    private modalUsers: MdDialogRef<ModalUsersComponent>;
-    private warehouse: any = {};
+
 
     constructor(public snackBar: MdSnackBar,
         private route: ActivatedRoute,
         private router: Router,
         private loaderService: LoaderService,
         private helperService: HelperService,
-        private comp: DeliveryPointsComponent,
+        private comp: AffiliatesComponent,
         private dialog: MdDialog
     ) {
         super();
@@ -44,8 +53,11 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
 
     ngOnInit() {
+
         this.clean();
         this.getCollection();
+        this.loadDepartment();
+        this.loadDeliveryContract();
         if (this.numId == undefined || this.numId == null || this.numId == '') {
             this.str_action = 'Guardar';
         } else {
@@ -55,24 +67,64 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
     }
 
     private getCollection() {
-        this.helperService.POST(`/api/collections`, ["DELIVERY_POINTS_GROUPS"]).subscribe(rs => {
+        this.helperService.POST(`/api/collections`, [
+            "TYPES_OF_DOCUMENTS",
+            "CONTRACTS_PAYMENT_METHOD",
+            "AFFILIATE_TYPE",
+            "AFFILIATE_CONDITION",
+            "PUBLIC_HEALTH_CONDITION"
+        ]).subscribe(rs => {
             let res = rs.json();
-            this.arrDelivery_point_group = res.DELIVERY_POINTS_GROUPS;
+            this.arrDocument_type = res.TYPES_OF_DOCUMENTS;
+            this.arrGender = res.GENDER;
+            this.arrContracts_payment_method = res.CONTRACTS_PAYMENT_METHOD;
+            this.arrAffiliate_type = res.AFFILIATE_TYPE;
+            this.arrAffiliate_condition = res.AFFILIATE_CONDITION;
+            this.arrPublic_health_condition = res.PUBLIC_HEALTH_CONDITION;
+
         }, err => { console.log(err); });
     }
 
+    private loadDepartment() {
+        this.arrCity = [];
+        this.booGeolocation = false;
+        this.helperService.GET(`/api/departamentos?pais_id=7`).subscribe(rs => {
+            let res = rs.json();
+            this.arrDepartment = res.departamentos;
+        }, err => {
+            console.log(err);
+        });
+    }
 
+    private loadCity() {
+        this.helperService.GET(`/api/ciudades?departamento_id=${this.model.department}`).subscribe(rs => {
+            let res = rs.json();
+            this.arrCity = res.ciudades;
+            this.model.city = this.model.geolocation.city;
+        }, err => {
+            console.log(err);
+        });
+    }
+
+    private loadDeliveryContract() {
+        this.helperService.GET(`/api/delivery-contracts`).subscribe(rs => {
+            let res = rs.json();
+            this.arrDelivery_contract = res.data;
+        }, err => {
+            console.log(err);
+        });
+    }
 
     private save() {
-
+        this.model.geolocation = JSON.stringify({
+            "department": this.model.department,
+            "city": this.model.city
+        });
         if (this.numId == '') {
-
-
             /**Create */
-            this.model.delivery_contracts = '[]';
+            this.model.delivery_contracts = '';
             this.loaderService.display(true);
-            this.helperService.POST(`/api/delivery-points`, this.model)
-                .subscribe(rs => {
+            this.helperService.POST(`/api/affiliates`, this.model).subscribe(rs => {
 
                     let res = rs.json();
                     if (res.store) {
@@ -89,16 +141,13 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
         } else {
             this.loaderService.display(true);
-            this.helperService.PUT(`/api/delivery-points/${this.numId}`, this.model).subscribe(rs => {
+            this.helperService.PUT(`/api/affiliates/${this.numId}`, this.model).subscribe(rs => {
                 let res = rs.json();
                 if (res.update) {
                     this.snackBar.open(res.message, 'Actualización', {
                         duration: 3500,
                     });
                     this.comp.openList();
-                }
-                if (this.noaction) {
-                    this.select.emit(res.data);
                 }
 
             }, err => {
@@ -111,14 +160,13 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/delivery-points/${this.numId}`)
+        this.helperService.GET(`/api/affiliates/${this.numId}`)
             .map((response: Response) => {
-                console.log(response);
-
                 let res = response.json();
                 this.model = res.data;
-                this.warehouse = this.model.warehouses;
-                this.model.operation_cost_centre_id = this.model.root == true ? 'co-' + this.model.operation_cost_centre_id : 'cc-' + this.model.operation_cost_centre_id;
+                this.model.geolocation = JSON.parse(this.model.geolocation);
+                this.model.department = this.model.geolocation.department;
+                this.loadCity();
 
             }).subscribe(
                 error => {
@@ -130,6 +178,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
     private clean() {
         this.model = {};
+        this.model.geolocation = {};
         this.model.state = true;
     }
 
@@ -137,43 +186,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
         this.comp.openList();
     }
 
-    private openModalWarehouse() {
-        this.modalWarehouse = this.dialog.open(ModalWarehouseComponent, {
-            hasBackdrop: false,
-            data: {
-                title: 'Bodega',
-            }
-        });
-
-        this.modalWarehouse
-            .afterClosed()
-            .pipe(filter((data) => data))
-            .subscribe((data) => {
-                this.model.warehouse_id = data.id;
-                this.warehouse = data;
-            });
+    private loadIpsNetword(item){
+        this.arrIps_network = item.ips;        
     }
-
-    private openModalUsers() {
-        this.modalUsers = this.dialog.open(ModalUsersComponent, {
-            hasBackdrop: false,
-            data: {
-                title: 'Usuarios',
-                type: 'regente'
-            }
-        });
-
-        this.modalUsers.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
-            if (!this.model.assigned_users) {
-                this.model.assigned_users = [];
-            }
-            this.model.assigned_users.push(data);
-            if (!this.model.users) {
-                this.model.users = [];
-            }
-            this.model.users.push({ "user_id": data.id });
-        });
-    }
-
-
 }

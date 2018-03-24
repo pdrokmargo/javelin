@@ -4,11 +4,9 @@ import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
 import { MdSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseModel } from '../../bases/base-model';
-import { UsersComponent } from '../users.component';
-import { HelperService, LoaderService } from '../../../shared';
 import { Response } from '@angular/http';
-import { isNullOrUndefined } from 'util';
+import { BaseModel } from '../../../bases/base-model';
+import { LoaderService, HelperService } from '../../../../shared';
 
 @Component({
     selector: 'user-action-cmp',
@@ -18,6 +16,8 @@ import { isNullOrUndefined } from 'util';
 
 export class UserActionComponent extends BaseModel implements OnInit {
 
+    @Output() select = new EventEmitter();
+    
 
     private companies: any[] = [];
     private user_profiles: any[] = [];
@@ -27,10 +27,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
     constructor(public loaderService: LoaderService,
         public helperService: HelperService,
-        public snackBar: MdSnackBar,
-        private route: ActivatedRoute,
-        private router: Router,
-        private comp: UsersComponent) {
+        public snackBar: MdSnackBar) {
         super();
 
     }
@@ -40,8 +37,9 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.clean();
         this.getUserProfiles();
         this.getCompanies();
+        console.log(this.numId);
 
-        if (!isNullOrUndefined(this.numId) && this.numId !== '') {
+        if (this.numId > 0) {
             // this.numId=this.route.snapshot.params['id'];
             this.str_action = 'Actualizar';
             this.getDataById();
@@ -77,60 +75,40 @@ export class UserActionComponent extends BaseModel implements OnInit {
     }
 
     private save() {
-        /** Update */
         if (this.model.usersprivileges.length === 0) {
             this.snackBar.open('Agregue una empresa para continuar.', 'Error', {
                 duration: 3500,
             });
             return false;
         }
-        if (!isNullOrUndefined(this.model.id) && this.model.id !== '') {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/users/${this.numId}`, this.model)
-                .map((response: Response) => {
 
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Actualización', {
-                            duration: 3500,
-                        });
-                        this.comp.openList();
-                    }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    }, (done) => {
-                        this.loaderService.display(false);
-                    });
-
-        } else {
-            /** Create */
-            if (this.model.usersprivileges.length === 0) {
-                this.snackBar.open('Agregue una empresa para continuar.', 'Error', {
-                    duration: 3500,
-                });
-                return false;
-            }
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/users`, this.model)
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                    }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    }, (done) => {
-                        this.loaderService.display(false);
-                    });
+        /** Create */
+        if (this.model.usersprivileges.length === 0) {
+            this.snackBar.open('Agregue una empresa para continuar.', 'Error', {
+                duration: 3500,
+            });
+            return false;
         }
+        this.loaderService.display(true);
+        this.helperService.POST(`/api/users`, this.model)
+            .map((response: Response) => {
+
+                const res = response.json();
+                if (res.status === 'success') {
+                    this.snackBar.open(res.message, 'Guardado', {
+                        duration: 3500,
+                    });
+                    this.clean();
+                    this.select.emit(res.data);
+                }
+
+            }).subscribe(
+                (error) => {
+                    this.loaderService.display(false);
+                }, (done) => {
+                    this.loaderService.display(false);
+                });
+
 
     }
 
@@ -138,6 +116,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.loaderService.display(true);
         this.helperService.GET(`/api/users/${this.numId}`)
             .map((response: Response) => {
+                console.log(response);
 
                 let res = response.json();
                 this.model = res.data;
@@ -193,10 +172,6 @@ export class UserActionComponent extends BaseModel implements OnInit {
         const index = this.model.usersprivileges.indexOf(obj);
         this.model.usersprivileges.splice(index, 1);
         this.refreshCompany();
-    }
-
-    private goList() {
-        this.comp.openList();
     }
 
 }

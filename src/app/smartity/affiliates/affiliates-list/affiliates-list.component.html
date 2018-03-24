@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" *ngIf="!noaction">
         <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
     </div>
 
@@ -21,32 +21,32 @@
             <table class="mdl-data-table table-bordered table-striped cf no-margin">
                 <thead>
                     <tr>
-                        <th (click)="sort('cc.id')">ID
-                            <span class="glyphicon sort-icon" *ngIf="key =='cc.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <th (click)="sort('id')">ID
+                            <span class="glyphicon sort-icon" *ngIf="key =='id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('code')">Nombre
-                            <span class="glyphicon sort-icon" *ngIf="key =='code'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <th (click)="sort('document_type_id')">Identificación
+                            <span class="glyphicon sort-icon" *ngIf="key =='document_type_id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('name')">Cliente
-                            <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <th (click)="sort('contract')">Contrato
+                            <span class="glyphicon sort-icon" *ngIf="key =='contract'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('operationcostcentres')">Población
-                            <span class="glyphicon sort-icon" *ngIf="key =='operationcostcentres'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <th (click)="sort('contract')">Modalidad
+                            <span class="glyphicon sort-icon" *ngIf="key =='contract'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('ct.value')">Estado
-                            <span class="glyphicon sort-icon" *ngIf="key =='ct.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <th (click)="sort('state')">Estado
+                            <span class="glyphicon sort-icon" *ngIf="key =='ct.state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th></th>
+                        <th *ngIf="!noaction"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor="let item of list.data">
+                <tbody *ngIf="list.data">
+                    <tr *ngFor="let item of list.data" (click)="view(item)">
                         <td>{{ item.id }}</td>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.customers.businessname }}</td>
-                        <td>{{ item.population_types.value }}</td>
+                        <td>{{ item.contract }}</td>
+                        <td>{{item.contracts_payment_method}}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>
-                        <td class="text-center">
+                        <td class="text-center" *ngIf="!noaction">
                             <a style="color:#0a6ebd;cursor:pointer;" (click)="view(item)">
                                 <i class="fa fa-pencil fa-2x"></i>
                             </a>

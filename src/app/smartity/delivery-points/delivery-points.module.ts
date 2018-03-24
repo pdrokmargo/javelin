@@ -14,12 +14,12 @@ const routes: Routes = [{ path: '', component: DeliveryPointsComponent }];
         CommonModule,
         RouterModule.forChild(routes),
         SharedModule,
-        NgbModule.forRoot()  
+        NgbModule.forRoot()
     ],
     declarations: [
         DeliveryPointsComponent,
-        DeliveryPointsActionComponent,
-        DeliveryPointsListComponent
+        DeliveryPointsListComponent,
+        DeliveryPointsActionComponent
     ]
 })
 export class DeliveryPointsModule {

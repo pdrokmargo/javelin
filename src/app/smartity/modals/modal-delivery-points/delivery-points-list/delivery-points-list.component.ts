@@ -4,10 +4,9 @@ import { FormControl } from "@angular/forms";
 import "rxjs/add/operator/startWith";
 import { MdSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseList } from '../../bases/base-list';
-import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
-import { DeliveryPointsComponent } from '../delivery-points.component';
+import { BaseList } from '../../../bases/base-list';
+import { LoaderService, HelperService } from '../../../../shared';
 
 @Component({
     selector: "delivery-points-list-cmp",
@@ -17,12 +16,12 @@ import { DeliveryPointsComponent } from '../delivery-points.component';
 export class DeliveryPointsListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
+    numItemSelected = -1;
 
     constructor(public router: Router,
         public loaderService: LoaderService,
-        public helperService: HelperService,
-        private comp: DeliveryPointsComponent) {
+        public helperService: HelperService
+    ) {
         super(loaderService, helperService);
         this.urlApi = '/api/delivery-points';
     }
@@ -32,17 +31,13 @@ export class DeliveryPointsListComponent extends BaseList implements OnInit {
     }
 
     private NEW(row: any) {
-        this.comp.openActions();
-        this.comp.id = '';
+
     }
 
     private view(row: any) {
-        if (this.noaction) {
-            this.select.emit(row);
-        } else {
-            this.comp.id = row.id;
-            this.comp.openActions();
-        }
+
+        this.select.emit(row);
+
     }
 
 }

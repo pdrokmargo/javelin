@@ -10,9 +10,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
-    </div>
 
     <div class="col-sm-12">
 
@@ -24,33 +21,23 @@
                         <th (click)="sort('cc.id')">ID
                             <span class="glyphicon sort-icon" *ngIf="key =='cc.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('code')">Nombre
-                            <span class="glyphicon sort-icon" *ngIf="key =='code'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                        </th>
-                        <th (click)="sort('name')">Cliente
+                        <th (click)="sort('name')">Nombre
                             <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('operationcostcentres')">Población
-                            <span class="glyphicon sort-icon" *ngIf="key =='operationcostcentres'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <th (click)="sort('delivery_contract_id')">Grupo
+                            <span class="glyphicon sort-icon" *ngIf="key =='delivery_contract_id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('ct.value')">Estado
-                            <span class="glyphicon sort-icon" *ngIf="key =='ct.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <th (click)="sort('ct.state')">Estado
+                            <span class="glyphicon sort-icon" *ngIf="key =='ct.state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor="let item of list.data">
+                <tbody *ngIf="list.data">
+                    <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
                         <td>{{ item.id }}</td>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.customers.businessname }}</td>
-                        <td>{{ item.population_types.value }}</td>
+                        <td>{{ item.delivery_points_groups.value }}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>
-                        <td class="text-center">
-                            <a style="color:#0a6ebd;cursor:pointer;" (click)="view(item)">
-                                <i class="fa fa-pencil fa-2x"></i>
-                            </a>
-                        </td>
                     </tr>
                 </tbody>
             </table>
