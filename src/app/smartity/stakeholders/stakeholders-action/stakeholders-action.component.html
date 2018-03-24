@@ -1,7 +1,7 @@
 
 <!-- FORM -->
 
-<form #stakeHolderForm="ngForm" autocomplete="off">
+<form #stakeHolderForm="ngForm" autocomplete="off" (ngSubmit)="submit($event)">
 
     <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
         <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
@@ -19,11 +19,18 @@
         </div>  
 
         <!-- rut -->
-        <div class='col-sm-12 col-md-6'>
+        <div class='col-sm-12 col-md-3'>
             <div class="box-body">
-                <md-slide-toggle [labelPosition]="after" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
+                <md-slide-toggle (change)="changeRut($event)" [labelPosition]="after" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
             </div>
         </div>
+
+        <div class='col-sm-12 col-md-3'>
+            <div class="box-body">
+                <md-slide-toggle [labelPosition]="after" id="status" name="status" [(ngModel)]="model.status">Estado</md-slide-toggle>
+            </div>
+        </div>
+
     </div>
         
     <!-- document type -->
@@ -31,21 +38,37 @@
         <div class="box-body">
             <md-select required class="full-width" placeholder="Tipo de documento" [(ngModel)]="model.document_type_id" name="document_type_id"
             id="document_type_id">
-                <md-option *ngFor="let item of document_type" [value]="item.id">{{item.value}}</md-option>
+                <md-option *ngFor="let item of document_type"  [value]="item.id">{{item.value}}</md-option>                
             </md-select>  
         </div>
     </div>  
 
     <!-- document number -->
-    <div class='col-sm-12 col-md-6'>
+    <div class='col-sm-12 col-md-6' *ngIf="!model.rut">
         <div class="box-body">
             <md-input-container class="full-width">
-                <input required NumberOnly type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
+                <input required type="text" (keypress)="keyPress($event)" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
             </md-input-container>
         </div>
     </div>
+
+     <!-- document number -->
+    <div class='col-sm-12 col-md-6' *ngIf="model.rut">
+        <div class="box-body">
+            <div class='col-sm-12 col-md-10'>
+                <md-input-container class="full-width">
+                    <input required (keypress)="keyPress($event)" (focusout)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
+                </md-input-container>
+            </div>
+            <div class='col-sm-12 col-md-2'>
+                <md-input-container class="full-width">
+                    <input [disabled]="true" type="text" id="document_number_digit" name="document_number_digit" [(ngModel)]="model.document_number_digit" mdInput placeholder="Dígito">
+                </md-input-container>
+            </div>
+        </div>
+    </div>
     
-    <div class='col-sm-12 col-md-4'>
+    <div class='col-sm-12 col-md-3' *ngIf="model.person_type_id===38">
         <div class="box-body">
             <md-input-container class="full-width">
                 <input type="text" id="firstname" name="firstname" [(ngModel)]="model.firstname" mdInput placeholder="Primer nombre">
@@ -53,7 +76,7 @@
         </div>
     </div>
 
-    <div class='col-sm-12 col-md-4'>
+    <div class='col-sm-12 col-md-3' *ngIf="model.person_type_id===38">
         <div class="box-body">
             <md-input-container class="full-width">
                 <input type="text" id="middlename" name="middlename" [(ngModel)]="model.middlename" mdInput placeholder="Segundo nombres">
@@ -61,7 +84,7 @@
         </div>
     </div>
 
-    <div class='col-sm-12 col-md-4'>
+    <div class='col-sm-12 col-md-3' *ngIf="model.person_type_id===38">
         <div class="box-body">
             <md-input-container class="full-width">
                 <input type="text" id="lastname" name="lastname" [(ngModel)]="model.lastname" mdInput placeholder="Apellidos">
@@ -69,15 +92,31 @@
         </div>
     </div>
 
-
-    <!-- legal name -->
-    <div class='col-sm-12 col-md-12'>
+    <div class='col-sm-12 col-md-3' *ngIf="model.person_type_id===38">
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <input type="text" id="second_surname" name="second_surname" [(ngModel)]="model.second_surname" mdInput placeholder="Segundo apellido">
+            </md-input-container>
+        </div>
+    </div>
+       
+    <!-- legal name -->   
+    <div class='col-sm-12 col-md-12' *ngIf="model.person_type_id===39">
         <div class="box-body">
             <md-input-container class="full-width">
                 <input type="text" id="legalname" name="legalname" [(ngModel)]="model.legalname" mdInput placeholder="Razón Social">
             </md-input-container>
         </div>
-    </div>  
+    </div> 
+    
+    <!-- business name -->   
+    <div class='col-sm-12 col-md-12' *ngIf="model.rut && (model.person_type_id===39 || model.person_type_id===38)">
+        <div class="box-body">
+            <md-input-container class="full-width">
+                <input type="text" id="businessname" name="businessname" [(ngModel)]="model.businessname" mdInput placeholder="Nombre del Establecimiento">
+            </md-input-container>
+        </div>
+    </div> 
 
     <!--country -->
     <div class='col-sm-12 col-md-4'>
@@ -122,7 +161,7 @@
     <div class='col-sm-12 col-md-4'>
         <div class="box-body">
             <md-input-container class="full-width">
-                <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
+                <input required (keypress)="keyPress($event)" type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
             </md-input-container>
         </div>                                
     </div>
@@ -183,7 +222,7 @@
         </div>
     </div> 
     
-    <div class="col-sm-12" *ngIf="model.person_type_id==39">
+    <div class="col-sm-12" *ngIf="model.person_type_id==39 && (model.is_supplier || model.is_customer)">
 
         <div class="col-sm-12">
             <h2 class="article-title text-center">Información Tributaria</h2>
@@ -285,7 +324,7 @@
          <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input NumberOnly required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit" mdInput placeholder="Cupo crédito">
+                    <input (keypress)="keyPress($event)" required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit" mdInput placeholder="Cupo crédito">
                 </md-input-container>
             </div>
         </div>
@@ -305,7 +344,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount" mdInput placeholder="Descuento Global">
+                        <input (keypress)="keyPress($event)" required type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount" mdInput placeholder="Descuento Global">
                     </md-input-container>
                 </div>
             </div>
@@ -333,7 +372,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="customer.days_early_payment" mdInput placeholder="Días de pronto pago">
+                        <input (keypress)="keyPress($event)" required type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="customer.days_early_payment" mdInput placeholder="Días de pronto pago">
                     </md-input-container>
                 </div>
             </div>
@@ -342,7 +381,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="days_grace" name="days_grace" [(ngModel)]="customer.days_grace" mdInput placeholder="Días de gracia">
+                        <input (keypress)="keyPress($event)" required type="text" id="days_grace" name="days_grace" [(ngModel)]="customer.days_grace" mdInput placeholder="Días de gracia">
                     </md-input-container>
                 </div>
             </div>         
@@ -373,7 +412,7 @@
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input type="text" id="phone_purchases_contact" name="phone_purchases_contact" [(ngModel)]="customer.purchases_contact.phone" mdInput placeholder="Teléfono del contacto de compras">
+                    <input (keypress)="keyPress($event)" type="text" id="phone_purchases_contact" name="phone_purchases_contact" [(ngModel)]="customer.purchases_contact.phone" mdInput placeholder="Teléfono del contacto de compras">
                 </md-input-container>
             </div>
         </div>
@@ -404,7 +443,7 @@
             <div class='col-sm-12 col-md-6'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input type="text" id="phone_debt_contact" name="phone_debt_contact" [(ngModel)]="customer.debt_contact.phone" mdInput placeholder="Teléfono del contacto de cartera">
+                        <input type="text" (keypress)="keyPress($event)" id="phone_debt_contact" name="phone_debt_contact" [(ngModel)]="customer.debt_contact.phone" mdInput placeholder="Teléfono del contacto de cartera">
                     </md-input-container>
                 </div>
             </div>
@@ -482,7 +521,7 @@
                             <tr *ngFor="let item of customer.institutional_sale_contract">
                                 <td>{{ item.contract_number }}</td>
                                 <td>{{ item.contracting_entity }}</td>
-                                <td><a href="{{ item.file }}"><i class="fa fa-paperclip" aria-hidden="true"></i></a></td>
+                                <td><a *ngIf="item.file !== '' && item.file !== null" href="{{ item.file }}"><i class="fa fa-paperclip fa-2x" aria-hidden="true"></i></a></td>
                                 <td class="text-center" title="Remover empresa">
                                     <a style="cursor: pointer;" class="text-danger" (click)="removeInstitucionalSale(item)">
                                         <i class="fa fa-trash fa-2x"></i>
@@ -584,7 +623,7 @@
             <h2 class="article-title text-center">Información del proveedor</h2>
         </div>
 
-          <!-- payment_condition -->     
+          <!-- class supplier -->     
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-select required class="full-width" placeholder="Clase de proveedor" [(ngModel)]="supplier.supplier_class_id" name="supplier_class_id"
@@ -598,7 +637,7 @@
          <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input NumberOnly required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="supplier.credit_limit" mdInput placeholder="Cupo de crédito">
+                    <input (keypress)="keyPress($event)" required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="supplier.credit_limit" mdInput placeholder="Cupo de crédito">
                 </md-input-container>
             </div>
         </div>
@@ -608,7 +647,7 @@
                 <div class='col-sm-12 col-md-3'>
                     <div class="box-body">
                         <md-input-container class="full-width">
-                            <input NumberOnly required type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount" mdInput placeholder="Descuento Global">
+                            <input (keypress)="keyPress($event)" required type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount" mdInput placeholder="Descuento Global">
                         </md-input-container>
                     </div>
                 </div>
@@ -627,7 +666,7 @@
                 <div class='col-sm-12 col-md-3'>
                     <div class="box-body">
                         <md-input-container class="full-width">
-                            <input NumberOnly required type="text" id="supplier_days_early_payment" name="supplier_days_early_payment" [(ngModel)]="supplier.days_early_payment" mdInput placeholder="Días de pronto pago">
+                            <input (keypress)="keyPress($event)" required type="text" id="supplier_days_early_payment" name="supplier_days_early_payment" [(ngModel)]="supplier.days_early_payment" mdInput placeholder="Días de pronto pago">
                         </md-input-container>
                     </div>
                 </div>
@@ -645,7 +684,7 @@
                     <div class="box-body">
                         <md-select required class="full-width" placeholder="Método de pago" [(ngModel)]="supplier.payment_method_id" name="supplier_payment_method_id"
                         id="supplier_class_id">
-                            <md-option *ngFor="let item of conditions_payment" [value]="item.id">{{item.value}}</md-option>
+                            <md-option *ngFor="let item of payment_method" [value]="item.id">{{item.value}}</md-option>
                         </md-select>  
                     </div>    
                 </div> 
@@ -656,38 +695,7 @@
                         <md-slide-toggle [labelPosition]="before" id="purchase_order" name="purchase_order" [(ngModel)]="supplier.purchase_order">Exige orden de compra</md-slide-toggle>
                     </div>                                         
                 </div> 
-                
-                <div class="col-sm-12">
-                    <div class="box-header no-padding-h text-center">Contacto de Venta</div>        
-                </div>
-            
-                <!-- name_sales_contact -->     
-                <div class='col-sm-12 col-md-12'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input required type="text" id="name_sales_contact" name="name_sales_contact" [(ngModel)]="supplier.sales_contact.name" mdInput placeholder="Nombre del contacto de compras">
-                        </md-input-container>
-                    </div>
-                </div>            
-        
-                <!-- phone_sales_contact -->     
-                <div class='col-sm-12 col-md-6'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input required type="text" id="phone_sales_contact" name="phone_sales_contact" [(ngModel)]="supplier.sales_contact.phone" mdInput placeholder="Teléfono del contacto de compras">
-                        </md-input-container>
-                    </div>
-                </div>
-        
-                <!-- email_sales_contact -->     
-                <div class='col-sm-12 col-md-6'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input required type="text" id="email_sales_contact" name="email_sales_contact" [(ngModel)]="supplier.sales_contact.email" mdInput placeholder="Correo electrónico del contacto de compras">
-                        </md-input-container>
-                    </div>
-                </div>
-
+               
                 <div class="col-sm-12 col-md-12">
                     <article class="article">                
                         <div class="col-sm-12">
@@ -712,9 +720,9 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let item of supplier.bank_accounts">
-                                        <td>{{ item.bank.value }}</td>
-                                        <td>{{ item.account_number }}</td>
-                                        <td>{{ item.bank_account_type.value }}</td>
+                                        <td>{{ item.bank?.value }}</td>
+                                        <td>{{ item?.account_number }}</td>
+                                        <td>{{ item.bank_account_type?.value }}</td>
                                         <td class="text-center" title="Remover">
                                             <a style="cursor: pointer;" class="text-danger" (click)="removeBankAccount(item)">
                                                 <i class="fa fa-trash fa-2x"></i>
@@ -726,6 +734,38 @@
                         </div>
                     </article>
                 </div> 
+
+                 
+                <div class="col-sm-12">
+                        <div class="box-header no-padding-h text-center">Contacto de Venta</div>        
+                    </div>
+                
+                    <!-- name_sales_contact -->     
+                    <div class='col-sm-12 col-md-12'>
+                        <div class="box-body">
+                            <md-input-container class="full-width">
+                                <input required type="text" id="name_sales_contact" name="name_sales_contact" [(ngModel)]="supplier.sales_contact.name" mdInput placeholder="Nombre del contacto de compras">
+                            </md-input-container>
+                        </div>
+                    </div>            
+            
+                    <!-- phone_sales_contact -->     
+                    <div class='col-sm-12 col-md-6'>
+                        <div class="box-body">
+                            <md-input-container class="full-width">
+                                <input (keypress)="keyPress($event)" required type="text" id="phone_sales_contact" name="phone_sales_contact" [(ngModel)]="supplier.sales_contact.phone" mdInput placeholder="Teléfono del contacto de compras">
+                            </md-input-container>
+                        </div>
+                    </div>
+            
+                    <!-- email_sales_contact -->     
+                    <div class='col-sm-12 col-md-6'>
+                        <div class="box-body">
+                            <md-input-container class="full-width">
+                                <input required type="text" id="email_sales_contact" name="email_sales_contact" [(ngModel)]="supplier.sales_contact.email" mdInput placeholder="Correo electrónico del contacto de compras">
+                            </md-input-container>
+                        </div>
+                    </div>
                    
             </div>
       

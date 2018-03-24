@@ -14,13 +14,13 @@
     </div>   
 
     <!-- codigo -->
-    <div class='col-sm-12 col-md-4'>
+    <!-- <div class='col-sm-12 col-md-4'>
         <div class="box-body">
             <md-input-container class="full-width">
                 <input type="text" id="codigo" name="codigo" [(ngModel)]="model.code" mdInput placeholder="Código" readonly>
             </md-input-container>
         </div>
-    </div>
+    </div> -->
 
     <!-- estado -->
     <div class='col-sm-12 col-md-4'>
@@ -82,7 +82,7 @@
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-input-container class="full-width">
-                <input required type="text" id="phone" name="phone" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
+                <input (keypress)="keyPress($event)" required type="text" id="phone" name="phone" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
             </md-input-container>
         </div>                            
     </div>

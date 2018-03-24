@@ -119,7 +119,8 @@ export class CostscentresActionComponent extends BaseModel implements OnInit {
                     this.snackBar.open(res.message, 'Guardado', {
                         duration: 3500,
                     });    
-                    this.clean();                
+                    this.clean(); 
+                    this.goList();              
                 }
     
             }).subscribe(

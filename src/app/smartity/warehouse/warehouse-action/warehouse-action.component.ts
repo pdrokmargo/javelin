@@ -133,6 +133,7 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
                         duration: 3500,
                     });
                     this.clean();
+                    this.goList();
                 }
                 if(this.noaction){
                     this.select.emit(res.data);

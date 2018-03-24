@@ -12,6 +12,7 @@ import { ModalConfirmationComponent, ModalSucursalComponent,
     ModalResolutionComponent, ModalInstitucionalSaleContractComponent,
     ModalBankAccountComponent } from '../../modals';
 import { filter } from 'rxjs/operators';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'stakeholders-action-cmp',
@@ -60,6 +61,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     private sales_representatives: any[] = [];
     private suppliers_class: any[] = [];
     private customers_class: any[] = [];
+    private tempDocumentType: any[] = [];
+    private payment_method: any[] = [];
 
     /**
      *
@@ -85,23 +88,24 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
       this.model.is_seller = false;
       this.model.is_employee = false;
 
-      if(this.numId!=null && this.numId != ''){
+      if (!isNullOrUndefined(this.numId) && this.numId !== ''){
           // this.numId=this.route.snapshot.params['id'];
-          this.str_action='Actualizar';
+          this.str_action = 'Actualizar';
           this.getDataById();
       } else {
-          this.str_action='Guardar';
+          this.str_action = 'Guardar';
       }
+      
     }
 
     /**
      * get the country and the tax regime with the collection of names
      */
-    private getCollection(){
+    private getCollection() {
         this.loaderService.display(true);
         this.helperService.POST(`/api/collections`, ['COUNTRIES', 'TAX_REGIME', 
                                 'TYPES_OF_DOCUMENTS', 'PORTFOLIO_TYPE', 'PERSONS_TYPE', 'PAYMENT_CONDITION',
-                                'SUPPLIERS_CLASS', 'CUSTOMERS_CLASS'])
+                                'SUPPLIERS_CLASS', 'CUSTOMERS_CLASS', 'PAYMENT_METHOD'])
         .map((response: Response) => {
 
             const res = response.json();
@@ -113,6 +117,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this.conditions_payment = res.PAYMENT_CONDITION;
             this.suppliers_class = res.SUPPLIERS_CLASS;
             this.customers_class = res.CUSTOMERS_CLASS;
+            this.tempDocumentType = res.TYPES_OF_DOCUMENTS;
+            this.payment_method = res.PAYMENT_METHOD;
 
         }).subscribe(
             (error) => {
@@ -192,7 +198,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             }
 
             this.loaderService.display(true);
-            this.helperService.PUTFORMDATA(`/api/stakeholders/${this.numId}`, formData)
+            this.helperService.POSTFORMDATA(`/api/update_stake_holder`, formData)
             .map((response: Response) => {
 
                 const res = response.json();
@@ -237,9 +243,10 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                         duration: 3500,
                     });
                     this.clean();
-                    if(this.noaction){
-                        this.select.emit(res.data);
-                    }
+                    this.goList();
+                    // if(this.noaction){
+                    //     this.select.emit(res.data);
+                    // }
                 }
 
             }).subscribe(
@@ -260,7 +267,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
 
             const res = response.json();
             this.model = res['data'];
-            this.customer = this.model.customer;
+
             this.comercial_stakeholders_info = this.model.comercial_stakeholders_info;
             if (this.model.comercial_stakeholders_info === null) {
                 this.comercial_stakeholders_info = {};
@@ -271,15 +278,34 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this.model.country_id = this.model.geolocation.country_id;
             this.model.department_id = this.model.geolocation.department_id;
             this.model.city_id = this.model.geolocation.city_id;
-            if (this.customer !== null) {
-                this.customer.sales_representative_id = this.model.customer.sales_representative_id;
-            } else {
-                this.customer.purchases_contact = {};
-                this.customer.institutional_sale_contract = {};
-                this.customer.debt_contact = {};
-            }
 
-            if (this.supplier !== null) {
+            if (this.model.customer) {
+                this.customer = this.model.customer;
+                this.customer.sales_representative_id = this.model.customer.sales_representative_id;
+                this.customer.institutional_sale_contract = this.customer.institutional_sale_contract ? this.customer.institutional_sale_contract : [];
+                this.customer.controlled_resolution = this.customer.controlled_resolution ? this.customer.controlled_resolution : [];
+                this.customer.monopoly_resolution = this.customer.monopoly_resolution ? this.customer.monopoly_resolution : [];
+                this.customer.shipping_points = this.customer.shipping_points ? this.customer.shipping_points : [];
+                this.customer.purchases_contact = this.customer.purchases_contact ? this.customer.purchases_contact : {};
+                this.customer.debt_contact = this.customer.debt_contact ? this.customer.debt_contact : {};
+
+            } else {
+
+                this.customer = {};
+                this.customer.purchases_contact = {};
+                this.customer.debt_contact = {};
+                this.customer.institutional_sale_contract = [];
+                this.customer.controlled_resolution = [];
+                this.customer.monopoly_resolution = [];
+                this.customer.shipping_points = [];
+                this.customer.credit_limit_blocking = false;
+                this.customer.late_payment_blocking = false;
+            }
+            
+            if (this.model.supplier) {
+                this.supplier = this.model.supplier;
+            } else{
+                this.supplier = {};
                 this.supplier.sales_contact = {};
             }
 
@@ -296,6 +322,24 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         this.cities = [];
         this.departments = [];
         this.model = {};
+
+        this.model.firstname = '';
+        this.model.middlename = '';
+        this.model.lastname = '';
+        this.model.businessname = '';
+        this.model.legalname = '';
+        this.model.document_type_id = '';
+        this.model.document_number = '';
+        this.model.geolocation_id = '';
+        this.model.person_type_id = '';
+        this.model.domiciled = false;
+        this.model.rut = false;
+        this.model.address = '';
+        this.model.phone_number = '';
+        this.model.email = '';
+        this.model.statu = true;
+        this.model.second_surname = '';
+
         this.model.id = '';
         this.model.rut = false;
         this.model.big_contributor = true;
@@ -564,5 +608,78 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         });       
        
     }
+
+    changeRut(value) {
+       
+        this.document_type = [];
+        let data: any[] = [];
+        this.tempDocumentType.forEach((item) => {
+
+                if (this.model.rut === true && item.id === 14) {
+                data.push(item);
+                } else if (this.model.rut === false && (item.id === 13 || item.id === 12)) {
+                data.push(item);
+                }
+
+        });
+
+        this.document_type = data;
+        
+    }
+
+    zero_fill(i_valor, num_ceros) {
+        let relleno = '';
+        let i = 1;
+        let salir = 0;
+        while (!salir) {
+            let total_caracteres = i_valor.length + i;
+            if ( i > num_ceros || total_caracteres > num_ceros )
+            {
+                salir = 1;
+            } else{
+                relleno = relleno + "0";
+            }
+            i++
+        }
+        
+        i_valor = relleno + i_valor
+        return i_valor
+    }
+
+    getRutDigit() {
+        let i_rut = this.model.document_number;
+        let pesos = [71, 67, 59, 53, 47, 43, 41, 37, 29, 23, 19, 17, 13, 7, 3];
+        let rut_fmt = this.zero_fill(i_rut, 15)
+        let suma = 0;
+        let digitov;
+        for (let i = 0; i <= 14; i++ ){
+            suma += rut_fmt.substring(i, i + 1) * pesos[i];
+        }
+
+        let resto = suma % 11;
+        if ( resto === 0 || resto === 1 )
+        {
+            digitov = resto;
+        } else {
+            digitov = 11 - resto;
+        }
+
+        this.model.document_number_digit = digitov;
+        // return(digitov)
+    }
+
+    keyPress(event: any) {
+        const pattern = /[0-9\+\-\ ]/;
+
+        const inputChar = String.fromCharCode(event.charCode);
+        if (event.keyCode !== 8 && !pattern.test(inputChar)) {
+          event.preventDefault();
+        }
+    }
+
+    submit(e){
+        /* form code */
+        e.preventDefault();
+     }
 
 } 

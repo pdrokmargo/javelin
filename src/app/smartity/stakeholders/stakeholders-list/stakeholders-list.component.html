@@ -47,8 +47,8 @@
                     <tbody>
                         <tr *ngFor="let item of list.data" (click)="view(item)">
                             <!-- <td>{{ item.id }}</td> -->
-                            <td *ngIf="item.document_type_id != 14">{{ item.name }}</td>
-                            <td *ngIf="item.document_type_id == 14">{{ item.businessname }}</td>
+                            <td *ngIf="item.person_type_id === 38">{{ item.name }}</td>
+                            <td *ngIf="item.person_type_id === 39">{{ item.legalname }}</td>
                             <td>{{ item.document_number }}</td>
                             <td>{{ item.geolocation }}</td>
                             <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>

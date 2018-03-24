@@ -11,3 +11,4 @@ export * from './modal-active-ingredients/modal-active-ingredients.component';
 export * from './modal-delivery-points/modal-delivery-points.component';
 export * from './modal-ips-network/modal-ips-network.component';
 export * from './modal-geolocation/modal-geolocation.component';
+export * from './modal-stake-holder/modal-stake-holder.component';

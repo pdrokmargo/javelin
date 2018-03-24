@@ -53,4 +53,8 @@ export class ModalInstitucionalSaleContractComponent implements OnInit {
         }
     }
     
+    onchange(){
+        this.model.expiration_date='';
+    }
+
   }
