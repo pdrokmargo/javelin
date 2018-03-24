@@ -10,9 +10,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" *ngIf="!noaction">
-                    <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>                                                        
-                </div>  
             
             <div class="col-sm-12">
                 
@@ -40,24 +37,17 @@
                             <th (click)="sort('i.status')">Estado
                                 <span class="glyphicon sort-icon" *ngIf="key =='i.status'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                            <th *ngIf="!noaction"></th>    
                                                             
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of list.data" (click)="view(item)">
+                        <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
                             <!-- <td>{{ item.id }}</td> -->
                             <td *ngIf="item.document_type_id != 14">{{ item.name }}</td>
                             <td *ngIf="item.document_type_id == 14">{{ item.businessname }}</td>
                             <td>{{ item.document_number }}</td>
                             <td>{{ item.geolocation }}</td>
                             <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>
-                            <!-- <td>{{ item.state ? 'Activa' : 'Inactiva' }}</td> -->
-                            <td class="text-center" *ngIf="!noaction">
-                                <a style="color:#0a6ebd;cursor: pointer;" (click)="view(item)">
-                                    <i class="fa fa-pencil fa-2x"></i>
-                                </a>
-                            </td>
                         </tr>                                          
                     </tbody>
                     </table>

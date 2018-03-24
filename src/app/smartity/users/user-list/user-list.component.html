@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" *ngIf="!noaction">
+            <div class="col-md-6">
                 <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>                                                        
             </div>  
         
@@ -37,24 +37,24 @@
                         <th (click)="sort('c.name')">Empresa
                             <span class="glyphicon sort-icon" *ngIf="key =='c.name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('last_access')">Ultimo Acceso
-                            <span class="glyphicon sort-icon" *ngIf="key =='last_access'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>     
+                        <!--th (click)="sort('last_access')">Ultimo Acceso
+                            <span class="glyphicon sort-icon" *ngIf="key =='last_access'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th-->     
                         <th (click)="sort('u.status')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='u.status'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th *ngIf="!noaction"></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of list.data" (click)="view(item)">   
+                    <tr *ngFor="let item of list.data">   
                         <td>{{ item.id }}</td>                                                                       
                         <td>{{ item.username }}</td>
                         <td>{{ item.firstname + ' ' + item.lastname }}</td>  
                         <td>{{ item.user_profile }}</td>    
                         <td>{{ item.company }}</td>    
-                        <td>{{ item.last_access }}</td>                                    
+                        <!--td>{{ item.last_access }}</td-->                                    
                         <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>
-                        <td class="text-center" *ngIf="!noaction">
+                        <td class="text-center">
                             <a style="color:#0a6ebd;cursor: pointer;" (click)="view(item)">
                                 <i class="fa fa-pencil fa-2x"></i>
                             </a>

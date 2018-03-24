@@ -16,17 +16,22 @@ import { LoaderService, HelperService } from '../../../../shared';
 export class UserListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
+    _type;
+    @Input() set type(str) {
+        this._type = str;
+        this.urlApi = '/api/users/type/' + this._type;
+        this.getAll();
+    }
+    numItemSelected = -1;
 
     constructor(public loaderService: LoaderService,
         public helperService: HelperService,
         public router: Router) {
         super(loaderService, helperService);
-        this.urlApi = '/api/users';
     }
 
     ngOnInit() {
-        this.getAll();
+        //this.getAll();
     }
 
 

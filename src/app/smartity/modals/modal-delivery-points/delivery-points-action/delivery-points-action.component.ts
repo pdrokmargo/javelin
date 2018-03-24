@@ -18,7 +18,6 @@ import { LoaderService, HelperService } from '../../../../shared';
 export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
 
     private arrDelivery_point_group: Array<any> = [];
     private action_active: boolean;
@@ -42,12 +41,8 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
     ngOnInit() {
         this.clean();
         this.getCollection();
-        if (this.numId == undefined || this.numId == null || this.numId == '') {
-            this.str_action = 'Guardar';
-        } else {
-            this.str_action = 'Actualizar';
-            this.getDataById();
-        }
+        this.str_action = 'Guardar';
+
     }
 
     private getCollection() {
@@ -61,46 +56,28 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
     private save() {
 
-        if (this.numId == '') {
 
 
-            /**Create */
-            this.model.delivery_contracts = '';
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/delivery-points`, this.model)
-                .subscribe(rs => {
-
-                    let res = rs.json();
-                    if (res.store) {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                        this.loaderService.display(false);
-                    }
-
-                }, err => {
-                    this.loaderService.display(false);
-                });
-
-        } else {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/delivery-points/${this.numId}`, this.model).subscribe(rs => {
+        /**Create */
+        this.model.delivery_contracts = '[]';
+        this.loaderService.display(true);
+        this.helperService.POST(`/api/delivery-points`, this.model)
+            .subscribe(rs => {
                 let res = rs.json();
-                if (res.update) {
-                    this.snackBar.open(res.message, 'Actualización', {
+                if (res.store) {
+                    this.snackBar.open(res.message, 'Guardado', {
                         duration: 3500,
                     });
+                    this.clean();
+                    this.loaderService.display(false);
                 }
-                if (this.noaction) {
-                    this.select.emit(res.data);
-                }
-
+                this.select.emit(res.data);
             }, err => {
                 this.loaderService.display(false);
             });
 
-        }
+
+
 
     }
 
@@ -128,7 +105,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
         this.model.state = true;
     }
 
-    
+
 
     private openModalWarehouse() {
         this.modalWarehouse = this.dialog.open(ModalWarehouseComponent, {
@@ -152,6 +129,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
             hasBackdrop: false,
             data: {
                 title: 'Usuarios',
+                type: 'regente'
             }
         });
 

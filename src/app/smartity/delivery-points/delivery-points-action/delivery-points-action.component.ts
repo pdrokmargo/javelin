@@ -69,7 +69,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
 
             /**Create */
-            this.model.delivery_contracts = '';
+            this.model.delivery_contracts = '[]';
             this.loaderService.display(true);
             this.helperService.POST(`/api/delivery-points`, this.model)
                 .subscribe(rs => {
@@ -159,6 +159,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
             hasBackdrop: false,
             data: {
                 title: 'Usuarios',
+                type: 'regente'
             }
         });
 

@@ -17,8 +17,6 @@ import { Response } from '@angular/http';
 
 export class UserActionComponent extends BaseModel implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
 
     private companies: any[] = [];
     private user_profiles: any[] = [];
@@ -41,9 +39,8 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.clean();
         this.getUserProfiles();
         this.getCompanies();
-
-        if (this.numId > 0) {
-            // this.numId=this.route.snapshot.params['id'];
+        
+        if (this.numId != '') {
             this.str_action = 'Actualizar';
             this.getDataById();
         } else {
@@ -85,7 +82,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
             });
             return false;
         }
-        if (this.model.id > 0) {
+        if (this.model.id != '') {
             this.loaderService.display(true);
             this.helperService.PUT(`/api/users/${this.numId}`, this.model)
                 .map((response: Response) => {
@@ -123,9 +120,6 @@ export class UserActionComponent extends BaseModel implements OnInit {
                             duration: 3500,
                         });
                         this.clean();
-                        if (this.noaction) {
-                            this.select.emit(res.data);
-                        }
                     }
 
                 }).subscribe(

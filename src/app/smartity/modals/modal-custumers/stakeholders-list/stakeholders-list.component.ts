@@ -16,18 +16,13 @@ import { LoaderService, HelperService } from '../../../../shared';
 export class StakeholdersListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
     @Input() type: string;
+    numItemSelected = -1;
 
     constructor(
         public loaderService: LoaderService,
         public helperService: HelperService) {
         super(loaderService, helperService);
-
-
-
-
-
     }
 
     ngOnInit() {

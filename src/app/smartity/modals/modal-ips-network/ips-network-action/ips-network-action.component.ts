@@ -18,7 +18,6 @@ import { LoaderService, HelperService } from '../../../../shared';
 export class IpsNetworkActionComponent extends BaseModel implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
 
     private action_active: boolean;
     private str_action: string = 'Guardar';
@@ -34,12 +33,8 @@ export class IpsNetworkActionComponent extends BaseModel implements OnInit {
 
     ngOnInit() {
         this.clean();
-        if (this.numId == undefined || this.numId == null || this.numId == '') {
-            this.str_action = 'Guardar';
-        } else {
-            this.str_action = 'Actualizar';
-            this.getDataById();
-        }
+        this.str_action = 'Guardar';
+
     }
 
 
@@ -48,67 +43,34 @@ export class IpsNetworkActionComponent extends BaseModel implements OnInit {
 
     private save() {
 
-        if (this.numId == '') {
+        this.model.delivery_contracts = '';
+        this.loaderService.display(true);
+        this.helperService.POST(`/api/ips-network`, this.model)
+            .subscribe(rs => {
 
-
-            /**Create */
-            this.model.delivery_contracts = '';
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/ips-network`, this.model)
-                .subscribe(rs => {
-
-                    let res = rs.json();
-                    if (res.store) {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                        this.loaderService.display(false);
-                    }
-
-                }, err => {
-                    this.loaderService.display(false);
-                });
-
-        } else {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/ips-network/${this.numId}`, this.model).subscribe(rs => {
                 let res = rs.json();
-                if (res.update) {
-                    this.snackBar.open(res.message, 'Actualización', {
+                if (res.store) {
+                    this.snackBar.open(res.message, 'Guardado', {
                         duration: 3500,
                     });
-                }
-                if (this.noaction) {
-                    this.select.emit(res.data);
+                    this.clean();
+                    this.loaderService.display(false);
                 }
 
             }, err => {
                 this.loaderService.display(false);
             });
 
-        }
+
 
     }
 
-    private getDataById(): void {
-        this.loaderService.display(true);
-        this.helperService.GET(`/api/ips-network/${this.numId}`)
-            .map((response: Response) => {
-                let res = response.json();
-                this.model = res.data;
-            }).subscribe(
-                error => {
-                    this.loaderService.display(false);
-                }, done => {
-                    this.loaderService.display(false);
-                });
-    }
+    
 
     private clean() {
         this.model = {};
         this.model.state = true;
     }
 
-   
+
 }

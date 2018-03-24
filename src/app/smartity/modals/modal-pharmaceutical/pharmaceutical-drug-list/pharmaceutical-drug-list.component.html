@@ -10,10 +10,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6" *ngIf="!noaction">
-        <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
-    </div>
-
     <div class="col-sm-12">
 
         <div class="box box-default table-box table-responsive mdl-shadow--2dp">
@@ -40,23 +36,16 @@
                         <th (click)="sort('pd.state')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='pd.state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th *ngIf="!noaction"></th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of list.data" (click)="view(item)">
+                    <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
                         <td>{{ item.name }}</td>
                         <td>{{ item.routes_administration }}</td>
                         <td>{{ item.dosage_form }}</td>
                         <td>{{ item.is_pos ? 'Si' : 'No' }}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
-                        <!-- <td>{{ item.state ? 'Activa' : 'Inactiva' }}</td> -->
-                        <td class="text-center" *ngIf="!noaction">
-                            <a style="color:#0a6ebd;cursor: pointer;" (click)="view(item)">
-                                <i class="fa fa-pencil fa-2x"></i>
-                            </a>
-                        </td>
                     </tr>
                 </tbody>
             </table>

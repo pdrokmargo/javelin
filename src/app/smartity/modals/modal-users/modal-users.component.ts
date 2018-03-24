@@ -18,10 +18,12 @@ export class ModalUsersComponent {
     };
 
     constructor(
-        private formBuilder: FormBuilder,
-        private dialogRef: MdDialogRef<ModalUsersComponent>,
-        @Inject(MD_DIALOG_DATA) private data
-    ) { }
+        public formBuilder: FormBuilder,
+        public dialogRef: MdDialogRef<ModalUsersComponent>,
+        @Inject(MD_DIALOG_DATA) public data
+    ) { 
+        console.log(data.type);        
+    }
 
     add() {
         this.dialogRef.close(this.model);

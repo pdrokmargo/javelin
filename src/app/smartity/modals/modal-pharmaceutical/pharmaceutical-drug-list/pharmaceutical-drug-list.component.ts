@@ -17,7 +17,7 @@ import { LoaderService, HelperService } from '../../../../shared';
 export class PharmaceuticalDrugListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
+    numItemSelected = -1;
 
     constructor(public router: Router,
         public loaderService: LoaderService,

@@ -16,7 +16,7 @@ import { LoaderService, HelperService } from '../../../../shared';
 export class IpsNetworkListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
+    private numItemSelected:number = -1;
 
     constructor(
         public loaderService: LoaderService,

@@ -20,7 +20,7 @@ import { ModalActiveIngredientsComponent } from '../..';
 export class PharmaceuticalDrugActionComponent extends BaseModel implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
+
 
     private action_active: boolean = false;
     private str_action: string = 'Guardar';
@@ -42,12 +42,9 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
     ngOnInit() {
         this.clean();
         this.getCollection();
-        if (this.numId == undefined || this.numId == null || this.numId == '') {
-            this.str_action = 'Guardar';
-        } else {
-            this.str_action = 'Actualizar';
-            this.getDataById();
-        }
+
+        this.str_action = 'Guardar';
+
     }
 
     /**
@@ -74,67 +71,17 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
     }
 
     private save() {
-        /** Update */
-        if (!isNullOrUndefined(this.model.id) && this.model.id !== '') {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/pharmaceuticaldrug/${this.numId}`, { "drug": this.model, "active_ingredients": this.arrActive_ingredients })
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Actualización', {
-                            duration: 3500,
-                        });
-                    }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    },
-                    (done) => {
-                        this.loaderService.display(false);
-                    });
-        } else {
-            /** Create */
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/pharmaceuticaldrug`, { "drug": this.model, "active_ingredients": this.arrActive_ingredients })
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                    }
-                    if (this.noaction) {
-                        this.select.emit(res.data);
-                    }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    },
-                    (done) => {
-                        this.loaderService.display(false);
-                    });
-        }
-
-    }
-
-    private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/pharmaceuticaldrug/${this.numId}`)
+        this.helperService.PUT(`/api/pharmaceuticaldrug/${this.numId}`, { "drug": this.model, "active_ingredients": this.arrActive_ingredients })
             .map((response: Response) => {
 
                 const res = response.json();
-                this.model = res['data']["model"];
-                this.arrActive_ingredients = res["data"]["active_ingredients"];
-                this.arrActive_ingredients.forEach(element => {
-                    element.name = element.active_ingredient.name;
-                    element.id = element.active_ingredient.id;
-                });
-
+                if (res.status === 'success') {
+                    this.snackBar.open(res.message, 'Actualización', {
+                        duration: 3500,
+                    });
+                }
+                this.select.emit(res.data);
             }).subscribe(
                 (error) => {
                     this.loaderService.display(false);
@@ -142,7 +89,11 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                 (done) => {
                     this.loaderService.display(false);
                 });
+
+
     }
+
+
 
     private clean() {
         this.model = {};

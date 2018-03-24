@@ -13,10 +13,10 @@
         </div>
     </div>
     <!-- FORM -->
-    <pharmaceutical-drug-action-cmp *ngIf="radio.option==='2'" (select)="select($event)" [noaction]="true"></pharmaceutical-drug-action-cmp>
+    <pharmaceutical-drug-action-cmp *ngIf="radio.option==='2'" (select)="select($event)"></pharmaceutical-drug-action-cmp>
     <!-- LIST -->
     <div class="col-sm-12">
-        <pharmaceutical-drug-list-cmp *ngIf="radio.option==='1'" (select)="select($event)" [noaction]="true"></pharmaceutical-drug-list-cmp>
+        <pharmaceutical-drug-list-cmp *ngIf="radio.option==='1'" (select)="select($event)"></pharmaceutical-drug-list-cmp>
     </div>
 </md-dialog-content>
 

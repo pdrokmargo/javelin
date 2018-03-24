@@ -13,10 +13,10 @@
         </div>
     </div>
     <!-- FORM -->
-    <delivery-points-action-cmp *ngIf="radio.option==='2'" (select)="select($event)" [noaction]="true"></delivery-points-action-cmp>
+    <delivery-points-action-cmp *ngIf="radio.option==='2'" (select)="select($event)"></delivery-points-action-cmp>
     <!-- LIST -->
     <div class="col-sm-12">
-        <delivery-points-list-cmp *ngIf="radio.option==='1'" (select)="select($event)" [noaction]="true"></delivery-points-list-cmp>
+        <delivery-points-list-cmp *ngIf="radio.option==='1'" (select)="select($event)"></delivery-points-list-cmp>
     </div>
 </md-dialog-content>
 

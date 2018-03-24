@@ -17,9 +17,6 @@ import { UsersComponent } from '../users.component';
 
 export class UserListComponent extends BaseList implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
-
     constructor(public loaderService: LoaderService,
         public helperService: HelperService,
         public router: Router,
@@ -38,9 +35,6 @@ export class UserListComponent extends BaseList implements OnInit {
     }
 
     private view(row: any) {
-        if (this.noaction) {
-            this.select.emit(row);
-        }
         this.comp.openActions();
         this.comp.id = row.id;
     }

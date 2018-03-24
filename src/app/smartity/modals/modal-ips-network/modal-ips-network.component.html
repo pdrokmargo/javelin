@@ -13,10 +13,10 @@
         </div>
     </div>
     <!-- FORM -->
-    <ips-network-action-cmp *ngIf="radio.option==='2'" (select)="select($event)" [noaction]="true"></ips-network-action-cmp>
+    <ips-network-action-cmp *ngIf="radio.option==='2'" (select)="select($event)"></ips-network-action-cmp>
     <!-- LIST -->
     <div class="col-sm-12">
-        <ips-network-list-cmp *ngIf="radio.option==='1'" (select)="select($event)" [noaction]="true"></ips-network-list-cmp>
+        <ips-network-list-cmp *ngIf="radio.option==='1'" (select)="select($event)"></ips-network-list-cmp>
     </div>
 </md-dialog-content>
 
