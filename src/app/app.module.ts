@@ -66,7 +66,8 @@ import {
   IpsNetworkActionComponent,
   IpsNetworkListComponent,
   StakeholdersActionComponent,
-  StakeholdersListComponent
+  StakeholdersListComponent,
+  ModalStakeHolderComponent
 
 } from './smartity/modals';
 import { NumberOnlyDirective } from './smartity/directive/number-only.directive';
@@ -76,10 +77,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActiveIngredientsComponent } from './smartity/active-ingredients/active-ingredients.component';
 import { ActiveIngredientsListComponent } from './smartity/active-ingredients/active-ingredients-list/active-ingredients-list.component';
 import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/active-ingredients-action/active-ingredients-action.component';
-
-
-
-
 
 
 @NgModule({
@@ -95,7 +92,7 @@ import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/
     SharedModule,
     MdNativeDateModule,
     NgxMaskModule.forRoot(),
-    NgbModule.forRoot(),
+    NgbModule.forRoot(),    
   ],
   declarations: [
     AppComponent,
@@ -142,6 +139,7 @@ import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/
     WarehouseListComponent,
     ModalIpsNetworkComponent,
     ModalGeolocationComponent,
+    ModalStakeHolderComponent,
     InputFileComponent,
     NumberOnlyDirective,
     StakeholdersActionComponent,
@@ -185,6 +183,7 @@ import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/
     WarehouseListComponent,
     ModalIpsNetworkComponent,
     ModalGeolocationComponent,
+    ModalStakeHolderComponent,
     InputFileComponent,
     UserActionComponent,
     UserListComponent,

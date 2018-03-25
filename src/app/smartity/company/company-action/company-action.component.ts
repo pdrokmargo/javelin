@@ -142,7 +142,7 @@ export class CompanyActionComponent extends BaseModel implements OnInit {
               duration: 3500
             });
             this.clean();
-            this.comp.openList();
+            this.goList();
           }
         })
         .subscribe(

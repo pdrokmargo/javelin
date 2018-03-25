@@ -53,12 +53,12 @@
       <div class='col-sm-12 col-md-6'>
           <div class="box-body">
               <md-input-container class="full-width">
-                  <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono de la sucursal">
+                  <input (keypress)="keyPress($event)" required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono de la sucursal">
               </md-input-container>
           </div>                                
       </div>
 
-      <!-- phone number -->
+      <!-- email -->
       <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-input-container class="full-width">
@@ -89,7 +89,7 @@
       <div class='col-sm-12 col-md-6'>
           <div class="box-body">
               <md-input-container class="full-width">
-                  <input required type="text" id="contact_person_phone_number" name="contact_person_phone_number" [(ngModel)]="model.contact_personphone_number" mdInput placeholder="Teléfono del contacto">
+                  <input (keypress)="keyPress($event)" required type="text" id="contact_person_phone_number" name="contact_person_phone_number" [(ngModel)]="model.contact_personphone_number" mdInput placeholder="Teléfono del contacto">
               </md-input-container>
           </div>
       </div>  

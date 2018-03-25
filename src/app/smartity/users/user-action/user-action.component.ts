@@ -8,6 +8,7 @@ import { BaseModel } from '../../bases/base-model';
 import { UsersComponent } from '../users.component';
 import { HelperService, LoaderService } from '../../../shared';
 import { Response } from '@angular/http';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'user-action-cmp',
@@ -41,6 +42,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.getCompanies();
 
         if (this.numId != undefined) {
+
             this.str_action = 'Actualizar';
             this.getDataById();
         } else {
@@ -82,7 +84,9 @@ export class UserActionComponent extends BaseModel implements OnInit {
             });
             return false;
         }
+
         if (this.numId != undefined) {
+
             this.loaderService.display(true);
             this.helperService.PUT(`/api/users/${this.numId}`, this.model)
                 .map((response: Response) => {
@@ -104,7 +108,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
         } else {
             /** Create */
-            
+
             this.loaderService.display(true);
             this.helperService.POST(`/api/users`, this.model)
                 .map((response: Response) => {

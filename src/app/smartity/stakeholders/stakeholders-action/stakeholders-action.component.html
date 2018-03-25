@@ -1,6 +1,6 @@
 <!-- FORM -->
 
-<form #stakeHolderForm="ngForm" autocomplete="off">
+<form #stakeHolderForm="ngForm" autocomplete="off" (ngSubmit)="submit($event)">
 
     <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
         <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
@@ -19,7 +19,9 @@
         <div class="flex" style="height: 30px;">
             <span class="flex-spacer"></span>
             <md-slide-toggle [labelPosition]="'before'" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
+
         </div>
+
     </div>
 
     <!-- document type -->
@@ -99,6 +101,7 @@
         <md-input-container class="full-width">
             <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
         </md-input-container>
+
     </div>
 
     <!-- email -->
@@ -218,6 +221,7 @@
                 <md-input-container class="full-width">
                     <input NumberOnly required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit" mdInput
                         placeholder="Cupo crédito">
+
                 </md-input-container>
             </div>
             <!-- sales_representative_id -->
@@ -226,6 +230,7 @@
                     id="sales_representative_id">
                     <md-option *ngFor="let item of sales_representatives" [value]="item.id">{{ item.stakeholder_info.fullname }}</md-option>
                 </md-select>
+
             </div>
             <!-- global_discount -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
@@ -258,6 +263,7 @@
                     <input NumberOnly required type="text" id="days_grace" name="days_grace" [(ngModel)]="customer.days_grace" mdInput placeholder="Días de gracia">
                 </md-input-container>
             </div>
+
             <!-- late_payment_blocking -->
             <div class='col-sm-12 col-md-6 margin-bottom'>
                 <md-slide-toggle [labelPosition]="before" id="late_payment_blocking" name="late_payment_blocking" [(ngModel)]="customer.late_payment_blocking">Bloqueo por mora</md-slide-toggle>
@@ -281,6 +287,7 @@
                 <md-input-container class="full-width">
                     <input type="text" id="phone_purchases_contact" name="phone_purchases_contact" [(ngModel)]="customer.purchases_contact.phone"
                         mdInput placeholder="Teléfono del contacto de compras">
+
                 </md-input-container>
             </div>
 
@@ -301,6 +308,7 @@
                 <md-input-container class="full-width">
                     <input type="text" id="name_debt_contact" name="name_debt_contact" [(ngModel)]="customer.debt_contact.name" mdInput placeholder="Nombre del contacto de cartera">
                 </md-input-container>
+
             </div>
 
             <!-- phone_debt_contact -->
@@ -384,6 +392,7 @@
                                         <i class="fa fa-paperclip" aria-hidden="true"></i>
                                     </a>
                                 </td>
+
                                 <td class="text-center" title="Remover empresa">
                                     <a style="cursor: pointer;" class="text-danger" (click)="removeInstitucionalSale(item)">
                                         <i class="fa fa-trash fa-2x"></i>
@@ -485,6 +494,7 @@
 
         <!-- payment_condition -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
+
             <div class="box-body">
                 <md-select required class="full-width" placeholder="Clase de proveedor" [(ngModel)]="supplier.supplier_class_id" name="supplier_class_id"
                     id="supplier_class_id">
@@ -499,6 +509,7 @@
                 <md-input-container class="full-width">
                     <input NumberOnly required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="supplier.credit_limit"
                         mdInput placeholder="Cupo de crédito">
+
                 </md-input-container>
             </div>
         </div>
@@ -511,6 +522,7 @@
                         <input NumberOnly required type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount"
                             mdInput placeholder="Descuento Global">
                     </md-input-container>
+
                 </div>
             </div>
 
@@ -531,6 +543,7 @@
                         <input NumberOnly required type="text" id="supplier_days_early_payment" name="supplier_days_early_payment" [(ngModel)]="supplier.days_early_payment"
                             mdInput placeholder="Días de pronto pago">
                     </md-input-container>
+
                 </div>
             </div>
 
@@ -582,6 +595,7 @@
                             mdInput placeholder="Teléfono del contacto de compras">
                     </md-input-container>
                 </div>
+
             </div>
 
             <!-- email_sales_contact -->
