@@ -69,7 +69,7 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
     private getCollection() {
         this.helperService.POST(`/api/collections`, [
             "TYPES_OF_DOCUMENTS",
-            "CONTRACTS_PAYMENT_METHOD",
+            "PAYMENT_METHOD",
             "AFFILIATE_TYPE",
             "AFFILIATE_CONDITION",
             "PUBLIC_HEALTH_CONDITION",
@@ -78,7 +78,7 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
             let res = rs.json();
             this.arrDocument_type = res.TYPES_OF_DOCUMENTS;
             this.arrGender = res.GENDER;
-            this.arrContracts_payment_method = res.CONTRACTS_PAYMENT_METHOD;
+            this.arrContracts_payment_method = res.PAYMENT_METHOD;
             this.arrAffiliate_type = res.AFFILIATE_TYPE;
             this.arrAffiliate_condition = res.AFFILIATE_CONDITION;
             this.arrPublic_health_condition = res.PUBLIC_HEALTH_CONDITION;
@@ -127,18 +127,19 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
             this.loaderService.display(true);
             this.helperService.POST(`/api/affiliates`, this.model).subscribe(rs => {
 
-                    let res = rs.json();
-                    if (res.store) {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                        this.loaderService.display(false);
-                    }
-
-                }, err => {
+                let res = rs.json();
+                if (res.store) {
+                    this.snackBar.open(res.message, 'Guardado', {
+                        duration: 3500,
+                    });
+                    this.clean();
                     this.loaderService.display(false);
-                });
+                    this.comp.openList();
+                }
+
+            }, err => {
+                this.loaderService.display(false);
+            });
 
         } else {
             this.loaderService.display(true);
@@ -187,7 +188,7 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
         this.comp.openList();
     }
 
-    private loadIpsNetword(item){
-        this.arrIps_network = item.ips;        
+    private loadIpsNetword(item) {
+        this.arrIps_network = item.ips;
     }
 }
