@@ -110,8 +110,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                         this.snackBar.open(res.message, 'Actualización', {
                             duration: 3500,
                         });
-                        // this.router.navigate(['app/costs-centres-list']);
-                        this.comp.openList();
+                        this.goList();
                     }
 
                 }).subscribe(
@@ -132,6 +131,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                         this.snackBar.open(res.message, 'Guardado', {
                             duration: 3500,
                         });
+                        this.goList();
                         this.clean();
 
                     }

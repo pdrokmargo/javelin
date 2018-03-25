@@ -26,27 +26,12 @@ export class StakeholdersListComponent extends BaseList implements OnInit {
         public helperService: HelperService,
         private comp: StakeholdersComponent) {
         super(loaderService, helperService);
-
-
-
-
-
+        this.urlApi = '/api/stakeholders';
+        this.getAll();
     }
 
     ngOnInit() {
-        console.log(this.type);
-        if (this.type != '') {
-            switch (this.type) {
-                case 'custumers':
-                    this.urlApi = '/api/stakeholders-custumers';
-                    break;
-            }
-            this.getAll();
-        } else {
-            this.urlApi = '/api/stakeholders';
-            this.getAll();
-        }
-
+        
     }
 
     private NEW(row: any) {

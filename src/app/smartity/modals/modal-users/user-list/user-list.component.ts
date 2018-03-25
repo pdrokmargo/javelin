@@ -19,7 +19,7 @@ export class UserListComponent extends BaseList implements OnInit {
     _type;
     @Input() set type(str) {
         this._type = str;
-        this.urlApi = '/api/users/type/' + this._type;
+        this.urlApi = '/api/users/bytype/' + this._type;
         this.getAll();
     }
     numItemSelected = -1;

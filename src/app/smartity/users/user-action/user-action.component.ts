@@ -39,8 +39,8 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.clean();
         this.getUserProfiles();
         this.getCompanies();
-        
-        if (this.numId != '') {
+
+        if (this.numId != undefined) {
             this.str_action = 'Actualizar';
             this.getDataById();
         } else {
@@ -82,7 +82,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
             });
             return false;
         }
-        if (this.model.id != '') {
+        if (this.numId != undefined) {
             this.loaderService.display(true);
             this.helperService.PUT(`/api/users/${this.numId}`, this.model)
                 .map((response: Response) => {
@@ -104,12 +104,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
         } else {
             /** Create */
-            if (this.model.usersprivileges.length === 0) {
-                this.snackBar.open('Agregue una empresa para continuar.', 'Error', {
-                    duration: 3500,
-                });
-                return false;
-            }
+            
             this.loaderService.display(true);
             this.helperService.POST(`/api/users`, this.model)
                 .map((response: Response) => {
@@ -120,6 +115,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
                             duration: 3500,
                         });
                         this.clean();
+                        this.comp.openList();
                     }
 
                 }).subscribe(

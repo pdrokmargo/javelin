@@ -31,7 +31,7 @@ export class UserListComponent extends BaseList implements OnInit {
 
     private NEW(row: any) {
         this.comp.openActions();
-        this.comp.id = 0;
+        this.comp.id = undefined;
     }
 
     private view(row: any) {

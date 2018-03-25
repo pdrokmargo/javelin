@@ -38,9 +38,6 @@ export class WarehouseListComponent extends BaseList implements OnInit {
     }
 
     private view(row: any) {
-        if (this.noaction) {
-            this.select.emit(row);
-        }
         this.comp.openActions();
         this.comp.id = row.id;
     }

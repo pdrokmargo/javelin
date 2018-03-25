@@ -72,7 +72,8 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
             "CONTRACTS_PAYMENT_METHOD",
             "AFFILIATE_TYPE",
             "AFFILIATE_CONDITION",
-            "PUBLIC_HEALTH_CONDITION"
+            "PUBLIC_HEALTH_CONDITION",
+            "GENDER"
         ]).subscribe(rs => {
             let res = rs.json();
             this.arrDocument_type = res.TYPES_OF_DOCUMENTS;

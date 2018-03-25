@@ -1,40 +1,36 @@
-
-
 <!-- FORM -->
 
 <form #modelForm="ngForm" autocomplete="off">
 
     <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
         <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
-    </div>                            
-    
+    </div>
+
     <!-- name -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required type="text" id="name" name="name" [(ngModel)]="model.up_description" mdInput placeholder="Nombre del Perfil de Usuario">
-            </md-input-container>
-        </div>
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="name" name="name" [(ngModel)]="model.up_description" mdInput placeholder="Nombre del Perfil de Usuario">
+        </md-input-container>
     </div>
 
     <!-- estado -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <div class="flex">
+            <span class="flex-spacer"></span>
             <md-slide-toggle [labelPosition]="after" id="up_state" name="up_state" [(ngModel)]="model.up_state">Estado</md-slide-toggle>
         </div>
+
     </div>
-    
-    <article class="article">
-        <h2 class="article-title"></h2>                          
-            
-            <section class="hero">
-            <div class="hero-content">                                                
-                <h1 class="hero-title">Privilegios</h1>                                                
+
+    <article class="col-sm-12 article">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Privilegios</h1>
             </div>
             <p class="hero-tagline">Selecciona un componente sobre el cual desea modificar sus privilegios de acceso para este perfil</p>
-        </section>                                        
+        </section>
 
-            <div class="col-xl-12" *ngFor="let item of viewactions" >
+        <div class="col-xl-12" *ngFor="let item of viewactions">
             <div class="box" *ngIf="item.views.link!=''">
                 <div class="box-header bg-color-dark" style="cursor:pointer;" (click)="item.expand=!item.expand">
                     <a style="cursor:pointer;" (click)="item.expand=!item.expand">
@@ -52,21 +48,20 @@
                     <p>
                         <md-checkbox (change)="item.check=!item.check;checkAll(item)" [checked]="item.check">Seleccionar</md-checkbox>
                     </p>
-                    <p *ngFor="let act of item.actions" >
+                    <p *ngFor="let act of item.actions">
                         <md-checkbox (change)="act.status=!act.status;" [checked]="act.status">{{ act.action }}</md-checkbox>
                     </p>
                 </div>
             </div>
-            </div>
-                                                                                                                
+        </div>
+
     </article>
 
     <div class="col-sm-12" [class.btn-action-container]="booActive">
 
-        <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary"
-        class="btn-w-md no-margin-left btn-right" (click)="save()">{{str_action}}</button>
-        
-    </div>
-    
-</form>
+        <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{str_action}}</button>
 
+    </div>
+
+</form>

@@ -1,443 +1,417 @@
-
 <!-- FORM -->
 
 <form #stakeHolderForm="ngForm" autocomplete="off">
 
     <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
-        <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
-    </div>                            
+        <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+    </div>
+    <!-- person type -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <md-select required class="full-width" placeholder="Tipo de persona" [(ngModel)]="model.person_type_id" name="person_type_id"
+            id="person_type_id">
+            <md-option *ngFor="let item of persons_type" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
 
-    <div class='col-sm-12'>
-        <!-- person type -->
-        <div class='col-sm-12 col-md-6'>
-            <div class="box-body">
-                <md-select required class="full-width" placeholder="Tipo de persona" [(ngModel)]="model.person_type_id" name="person_type_id"
-                id="person_type_id">
-                    <md-option *ngFor="let item of persons_type" [value]="item.id">{{item.value}}</md-option>
-                </md-select>  
-            </div>
-        </div>  
-
-        <!-- rut -->
-        <div class='col-sm-12 col-md-6'>
-            <div class="box-body">
-                <md-slide-toggle [labelPosition]="after" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
-            </div>
+    <!-- rut -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <md-slide-toggle [labelPosition]="after" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
         </div>
     </div>
-        
+
     <!-- document type -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-select required class="full-width" placeholder="Tipo de documento" [(ngModel)]="model.document_type_id" name="document_type_id"
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <md-select required class="full-width" placeholder="Tipo de documento" [(ngModel)]="model.document_type_id" name="document_type_id"
             id="document_type_id">
-                <md-option *ngFor="let item of document_type" [value]="item.id">{{item.value}}</md-option>
-            </md-select>  
-        </div>
-    </div>  
+            <md-option *ngFor="let item of document_type" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
 
     <!-- document number -->
-    <div class='col-sm-12 col-md-6'>
+    <div class='col-sm-12 col-md-6 margin-bottom'>
         <div class="box-body">
             <md-input-container class="full-width">
-                <input required NumberOnly type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
-            </md-input-container>
-        </div>
-    </div>
-    
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input type="text" id="firstname" name="firstname" [(ngModel)]="model.firstname" mdInput placeholder="Primer nombre">
+                <input required NumberOnly type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput
+                    placeholder="Número de documento">
             </md-input-container>
         </div>
     </div>
 
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input type="text" id="middlename" name="middlename" [(ngModel)]="model.middlename" mdInput placeholder="Segundo nombres">
-            </md-input-container>
-        </div>
+    <div class='col-sm-12 col-md-4 margin-bottom'>
+        <md-input-container class="full-width">
+            <input type="text" id="firstname" name="firstname" [(ngModel)]="model.firstname" mdInput placeholder="Primer nombre">
+        </md-input-container>
     </div>
 
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input type="text" id="lastname" name="lastname" [(ngModel)]="model.lastname" mdInput placeholder="Apellidos">
-            </md-input-container>
-        </div>
+    <div class='col-sm-12 col-md-4 margin-bottom'>
+        <md-input-container class="full-width">
+            <input type="text" id="middlename" name="middlename" [(ngModel)]="model.middlename" mdInput placeholder="Segundo nombres">
+        </md-input-container>
+    </div>
+
+    <div class='col-sm-12 col-md-4 margin-bottom'>
+        <md-input-container class="full-width">
+            <input type="text" id="lastname" name="lastname" [(ngModel)]="model.lastname" mdInput placeholder="Apellidos">
+        </md-input-container>
     </div>
 
 
     <!-- legal name -->
-    <div class='col-sm-12 col-md-12'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input type="text" id="legalname" name="legalname" [(ngModel)]="model.legalname" mdInput placeholder="Razón Social">
-            </md-input-container>
-        </div>
-    </div>  
+    <div class='col-sm-12 margin-bottom'>
+        <md-input-container class="full-width">
+            <input type="text" id="legalname" name="legalname" [(ngModel)]="model.legalname" mdInput placeholder="Razón Social">
+        </md-input-container>
+    </div>
 
     <!--country -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-select required class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id"
-            (change)="getDepartments()" id="country_id">
-                <md-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</md-option>
-            </md-select>  
-        </div>
-    </div>  
+    <div class='col-sm-12 col-md-4 margin-bottom'>
+        <md-select required class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id" (change)="getDepartments()"
+            id="country_id">
+            <md-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
 
     <!-- department -->
-    <div class='col-sm-12 col-md-4'>
+    <div class='col-sm-12 col-md-4 margin-bottom'>
         <div class="box-body">
             <md-select required class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department_id"
-            (change)="getCities()" id="department_id">
+                (change)="getCities()" id="department_id">
                 <md-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</md-option>
-            </md-select>  
+            </md-select>
         </div>
     </div>
 
     <!--city -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-select required class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id"
-            id="city_id">
-                <md-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</md-option>
-            </md-select>  
-        </div>    
+    <div class='col-sm-12 col-md-4 margin-bottom'>
+        <md-select required class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id" id="city_id">
+            <md-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
     </div>
 
     <!-- address -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">                              
-            <md-input-container class="full-width">
-                <input required type="text" id="address" name="address" [(ngModel)]="model.address" mdInput placeholder="Dirección">
-            </md-input-container>                               
-        </div>
+    <div class='col-sm-12 col-md-4 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="address" name="address" [(ngModel)]="model.address" mdInput placeholder="Dirección">
+        </md-input-container>
     </div>
 
     <!-- phone number -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
-            </md-input-container>
-        </div>                                
+    <div class='col-sm-12 col-md-4 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
+        </md-input-container>
     </div>
 
     <!-- email -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required type="text" id="website" name="website" [(ngModel)]="model.email" mdInput placeholder="Correo electrónico">
-            </md-input-container>
-        </div>
+    <div class='col-sm-12 col-md-4 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="website" name="website" [(ngModel)]="model.email" mdInput placeholder="Correo electrónico">
+        </md-input-container>
     </div>
 
-    <div class="col-sm-12">
-        <div class="box-header no-padding-h text-center">Perfiles como tercero</div>        
+    <div class='col-sm-12 margin-bottom'>
+        <div class="box-header no-padding-h text-center">Perfiles como tercero</div>
     </div>
 
-    <div class='col-sm-12 col-md-3'>
-        <div class="box-body">
-            <md-checkbox [checked]="model.is_customer" (change)="checked(1)">Cliente</md-checkbox>
-        </div>
-    </div>   
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <md-checkbox [checked]="model.is_customer" (change)="checked(1)">Cliente</md-checkbox>
+    </div>
 
-    <div class='col-sm-12 col-md-3'>
-        <div class="box-body">
-            <md-checkbox [checked]="model.is_supplier" (change)="checked(2)">Proveedor</md-checkbox>
-        </div>
-    </div> 
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <md-checkbox [checked]="model.is_supplier" (change)="checked(2)">Proveedor</md-checkbox>
+    </div>
 
-    <div class='col-sm-12 col-md-3'>
-        <div class="box-body">
-            <md-checkbox [checked]="model.is_seller" (change)="checked(3)">Vendedor</md-checkbox>
-        </div>
-    </div>   
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <md-checkbox [checked]="model.is_seller" (change)="checked(3)">Vendedor</md-checkbox>
+    </div>
 
-    <div class='col-sm-12 col-md-3'>
-        <div class="box-body">
-            <md-checkbox [checked]="model.is_employee" (change)="checked(4)">Empleador</md-checkbox>
-        </div>
-    </div>        
-    
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <md-checkbox [checked]="model.is_employee" (change)="checked(4)">Empleador</md-checkbox>
+    </div>
 
-    <div class='col-sm-12 col-md-3'>
-        <div class="box-body">
-            <md-checkbox [checked]="model.is_maker" (change)="checked(6)">Fabricante</md-checkbox>
-        </div>
-    </div>  
 
-    <div class='col-sm-12 col-md-3'>
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <md-checkbox [checked]="model.is_maker" (change)="checked(6)">Fabricante</md-checkbox>
+    </div>
+
+    <div class='col-sm-12 col-md-3 margin-bottom'>
         <div class="box-body">
             <md-checkbox [checked]="model.is_importer" (change)="checked(7)">Importador</md-checkbox>
         </div>
-    </div>      
+    </div>
 
-    <div class='col-sm-12 col-md-6'>
+    <div class='col-sm-12 col-md-6 margin-bottom'>
         <div class="box-body">
             <md-checkbox [checked]="model.is_holder_sanitary" (change)="checked(5)">Titular de registro sanitario</md-checkbox>
         </div>
-    </div> 
-    
-    <div class="col-sm-12" *ngIf="model.person_type_id==39">
+    </div>
 
-        <div class="col-sm-12">
+    <div class='col-sm-12 margin-bottom' *ngIf="model.person_type_id==39">
+
+        <div class='col-sm-12 margin-bottom'>
             <h2 class="article-title text-center">Información Tributaria</h2>
         </div>
 
-        <div class="col-sm-12">
+        <div class='col-sm-12 margin-bottom'>
             <!--regimen type -->
-            <div class='col-sm-12 col-md-4'>
+            <div class='col-sm-12 col-md-4 margin-bottom'>
                 <div class="box-body">
-                    <md-select required class="full-width" placeholder="Tipo de regimen" [(ngModel)]="comercial_stakeholders_info.tax_regime_id" name="tax_regime_id"
-                    id="tax_regime_id">
+                    <md-select required class="full-width" placeholder="Tipo de regimen" [(ngModel)]="comercial_stakeholders_info.tax_regime_id"
+                        name="tax_regime_id" id="tax_regime_id">
                         <md-option *ngFor="let item of tax_regime" [value]="item.id">{{item.value}}</md-option>
-                    </md-select>  
+                    </md-select>
                 </div>
-            </div>  
-            
+            </div>
+
             <!-- retention_for_rent -->
-            <div class='col-sm-12 col-md-4'>
+            <div class='col-sm-12 col-md-4 margin-bottom'>
                 <div class="box-body">
                     <md-slide-toggle [labelPosition]="before" id="retention_for_rent" name="retention_for_rent" [(ngModel)]="comercial_stakeholders_info.retention_for_rent">Gran Contribuyente</md-slide-toggle>
-                </div>                                         
-            </div> 
-                    
+                </div>
+            </div>
+
             <!-- big_contributor -->
-            <div class='col-sm-12 col-md-4'>
+            <div class='col-sm-12 col-md-4 margin-bottom'>
                 <div class="box-body">
                     <md-slide-toggle [labelPosition]="before" id="big_contributor" name="big_contributor" [(ngModel)]="comercial_stakeholders_info.big_contributor">Gran Contribuyente</md-slide-toggle>
-                </div>                                         
-            </div> 
-        </div> 
-         <!-- codes_ica_retention_code -->
-        <div class='col-sm-12 col-md-6'>
+                </div>
+            </div>
+        </div>
+        <!-- codes_ica_retention_code -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input required type="text" id="codes_ica_retention_code" name="codes_iva_withholding_code" [(ngModel)]="comercial_stakeholders_info?.codes.iva_withholding_code" mdInput placeholder="Código de deretención de IVA">
+                    <input required type="text" id="codes_ica_retention_code" name="codes_iva_withholding_code" [(ngModel)]="comercial_stakeholders_info?.codes.iva_withholding_code"
+                        mdInput placeholder="Código de deretención de IVA">
                 </md-input-container>
             </div>
-        </div>  
+        </div>
 
         <!-- codes_ica_retention_code -->
-        <div class='col-sm-12 col-md-6'>
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input required type="text" id="codes_ica_retention_code" name="codes_ica_retention_code" [(ngModel)]="comercial_stakeholders_info?.codes.ica_retention_code" mdInput placeholder="Código de retención de ICA">
+                    <input required type="text" id="codes_ica_retention_code" name="codes_ica_retention_code" [(ngModel)]="comercial_stakeholders_info?.codes.ica_retention_code"
+                        mdInput placeholder="Código de retención de ICA">
                 </md-input-container>
             </div>
-        </div> 
-        
-            <!-- codes_other_retention_code -->
-        <div class='col-sm-12 col-md-6'>
+        </div>
+
+        <!-- codes_other_retention_code -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input required type="text" id="codes_other_retention_code" name="codes_other_retention_code" [(ngModel)]="comercial_stakeholders_info?.codes.other_retention_code" mdInput placeholder="Código de retención de otros">
+                    <input required type="text" id="codes_other_retention_code" name="codes_other_retention_code" [(ngModel)]="comercial_stakeholders_info?.codes.other_retention_code"
+                        mdInput placeholder="Código de retención de otros">
                 </md-input-container>
             </div>
-        </div> 
+        </div>
 
         <!-- codes_ciiu_code -->
-        <div class='col-sm-12 col-md-6'>
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input required type="text" id="codes_ica_retention_code" name="codes_ica_retention_code" [(ngModel)]="comercial_stakeholders_info?.codes.ciiu_code" mdInput placeholder="Código CIIU">
+                    <input required type="text" id="codes_ica_retention_code" name="codes_ica_retention_code" [(ngModel)]="comercial_stakeholders_info?.codes.ciiu_code"
+                        mdInput placeholder="Código CIIU">
                 </md-input-container>
             </div>
-        </div>      
+        </div>
 
-    </div> 
+    </div>
 
-   
-     
-    <div class="col-sm-12" *ngIf="model.is_customer">
 
-        <div class="col-sm-12">
+
+    <div class='col-sm-12 margin-bottom' *ngIf="model.is_customer">
+
+        <div class='col-sm-12 margin-bottom'>
             <h2 class="article-title text-center">Información del Cliente</h2>
         </div>
 
 
         <!-- customer_class_id -->
-        <div class='col-sm-12 col-md-6'>
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-select class="full-width" placeholder="Clases de cliente" [(ngModel)]="customer.customer_class_id" name="customer_class_id"
-                id="customer_class_id">
+                    id="customer_class_id">
                     <md-option *ngFor="let item of customers_class" [value]="item.id">{{item.value}}</md-option>
-                </md-select>  
-            </div>    
+                </md-select>
+            </div>
         </div>
 
         <!-- debt_type_id -->
-        <div class='col-sm-12 col-md-6'>
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-select required class="full-width" placeholder="Tipo de cartera" [(ngModel)]="customer.debt_type_id" name="debt_type_id"
-                id="city_id">
+                    id="city_id">
                     <md-option *ngFor="let item of portfolio_type" [value]="item.id">{{item.value}}</md-option>
-                </md-select>  
-            </div>    
+                </md-select>
+            </div>
         </div>
 
-         <!-- credit_limit -->
-         <div class='col-sm-12 col-md-6'>
+        <!-- credit_limit -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input NumberOnly required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit" mdInput placeholder="Cupo crédito">
+                    <input NumberOnly required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit" mdInput
+                        placeholder="Cupo crédito">
                 </md-input-container>
             </div>
         </div>
-       
+
         <!-- sales_representative_id -->
-        <div class='col-sm-12 col-md-6'>
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-select required class="full-width" placeholder="Vendedor" [(ngModel)]="customer.sales_representative_id" name="sales_representative_id"
-                id="sales_representative_id">
-                    <md-option *ngFor="let item of sales_representatives" [value]="item.id">{{ item.stakeholder_info.fullname }}</md-option>               
-                </md-select>  
-            </div>    
-        </div>
-
-        <div class='col-sm-12'>            
-            <!-- global_discount -->     
-            <div class='col-sm-12 col-md-3'>
-                <div class="box-body">
-                    <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount" mdInput placeholder="Descuento Global">
-                    </md-input-container>
-                </div>
+                    id="sales_representative_id">
+                    <md-option *ngFor="let item of sales_representatives" [value]="item.id">{{ item.stakeholder_info.fullname }}</md-option>
+                </md-select>
             </div>
-
-            <!-- payment_condition -->     
-            <div class='col-sm-12 col-md-3'>
-                <div class="box-body">
-                    <md-select required class="full-width" placeholder="Condición de pago" [(ngModel)]="customer.payment_condition_id" name="payment_condition"
-                    id="payment_condition">
-                        <md-option *ngFor="let item of conditions_payment" [value]="item.id">{{item.value}}</md-option>
-                    </md-select>  
-                </div>    
-            </div>
-
-            <!-- credit_limit_blocking -->
-            <div class='col-sm-12 col-md-6'>
-                <div class="box-body">
-                    <md-slide-toggle [labelPosition]="before" id="credit_limit_blocking" name="credit_limit_blocking" [(ngModel)]="customer.credit_limit_blocking">Bloqueo por cupo</md-slide-toggle>
-                </div>                                         
-            </div> 
         </div>
 
         <div class='col-sm-12'>
-            <!-- days_early_payment -->     
-            <div class='col-sm-12 col-md-3'>
+            <!-- global_discount -->
+            <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="customer.days_early_payment" mdInput placeholder="Días de pronto pago">
+                        <input NumberOnly required type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount"
+                            mdInput placeholder="Descuento Global">
                     </md-input-container>
                 </div>
             </div>
 
-            <!-- days_grace -->     
-            <div class='col-sm-12 col-md-3'>
+            <!-- payment_condition -->
+            <div class='col-sm-12 col-md-3 margin-bottom'>
+                <div class="box-body">
+                    <md-select required class="full-width" placeholder="Condición de pago" [(ngModel)]="customer.payment_condition_id" name="payment_condition"
+                        id="payment_condition">
+                        <md-option *ngFor="let item of conditions_payment" [value]="item.id">{{item.value}}</md-option>
+                    </md-select>
+                </div>
+            </div>
+
+            <!-- credit_limit_blocking -->
+            <div class='col-sm-12 col-md-6 margin-bottom'>
+                <div class="box-body">
+                    <md-slide-toggle [labelPosition]="before" id="credit_limit_blocking" name="credit_limit_blocking" [(ngModel)]="customer.credit_limit_blocking">Bloqueo por cupo</md-slide-toggle>
+                </div>
+            </div>
+        </div>
+
+        <div class='col-sm-12'>
+            <!-- days_early_payment -->
+            <div class='col-sm-12 col-md-3 margin-bottom'>
+                <div class="box-body">
+                    <md-input-container class="full-width">
+                        <input NumberOnly required type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="customer.days_early_payment"
+                            mdInput placeholder="Días de pronto pago">
+                    </md-input-container>
+                </div>
+            </div>
+
+            <!-- days_grace -->
+            <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
                         <input NumberOnly required type="text" id="days_grace" name="days_grace" [(ngModel)]="customer.days_grace" mdInput placeholder="Días de gracia">
                     </md-input-container>
                 </div>
-            </div>         
-            
+            </div>
+
             <!-- late_payment_blocking -->
-            <div class='col-sm-12 col-md-6'>
+            <div class='col-sm-12 col-md-6 margin-bottom'>
                 <div class="box-body">
                     <md-slide-toggle [labelPosition]="before" id="late_payment_blocking" name="late_payment_blocking" [(ngModel)]="customer.late_payment_blocking">Bloqueo por mora</md-slide-toggle>
-                </div>                                         
-            </div> 
+                </div>
+            </div>
 
         </div>
-        
-        <div class="col-sm-12">
-            <div class="box-header no-padding-h text-center">Contacto de Compras</div>        
+
+        <div class='col-sm-12 margin-bottom'>
+            <div class="box-header no-padding-h text-center">Contacto de Compras</div>
         </div>
 
-        <!-- name_purchases_contact -->     
+        <!-- name_purchases_contact -->
         <div class='col-sm-12 col-md-12'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input type="text" id="name_purchases_contact" name="name_purchases_contact" [(ngModel)]="customer.purchases_contact.name" mdInput placeholder="Nombre del contacto de compras">
+                    <input type="text" id="name_purchases_contact" name="name_purchases_contact" [(ngModel)]="customer.purchases_contact.name"
+                        mdInput placeholder="Nombre del contacto de compras">
                 </md-input-container>
             </div>
-        </div>            
+        </div>
 
-        <!-- phone_purchases_contact -->     
-        <div class='col-sm-12 col-md-6'>
+        <!-- phone_purchases_contact -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input type="text" id="phone_purchases_contact" name="phone_purchases_contact" [(ngModel)]="customer.purchases_contact.phone" mdInput placeholder="Teléfono del contacto de compras">
+                    <input type="text" id="phone_purchases_contact" name="phone_purchases_contact" [(ngModel)]="customer.purchases_contact.phone"
+                        mdInput placeholder="Teléfono del contacto de compras">
                 </md-input-container>
             </div>
         </div>
 
-        <!-- email_purchases_contact -->     
-        <div class='col-sm-12 col-md-6'>
+        <!-- email_purchases_contact -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input type="text" id="email_purchases_contact" name="email_purchases_contact" [(ngModel)]="customer.purchases_contact.email" mdInput placeholder="Correo electrónico del contacto de compras">
+                    <input type="text" id="email_purchases_contact" name="email_purchases_contact" [(ngModel)]="customer.purchases_contact.email"
+                        mdInput placeholder="Correo electrónico del contacto de compras">
                 </md-input-container>
             </div>
         </div>
 
-        <div class="col-sm-12">
-            <div class="box-header no-padding-h text-center">Contacto de Cartera</div>        
+        <div class='col-sm-12 margin-bottom'>
+            <div class="box-header no-padding-h text-center">Contacto de Cartera</div>
         </div>
-    
-            <!-- name_debt_contact -->     
-            <div class='col-sm-12 col-md-12'>
-                <div class="box-body">
-                    <md-input-container class="full-width">
-                        <input type="text" id="name_debt_contact" name="name_debt_contact" [(ngModel)]="customer.debt_contact.name" mdInput placeholder="Nombre del contacto de cartera">
-                    </md-input-container>
-                </div>
-            </div>            
-    
-            <!-- phone_debt_contact -->     
-            <div class='col-sm-12 col-md-6'>
-                <div class="box-body">
-                    <md-input-container class="full-width">
-                        <input type="text" id="phone_debt_contact" name="phone_debt_contact" [(ngModel)]="customer.debt_contact.phone" mdInput placeholder="Teléfono del contacto de cartera">
-                    </md-input-container>
-                </div>
+
+        <!-- name_debt_contact -->
+        <div class='col-sm-12 col-md-12'>
+            <div class="box-body">
+                <md-input-container class="full-width">
+                    <input type="text" id="name_debt_contact" name="name_debt_contact" [(ngModel)]="customer.debt_contact.name" mdInput placeholder="Nombre del contacto de cartera">
+                </md-input-container>
             </div>
-    
-            <!-- email_debt_contact -->     
-            <div class='col-sm-12 col-md-6'>
-                <div class="box-body">
-                    <md-input-container class="full-width">
-                        <input type="text" id="email_debt_contact" name="email_debt_contact" [(ngModel)]="customer.debt_contact.email" mdInput placeholder="Correo electrónico del contacto de cartera">
-                    </md-input-container>
-                </div>
+        </div>
+
+        <!-- phone_debt_contact -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <div class="box-body">
+                <md-input-container class="full-width">
+                    <input type="text" id="phone_debt_contact" name="phone_debt_contact" [(ngModel)]="customer.debt_contact.phone" mdInput placeholder="Teléfono del contacto de cartera">
+                </md-input-container>
             </div>
-        
+        </div>
+
+        <!-- email_debt_contact -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <div class="box-body">
+                <md-input-container class="full-width">
+                    <input type="text" id="email_debt_contact" name="email_debt_contact" [(ngModel)]="customer.debt_contact.email" mdInput placeholder="Correo electrónico del contacto de cartera">
+                </md-input-container>
+            </div>
+        </div>
+
         <div class="col-sm-12 col-md-12">
             <article class="article">
 
-                <div class="col-sm-12">
+                <div class='col-sm-12 margin-bottom'>
                     <div class="col-sm-6">
                         <div class="box-header no-padding-h">Puntos de envío</div>
                     </div>
                     <div class="col-sm-6">
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddSucursal()"
-                        >Añadir</button>  
-                    </div> 
-                </div>   
-               
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">                                   
-                                                                
+                        <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddSucursal()">Añadir</button>
+                    </div>
+                </div>
+
+                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
                     <table class="mdl-data-table table-bordered table-striped cf no-margin">
                         <thead>
                             <tr>
-                                <th>Sucursal</th> 
-                                <th>Ubicación</th>                                                           
+                                <th>Sucursal</th>
+                                <th>Ubicación</th>
                                 <th colspan="2"></th>
                             </tr>
                         </thead>
@@ -450,31 +424,30 @@
                                         <i class="fa fa-trash fa-2x"></i>
                                     </a>
                                 </td>
-                            </tr>                       
+                            </tr>
                         </tbody>
-                    </table>                                                                
+                    </table>
                 </div>
-            </article> 
+            </article>
         </div>
 
         <div class="col-sm-12 col-md-12">
-            <article class="article">                
-                <div class="col-sm-12">
+            <article class="article">
+                <div class='col-sm-12 margin-bottom'>
                     <div class="col-sm-6">
                         <div class="box-header no-padding-h">Contrato institucional</div>
                     </div>
                     <div class="col-sm-6">
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddInstitucionalSale()"
-                        >Añadir</button>  
-                    </div> 
-                </div>                                       
+                        <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddInstitucionalSale()">Añadir</button>
+                    </div>
+                </div>
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                     <table class="mdl-data-table table-bordered table-striped cf no-margin">
                         <thead>
                             <tr>
-                                <th>No. Contrato</th> 
-                                <th>Entidad contratante</th>  
-                                <th></th>                                                         
+                                <th>No. Contrato</th>
+                                <th>Entidad contratante</th>
+                                <th></th>
                                 <th colspan="2"></th>
                             </tr>
                         </thead>
@@ -482,39 +455,42 @@
                             <tr *ngFor="let item of customer.institutional_sale_contract">
                                 <td>{{ item.contract_number }}</td>
                                 <td>{{ item.contracting_entity }}</td>
-                                <td><a href="{{ item.file }}"><i class="fa fa-paperclip" aria-hidden="true"></i></a></td>
+                                <td>
+                                    <a href="{{ item.file }}">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </a>
+                                </td>
                                 <td class="text-center" title="Remover empresa">
                                     <a style="cursor: pointer;" class="text-danger" (click)="removeInstitucionalSale(item)">
                                         <i class="fa fa-trash fa-2x"></i>
                                     </a>
                                 </td>
-                            </tr>                       
+                            </tr>
                         </tbody>
-                    </table>                                                                
+                    </table>
                 </div>
             </article>
         </div>
 
         <div class="col-sm-12 col-md-12">
-            <article class="article">                
-                <div class="col-sm-12">
+            <article class="article">
+                <div class='col-sm-12 margin-bottom'>
                     <div class="col-sm-6">
                         <div class="box-header no-padding-h">Resoluciones de controlado</div>
                     </div>
                     <div class="col-sm-6">
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddControlledResolution()"
-                        >Añadir</button>  
-                    </div> 
-                </div>                         
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">                                   
-                                                                
+                        <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddControlledResolution()">Añadir</button>
+                    </div>
+                </div>
+                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
                     <table class="mdl-data-table table-bordered table-striped cf no-margin">
                         <thead>
                             <tr>
-                                <th>No. Resolución</th> 
-                                <th>Fecha de as</th>   
-                                <th>Fecha de expiración</th>   
-                                <th>Estado</th>  
+                                <th>No. Resolución</th>
+                                <th>Fecha de as</th>
+                                <th>Fecha de expiración</th>
+                                <th>Estado</th>
                                 <th colspan="2"></th>
                             </tr>
                         </thead>
@@ -523,39 +499,38 @@
                                 <td>{{ item.resolution_number }}</td>
                                 <td>{{ item.issue_date | date: 'dd-MM-yyyy'}}</td>
                                 <td>{{ item.expiration_date | date: 'dd-MM-yyyy'}}</td>
-                                <td>{{ item.state ? 'Actvo' : 'Inactivo' }}</td>                               
+                                <td>{{ item.state ? 'Actvo' : 'Inactivo' }}</td>
                                 <td class="text-center" title="Remover empresa">
                                     <a style="cursor: pointer;" class="text-danger" (click)="removeControlledResolution(item)">
                                         <i class="fa fa-trash fa-2x"></i>
                                     </a>
                                 </td>
-                            </tr>                       
+                            </tr>
                         </tbody>
-                    </table>                                                                
+                    </table>
                 </div>
             </article>
         </div>
 
         <div class="col-sm-12 col-md-12">
-            <article class="article">                
-                <div class="col-sm-12">
+            <article class="article">
+                <div class='col-sm-12 margin-bottom'>
                     <div class="col-sm-6">
                         <div class="box-header no-padding-h">Resoluciones de monopolio</div>
                     </div>
                     <div class="col-sm-6">
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddMonopolyResolution()"
-                        >Añadir</button>  
-                    </div> 
-                </div>                  
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">                                   
-                                                                
+                        <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddMonopolyResolution()">Añadir</button>
+                    </div>
+                </div>
+                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
                     <table class="mdl-data-table table-bordered table-striped cf no-margin">
                         <thead>
                             <tr>
-                                <th>No. Resolución</th> 
-                                <th>Fecha de as</th>   
-                                <th>Fecha de expiración</th>   
-                                <th>Estado</th>  
+                                <th>No. Resolución</th>
+                                <th>Fecha de as</th>
+                                <th>Fecha de expiración</th>
+                                <th>Estado</th>
                                 <th colspan="2"></th>
                             </tr>
                         </thead>
@@ -570,175 +545,181 @@
                                         <i class="fa fa-trash fa-2x"></i>
                                     </a>
                                 </td>
-                            </tr>                       
+                            </tr>
                         </tbody>
-                    </table>                                                                
+                    </table>
                 </div>
             </article>
-        </div> 
+        </div>
 
     </div>
 
-    <div class="col-sm-12" *ngIf="model.is_supplier">
-        <div class="col-sm-12">
+    <div class='col-sm-12 margin-bottom' *ngIf="model.is_supplier">
+        <div class='col-sm-12 margin-bottom'>
             <h2 class="article-title text-center">Información del proveedor</h2>
         </div>
 
-          <!-- payment_condition -->     
-        <div class='col-sm-12 col-md-6'>
+        <!-- payment_condition -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-select required class="full-width" placeholder="Clase de proveedor" [(ngModel)]="supplier.supplier_class_id" name="supplier_class_id"
-                id="supplier_class_id">
+                    id="supplier_class_id">
                     <md-option *ngFor="let item of suppliers_class" [value]="item.id">{{item.value}}</md-option>
-                </md-select>  
-            </div>    
+                </md-select>
+            </div>
         </div>
 
-         <!-- credit_limit -->     
-         <div class='col-sm-12 col-md-6'>
+        <!-- credit_limit -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input NumberOnly required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="supplier.credit_limit" mdInput placeholder="Cupo de crédito">
+                    <input NumberOnly required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="supplier.credit_limit"
+                        mdInput placeholder="Cupo de crédito">
                 </md-input-container>
             </div>
         </div>
 
-        <div class='col-sm-12'>            
-                <!-- supplier_global_discount -->     
-                <div class='col-sm-12 col-md-3'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input NumberOnly required type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount" mdInput placeholder="Descuento Global">
-                        </md-input-container>
-                    </div>
+        <div class='col-sm-12'>
+            <!-- supplier_global_discount -->
+            <div class='col-sm-12 col-md-3 margin-bottom'>
+                <div class="box-body">
+                    <md-input-container class="full-width">
+                        <input NumberOnly required type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount"
+                            mdInput placeholder="Descuento Global">
+                    </md-input-container>
                 </div>
-    
-                <!-- supplier_payment_condition -->     
-                <div class='col-sm-12 col-md-3'>
-                    <div class="box-body">
-                        <md-select required class="full-width" placeholder="Condición de pago" [(ngModel)]="supplier.payment_condition_id" name="supplier_payment_condition"
-                        id="supplier_payment_condition">
-                            <md-option *ngFor="let item of conditions_payment" [value]="item.id">{{item.value}}</md-option>
-                        </md-select>  
-                    </div>    
-                </div>
-               
-                <!-- supplier_days_early_payment -->     
-                <div class='col-sm-12 col-md-3'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input NumberOnly required type="text" id="supplier_days_early_payment" name="supplier_days_early_payment" [(ngModel)]="supplier.days_early_payment" mdInput placeholder="Días de pronto pago">
-                        </md-input-container>
-                    </div>
-                </div>
-    
-                <!-- supplier_days_grace -->     
-                <div class='col-sm-12 col-md-3'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input NumberOnly required type="text" id="supplier_days_grace" name="supplier_days_grace" [(ngModel)]="supplier.days_grace" mdInput placeholder="Días de gracia">
-                        </md-input-container>
-                    </div>
-                </div>  
-                
-                <div class='col-sm-12 col-md-6'>
-                    <div class="box-body">
-                        <md-select required class="full-width" placeholder="Método de pago" [(ngModel)]="supplier.payment_method_id" name="supplier_payment_method_id"
-                        id="supplier_class_id">
-                            <md-option *ngFor="let item of conditions_payment" [value]="item.id">{{item.value}}</md-option>
-                        </md-select>  
-                    </div>    
-                </div> 
-                
-                 <!-- purchase_order -->
-                <div class='col-sm-12 col-md-6'>
-                    <div class="box-body">
-                        <md-slide-toggle [labelPosition]="before" id="purchase_order" name="purchase_order" [(ngModel)]="supplier.purchase_order">Exige orden de compra</md-slide-toggle>
-                    </div>                                         
-                </div> 
-                
-                <div class="col-sm-12">
-                    <div class="box-header no-padding-h text-center">Contacto de Venta</div>        
-                </div>
-            
-                <!-- name_sales_contact -->     
-                <div class='col-sm-12 col-md-12'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input required type="text" id="name_sales_contact" name="name_sales_contact" [(ngModel)]="supplier.sales_contact.name" mdInput placeholder="Nombre del contacto de compras">
-                        </md-input-container>
-                    </div>
-                </div>            
-        
-                <!-- phone_sales_contact -->     
-                <div class='col-sm-12 col-md-6'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input required type="text" id="phone_sales_contact" name="phone_sales_contact" [(ngModel)]="supplier.sales_contact.phone" mdInput placeholder="Teléfono del contacto de compras">
-                        </md-input-container>
-                    </div>
-                </div>
-        
-                <!-- email_sales_contact -->     
-                <div class='col-sm-12 col-md-6'>
-                    <div class="box-body">
-                        <md-input-container class="full-width">
-                            <input required type="text" id="email_sales_contact" name="email_sales_contact" [(ngModel)]="supplier.sales_contact.email" mdInput placeholder="Correo electrónico del contacto de compras">
-                        </md-input-container>
-                    </div>
-                </div>
-
-                <div class="col-sm-12 col-md-12">
-                    <article class="article">                
-                        <div class="col-sm-12">
-                            <div class="col-sm-6">
-                                <div class="box-header no-padding-h">Ceuntas bancarias</div>
-                            </div>
-                            <div class="col-sm-6">
-                                <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddBankAccount()"
-                                >Añadir</button>  
-                            </div> 
-                        </div>            
-                        <div class="box box-default table-box table-responsive mdl-shadow--2dp">                                   
-                                                                        
-                            <table class="mdl-data-table table-bordered table-striped cf no-margin">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th> 
-                                        <th>Cuenta</th> 
-                                        <th>Tipo de cuenta</th>                                                          
-                                        <th colspan="2"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of supplier.bank_accounts">
-                                        <td>{{ item.bank.value }}</td>
-                                        <td>{{ item.account_number }}</td>
-                                        <td>{{ item.bank_account_type.value }}</td>
-                                        <td class="text-center" title="Remover">
-                                            <a style="cursor: pointer;" class="text-danger" (click)="removeBankAccount(item)">
-                                                <i class="fa fa-trash fa-2x"></i>
-                                            </a>
-                                        </td>
-                                    </tr>                       
-                                </tbody>
-                            </table>                                                                
-                        </div>
-                    </article>
-                </div> 
-                   
             </div>
-      
+
+            <!-- supplier_payment_condition -->
+            <div class='col-sm-12 col-md-3 margin-bottom'>
+                <div class="box-body">
+                    <md-select required class="full-width" placeholder="Condición de pago" [(ngModel)]="supplier.payment_condition_id" name="supplier_payment_condition"
+                        id="supplier_payment_condition">
+                        <md-option *ngFor="let item of conditions_payment" [value]="item.id">{{item.value}}</md-option>
+                    </md-select>
+                </div>
+            </div>
+
+            <!-- supplier_days_early_payment -->
+            <div class='col-sm-12 col-md-3 margin-bottom'>
+                <div class="box-body">
+                    <md-input-container class="full-width">
+                        <input NumberOnly required type="text" id="supplier_days_early_payment" name="supplier_days_early_payment" [(ngModel)]="supplier.days_early_payment"
+                            mdInput placeholder="Días de pronto pago">
+                    </md-input-container>
+                </div>
+            </div>
+
+            <!-- supplier_days_grace -->
+            <div class='col-sm-12 col-md-3 margin-bottom'>
+                <div class="box-body">
+                    <md-input-container class="full-width">
+                        <input NumberOnly required type="text" id="supplier_days_grace" name="supplier_days_grace" [(ngModel)]="supplier.days_grace"
+                            mdInput placeholder="Días de gracia">
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div class='col-sm-12 col-md-6 margin-bottom'>
+                <div class="box-body">
+                    <md-select required class="full-width" placeholder="Método de pago" [(ngModel)]="supplier.payment_method_id" name="supplier_payment_method_id"
+                        id="supplier_class_id">
+                        <md-option *ngFor="let item of conditions_payment" [value]="item.id">{{item.value}}</md-option>
+                    </md-select>
+                </div>
+            </div>
+
+            <!-- purchase_order -->
+            <div class='col-sm-12 col-md-6 margin-bottom'>
+                <div class="box-body">
+                    <md-slide-toggle [labelPosition]="before" id="purchase_order" name="purchase_order" [(ngModel)]="supplier.purchase_order">Exige orden de compra</md-slide-toggle>
+                </div>
+            </div>
+
+            <div class='col-sm-12 margin-bottom'>
+                <div class="box-header no-padding-h text-center">Contacto de Venta</div>
+            </div>
+
+            <!-- name_sales_contact -->
+            <div class='col-sm-12 col-md-12'>
+                <div class="box-body">
+                    <md-input-container class="full-width">
+                        <input required type="text" id="name_sales_contact" name="name_sales_contact" [(ngModel)]="supplier.sales_contact.name" mdInput
+                            placeholder="Nombre del contacto de compras">
+                    </md-input-container>
+                </div>
+            </div>
+
+            <!-- phone_sales_contact -->
+            <div class='col-sm-12 col-md-6 margin-bottom'>
+                <div class="box-body">
+                    <md-input-container class="full-width">
+                        <input required type="text" id="phone_sales_contact" name="phone_sales_contact" [(ngModel)]="supplier.sales_contact.phone"
+                            mdInput placeholder="Teléfono del contacto de compras">
+                    </md-input-container>
+                </div>
+            </div>
+
+            <!-- email_sales_contact -->
+            <div class='col-sm-12 col-md-6 margin-bottom'>
+                <div class="box-body">
+                    <md-input-container class="full-width">
+                        <input required type="text" id="email_sales_contact" name="email_sales_contact" [(ngModel)]="supplier.sales_contact.email"
+                            mdInput placeholder="Correo electrónico del contacto de compras">
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12">
+                <article class="article">
+                    <div class='col-sm-12 margin-bottom'>
+                        <div class="col-sm-6">
+                            <div class="box-header no-padding-h">Ceuntas bancarias</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddBankAccount()">Añadir</button>
+                        </div>
+                    </div>
+                    <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
+                        <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Cuenta</th>
+                                    <th>Tipo de cuenta</th>
+                                    <th colspan="2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of supplier.bank_accounts">
+                                    <td>{{ item.bank.value }}</td>
+                                    <td>{{ item.account_number }}</td>
+                                    <td>{{ item.bank_account_type.value }}</td>
+                                    <td class="text-center" title="Remover">
+                                        <a style="cursor: pointer;" class="text-danger" (click)="removeBankAccount(item)">
+                                            <i class="fa fa-trash fa-2x"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+
 
     </div>
 
-    <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button [disabled]="action_active ? false : !stakeHolderForm.form.valid" md-raised-button color="primary"
-        class="btn-w-md no-margin-left btn-right" (click)="save()">{{str_action}}</button>
+    <div class='col-sm-12 margin-bottom' [class.btn-action-container]="booActive">
+        <button type="button" [disabled]="action_active ? false : !stakeHolderForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{str_action}}</button>
     </div>
 
     <div class='col-sm-12 col-md-12'>
-        
+
 
 
     </div>

@@ -1,103 +1,91 @@
 <div class="box-body">
-
-<!--FORM-->
-
+    <!--FORM-->
     <form #modelForm="ngForm" autocomplete="off">
-
-      
-
-        <div class="col-sm-12 col-md-6">
-            <div class="box-body">
-                <md-input-container class="full-width">
-                    <input required type="text" id="firstname" name="firstname" [(ngModel)]="model.firstname" mdInput placeholder="Nombres">
-                </md-input-container>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-6">
-            <div class="box-body">
-                <md-input-container class="full-width">
-                    <input required type="text" id="lastname" name="lastname" [(ngModel)]="model.lastname" mdInput placeholder="Apellidos">
-                </md-input-container>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-6">
-            <div class="box-body">
-                <md-input-container class="full-width">
-                    <input autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" required type="text" id="username" name="username" [(ngModel)]="model.username" mdInput placeholder="Nombre de Usuario">
-                </md-input-container>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-6">
-            <div class="box-body">
-                <md-input-container class="full-width">
-                    <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" [required]="!model.id" [disabled]="model.id" type="password" id="password" name="password" [(ngModel)]="model.password"
-                        mdInput placeholder="Contraseña" reverse="true">
-                </md-input-container>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-6">
-            <div class="box-body">
-                <md-input-container class="full-width">
-                    <input required type="email" id="email" name="email" [(ngModel)]="model.email" mdInput placeholder="Correo electrónico">
-                </md-input-container>
-            </div>
-        </div>
-        
-        <div class="col-sm-12 col-md-6">
-            <div class="box-body">
+        <div class="col-sm-12 margin-botton">
+            <div class="flex">
+                <span class="flex-spacer"></span>
                 <md-slide-toggle checked="true" id="status" name="status" [(ngModel)]="model.status"> Estado </md-slide-toggle>
             </div>
         </div>
         
+        <div class="col-sm-12 col-md-6 margin-botton">
+            <md-input-container class="full-width">
+                <input required type="text" id="firstname" name="firstname" [(ngModel)]="model.firstname" mdInput placeholder="Nombres">
+            </md-input-container>
+        </div>
+
+        <div class="col-sm-12 col-md-6 margin-botton">
+            <md-input-container class="full-width">
+                <input required type="text" id="lastname" name="lastname" [(ngModel)]="model.lastname" mdInput placeholder="Apellidos">
+            </md-input-container>
+        </div>
+
+        <div class="col-sm-12 col-md-6 margin-botton">
+            <md-input-container class="full-width">
+                <input autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" required type="text" id="username" name="username"
+                    [(ngModel)]="model.username" mdInput placeholder="Nombre de Usuario">
+            </md-input-container>
+        </div>
+
+        <div class="col-sm-12 col-md-6 margin-botton">
+            <md-input-container class="full-width">
+                <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" [required]="!model.id" [disabled]="model.id"
+                    type="password" id="password" name="password" [(ngModel)]="model.password" mdInput placeholder="Contraseña"
+                    reverse="true">
+            </md-input-container>
+        </div>
+
+        <div class="col-sm-12 col-md-6 margin-botton">
+            <md-input-container class="full-width">
+                <input required type="email" id="email" name="email" [(ngModel)]="model.email" mdInput placeholder="Correo electrónico">
+            </md-input-container>
+        </div>
+
+
+
     </form>
-                                        
+
 
 </div>
 
 <div class="box-body">
-    
+
     <div class="row">
-                        
+
         <div class="col-sm-12">
-                <form #companyForm="ngForm" autocomplete="off">  
-                    
-                    <!-- company -->
-                    <div class='col-sm-12 col-md-4'>
-                        <div class="box-body">
-                            <md-select required class="full-width" placeholder="Empresa" [(ngModel)]="model_user_company.company" name="company_id"
-                                id="company_id">
-                                <md-option *ngFor="let item of companies" [value]="item" [hidden]="item.hide">{{item.name}}</md-option>
-                            </md-select>    
-                        </div>
+            <form #companyForm="ngForm" autocomplete="off">
+
+                <!-- company -->
+                <div class='col-sm-12 col-md-4'>
+                    <div class="box-body">
+                        <md-select required class="full-width" placeholder="Empresa" [(ngModel)]="model_user_company.company" name="company_id" id="company_id">
+                            <md-option *ngFor="let item of companies" [value]="item" [hidden]="item.hide">{{item.name}}</md-option>
+                        </md-select>
                     </div>
+                </div>
 
-                    <!-- user profile -->
-                    <div class='col-sm-12 col-md-4'>
-                        <div class="box-body">
-                            <md-select required class="full-width" placeholder="Perfil de usuario" [(ngModel)]="model_user_company.userprofile" name="user_profile_id"
-                                id="user_profile_id">
-                                <md-option *ngFor="let item of user_profiles" [value]="item">{{item.up_description}}</md-option>
-                            </md-select>    
-                        </div>                            
-                    </div> 
+                <!-- user profile -->
+                <div class='col-sm-12 col-md-4'>
+                    <div class="box-body">
+                        <md-select required class="full-width" placeholder="Perfil de usuario" [(ngModel)]="model_user_company.userprofile" name="user_profile_id"
+                            id="user_profile_id">
+                            <md-option *ngFor="let item of user_profiles" [value]="item">{{item.up_description}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
 
-                    <div class="col-md-4">
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left" 
-                        [disabled]="!companyForm.form.valid"
-                        (click)="addCompany()">Añadir Empresa</button>                                                        
-                    </div>  
-                </form>   
-            <div class="box box-default table-box table-responsive mdl-shadow--2dp">                                   
-                                                    
+                <div class="col-md-4">
+                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" [disabled]="!companyForm.form.valid"
+                        (click)="addCompany()">Añadir Empresa</button>
+                </div>
+            </form>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
                 <table class="mdl-data-table table-bordered table-striped cf no-margin">
                     <thead>
                         <tr>
                             <th>Empresa</th>
-                            <th>Perfil de Usuario</th>                                                
+                            <th>Perfil de Usuario</th>
                             <th colspan="2"></th>
                         </tr>
                     </thead>
@@ -106,7 +94,7 @@
                             <td>{{ item.company?.name }}</td>
                             <td>{{ item.userprofile?.up_description }}</td>
                             <td class="text-center">
-                                <i class="fa fa-check fa-2x text-success" aria-hidden="true" *ngIf="item.company_id == model.company_default_id"></i>                                                    
+                                <i class="fa fa-check fa-2x text-success" aria-hidden="true" *ngIf="item.company_id == model.company_default_id"></i>
                             </td>
                             <td class="text-center" title="Remover empresa">
                                 <a style="cursor: pointer;" class="text-danger" (click)="removeCompany(item)">
@@ -116,20 +104,15 @@
                         </tr>
                     </tbody>
                 </table>
-                                                                        
+
             </div>
         </div>
 
-        <div class="col-sm-12" [class.btn-action-container]="booActive">                                
-            <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary"
-            class="btn-w-md no-margin-left btn-right" (click)="save()">{{str_action}}</button>                            
+        <div class="col-sm-12" [class.btn-action-container]="booActive">
+            <button type="button" [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+                (click)="save()">{{str_action}}</button>
         </div>
 
     </div>
 
 </div>
-
-
-
-
-

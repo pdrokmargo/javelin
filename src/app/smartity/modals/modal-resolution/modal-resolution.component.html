@@ -26,7 +26,7 @@
         <div class="box-body">
             <md-input-container class="full-width">
                 <input mdInput [mdDatepicker]="pickerIssueDate" id="issue_date" name="issue_date" placeholder="Fecha de expedición" [(ngModel)]="model.issue_date">
-                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate"></button>
+                <button type="button" mdSuffix [mdDatepickerToggle]="pickerIssueDate"></button>
             </md-input-container>
             <md-datepicker #pickerIssueDate></md-datepicker>
         </div>                          
@@ -37,7 +37,7 @@
         <div class="box-body">
             <md-input-container class="full-width">
                 <input mdInput [mdDatepicker]="pickerExpirationDate" id="expiration_date" name="expiration_date" placeholder="Fecha de vencimiento" [(ngModel)]="model.expiration_date">
-                <button mdSuffix [mdDatepickerToggle]="pickerExpirationDate"></button>
+                <button type="button" mdSuffix [mdDatepickerToggle]="pickerExpirationDate"></button>
             </md-input-container>
             <md-datepicker #pickerExpirationDate></md-datepicker>
         </div>                          
@@ -61,7 +61,7 @@
                     <div class="box-header no-padding-h">Productos asociados(Pendiente)</div>
                 </div>
                 <div class="col-sm-6">
-                    <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right">Añadir</button>
+                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right">Añadir</button>
                 </div> 
             </div>   
            
@@ -91,7 +91,7 @@
 
     </md-dialog-content>
     <md-dialog-actions>
-      <button md-button type="submit" [disabled]="action_active ? false : !resolutionForm.form.valid" (click)="add()">Agregar</button>     
+      <button md-button type="button" [disabled]="action_active ? false : !resolutionForm.form.valid" (click)="add()">Agregar</button>     
       <button md-button type="button" md-dialog-close>Cerrar</button>
     </md-dialog-actions>
     

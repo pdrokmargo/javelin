@@ -24,7 +24,7 @@
                 <div class="flex margin-bottom">
                     <div class="box-header no-padding-h">Principio activo</div>
                     <span class="flex-spacer"></span>
-                    <button md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalActiveIngredients()">Añadir</button>
+                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalActiveIngredients()">Añadir</button>
                 </div>
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                     <table class="mdl-data-table table-bordered table-striped no-margin">
@@ -100,7 +100,7 @@
         <md-slide-toggle [labelPosition]="after" id="is_pos" name="is_pos" [(ngModel)]="model.is_pos">POS</md-slide-toggle>
     </div>
     <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button [disabled]="action_active ? false : !pharmeceuticalForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+        <button type="button" [disabled]="action_active ? false : !pharmeceuticalForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
             (click)="save()">{{str_action}}</button>
     </div>
 </form>

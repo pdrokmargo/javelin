@@ -44,8 +44,9 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
 
         this.clean();
         this.getCollection();
-
-        if (this.numId > 0) {
+        console.log(this.numId);
+        
+        if (this.numId != '') {
             // this.numId=this.route.snapshot.params['id'];
             this.str_action = 'Actualizar';
             this.getDataById();
@@ -101,9 +102,9 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
 
     private save(){
         /** Update */
-        if (this.model.id > 0) {
+        if (this.numId != '') {
             this.loaderService.display(true);
-            this.helperService.PUT(`/api/operationscentres/${this.numId}`, this.model)
+            this.helperService.PUT(`/api/warehouse/${this.numId}`, this.model)
             .map((response: Response) => {
 
                 const res = response.json();
@@ -133,11 +134,8 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
                         duration: 3500,
                     });
                     this.clean();
+                    this.comp.openList();
                 }
-                if(this.noaction){
-                    this.select.emit(res.data);
-                }
-
             }).subscribe(
             (error) => {
                 this.loaderService.display(false);

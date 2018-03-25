@@ -31,12 +31,12 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
     private warehouse: any = {};
 
     constructor(public snackBar: MdSnackBar,
-        private route: ActivatedRoute,
-        private router: Router,
-        private loaderService: LoaderService,
-        private helperService: HelperService,
-        private comp: DeliveryPointsComponent,
-        private dialog: MdDialog
+        public route: ActivatedRoute,
+        public router: Router,
+        public loaderService: LoaderService,
+        public helperService: HelperService,
+        public comp: DeliveryPointsComponent,
+        public dialog: MdDialog
     ) {
         super();
 
@@ -79,7 +79,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
                         this.snackBar.open(res.message, 'Guardado', {
                             duration: 3500,
                         });
-                        this.clean();
+                        this.goList();
                         this.loaderService.display(false);
                     }
 

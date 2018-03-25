@@ -27,36 +27,38 @@
                 <div class="col-sm-12 col-md-8 col-lg-9">
                     <div class="box box-default">
                         <div class="box-body">
+                            <div class="margin-bottom"></div>
                             <!--business-->
                             <div class="ibox-plain">
                                 <form #businessForm="ngForm" autocomplete="off">
                                     <div class="row" [hidden]="itemSelected != 'business'">
+
                                         <!--nombre de la empresa-->
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
                                             <md-input-container class="full-width">
                                                 <input required type="text" id="name" name="name" [(ngModel)]="model.business.name" mdInput placeholder="Nombre de la empresa">
                                             </md-input-container>
                                         </div>
                                         <!--nit-->
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
                                             <md-input-container class="full-width">
                                                 <input required type="text" id="nit" name="nit" [(ngModel)]="model.business.nit" mdInput placeholder="NIT">
                                             </md-input-container>
                                         </div>
                                         <!--address-->
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
                                             <md-input-container class="full-width">
                                                 <input required type="text" id="address" name="address" [(ngModel)]="model.business.address" mdInput placeholder="Dirección">
                                             </md-input-container>
                                         </div>
                                         <!--phone_number-->
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
                                             <md-input-container class="full-width">
                                                 <input required type="number" id="phone_number" name="phone_number" [(ngModel)]="model.business.phone_number" mdInput placeholder="Teléfono">
                                             </md-input-container>
                                         </div>
                                         <!--tax_regime_id-->
-                                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
                                             <md-select class="full-width" placeholder="Tipo de régimen" id="tax_regime_id" name="tax_regime_id" [(ngModel)]="model.business.tax_regime_id">
                                                 <md-option *ngFor="let r of regimen" [value]="r.id">
                                                     {{ r.value }}

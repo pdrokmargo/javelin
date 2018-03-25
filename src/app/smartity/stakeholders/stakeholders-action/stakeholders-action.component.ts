@@ -8,16 +8,18 @@ import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
 import { StakeholdersComponent } from '../stakeholders.component';
 import { BaseModel } from '../../bases/base-model';
-import { ModalConfirmationComponent, ModalSucursalComponent, 
+import {
+    ModalConfirmationComponent, ModalSucursalComponent,
     ModalResolutionComponent, ModalInstitucionalSaleContractComponent,
-    ModalBankAccountComponent } from '../../modals';
+    ModalBankAccountComponent
+} from '../../modals';
 import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'stakeholders-action-cmp',
     templateUrl: 'stakeholders-action.component.html',
     styles: [
-      `
+        `
         h2 {
           width: 100%;
           border-top: 1px solid #ccc !important;
@@ -27,7 +29,7 @@ import { filter } from 'rxjs/operators';
         .justify-content-end { display: flex;justify-content: flex-end;}
       `
     ]
-  })
+})
 export class StakeholdersActionComponent extends BaseModel implements OnInit {
 
     @Output() select = new EventEmitter();
@@ -65,127 +67,127 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
      *
      */
     constructor(private loaderService: LoaderService,
-                private helperService: HelperService,
-                public snackBar: MdSnackBar,
-                private route: ActivatedRoute,
-                private router: Router,
-                private comp: StakeholdersComponent,
-                private dialog: MdDialog) {
+        private helperService: HelperService,
+        public snackBar: MdSnackBar,
+        private route: ActivatedRoute,
+        private router: Router,
+        private comp: StakeholdersComponent,
+        private dialog: MdDialog) {
         super();
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
 
-      this.clean();
-      this.getCollection();
-      this.getSalesRepresentative();
-      this.model.is_customer = false;
-      this.model.is_supplier = false;
-      this.model.is_seller = false;
-      this.model.is_employee = false;
+        this.clean();
+        this.getCollection();
+        this.getSalesRepresentative();
+        this.model.is_customer = false;
+        this.model.is_supplier = false;
+        this.model.is_seller = false;
+        this.model.is_employee = false;
 
-      if(this.numId!=null && this.numId != ''){
-          // this.numId=this.route.snapshot.params['id'];
-          this.str_action='Actualizar';
-          this.getDataById();
-      } else {
-          this.str_action='Guardar';
-      }
+        if (this.numId != null && this.numId != '') {
+            // this.numId=this.route.snapshot.params['id'];
+            this.str_action = 'Actualizar';
+            this.getDataById();
+        } else {
+            this.str_action = 'Guardar';
+        }
     }
 
     /**
      * get the country and the tax regime with the collection of names
      */
-    private getCollection(){
+    private getCollection() {
         this.loaderService.display(true);
-        this.helperService.POST(`/api/collections`, ['COUNTRIES', 'TAX_REGIME', 
-                                'TYPES_OF_DOCUMENTS', 'PORTFOLIO_TYPE', 'PERSONS_TYPE', 'PAYMENT_CONDITION',
-                                'SUPPLIERS_CLASS', 'CUSTOMERS_CLASS'])
-        .map((response: Response) => {
+        this.helperService.POST(`/api/collections`, ['COUNTRIES', 'TAX_REGIME',
+            'TYPES_OF_DOCUMENTS', 'PORTFOLIO_TYPE', 'PERSONS_TYPE', 'PAYMENT_CONDITION',
+            'SUPPLIERS_CLASS', 'CUSTOMERS_CLASS'])
+            .map((response: Response) => {
 
-            const res = response.json();
-            this.countries = res.COUNTRIES;
-            this.tax_regime = res.TAX_REGIME;
-            this.document_type = res.TYPES_OF_DOCUMENTS;
-            this.portfolio_type = res.PORTFOLIO_TYPE;
-            this.persons_type = res.PERSONS_TYPE;
-            this.conditions_payment = res.PAYMENT_CONDITION;
-            this.suppliers_class = res.SUPPLIERS_CLASS;
-            this.customers_class = res.CUSTOMERS_CLASS;
+                const res = response.json();
+                this.countries = res.COUNTRIES;
+                this.tax_regime = res.TAX_REGIME;
+                this.document_type = res.TYPES_OF_DOCUMENTS;
+                this.portfolio_type = res.PORTFOLIO_TYPE;
+                this.persons_type = res.PERSONS_TYPE;
+                this.conditions_payment = res.PAYMENT_CONDITION;
+                this.suppliers_class = res.SUPPLIERS_CLASS;
+                this.customers_class = res.CUSTOMERS_CLASS;
 
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
+            }).subscribe(
+                (error) => {
+                    this.loaderService.display(false);
+                },
+                (done) => {
+                    this.loaderService.display(false);
+                });
     }
 
-    private getSalesRepresentative(){
+    private getSalesRepresentative() {
         this.loaderService.display(true);
         this.helperService.GET(`/api/sales_representatives?all=all`)
-        .map((response: Response) => {
+            .map((response: Response) => {
 
-            const res = response.json();
-            this.sales_representatives = res.data;
+                const res = response.json();
+                this.sales_representatives = res.data;
 
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
+            }).subscribe(
+                (error) => {
+                    this.loaderService.display(false);
+                },
+                (done) => {
+                    this.loaderService.display(false);
+                });
     }
 
-    private getDepartments(){
+    private getDepartments() {
         this.loaderService.display(true);
         this.helperService.GET(`/api/departamentos?pais_id=${this.model.country_id}`)
-        .map((response: Response) => {
+            .map((response: Response) => {
 
-            const res = response.json();
-            this.departments = res['departamentos'];
+                const res = response.json();
+                this.departments = res['departamentos'];
 
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
+            }).subscribe(
+                (error) => {
+                    this.loaderService.display(false);
+                },
+                (done) => {
+                    this.loaderService.display(false);
+                });
     }
 
     private getCities() {
         this.loaderService.display(true);
         this.helperService.GET(`/api/ciudades?departamento_id=${this.model.department_id}`)
-        .map((response: Response) => {
+            .map((response: Response) => {
 
-            const res = response.json();
-            this.cities = res['ciudades'];
+                const res = response.json();
+                this.cities = res['ciudades'];
 
-        }).subscribe(
-            (error) =>{
-                this.loaderService.display(false);
-            },
-            (done) =>{
-                this.loaderService.display(false);
-            });
+            }).subscribe(
+                (error) => {
+                    this.loaderService.display(false);
+                },
+                (done) => {
+                    this.loaderService.display(false);
+                });
     }
 
-    private save(){
+    private save() {
         /** Update */
-        if(this.model.id !== '' && this.model.id != null){
+        if (this.model.id !== '' && this.model.id != null) {
             this.model.customer = this.customer;
             this.model.comercial_stakeholders_info = this.comercial_stakeholders_info;
             this.model.supplier = this.supplier;
 
             const formData: FormData = new FormData();
             formData.append('data', JSON.stringify(this.model));
-            if(this.model.customer.institutional_sale_contract != null) {
-                this.model.customer.institutional_sale_contract.forEach( (obj) => {
-                    if(obj.is_file === true) {
+            if (this.model.customer.institutional_sale_contract != null) {
+                this.model.customer.institutional_sale_contract.forEach((obj) => {
+                    if (obj.is_file === true) {
                         formData.append(obj.contract_number + '_file', obj.file);
                     }
                 });
@@ -193,35 +195,35 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
 
             this.loaderService.display(true);
             this.helperService.PUTFORMDATA(`/api/stakeholders/${this.numId}`, formData)
-            .map((response: Response) => {
+                .map((response: Response) => {
 
-                const res = response.json();
-                if (res.status === 'success') {
-                    this.snackBar.open(res.message, 'Actualización', {
-                        duration: 3500,
+                    const res = response.json();
+                    if (res.status === 'success') {
+                        this.snackBar.open(res.message, 'Actualización', {
+                            duration: 3500,
+                        });
+                        // this.router.navigate(['app/company-list']);
+                        this.comp.openList();
+                    }
+
+                }).subscribe(
+                    (error) => {
+                        this.loaderService.display(false);
+                    },
+                    (done) => {
+                        this.loaderService.display(false);
                     });
-                    // this.router.navigate(['app/company-list']);
-                    this.comp.openList();
-                }
-
-            }).subscribe(
-                (error) =>{
-                    this.loaderService.display(false);
-                },
-                (done) => {
-                    this.loaderService.display(false);
-                });
         } else {
             /** Create */
-            this.model.customer=this.customer;
+            this.model.customer = this.customer;
             this.model.comercial_stakeholders_info = this.comercial_stakeholders_info;
             this.model.supplier = this.supplier;
 
             const formData: FormData = new FormData();
             formData.append('data', JSON.stringify(this.model));
-            if(this.model.customer.institutional_sale_contract !== null) {
-                this.model.customer.institutional_sale_contract.forEach( (obj) => {
-                    if(obj.is_file === true){
+            if (this.model.customer.institutional_sale_contract !== null) {
+                this.model.customer.institutional_sale_contract.forEach((obj) => {
+                    if (obj.is_file === true) {
                         formData.append(obj.contract_number + '_file', obj.file);
                     }
                 });
@@ -229,17 +231,57 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
 
             this.loaderService.display(true);
             this.helperService.POSTFORMDATA(`/api/stakeholders`, formData)
+                .map((response: Response) => {
+
+                    const res = response.json();
+                    if (res.status === 'success') {
+                        this.snackBar.open(res.message, 'Guardado', {
+                            duration: 3500,
+                        });
+                        this.clean();
+                        this.select.emit(res.data);
+                        this.comp.openList();
+                    }
+
+                }).subscribe(
+                    (error) => {
+                        this.loaderService.display(false);
+                    },
+                    (done) => {
+                        this.loaderService.display(false);
+                    });
+        }
+
+    }
+
+    private getDataById(): void {
+        this.loaderService.display(true);
+        this.helperService.GET(`/api/stakeholders/${this.numId}`)
             .map((response: Response) => {
 
                 const res = response.json();
-                if (res.status === 'success') {
-                    this.snackBar.open(res.message, 'Guardado', {
-                        duration: 3500,
-                    });
-                    this.clean();
-                    if(this.noaction){
-                        this.select.emit(res.data);
-                    }
+                this.model = res['data'];
+                this.customer = this.model.customer;
+                this.comercial_stakeholders_info = this.model.comercial_stakeholders_info;
+                if (this.model.comercial_stakeholders_info === null) {
+                    this.comercial_stakeholders_info = {};
+                    this.comercial_stakeholders_info.codes = {};
+                }
+                this.departments.push(this.model.geolocation.department);
+                this.cities.push(this.model.geolocation.city);
+                this.model.country_id = this.model.geolocation.country_id;
+                this.model.department_id = this.model.geolocation.department_id;
+                this.model.city_id = this.model.geolocation.city_id;
+                if (this.customer !== null) {
+                    this.customer.sales_representative_id = this.model.customer.sales_representative_id;
+                } else {
+                    this.customer.purchases_contact = {};
+                    this.customer.institutional_sale_contract = {};
+                    this.customer.debt_contact = {};
+                }
+
+                if (this.supplier !== null) {
+                    this.supplier.sales_contact = {};
                 }
 
             }).subscribe(
@@ -249,47 +291,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 (done) => {
                     this.loaderService.display(false);
                 });
-        }
-
-    }
-
-    private getDataById(): void {
-        this.loaderService.display(true);
-        this.helperService.GET(`/api/stakeholders/${this.numId}`)
-        .map((response: Response) => {
-
-            const res = response.json();
-            this.model = res['data'];
-            this.customer = this.model.customer;
-            this.comercial_stakeholders_info = this.model.comercial_stakeholders_info;
-            if (this.model.comercial_stakeholders_info === null) {
-                this.comercial_stakeholders_info = {};
-                this.comercial_stakeholders_info.codes = {};
-            }
-            this.departments.push(this.model.geolocation.department);
-            this.cities.push(this.model.geolocation.city);
-            this.model.country_id = this.model.geolocation.country_id;
-            this.model.department_id = this.model.geolocation.department_id;
-            this.model.city_id = this.model.geolocation.city_id;
-            if (this.customer !== null) {
-                this.customer.sales_representative_id = this.model.customer.sales_representative_id;
-            } else {
-                this.customer.purchases_contact = {};
-                this.customer.institutional_sale_contract = {};
-                this.customer.debt_contact = {};
-            }
-
-            if (this.supplier !== null) {
-                this.supplier.sales_contact = {};
-            }
-
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
     }
 
     private clean() {
@@ -334,29 +335,29 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     }
 
     openAddSucursal() {
-        this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent,{
+        this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent, {
             hasBackdrop: false,
             // height: 'auto',
             // width: '700px',
         });
 
         this.sucursalDialogRef
-        .afterClosed()
-        .pipe(filter( (shipping_point) => shipping_point))
-        .subscribe( (shipping_point) => {
-            this.customer.shipping_points.push(shipping_point);
-        });
+            .afterClosed()
+            .pipe(filter((shipping_point) => shipping_point))
+            .subscribe((shipping_point) => {
+                this.customer.shipping_points.push(shipping_point);
+            });
 
     }
 
     private checked(opcion: any) {
-        if (opcion === 1){
+        if (opcion === 1) {
             this.model.is_customer = !this.model.is_customer;
         } else if (opcion === 2) {
             this.model.is_supplier = !this.model.is_supplier;
         } else if (opcion === 3) {
             this.model.is_seller = !this.model.is_seller;
-        } else if (opcion === 4){
+        } else if (opcion === 4) {
             this.model.is_employee = !this.model.is_employee;
         } else if (opcion === 5) {
             this.model.is_holder_sanitary = !this.model.is_holder_sanitary;
@@ -373,196 +374,196 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         this.confirmDialogRef = this.dialog.open(ModalConfirmationComponent, {
             hasBackdrop: false,
             data: {
-                    message: 'Desea remover la sucursal?',
-                    title: 'Confirmar',
-                    button_confirm: 'Si',
-                    button_close: 'No'
-                }
+                message: 'Desea remover la sucursal?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
         });
 
         this.confirmDialogRef
-        .afterClosed()
-        // .pipe(filter(confirmation => confirmation))
-        .subscribe( (confirmation) => {
-            if (confirmation) {
-                const index = this.customer.shipping_points.indexOf(obj);
-                this.customer.shipping_points.splice(index, 1);
-            }
-        });
+            .afterClosed()
+            // .pipe(filter(confirmation => confirmation))
+            .subscribe((confirmation) => {
+                if (confirmation) {
+                    const index = this.customer.shipping_points.indexOf(obj);
+                    this.customer.shipping_points.splice(index, 1);
+                }
+            });
 
     }
 
     openAddControlledResolution() {
-        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent,{
+        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
             hasBackdrop: false,
             data: {
-                shipping_points:this.customer.shipping_points,
-                title:'Agregar Resolución de controlado'
+                shipping_points: this.customer.shipping_points,
+                title: 'Agregar Resolución de controlado'
             }
             // height: 'auto',
             // width: '700px',
         });
 
         this.resolutionDialogRef
-        .afterClosed()
-        .pipe(filter(ctr_resolution => ctr_resolution))
-        .subscribe(ctr_resolution => {           
-            this.customer.controlled_resolution.push(ctr_resolution);
-        });
-       
+            .afterClosed()
+            .pipe(filter(ctr_resolution => ctr_resolution))
+            .subscribe(ctr_resolution => {
+                this.customer.controlled_resolution.push(ctr_resolution);
+            });
+
     }
 
-    private removeControlledResolution(obj: any){
-       
-        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent,{
+    private removeControlledResolution(obj: any) {
+
+        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
             hasBackdrop: false,
             data: {
-                    message:'Desea remover el registro?', 
-                    title:'Confirmar',
-                    button_confirm:'Si',
-                    button_close:'No'
-                }
+                message: 'Desea remover el registro?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
         });
 
         this.resolutionDialogRef
-        .afterClosed()
-        // .pipe(filter(confirmation => confirmation))
-        .subscribe(confirmation => {
-            if(confirmation){                
-                var index = this.customer.controlled_resolution.indexOf(obj);       
-                this.customer.controlled_resolution.splice(index, 1);
-            }  
-        });       
-       
+            .afterClosed()
+            // .pipe(filter(confirmation => confirmation))
+            .subscribe(confirmation => {
+                if (confirmation) {
+                    var index = this.customer.controlled_resolution.indexOf(obj);
+                    this.customer.controlled_resolution.splice(index, 1);
+                }
+            });
+
     }
 
     openAddMonopolyResolution() {
 
-        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent,{
+        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
             hasBackdrop: false,
             data: {
-                shipping_points:this.customer.shipping_points,
-                title:'Agregar Resolución de monopolio'
+                shipping_points: this.customer.shipping_points,
+                title: 'Agregar Resolución de monopolio'
             }
             // height: 'auto',
             // width: '700px',
         });
 
         this.resolutionDialogRef
-        .afterClosed()
-        .pipe(filter(mnp_resolution => mnp_resolution))
-        .subscribe(mnp_resolution => {           
-            this.customer.monopoly_resolution.push(mnp_resolution);
-        });
-       
+            .afterClosed()
+            .pipe(filter(mnp_resolution => mnp_resolution))
+            .subscribe(mnp_resolution => {
+                this.customer.monopoly_resolution.push(mnp_resolution);
+            });
+
     }
 
-    private removeMonopolyResolution(obj: any){
-       
-        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent,{
+    private removeMonopolyResolution(obj: any) {
+
+        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
             hasBackdrop: false,
             data: {
-                    message:'Desea remover el registro?', 
-                    title:'Confirmar',
-                    button_confirm:'Si',
-                    button_close:'No'
-                }
+                message: 'Desea remover el registro?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
         });
 
         this.resolutionDialogRef
-        .afterClosed()
-        // .pipe(filter(confirmation => confirmation))
-        .subscribe(confirmation => {   
-            if(confirmation){                
-                var index = this.customer.monopoly_resolution.indexOf(obj);       
-                this.customer.monopoly_resolution.splice(index, 1);
-            }  
-        });       
-       
+            .afterClosed()
+            // .pipe(filter(confirmation => confirmation))
+            .subscribe(confirmation => {
+                if (confirmation) {
+                    var index = this.customer.monopoly_resolution.indexOf(obj);
+                    this.customer.monopoly_resolution.splice(index, 1);
+                }
+            });
+
     }
-       
+
     openAddInstitucionalSale() {
-        this.institutionalSaleDialogRef = this.dialog.open(ModalInstitucionalSaleContractComponent,{
+        this.institutionalSaleDialogRef = this.dialog.open(ModalInstitucionalSaleContractComponent, {
             hasBackdrop: false,
-            data: {                
-                title:'Agregar Contrato institucional'
+            data: {
+                title: 'Agregar Contrato institucional'
             }
             // height: 'auto',
             // width: '700px',
         });
 
         this.institutionalSaleDialogRef
-        .afterClosed()
-        .pipe(filter(institutional_sale_contract => institutional_sale_contract))
-        .subscribe(institutional_sale_contract => {
-            this.customer.institutional_sale_contract.push(institutional_sale_contract);
-        });       
+            .afterClosed()
+            .pipe(filter(institutional_sale_contract => institutional_sale_contract))
+            .subscribe(institutional_sale_contract => {
+                this.customer.institutional_sale_contract.push(institutional_sale_contract);
+            });
     }
 
-    private removeInstitucionalSale(obj: any){
-       
-        this.institutionalSaleDialogRef = this.dialog.open(ModalInstitucionalSaleContractComponent,{
+    private removeInstitucionalSale(obj: any) {
+
+        this.institutionalSaleDialogRef = this.dialog.open(ModalInstitucionalSaleContractComponent, {
             hasBackdrop: false,
             data: {
-                    message:'Desea remover el registro?', 
-                    title:'Confirmar',
-                    button_confirm:'Si',
-                    button_close:'No'
-                }
+                message: 'Desea remover el registro?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
         });
 
         this.institutionalSaleDialogRef
-        .afterClosed()
-        // .pipe(filter(confirmation => confirmation))
-        .subscribe(confirmation => {   
-            if(confirmation){                
-                var index = this.customer.institutional_sale_contract.indexOf(obj);       
-                this.customer.institutional_sale_contract.splice(index, 1);
-            }  
-        });       
-       
+            .afterClosed()
+            // .pipe(filter(confirmation => confirmation))
+            .subscribe(confirmation => {
+                if (confirmation) {
+                    var index = this.customer.institutional_sale_contract.indexOf(obj);
+                    this.customer.institutional_sale_contract.splice(index, 1);
+                }
+            });
+
     }
 
     openAddBankAccount() {
-        this.bankAccountDialogRef = this.dialog.open(ModalBankAccountComponent,{
+        this.bankAccountDialogRef = this.dialog.open(ModalBankAccountComponent, {
             hasBackdrop: false,
-            data: {                
-                title:'Cuenta bancaria'
+            data: {
+                title: 'Cuenta bancaria'
             }
             // height: 'auto',
             // width: '700px',
         });
 
         this.bankAccountDialogRef
-        .afterClosed()
-        .pipe(filter(bank_account => bank_account))
-        .subscribe(bank_account => { 
-            this.supplier.bank_accounts.push(bank_account);
-        });       
+            .afterClosed()
+            .pipe(filter(bank_account => bank_account))
+            .subscribe(bank_account => {
+                this.supplier.bank_accounts.push(bank_account);
+            });
     }
 
-    private removeBankAccount(obj: any){
-       
-        this.bankAccountDialogRef = this.dialog.open(ModalBankAccountComponent,{
+    private removeBankAccount(obj: any) {
+
+        this.bankAccountDialogRef = this.dialog.open(ModalBankAccountComponent, {
             hasBackdrop: false,
             data: {
-                    message:'Desea remover el registro?', 
-                    title:'Confirmar',
-                    button_confirm:'Si',
-                    button_close:'No'
-                }
+                message: 'Desea remover el registro?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
         });
 
         this.bankAccountDialogRef
-        .afterClosed()
-        // .pipe(filter(confirmation => confirmation))
-        .subscribe(confirmation => {   
-            if(confirmation){                
-                var index = this.supplier.bank_accounts.indexOf(obj);       
-                this.supplier.bank_accounts.splice(index, 1);
-            }  
-        });       
-       
+            .afterClosed()
+            // .pipe(filter(confirmation => confirmation))
+            .subscribe(confirmation => {
+                if (confirmation) {
+                    var index = this.supplier.bank_accounts.indexOf(obj);
+                    this.supplier.bank_accounts.splice(index, 1);
+                }
+            });
+
     }
 
 } 

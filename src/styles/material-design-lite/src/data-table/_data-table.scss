@@ -51,7 +51,7 @@
   }
 
   td, th {
-    padding: 0 $data-table-column-padding 12px $data-table-column-padding;
+    padding: 10px;
     
 
     &:first-of-type {
@@ -66,7 +66,7 @@
   td {
     position: relative;
     vertical-align: middle;
-    height: $data-table-row-height;
+    /*height: $data-table-row-height;*/
     border-top: $data-table-dividers;
     border-bottom: $data-table-dividers;
     padding-top: $data-table-cell-top;

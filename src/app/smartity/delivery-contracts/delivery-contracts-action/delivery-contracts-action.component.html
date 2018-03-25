@@ -45,7 +45,7 @@
                 <div class="flex margin-bottom">
                     <div class="box-header no-padding-h text-center">Red adscrita</div>
                     <span class="flex-spacer"></span>
-                    <button color="primary" type="button" md-raised-button class="btn-w-md" (click)="openModalIpsNetwork()">Añadir</button>
+                    <button type="button" color="primary" type="button" md-raised-button class="btn-w-md" (click)="openModalIpsNetwork()">Añadir</button>
                 </div>
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                     <table class="mdl-data-table table-bordered table-striped no-margin">
@@ -59,7 +59,7 @@
                             <tr *ngFor="let item of _ips">
                                 <td>{{item.value}}</td>
                                 <td class="w-40">
-                                    <button type="button" md-icon-button (click)="deleteIps(item)">
+                                    <button type="button" type="button" md-icon-button (click)="deleteIps(item)">
                                         <md-icon>delete</md-icon>
                                     </button>
                                 </td>
