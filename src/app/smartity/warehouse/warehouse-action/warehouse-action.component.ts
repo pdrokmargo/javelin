@@ -9,6 +9,7 @@ import { BaseModel } from '../../bases/base-model';
 import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
 import { WarehouseComponent } from '../warehouse.component';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'warehouse-action-cmp',
@@ -46,7 +47,7 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
         this.getCollection();
         console.log(this.numId);
         
-        if (this.numId != '') {
+        if (!isNullOrUndefined(this.numId) && this.numId !== '') {
             // this.numId=this.route.snapshot.params['id'];
             this.str_action = 'Actualizar';
             this.getDataById();
@@ -134,12 +135,7 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
                         duration: 3500,
                     });
                     this.clean();
-<<<<<<< HEAD
-=======
-                }
-                if(this.noaction){
-                    this.select.emit(res.data);
->>>>>>> parent of 402783c... correcciones
+                    this.comp.openList();
                 }
             }).subscribe(
             (error) => {
