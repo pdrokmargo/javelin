@@ -95,7 +95,9 @@
                                     <md-slide-toggle id="p_event{{index}}" name="p_event{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
                                 </td>
                                 <td>
-                                    <md-slide-toggle id="p_fare{{index}}" name="p_fare{{index}}" [(ngModel)]="item.fare"></md-slide-toggle>
+                                    <md-input-container class="full-width">
+                                        <input mdInput type="text" [(ngModel)]="item.fare" id="p_fare{{index}}" name="p_fare{{index}}" />
+                                    </md-input-container>
                                 </td>
                                 <td>
                                     <md-slide-toggle id="p_capita{{index}}" name="p_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>

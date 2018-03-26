@@ -55,14 +55,14 @@
                                 <tbody>
                                     <tr *ngFor="let item of model.assigned_contracts">
                                         <td>{{item.name}}</td>
-                                        <td>
-                                            <md-icon>{{item.event ? 'check_circle' : ''}}</md-icon>
+                                        <td class="text-center">
+                                            <md-icon>{{item.event.length > 2 ? 'check_circle' : ''}}</md-icon>
                                         </td>
-                                        <td>
-                                            <md-icon>{{item.capita ? 'check_circle' : ''}}</md-icon>
+                                        <td class="text-center">
+                                            <md-icon>{{item.capita.length > 2 ? 'check_circle' : ''}}</md-icon>
                                         </td>
-                                        <td>
-                                            <md-icon>{{item.pgp ? 'check_circle' : ''}}</md-icon>
+                                        <td class="text-center">
+                                            <md-icon>{{item.pgp.length > 2 ? 'check_circle' : ''}}</md-icon>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -98,6 +98,16 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         this.model.pgp = JSON.stringify(this.objPgp || {});
         this.model.capita = JSON.stringify(this.objCapita || {});
 
+        if (!this.booEvento) {
+            this.model.event = null;
+        }
+        if (!this.booCapita) {
+            this.model.capita = null;
+        }
+        if (!this.booPgp) {
+            this.model.pgp = null;
+        }
+
 
         /** Update */
         if (this.numId != '') {
@@ -158,7 +168,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 this._pharmadrugs = JSON.parse(this.model.pharmadrugs);
                 this._conditional_alerts = JSON.parse(this.model.conditional_alerts);
                 this._ips = this.model.ips;
-                
+
                 this.objEvent = JSON.parse(this.model.event);
                 this.objPgp = JSON.parse(this.model.pgp);
                 this.objCapita = JSON.parse(this.model.capita);
