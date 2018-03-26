@@ -56,6 +56,7 @@ import {
   DeliveryPointsListComponent,
   DeliveryPointsActionComponent,
   ModalIpsNetworkComponent,
+<<<<<<< HEAD
   ModalGeolocationComponent,
   WarehouseActionComponent,
   WarehouseListComponent,
@@ -69,14 +70,30 @@ import {
   StakeholdersListComponent,
   ModalStakeHolderComponent
 
+=======
+  ModalGeolocationComponent
+>>>>>>> parent of 402783c... correcciones
 } from './smartity/modals';
 import { NumberOnlyDirective } from './smartity/directive/number-only.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { InputFileComponent } from './smartity/component/index';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+<<<<<<< HEAD
+=======
+import { WarehouseActionComponent } from './smartity/warehouse/warehouse-action/warehouse-action.component';
+import { WarehouseListComponent } from './smartity/warehouse/warehouse-list/warehouse-list.component';
+import { WarehouseComponent } from './smartity/warehouse/warehouse.component';
+import { StakeholdersComponent } from './smartity/stakeholders/stakeholders.component';
+import { StakeholdersActionComponent } from './smartity/stakeholders/stakeholders-action/stakeholders-action.component';
+import { StakeholdersListComponent } from './smartity/stakeholders/stakeholders-list/stakeholders-list.component';
+import { UserListComponent } from './smartity/users/user-list/user-list.component';
+import { UsersComponent } from './smartity/users/users.component';
+import { UserActionComponent } from './smartity/users/user-action/user-action.component';
+>>>>>>> parent of 402783c... correcciones
 import { ActiveIngredientsComponent } from './smartity/active-ingredients/active-ingredients.component';
 import { ActiveIngredientsListComponent } from './smartity/active-ingredients/active-ingredients-list/active-ingredients-list.component';
 import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/active-ingredients-action/active-ingredients-action.component';
+
 
 
 @NgModule({
@@ -92,7 +109,7 @@ import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/
     SharedModule,
     MdNativeDateModule,
     NgxMaskModule.forRoot(),
-    NgbModule.forRoot(),    
+    NgbModule.forRoot(),
   ],
   declarations: [
     AppComponent,
@@ -139,11 +156,20 @@ import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/
     WarehouseListComponent,
     ModalIpsNetworkComponent,
     ModalGeolocationComponent,
-    ModalStakeHolderComponent,
     InputFileComponent,
     NumberOnlyDirective,
+<<<<<<< HEAD
     StakeholdersActionComponent,
     StakeholdersListComponent,
+=======
+    WarehouseActionComponent,
+    WarehouseListComponent,
+    WarehouseComponent,
+    StakeholdersComponent,
+    StakeholdersActionComponent,
+    StakeholdersListComponent,
+    UsersComponent,
+>>>>>>> parent of 402783c... correcciones
     UserActionComponent,
     UserListComponent,
     ActiveIngredientsComponent,
@@ -159,7 +185,17 @@ import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/
     AuthenticationService,
     PrivilegeGuard,
     LoaderService,
+<<<<<<< HEAD
     ActiveIngredientsComponent,
+=======
+    WarehouseComponent,
+    StakeholdersComponent,
+    ActiveIngredientsComponent,
+    PharmaceuticalDrugComponent,
+    DeliveryPointsComponent,
+    IpsNetworkComponent,
+    UsersComponent,
+>>>>>>> parent of 402783c... correcciones
     HelperService
   ],
   bootstrap: [
@@ -183,8 +219,14 @@ import { ActiveIngredientsActionComponent } from './smartity/active-ingredients/
     WarehouseListComponent,
     ModalIpsNetworkComponent,
     ModalGeolocationComponent,
-    ModalStakeHolderComponent,
     InputFileComponent,
+<<<<<<< HEAD
+=======
+    WarehouseActionComponent,
+    WarehouseListComponent,
+    WarehouseComponent,
+    UsersComponent,
+>>>>>>> parent of 402783c... correcciones
     UserActionComponent,
     UserListComponent,
     ActiveIngredientsComponent,

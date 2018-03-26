@@ -112,7 +112,6 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                             duration: 3500,
                         });
                         this.clean();
-                        this.goList();
                     }
                     if (this.noaction) {
                         this.select.emit(res.data);

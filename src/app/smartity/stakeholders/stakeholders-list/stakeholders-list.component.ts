@@ -36,7 +36,7 @@ export class StakeholdersListComponent extends BaseList implements OnInit {
 
     private NEW(row: any) {
         this.comp.openActions();
-        this.comp.id = '';
+        this.comp.id = 0;
     }
 
     private view(row: any) {

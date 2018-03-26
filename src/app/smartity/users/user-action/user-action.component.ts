@@ -8,7 +8,6 @@ import { BaseModel } from '../../bases/base-model';
 import { UsersComponent } from '../users.component';
 import { HelperService, LoaderService } from '../../../shared';
 import { Response } from '@angular/http';
-import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'user-action-cmp',
@@ -41,8 +40,13 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.getUserProfiles();
         this.getCompanies();
 
+<<<<<<< HEAD
         if (this.numId != undefined) {
 
+=======
+        if (this.numId > 0) {
+            // this.numId=this.route.snapshot.params['id'];
+>>>>>>> parent of 402783c... correcciones
             this.str_action = 'Actualizar';
             this.getDataById();
         } else {
@@ -84,9 +88,13 @@ export class UserActionComponent extends BaseModel implements OnInit {
             });
             return false;
         }
+<<<<<<< HEAD
 
         if (this.numId != undefined) {
 
+=======
+        if (this.model.id > 0) {
+>>>>>>> parent of 402783c... correcciones
             this.loaderService.display(true);
             this.helperService.PUT(`/api/users/${this.numId}`, this.model)
                 .map((response: Response) => {

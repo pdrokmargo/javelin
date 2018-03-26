@@ -14,7 +14,6 @@ import {
     ModalBankAccountComponent
 } from '../../modals';
 import { filter } from 'rxjs/operators';
-import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'stakeholders-action-cmp',
@@ -65,7 +64,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     private customers_class: any[] = [];
     private tempDocumentType: any[] = [];
     private payment_method: any[] = [];
-
     /**
      *
      */
@@ -103,7 +101,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     /**
      * get the country and the tax regime with the collection of names
      */
-    private getCollection() {
+    private getCollection(){
         this.loaderService.display(true);
 
         this.helperService.POST(`/api/collections`, ['COUNTRIES', 'TAX_REGIME',
@@ -213,7 +211,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                         this.comp.openList();
                     }
 
-
                 }).subscribe(
                     (error) => {
                         this.loaderService.display(false);
@@ -247,7 +244,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                             duration: 3500,
                         });
                         this.clean();
-                        this.select.emit(res.data);
+                        // this.select.emit(res.data);
                         this.comp.openList();
                     }
 
@@ -307,24 +304,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         this.cities = [];
         this.departments = [];
         this.model = {};
-
-        this.model.firstname = '';
-        this.model.middlename = '';
-        this.model.lastname = '';
-        this.model.businessname = '';
-        this.model.legalname = '';
-        this.model.document_type_id = '';
-        this.model.document_number = '';
-        this.model.geolocation_id = '';
-        this.model.person_type_id = '';
-        this.model.domiciled = false;
-        this.model.rut = false;
-        this.model.address = '';
-        this.model.phone_number = '';
-        this.model.email = '';
-        this.model.statu = true;
-        this.model.second_surname = '';
-
         this.model.id = '';
         this.model.rut = false;
         this.model.big_contributor = true;
@@ -665,4 +644,4 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         e.preventDefault();
     }
 
-} 
+}

@@ -12,9 +12,15 @@
             </p>
         </div>
     </div>
+<<<<<<< HEAD
     <stakeholders-action-cmp *ngIf="radio.option==='2'" [type]="'custumers'" (select)="select($event)"></stakeholders-action-cmp>
     <div class="col-sm-12">
         <stakeholders-list-cmp *ngIf="radio.option==='1'" [type]="'custumers'" (select)="select($event)"></stakeholders-list-cmp>
+=======
+    <stakeholders-action-cmp *ngIf="radio.option==='2'" [noaction]="true" [type]="'custumers'" (select)="select($event)"></stakeholders-action-cmp>
+    <div class="col-sm-12">
+        <stakeholders-list-cmp *ngIf="radio.option==='1'" [noaction]="true" [type]="'custumers'" (select)="select($event)"></stakeholders-list-cmp>
+>>>>>>> parent of 402783c... correcciones
     </div>
 </md-dialog-content>
 <md-dialog-actions>

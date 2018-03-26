@@ -13,10 +13,17 @@
         </div>
     </div>
     <!-- FORM -->
+<<<<<<< HEAD
     <user-action-cmp *ngIf="radio.option==='2'" (select)="select($event)"></user-action-cmp>
     <!-- LIST -->
     <div class="col-sm-12">
         <user-list-cmp *ngIf="radio.option==='1'" (select)="select($event)" [type]="data.type"></user-list-cmp>
+=======
+    <user-action-cmp *ngIf="radio.option==='2'" (select)="select($event)" [noaction]="true"></user-action-cmp>
+    <!-- LIST -->
+    <div class="col-sm-12">
+        <user-list-cmp *ngIf="radio.option==='1'" (select)="select($event)" [noaction]="true"></user-list-cmp>
+>>>>>>> parent of 402783c... correcciones
     </div>
 </md-dialog-content>
 

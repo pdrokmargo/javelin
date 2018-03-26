@@ -10,6 +10,7 @@ export * from './modal-users/modal-users.component';
 export * from './modal-active-ingredients/modal-active-ingredients.component';
 export * from './modal-delivery-points/modal-delivery-points.component';
 export * from './modal-ips-network/modal-ips-network.component';
+<<<<<<< HEAD
 export * from './modal-geolocation/modal-geolocation.component';
 
 export * from './modal-delivery-points/delivery-points-action/delivery-points-action.component';
@@ -25,3 +26,6 @@ export * from './modal-ips-network/ips-network-list/ips-network-list.component';
 export * from './modal-custumers/stakeholders-action/stakeholders-action.component';
 export * from './modal-custumers/stakeholders-list/stakeholders-list.component';
 export * from './modal-stake-holder/modal-stake-holder.component';
+=======
+export * from './modal-geolocation/modal-geolocation.component';
+>>>>>>> parent of 402783c... correcciones
