@@ -132,7 +132,6 @@ export class OperationscentreActionComponent extends BaseModel implements OnInit
                         duration: 3500,
                     });
                     this.clean();
-                    this.goList();
                 }
 
             }).subscribe(
@@ -179,14 +178,5 @@ export class OperationscentreActionComponent extends BaseModel implements OnInit
     private goList(){
         this.comp.openList();
     }
-
-    keyPress(event: any) {
-        const pattern = /[0-9\+\-\ ]/;
-
-        const inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode != 8 && !pattern.test(inputChar)) {
-          event.preventDefault();
-        }
-      }
 
 }

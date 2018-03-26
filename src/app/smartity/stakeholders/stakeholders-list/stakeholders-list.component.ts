@@ -27,11 +27,10 @@ export class StakeholdersListComponent extends BaseList implements OnInit {
         private comp: StakeholdersComponent) {
         super(loaderService, helperService);
         this.urlApi = '/api/stakeholders';
-        this.getAll();
     }
 
     ngOnInit() {
-        
+        this.getAll();
     }
 
     private NEW(row: any) {

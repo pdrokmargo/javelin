@@ -82,14 +82,4 @@ export class ModalSucursalComponent implements OnInit {
                 this.loaderService.display(false);    
             });
     }
-
-    keyPress(event: any) {
-        const pattern = /[0-9\+\-\ ]/;
-
-        const inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode !== 8 && !pattern.test(inputChar)) {
-          event.preventDefault();
-        }
-    }
-    
   }

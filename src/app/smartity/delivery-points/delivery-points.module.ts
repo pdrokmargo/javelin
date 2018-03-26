@@ -11,7 +11,7 @@ const routes: Routes = [{ path: '', component: DeliveryPointsComponent }];
 
 @NgModule({
     imports: [
-        CommonModule,
+        CommonModule,        
         RouterModule.forChild(routes),
         SharedModule,
         NgbModule.forRoot()

@@ -18,6 +18,8 @@ import { isNullOrUndefined } from 'util';
 
 export class UserActionComponent extends BaseModel implements OnInit {
 
+    @Output() select = new EventEmitter();
+    @Input() noaction: boolean;
 
     private companies: any[] = [];
     private user_profiles: any[] = [];
@@ -41,8 +43,8 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.getUserProfiles();
         this.getCompanies();
 
-        if (this.numId != undefined) {
-
+        if (!isNullOrUndefined(this.numId) && this.numId !== '') {
+            // this.numId=this.route.snapshot.params['id'];
             this.str_action = 'Actualizar';
             this.getDataById();
         } else {
@@ -84,9 +86,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
             });
             return false;
         }
-
-        if (this.numId != undefined) {
-
+        if (!isNullOrUndefined(this.model.id) && this.model.id !== '') {
             this.loaderService.display(true);
             this.helperService.PUT(`/api/users/${this.numId}`, this.model)
                 .map((response: Response) => {
@@ -108,7 +108,12 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
         } else {
             /** Create */
-
+            if (this.model.usersprivileges.length === 0) {
+                this.snackBar.open('Agregue una empresa para continuar.', 'Error', {
+                    duration: 3500,
+                });
+                return false;
+            }
             this.loaderService.display(true);
             this.helperService.POST(`/api/users`, this.model)
                 .map((response: Response) => {
@@ -119,7 +124,9 @@ export class UserActionComponent extends BaseModel implements OnInit {
                             duration: 3500,
                         });
                         this.clean();
-                        this.comp.openList();
+                        if (this.noaction) {
+                            this.select.emit(res.data);
+                        }
                     }
 
                 }).subscribe(
