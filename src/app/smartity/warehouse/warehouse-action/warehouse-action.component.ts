@@ -134,6 +134,12 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
                         duration: 3500,
                     });
                     this.clean();
+<<<<<<< HEAD
+=======
+                }
+                if(this.noaction){
+                    this.select.emit(res.data);
+>>>>>>> parent of 402783c... correcciones
                 }
             }).subscribe(
             (error) => {
