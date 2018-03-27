@@ -18,9 +18,9 @@ import { UsersComponent } from '../users.component';
 export class UserListComponent extends BaseList implements OnInit {
 
     constructor(public loaderService: LoaderService,
-        public helperService: HelperService,
-        public router: Router,
-        private comp: UsersComponent) {
+                public helperService: HelperService,
+                public router: Router,
+                private comp: UsersComponent) {
         super(loaderService, helperService);
         this.urlApi = '/api/users';
     }

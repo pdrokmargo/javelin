@@ -8,7 +8,7 @@ import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
 import { ProductComponent } from '../product.component';
 import { BaseModel } from '../../bases/base-model';
-import { ModalPharmaceuticalComponent } from '../../modals';
+import { ModalPharmaceuticalComponent, ModalStakeHolderComponent } from '../../modals';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -28,8 +28,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     private suppliers: any[] = [];
     private healthrecordholder: any[] = [];
     private pharmaceuticalDialogRef: MdDialogRef<ModalPharmaceuticalComponent>;
+    private modalStakeHolderDialogRef: MdDialogRef<ModalStakeHolderComponent>;
 
-    constructor(private loaderService: LoaderService, 
+    constructor(private loaderService: LoaderService,
                 private helperService: HelperService,
                 public snackBar: MdSnackBar,
                 private route: ActivatedRoute,
@@ -182,6 +183,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
                         duration: 3500,
                     });
                     this.clean();
+                    this.goList();
                 }
 
             }).subscribe(
@@ -221,6 +223,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         this.model.comercial = false;
         this.model.is_regulated = false;
         this.model.state = true;
+        this.model.comercial_name = '';
     }
 
     private goList(){
@@ -247,4 +250,73 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         const index = this.model.pharmaceutical_drugs.indexOf(obj);
         this.model.pharmaceutical_drugs.splice(index, 1);
     }
+
+    openAddSanitaryRegistration() {
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeHolderComponent,{
+            hasBackdrop: false,
+            data: {
+                title: 'Titular registro sanitario',
+                option: '6'
+            }
+        });
+
+        this.modalStakeHolderDialogRef
+        .afterClosed()
+        .pipe(filter( (stakeHolder) => stakeHolder))
+        .subscribe( (stakeHolder) => {
+            this.model.sanitary_registration_holder_id = stakeHolder.x_id;
+        });
+    }
+
+    openAddSupplier() {
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeHolderComponent,{
+            hasBackdrop: false,
+            data: {
+                title: 'Proveedores',
+                option: '2'
+            }
+        });
+
+        this.modalStakeHolderDialogRef
+        .afterClosed()
+        .pipe(filter( (stakeHolder) => stakeHolder))
+        .subscribe( (stakeHolder) => {
+            this.model.supplier_id = stakeHolder.x_id;
+        });
+    }
+
+    openAddMaker() {
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeHolderComponent,{
+            hasBackdrop: false,
+            data: {
+                title: 'Fabricantes',
+                option: '4'
+            }
+        });
+
+        this.modalStakeHolderDialogRef
+        .afterClosed()
+        .pipe(filter( (stakeHolder) => stakeHolder))
+        .subscribe( (stakeHolder) => {
+            this.model.manufacturer_id = stakeHolder.x_id;
+        });
+    }
+
+    openAddImporter() {
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeHolderComponent,{
+            hasBackdrop: false,
+            data: {
+                title: 'Fabricantes',
+                option: '5'
+            }
+        });
+
+        this.modalStakeHolderDialogRef
+        .afterClosed()
+        .pipe(filter( (stakeHolder) => stakeHolder))
+        .subscribe( (stakeHolder) => {
+            this.model.importer_id = stakeHolder.x_id;
+        });
+    }
+
 }

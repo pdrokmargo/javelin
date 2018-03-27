@@ -29,7 +29,7 @@
                 <input mdInput [mdDatepicker]="pickerIssueDate" id="issue_date" name="issue_date" placeholder="Fecha de expedición" [(ngModel)]="model.issue_date">
                 <button mdSuffix [mdDatepickerToggle]="pickerIssueDate"></button>
             </md-input-container>
-            <md-datepicker #pickerIssueDate></md-datepicker>
+            <md-datepicker #pickerIssueDate (selectedChanged)="onchange()"></md-datepicker>
         </div>                          
     </div>  
     
@@ -37,7 +37,8 @@
      <div class='col-sm-12 col-md-4'>
         <div class="box-body">
             <md-input-container class="full-width">
-                <input mdInput [mdDatepicker]="pickerExpirationDate" id="expiration_date" name="expiration_date" placeholder="Fecha de vencimiento" [(ngModel)]="model.expiration_date">
+                <input mdInput [mdDatepicker]="pickerExpirationDate" id="expiration_date" name="expiration_date" 
+                placeholder="Fecha de vencimiento" [(ngModel)]="model.expiration_date" [min]="model.issue_date">
                 <button mdSuffix [mdDatepickerToggle]="pickerExpirationDate"></button>
             </md-input-container>
             <md-datepicker #pickerExpirationDate></md-datepicker>

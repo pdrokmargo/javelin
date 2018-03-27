@@ -30,9 +30,13 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
 
     constructor(private loaderService: LoaderService,
                 private helperService: HelperService,
+<<<<<<< HEAD
                 public snackBar: MdSnackBar,
                 private route: ActivatedRoute,
                 private router: Router) {
+=======
+                public snackBar: MdSnackBar) {
+>>>>>>> f4ac6261d2006953067c33ba84a5a54a4362da11
         super();
 
     }
@@ -170,4 +174,8 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
         this.model = {};
         this.model.state = true;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4ac6261d2006953067c33ba84a5a54a4362da11
 }

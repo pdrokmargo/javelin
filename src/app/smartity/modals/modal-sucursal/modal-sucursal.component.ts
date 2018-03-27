@@ -16,16 +16,16 @@ export class ModalSucursalComponent implements OnInit {
     private cities: Array<any> = [];
 
     constructor(
-      private formBuilder: FormBuilder,
-      private dialogRef: MdDialogRef<ModalSucursalComponent>,
-      @Inject(MD_DIALOG_DATA) private data,
-      private loaderService:LoaderService, 
-      private helperService:HelperService,
+                private formBuilder: FormBuilder,
+                private dialogRef: MdDialogRef<ModalSucursalComponent>,
+                @Inject(MD_DIALOG_DATA) private data,
+                private loaderService: LoaderService,
+                private helperService: HelperService,
     ) {}
   
-    ngOnInit() {     
+    ngOnInit() {
       this.model = {};
-      this.getCollection();      
+      this.getCollection();
     }
        
     add() {     
