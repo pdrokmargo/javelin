@@ -12,3 +12,5 @@ export * from './modal-delivery-points/modal-delivery-points.component';
 export * from './modal-ips-network/modal-ips-network.component';
 export * from './modal-geolocation/modal-geolocation.component';
 export * from './modal-stake-holder/modal-stake-holder.component';
+export * from './modal-pharmaceutical/pharmaceutical-drug-action/pharmaceutical-drug-action.component';
+export * from './modal-pharmaceutical/pharmaceutical-drug-list/pharmaceutical-drug-list.component';

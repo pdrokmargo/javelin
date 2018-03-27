@@ -2,13 +2,11 @@ import { Component, OnInit, ViewChild, Output, Input, EventEmitter } from '@angu
 import { DataTableResource } from 'angular-4-data-table';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
-import { AuthenticationService } from '../../../auth/authentication.service';
 import { MdSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseModel } from '../../bases/base-model';
-import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
-import { WarehouseComponent } from '../warehouse.component';
+import { BaseModel } from '../../../bases/base-model';
+import { LoaderService, HelperService } from '../../../../shared';
 
 @Component({
     selector: 'warehouse-action-cmp',
@@ -34,8 +32,7 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
                 private helperService: HelperService,
                 public snackBar: MdSnackBar,
                 private route: ActivatedRoute,
-                private router: Router,
-                private comp: WarehouseComponent) {
+                private router: Router) {
         super();
 
     }
@@ -111,8 +108,6 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
                     this.snackBar.open(res.message, 'Actualización', {
                         duration: 3500,
                     });
-                    this.comp.openList();
-                    
                 }
 
             }).subscribe(
@@ -133,7 +128,6 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
                         duration: 3500,
                     });
                     this.clean();
-                    this.goList();
                 }
                 if(this.noaction){
                     this.select.emit(res.data);
@@ -176,9 +170,4 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
         this.model = {};
         this.model.state = true;
     }
-
-    private goList(){
-        this.comp.openList();
-    }
-
 }
