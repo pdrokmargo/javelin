@@ -209,12 +209,12 @@
             </div>
             <!-- autorizacion -->
             <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
-                <md-slide-toggle [labelPosition]="'before'" id="perauth" name="perauth" [(ngModel)]="objEvent.perauth">Autorización</md-slide-toggle>
+                <md-slide-toggle (change)="activeperauth_length()" [labelPosition]="'before'" id="perauth" name="perauth" [(ngModel)]="objEvent.perauth">Autorización</md-slide-toggle>
             </div>
             <!-- longitud -->
             <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="text" id="perauth_length" name="perauth_length" [(ngModel)]="objEvent.perauth_length" mdInput placeholder="Longitud">
+                    <input [disabled]="!objEvent.perauth" required type="text" id="perauth_length" name="perauth_length" [(ngModel)]="objEvent.perauth_length" mdInput placeholder="Longitud">
                 </md-input-container>
             </div>
             <!-- tipo de caracteres -->

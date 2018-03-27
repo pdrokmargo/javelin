@@ -355,4 +355,12 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
     private deleteDetailedCapita(item) {
         item.state = false;
     }
+
+    private activeperauth_length(){
+        console.log(this.objEvent.perauth);
+        
+        if(!this.objEvent.perauth){
+            this.objEvent.perauth_length = '';
+        }
+    }
 }
