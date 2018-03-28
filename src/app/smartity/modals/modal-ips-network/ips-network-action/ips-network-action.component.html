@@ -1,8 +1,5 @@
 <form #modelForm="ngForm" autocomplete="off">
 
-    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
-        <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
-    </div>
     <!-- code -->
     <div class='col-sm-12 margin-bottom'>
         <md-input-container class="full-width">
@@ -16,6 +13,7 @@
         </md-input-container>
     </div>
     <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button type="button" [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{str_action}}</button>
+        <button type="button" [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{str_action}}</button>
     </div>
 </form>

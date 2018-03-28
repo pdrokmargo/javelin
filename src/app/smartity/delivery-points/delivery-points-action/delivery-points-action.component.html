@@ -1,7 +1,7 @@
 <form #modelForm="ngForm" autocomplete="off">
     <div class="col-sm-12">
         <div class="row">
-            <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
+            <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
                 <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
             </div>
             <!-- name -->
@@ -57,16 +57,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of model.contract_point">
-                                        <td>{{item.delivery_contracts.name}}</td>
+                                    <tr *ngFor="let item of arrDelivery_contracts">
+                                        <td>{{item.name}}</td>
                                         <td class="text-center">
-                                            <md-icon>{{item.config.event ? 'check_circle' : ''}}</md-icon>
+                                            <md-icon>{{item.event ? 'check_circle' : ''}}</md-icon>
                                         </td>
                                         <td class="text-center">
-                                            <md-icon>{{item.config.capita ? 'check_circle' : ''}}</md-icon>
+                                            <md-icon>{{item.capita ? 'check_circle' : ''}}</md-icon>
                                         </td>
                                         <td class="text-center">
-                                            <md-icon>{{item.config.pgp ? 'check_circle' : ''}}</md-icon>
+                                            <md-icon>{{item.pgp ? 'check_circle' : ''}}</md-icon>
                                         </td>
                                     </tr>
                                 </tbody>

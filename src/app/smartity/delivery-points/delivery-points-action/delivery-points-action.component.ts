@@ -21,7 +21,6 @@ import { ModalUsersComponent } from '../../modals/modal-users/modal-users.compon
 export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
 
     private arrDelivery_point_group: Array<any> = [];
     private action_active: boolean;
@@ -62,12 +61,10 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
     }
 
 
-
+    arrDelivery_contracts = [];
     private save() {
 
         if (this.numId == '') {
-
-
             /**Create */
             this.model.delivery_contracts = '[]';
             this.loaderService.display(true);
@@ -80,8 +77,8 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
                             duration: 3500,
                         });
                         this.clean();
-                        this.loaderService.display(false);
                         this.comp.openList();
+                        this.loaderService.display(false);
                     }
 
                 }, err => {
@@ -98,9 +95,6 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
                     });
                     this.comp.openList();
                 }
-                if (this.noaction) {
-                    this.select.emit(res.data);
-                }
 
             }, err => {
                 this.loaderService.display(false);
@@ -114,10 +108,28 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
         this.loaderService.display(true);
         this.helperService.GET(`/api/delivery-points/${this.numId}`)
             .map((response: Response) => {
-                console.log(response);
+
 
                 let res = response.json();
                 this.model = res.data;
+                console.log(this.model);
+
+                console.log(this.model.contract_point);
+                
+                this.arrDelivery_contracts = [];
+                this.model.contract_point.forEach(element => {
+                    console.log(element);
+                    
+                    element.config = JSON.parse(element.config);
+                    this.arrDelivery_contracts.push({
+                        id: element.delivery_contracts.id,
+                        name: element.delivery_contracts.name,
+                        event: element.config.event || false,
+                        capita: element.config.capita || false,
+                        pgp: element.config.pgp || false,
+                    });
+                });
+                //this.arrDelivery_contracts = JSON.parse(this.model.delivery_contracts);
                 this.warehouse = this.model.warehouses;
                 this.model.operation_cost_centre_id = this.model.root == true ? 'co-' + this.model.operation_cost_centre_id : 'cc-' + this.model.operation_cost_centre_id;
 

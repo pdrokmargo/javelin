@@ -17,7 +17,6 @@ import { LoaderService, HelperService } from '../../../../shared';
 export class WarehouseListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
 
     constructor(public loaderService: LoaderService,
         public helperService: HelperService,
@@ -33,9 +32,7 @@ export class WarehouseListComponent extends BaseList implements OnInit {
    
 
     private view(row: any) {
-        if (this.noaction) {
-            this.select.emit(row);
-        }
+        this.select.emit(row);
     }
 
 }

@@ -162,7 +162,7 @@
         <!--EVENTO-->
         <div class="row">
             <div class="col-sm-12 margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle [labelPosition]="'before'" id="event" name="event" [(ngModel)]="booEvento">Evento</md-slide-toggle>
+                <md-slide-toggle (click)="clearEvent()" [labelPosition]="'before'" id="event" name="event" [(ngModel)]="booEvento">Evento</md-slide-toggle>
             </div>
         </div>
         <div class="row" *ngIf="booEvento">
@@ -176,16 +176,20 @@
             <!-- inicio del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="date" id="evento_contract_start_date" name="evento_contract_start_date" [(ngModel)]="objEvent.contract_start_datet"
-                        mdInput placeholder="Inicio de contracto">
+                    <input mdInput [mdDatepicker]="pickerIssueDate2" id="evento_contract_start_date" name="evento_contract_start_date" placeholder="Inicio de contracto"
+                        [(ngModel)]="objEvent.contract_start_datet">
+                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate2"></button>
                 </md-input-container>
+                <md-datepicker #pickerIssueDate2></md-datepicker>
             </div>
             <!-- Vencimiento del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="date" id="evento_contract_expiration_date" name="evento_contract_expiration_date" [(ngModel)]="objEvent.contrct_expiration_date"
-                        mdInput placeholder="Vencimiento del contracto">
+                    <input mdInput [mdDatepicker]="pickerIssueDate1" id="evento_contract_expiration_date" name="evento_contract_expiration_date"
+                        placeholder="Vencimiento del contracto" [(ngModel)]="objEvent.contrct_expiration_date">
+                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate1"></button>
                 </md-input-container>
+                <md-datepicker #pickerIssueDate1></md-datepicker>
             </div>
             <!-- presupuesto -->
             <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
@@ -214,7 +218,8 @@
             <!-- longitud -->
             <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input [disabled]="!objEvent.perauth" required type="text" id="perauth_length" name="perauth_length" [(ngModel)]="objEvent.perauth_length" mdInput placeholder="Longitud">
+                    <input [disabled]="!objEvent.perauth" [required]="objEvent.perauth" type="text" id="perauth_length" name="perauth_length"
+                        [(ngModel)]="objEvent.perauth_length" mdInput placeholder="Longitud">
                 </md-input-container>
             </div>
             <!-- tipo de caracteres -->
@@ -228,7 +233,7 @@
         <!--CÁPITA-->
         <div class="row">
             <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle [labelPosition]="'before'" id="capita" name="capita" [(ngModel)]="booCapita">Cápita</md-slide-toggle>
+                <md-slide-toggle (click)="clearCapita()" [labelPosition]="'before'" id="capita" name="capita" [(ngModel)]="booCapita">Cápita</md-slide-toggle>
             </div>
         </div>
         <div class="row" *ngIf="booCapita">
@@ -242,16 +247,20 @@
             <!-- inicio del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="date" id="capita_contract_start_date" name="capita_contract_start_date" [(ngModel)]="objCapita.contract_start_date"
-                        mdInput placeholder="Inicio de contracto">
+                    <input mdInput [mdDatepicker]="pickerIssueDate" id="capita_contract_start_date" name="capita_contract_start_date" placeholder="Inicio de contracto"
+                        [(ngModel)]="objCapita.contract_start_date">
+                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate"></button>
                 </md-input-container>
+                <md-datepicker #pickerIssueDate></md-datepicker>
             </div>
             <!-- Vencimiento del contracto -->
             <div class='col-sm-12 col-md-3  margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="date" id="capita_contract_expiration_date" name="capita_contract_expiration_date" [(ngModel)]="objCapita.contract_expiration_date"
-                        mdInput placeholder="Vencimiento del contracto">
+                    <input mdInput [mdDatepicker]="pickerIssueDate3" id="capita_contract_expiration_date" name="capita_contract_expiration_date"
+                        placeholder="Vencimiento del contracto" [(ngModel)]="objCapita.contract_expiration_date">
+                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate3"></button>
                 </md-input-container>
+                <md-datepicker #pickerIssueDate3></md-datepicker>
             </div>
             <!-- Alerta -->
             <div class='col-sm-12 col-md-3 col-lg-2 margin-bottom'>
@@ -348,7 +357,7 @@
         <!--PGP-->
         <div class="row">
             <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle [labelPosition]="'before'" id="php" name="pgp" [(ngModel)]="booPgp">PGP </md-slide-toggle>
+                <md-slide-toggle (click)="clearPgp()" [labelPosition]="'before'" id="php" name="pgp" [(ngModel)]="booPgp">PGP </md-slide-toggle>
             </div>
         </div>
         <div class="row" *ngIf="booPgp">
@@ -362,16 +371,20 @@
             <!-- inicio del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="date" id="pgp_contract_start_date" name="pgp_contract_start_date" [(ngModel)]="objPgp.contract_start_date"
-                        mdInput placeholder="Inicio de contracto">
+                    <input mdInput [mdDatepicker]="pickerIssueDate4" id="pgp_contract_start_date" name="pgp_contract_start_date" placeholder="Inicio de contracto"
+                        [(ngModel)]="objPgp.contract_start_date">
+                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate4"></button>
                 </md-input-container>
+                <md-datepicker #pickerIssueDate4></md-datepicker>
             </div>
             <!-- Vencimiento del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="date" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date" [(ngModel)]="objPgp.contract_expiration_date"
-                        mdInput placeholder="Vencimiento del contracto">
+                    <input mdInput [mdDatepicker]="pickerIssueDate4" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date" placeholder="Vencimiento del contracto"
+                        [(ngModel)]="objPgp.contract_expiration_date">
+                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate4"></button>
                 </md-input-container>
+                <md-datepicker #pickerIssueDate4></md-datepicker>
             </div>
             <!-- presupuesto -->
             <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>

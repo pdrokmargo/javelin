@@ -17,7 +17,7 @@ import { LoaderService, HelperService } from '../../../../shared';
 export class WarehouseActionComponent extends BaseModel implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
+
 
     private countries: any[] = [];
     private departments: any[] = [];
@@ -39,17 +39,9 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
     }
 
     ngOnInit() {
-
         this.clean();
         this.getCollection();
-
-        if (this.numId > 0) {
-            // this.numId=this.route.snapshot.params['id'];
-            this.str_action = 'Actualizar';
-            this.getDataById();
-        } else {
-            this.str_action = 'Guardar';
-        }
+        this.str_action = 'Guardar';
     }
 
     /**
@@ -98,49 +90,28 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
     }
 
     private save() {
-        /** Update */
-        if (this.model.id > 0) {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/operationscentres/${this.numId}`, this.model)
-                .map((response: Response) => {
 
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Actualización', {
-                            duration: 3500,
-                        });
-                    }
+        /** Create */
+        this.loaderService.display(true);
+        this.helperService.POST(`/api/warehouse`, this.model)
+            .map((response: Response) => {
 
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    }, (done) => {
-                        this.loaderService.display(false);
+                const res = response.json();
+                if (res.status === 'success') {
+                    this.snackBar.open(res.message, 'Guardado', {
+                        duration: 3500,
                     });
-        } else {
-            /** Create */
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/warehouse`, this.model)
-                .map((response: Response) => {
+                    this.clean();
+                }
+                this.select.emit(res.data);
 
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                    }
-                    if (this.noaction) {
-                        this.select.emit(res.data);
-                    }
+            }).subscribe(
+                (error) => {
+                    this.loaderService.display(false);
+                }, (done) => {
+                    this.loaderService.display(false);
+                });
 
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    }, (done) => {
-                        this.loaderService.display(false);
-                    });
-        }
 
     }
 

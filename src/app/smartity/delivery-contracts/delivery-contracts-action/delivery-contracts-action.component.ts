@@ -162,18 +162,21 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         this.helperService.GET(`/api/delivery-contracts/${this.numId}`)
             .map((response: Response) => {
 
+
                 let res = response.json();
                 this.model = res.data;
                 var delivery_points = [];
                 this.model.contract_point.forEach((element, index) => {
+                    element.config = JSON.parse(element.config);
                     delivery_points.push({
+                        id: element.delivery_points.id,
                         name: element.delivery_points.name,
-                        event: element.config.event,
-                        capita: element.config.capita,
-                        pgp: element.config.pgp,
+                        event: element.config.event || false,
+                        capita: element.config.capita || false,
+                        pgp: element.config.pgp || false,
                     });
-
-                    if (this.model.contract_point.length - 1 == index){
+                    if (this.model.contract_point.length - 1 == index) {
+                        console.log(delivery_points);
                         this.model.delivery_points = delivery_points;
                     }
                 });
@@ -182,9 +185,11 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 this._pharmadrugs = JSON.parse(this.model.pharmadrugs);
                 this._conditional_alerts = JSON.parse(this.model.conditional_alerts);
                 this._ips = this.model.ips;
-
+                this.booEvento = true;
                 this.objEvent = JSON.parse(this.model.event);
+                this.booPgp = true;
                 this.objPgp = JSON.parse(this.model.pgp);
+                this.booCapita = true;
                 this.objCapita = JSON.parse(this.model.capita);
 
             }).subscribe(
@@ -241,6 +246,10 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 this._pharmadrugs = [];
             }
             if (this._pharmadrugs.length == 0) {
+                data.event = false;
+                data.capita = false;
+                data.pgp = false;
+                data.fare = '0';
                 this._pharmadrugs.push(data);
             }
             var exist = false;
@@ -250,6 +259,10 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 }
                 if (this._pharmadrugs.length == index + 1) {
                     if (!exist) {
+                        data.event = false;
+                        data.capita = false;
+                        data.pgp = false;
+                        data.fare = '0';
                         this._pharmadrugs.push(data);
                     }
                 }
@@ -272,6 +285,9 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 this.model.delivery_points = [];
             }
             if (this.model.delivery_points.length == 0) {
+                data.event = false;
+                data.capita = false;
+                data.pgp = false;
                 this.model.delivery_points.push(data);
             }
             var exist = false;
@@ -281,6 +297,9 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 }
                 if (this.model.delivery_points.length == index + 1) {
                     if (!exist) {
+                        data.event = false;
+                        data.capita = false;
+                        data.pgp = false;
                         this.model.delivery_points.push(data);
                     }
                 }
@@ -355,6 +374,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 }
                 if (this.objCapita.detailed_capita.length - 1 == index) {
                     if (!exist) {
+
                         this.objCapita.detailed_capita.push(data);
                     }
                     if (isDelete) {
@@ -375,6 +395,22 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
         if (!this.objEvent.perauth) {
             this.objEvent.perauth_length = '';
+        }
+    }
+
+    private clearEvent(){
+        if(!this.booEvento){
+            this.objEvent = {};
+        }
+    }
+    private clearCapita(){
+        if(!this.booCapita){
+            this.objCapita = {};
+        }
+    }
+    private clearPgp(){
+        if(!this.booPgp){
+            this.objPgp = {};
         }
     }
 }

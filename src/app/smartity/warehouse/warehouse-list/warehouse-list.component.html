@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6" *ngIf="!noaction">
+    <div class="col-md-6">
         <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
     </div>
     <div class="col-sm-12">
@@ -32,7 +32,7 @@
                         <th (click)="sort('w.state')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='w.state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th *ngIf="!noaction"></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

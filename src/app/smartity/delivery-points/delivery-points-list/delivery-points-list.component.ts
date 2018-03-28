@@ -17,7 +17,6 @@ import { DeliveryPointsComponent } from '../delivery-points.component';
 export class DeliveryPointsListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
 
     constructor(public router: Router,
         public loaderService: LoaderService,
@@ -37,12 +36,8 @@ export class DeliveryPointsListComponent extends BaseList implements OnInit {
     }
 
     private view(row: any) {
-        if (this.noaction) {
-            this.select.emit(row);
-        } else {
-            this.comp.id = row.id;
-            this.comp.openActions();
-        }
+        this.comp.id = row.id;
+        this.comp.openActions();
     }
 
 }
