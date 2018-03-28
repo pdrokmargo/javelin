@@ -164,6 +164,20 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
                 let res = response.json();
                 this.model = res.data;
+                var delivery_points = [];
+                this.model.contract_point.forEach((element, index) => {
+                    delivery_points.push({
+                        name: element.delivery_points.name,
+                        event: element.config.event,
+                        capita: element.config.capita,
+                        pgp: element.config.pgp,
+                    });
+
+                    if (this.model.contract_point.length - 1 == index){
+                        this.model.delivery_points = delivery_points;
+                    }
+                });
+
                 this.customers = this.model.customers;
                 this._pharmadrugs = JSON.parse(this.model.pharmadrugs);
                 this._conditional_alerts = JSON.parse(this.model.conditional_alerts);
@@ -356,10 +370,10 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         item.state = false;
     }
 
-    private activeperauth_length(){
+    private activeperauth_length() {
         console.log(this.objEvent.perauth);
-        
-        if(!this.objEvent.perauth){
+
+        if (!this.objEvent.perauth) {
             this.objEvent.perauth_length = '';
         }
     }

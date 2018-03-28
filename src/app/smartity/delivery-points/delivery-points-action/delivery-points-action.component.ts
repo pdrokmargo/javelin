@@ -81,6 +81,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
                         });
                         this.clean();
                         this.loaderService.display(false);
+                        this.comp.openList();
                     }
 
                 }, err => {

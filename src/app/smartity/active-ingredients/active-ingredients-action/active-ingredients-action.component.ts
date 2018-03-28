@@ -68,6 +68,10 @@ export class ActiveIngredientsActionComponent extends BaseModel implements OnIni
                 }
 
             }, err => {
+                console.log(err);
+                this.snackBar.open(err.message, 'Guardado', {
+                    duration: 3500,
+                });                
                 this.loaderService.display(false);
             });
         } else {

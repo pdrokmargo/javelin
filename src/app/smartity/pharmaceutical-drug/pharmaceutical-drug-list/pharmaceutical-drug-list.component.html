@@ -51,11 +51,10 @@
                         <td>{{ item.dosage_form }}</td>
                         <td>{{ item.is_pos ? 'Si' : 'No' }}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
-                        <!-- <td>{{ item.state ? 'Activa' : 'Inactiva' }}</td> -->
-                        <td class="text-center" *ngIf="!noaction">
-                            <a style="color:#0a6ebd;cursor: pointer;" (click)="view(item)">
-                                <i class="fa fa-pencil fa-2x"></i>
-                            </a>
+                        <td class="w-40">
+                            <button type="button" md-icon-button class="text-primary" (click)="view(item)">
+                                <md-icon>mode_edit</md-icon>
+                            </button>
                         </td>
                     </tr>
                 </tbody>

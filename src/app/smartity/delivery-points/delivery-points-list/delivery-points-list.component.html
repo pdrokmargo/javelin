@@ -42,10 +42,10 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.delivery_points_groups.value }}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>
-                        <td class="text-center" *ngIf="!noaction">
-                            <a style="color:#0a6ebd;cursor:pointer;" (click)="view(item)">
-                                <i class="fa fa-pencil fa-2x"></i>
-                            </a>
+                        <td class="w-40">
+                            <button type="button" md-icon-button class="text-primary" (click)="view(item)">
+                                <md-icon>mode_edit</md-icon>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
