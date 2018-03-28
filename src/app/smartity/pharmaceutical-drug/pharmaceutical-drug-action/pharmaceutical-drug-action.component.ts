@@ -174,6 +174,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
         });
 
         this.modalActiveIngredients.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
+            
             if (this.arrActive_ingredients.length == 0) {
                 this.arrActive_ingredients.push(data);
             } else {
