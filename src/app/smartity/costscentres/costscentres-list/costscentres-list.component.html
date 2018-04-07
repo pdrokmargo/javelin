@@ -1,72 +1,72 @@
-
 <!-- LIST -->
 <div class="row">
-        <div class="col-md-6">
-            <div class="input-group mb-2 mr-sm-2 mb-sm-0">                                    
-                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar"
-                [(ngModel)]="search" (keydown)="enter($event)">
-                <div style="width: 34px" class="input-group-addon">
-                    <a style="cursor:pointer" (click)="getAll()"><i class="fa fa-search"></i></a> 
-                </div>
+    <div class="col-md-6">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar" [(ngModel)]="search" (keydown)="enter($event)">
+            <div style="width: 34px" class="input-group-addon">
+                <a style="cursor:pointer" (click)="getAll()">
+                    <i class="fa fa-search"></i>
+                </a>
             </div>
         </div>
-        <div class="col-md-6">
-            <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>                                                        
-        </div>  
-    
+    </div>
+    <div class="col-md-6">
+        <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
+    </div>
+
     <div class="col-sm-12">
-        
+
         <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-            
+
             <table class="mdl-data-table table-bordered table-striped cf no-margin">
-            <thead>
-                <tr>
-                    <th (click)="sort('cc.id')">ID
-                        <span class="glyphicon sort-icon" *ngIf="key =='cc.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                    </th>                 
-                    <th (click)="sort('code')">Código
-                        <span class="glyphicon sort-icon" *ngIf="key =='code'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                    </th>
-                    <th (click)="sort('name')">Nombre
-                        <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                    </th>
-                    <th (click)="sort('operationcostcentres')">C. Operaciones/Costos
-                        <span class="glyphicon sort-icon" *ngIf="key =='operationcostcentres'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                    </th>
-                    <th (click)="sort('ct.value')">Tipo
-                        <span class="glyphicon sort-icon" *ngIf="key =='ct.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                    </th>
-                    <th (click)="sort('cg.value')">Grupo
-                        <span class="glyphicon sort-icon" *ngIf="key =='cg.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                    </th>
-                    <th (click)="sort('state')">Estado
-                        <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of list.data">   
-                    <td>{{ item.id }}</td>                                                                       
-                    <td>{{ item.code }}</td>
-                    <td>{{ item.name }}</td>     
-                    <td>{{ item.operationcostcentres }}</td>                                   
-                    <td>{{ item.costcentretype }}</td>    
-                    <td>{{ item.costcentregroup }}</td>                                        
-                    <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>
-                    <td class="text-center">
-                        <a style="color:#0a6ebd;cursor:pointer;" (click)="view(item)">
-                            <i class="fa fa-pencil fa-2x"></i>
-                        </a>
-                    </td>
-                </tr>                                          
-            </tbody>
+                <thead>
+                    <tr>
+                        <th class="noAuto" (click)="sort('cc.id')">ID
+                            <span class="glyphicon sort-icon" *ngIf="key =='cc.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('code')">Código
+                            <span class="glyphicon sort-icon" *ngIf="key =='code'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('name')">Nombre
+                            <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('operationcostcentres')">C. Operaciones/Costos
+                            <span class="glyphicon sort-icon" *ngIf="key =='operationcostcentres'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('ct.value')">Tipo
+                            <span class="glyphicon sort-icon" *ngIf="key =='ct.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('cg.value')">Grupo
+                            <span class="glyphicon sort-icon" *ngIf="key =='cg.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('state')">Estado
+                            <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th class="w-40"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of list.data">
+                        <td class="noAuto">{{ item.id }}</td>
+                        <td>{{ item.code }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.operationcostcentres }}</td>
+                        <td>{{ item.costcentretype }}</td>
+                        <td>{{ item.costcentregroup }}</td>
+                        <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>
+                        <td class="w-40">
+                            <button type="button" md-icon-button class="text-primary" (click)="view(item)">
+                                <md-icon>mode_edit</md-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-            
+
         </div>
 
-        <ngb-pagination [pageSize]="pageSize" [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="maxSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>
-        
+        <ngb-pagination [pageSize]="pageSize" [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="maxSize"
+            [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>
+
     </div>
-</div>                  
-                    
+</div>

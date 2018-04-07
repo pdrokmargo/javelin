@@ -107,6 +107,11 @@ tr.active {
   border: 3px solid #000;
 }
 
+.noAuto {
+  width: 1px;
+  white-space: nowrap;
+}
+
 .flex {
   display: flex;
 }

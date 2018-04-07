@@ -60,7 +60,8 @@ import {
   PharmaceuticalDrugActionComponent,
   PharmaceuticalDrugListComponent,
   StakeholdersActionComponent,
-  StakeholdersListComponent
+  StakeholdersListComponent,
+  ModalGeolocationComponent
 } from './smartity/modals';
 import { NumberOnlyDirective } from './smartity/directive/number-only.directive';
 import { NgxMaskModule } from 'ngx-mask';
@@ -150,7 +151,8 @@ import { IpsNetworkListComponent } from './smartity/modals/modal-ips-network/ips
     DeliveryPointsActionComponent,
     DeliveryPointsListComponent,
     IpsNetworkActionComponent,
-    IpsNetworkListComponent
+    IpsNetworkListComponent,
+    ModalGeolocationComponent
   ],
   providers: [
     AuthGuard,
@@ -161,8 +163,9 @@ import { IpsNetworkListComponent } from './smartity/modals/modal-ips-network/ips
     ActiveIngredientsComponent,
     HelperService
   ],
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
   entryComponents: [
+    ModalGeolocationComponent,
     ModalSucursalComponent,
     ModalConfirmationComponent,
     ModalResolutionComponent,

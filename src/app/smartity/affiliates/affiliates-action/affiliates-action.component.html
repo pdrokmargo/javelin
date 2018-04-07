@@ -38,7 +38,7 @@
     <!-- lastname1 -->
     <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
         <md-input-container class="full-width">
-            <input required type="text" id="lastname1" name="lastname1" [(ngModel)]="model.lastname1" mdInput placeholder="Appellidos">
+            <input required type="text" id="lastname1" name="lastname1" [(ngModel)]="model.lastname1" mdInput placeholder="Apellidos">
         </md-input-container>
     </div>
     <!-- lastname2 -->
@@ -51,12 +51,14 @@
     <!-- birthday -->
     <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
         <md-input-container class="full-width">
-            <input required type="date" id="birthday" name="birthday" [(ngModel)]="model.birthday" mdInput placeholder="Fecha de nacimiento">
+            <input mdInput [mdDatepicker]="pickerIssueDate5" id="birthday" name="birthday" placeholder="Fecha de nacimiento" [(ngModel)]="model.birthday">
+            <button mdSuffix [mdDatepickerToggle]="pickerIssueDate5"></button>
         </md-input-container>
+        <md-datepicker #pickerIssueDate5></md-datepicker>
     </div>
     <!-- gender_id -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <md-select class="full-width" placeholder="Genero" [(ngModel)]="model.gender_id" name="gender_id" id="gender_id">
+        <md-select class="full-width" placeholder="Género" [(ngModel)]="model.gender_id" name="gender_id" id="gender_id">
             <md-option *ngFor="let item of arrGender" [value]="item.id">{{item.value}}</md-option>
         </md-select>
     </div>
@@ -81,14 +83,16 @@
     </div>
     <!-- conutry -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <md-select [disabled]="arrDepartment.length == 0" class="full-width" placeholder="Departamento" [(ngModel)]="model.department" name="department" id="department" (change)="loadCity()">
+        <md-select [disabled]="arrDepartment.length == 0" class="full-width" placeholder="Departamento" [(ngModel)]="model.department"
+            name="department" id="department" (change)="loadCity()">
             <md-option *ngFor="let item of arrDepartment" [value]="item.id">{{item.value}}</md-option>
         </md-select>
-        
+
     </div>
     <!-- conutry -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <md-select [disabled]="arrCity.length == 0" class="full-width" placeholder="Ciudad" [(ngModel)]="model.city" name="city" id="city" (change)="booGeolocation=true">
+        <md-select [disabled]="arrCity.length == 0" class="full-width" placeholder="Ciudad" [(ngModel)]="model.city" name="city"
+            id="city" (change)="booGeolocation=true">
             <md-option *ngFor="let item of arrCity" [value]="item.id">{{item.value}}</md-option>
         </md-select>
     </div>
@@ -116,7 +120,8 @@
     <div class="col-sm-12"></div>
     <!-- delivery_contract_id -->
     <div class="col-sm-12 col-md-6 margin-bottom">
-        <md-select class="full-width" placeholder="Contrato" [(ngModel)]="model.delivery_contract_id" name="delivery_contract_id" id="delivery_contract_id">
+        <md-select class="full-width" placeholder="Contrato" [(ngModel)]="model.delivery_contract_id" name="delivery_contract_id"
+            id="delivery_contract_id">
             <md-option *ngFor="let item of arrDelivery_contract" [value]="item.id" (click)="loadIpsNetword(item)">{{item.name}}</md-option>
         </md-select>
     </div>

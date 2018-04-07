@@ -24,7 +24,6 @@ import { ModalGeolocationComponent } from '../../modals/modal-geolocation/modal-
 
 export class DeliveryContractsActionComponent extends BaseModel implements OnInit {
 
-
     private arrPopulation_type: Array<any> = [];
     private arrPerauth_char_type: Array<any> = [];
 
@@ -161,8 +160,6 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         this.loaderService.display(true);
         this.helperService.GET(`/api/delivery-contracts/${this.numId}`)
             .map((response: Response) => {
-
-
                 let res = response.json();
                 this.model = res.data;
                 var delivery_points = [];
@@ -352,36 +349,38 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         this.modalGeolocation = this.dialog.open(ModalGeolocationComponent, {
             hasBackdrop: false,
             width: '400px',
-            data: { title: 'Geolocalisación', }
+            data: { title: 'Ubicación', }
         });
 
         this.modalGeolocation.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
-            if (this.objCapita.detailed_capita == undefined || this.objCapita.detailed_capita == null) {
-                this.objCapita.detailed_capita = [];
-                this.objCapita.detailed_capita.push(data);
+            if (data) {
+                if (this.objCapita.detailed_capita == undefined || this.objCapita.detailed_capita == null) {
+                    this.objCapita.detailed_capita = [];
+                    this.objCapita.detailed_capita.push(data);
+                }
+                var exist = false;
+                var isDelete = false;
+                var _data;
+
+                this.objCapita.detailed_capita.forEach((element, index) => {
+                    if (element.city.id == data.city.id) {
+                        exist = true;
+                        if (!element.state) {
+                            isDelete = true;
+                            _data = element;
+                        }
+                    }
+                    if (this.objCapita.detailed_capita.length - 1 == index) {
+                        if (!exist) {
+
+                            this.objCapita.detailed_capita.push(data);
+                        }
+                        if (isDelete) {
+                            _data.state = true;
+                        }
+                    }
+                });
             }
-            var exist = false;
-            var isDelete = false;
-            var _data;
-
-            this.objCapita.detailed_capita.forEach((element, index) => {
-                if (element.city.id == data.city.id) {
-                    exist = true;
-                    if (!element.state) {
-                        isDelete = true;
-                        _data = element;
-                    }
-                }
-                if (this.objCapita.detailed_capita.length - 1 == index) {
-                    if (!exist) {
-
-                        this.objCapita.detailed_capita.push(data);
-                    }
-                    if (isDelete) {
-                        _data.state = true;
-                    }
-                }
-            });
         });
 
 
@@ -391,25 +390,24 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
     }
 
     private activeperauth_length() {
-        console.log(this.objEvent.perauth);
-
         if (!this.objEvent.perauth) {
             this.objEvent.perauth_length = '';
+            this.objEvent.perauth_char_type = '';
         }
     }
 
-    private clearEvent(){
-        if(!this.booEvento){
+    private clearEvent() {
+        if (!this.booEvento) {
             this.objEvent = {};
         }
     }
-    private clearCapita(){
-        if(!this.booCapita){
+    private clearCapita() {
+        if (!this.booCapita) {
             this.objCapita = {};
         }
     }
-    private clearPgp(){
-        if(!this.booPgp){
+    private clearPgp() {
+        if (!this.booPgp) {
             this.objPgp = {};
         }
     }

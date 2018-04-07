@@ -21,7 +21,7 @@
             <table class="mdl-data-table table-bordered table-striped cf no-margin">
                 <thead>
                     <tr>
-                        <th (click)="sort('id')">ID
+                        <th class="noAuto" (click)="sort('id')">ID
                             <span class="glyphicon sort-icon" *ngIf="key =='id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th (click)="sort('nit')">Nit
@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of list.data">
-                        <td>{{ item.id }}</td>
+                        <td class="noAuto">{{ item.id }}</td>
                         <td>{{ item.nit }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.state ? 'Activa' : 'Inactiva' }}</td>

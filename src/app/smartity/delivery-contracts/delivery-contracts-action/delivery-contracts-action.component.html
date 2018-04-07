@@ -45,6 +45,7 @@
                 <div class="flex margin-bottom">
                     <div class="box-header no-padding-h text-center">Red adscrita</div>
                     <span class="flex-spacer"></span>
+
                     <button type="button" color="primary" type="button" md-raised-button class="btn-w-md" (click)="openModalIpsNetwork()">Añadir</button>
                 </div>
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
@@ -224,7 +225,7 @@
             </div>
             <!-- tipo de caracteres -->
             <div class="col-sm-12 col-md-4 col-lg-2 margin-bottom">
-                <md-select class="full-width" placeholder="Tipo de caracteres" [(ngModel)]="objEvent.perauth_char_type" name="perauth_char_type"
+                <md-select [disabled]="!objEvent.perauth" class="full-width" placeholder="Tipo caracteres" [(ngModel)]="objEvent.perauth_char_type" name="perauth_char_type"
                     id="perauth_char_type">
                     <md-option *ngFor="let item of arrPerauth_char_type" [value]="item.id">{{item.value}}</md-option>
                 </md-select>
@@ -380,11 +381,11 @@
             <!-- Vencimiento del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="pickerIssueDate4" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date" placeholder="Vencimiento del contracto"
+                    <input mdInput [mdDatepicker]="pickerIssueDate5" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date" placeholder="Vencimiento del contracto"
                         [(ngModel)]="objPgp.contract_expiration_date">
-                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate4"></button>
+                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate5"></button>
                 </md-input-container>
-                <md-datepicker #pickerIssueDate4></md-datepicker>
+                <md-datepicker #pickerIssueDate5></md-datepicker>
             </div>
             <!-- presupuesto -->
             <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
