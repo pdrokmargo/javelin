@@ -1,351 +1,211 @@
-<!-- FORM -->
 <form #productForm="ngForm" autocomplete="off">
+    <div class="row">
 
-    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
-        <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
-    </div>
-    <!-- name>
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <md-input-container class="full-width">
-            <input required type="text" id="name" name="name" [(ngModel)]="model.name" mdInput placeholder="Nombre">
-        </md-input-container>
-    </div-->
-    <!--product type -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <md-select class="full-width" placeholder="Tipo de producto" [(ngModel)]="model.product_profile_id" name="product_profile_id"
-            id="product_profile_id">
-            <md-option *ngFor="let item of product_type" [value]="item.id">{{item.value}}</md-option>
-        </md-select>
-    </div>
-    <!-- medicamentos -->
-    <div class="col-sm-12 margin-bottom" *ngIf="model.product_profile_id == 30">
-
-        <div class="flex margin-bottom">
-            <div class="box-header no-padding-h">Medicamentos</div>
-            <span class="flex-spacer"></span>
-            <button type="button" type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openAddBankAccount()">Añadir</button>
+        <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
+            <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
         </div>
-        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-            <table class="mdl-data-table table-bordered table-striped cf no-margin">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Vía Administración</th>
-                        <th>Forma Farmaceutica</th>
-                        <th class="w-40"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of model.pharmaceutical_drugs">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.routes_administration }}</td>
-                        <td>{{ item.dosage_form }}</td>
-                        <td class="w-40">
-                            <button type="button" type="button" md-icon-button (click)="removePharmaceutical(item)">
-                                <md-icon>delete</md-icon>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        
+        <!-- state -->
+        <div class='col-sm-12 margin-bottom'>
+            <div class="flex">
+                <span class="flex-spacer"></span>
+                <md-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</md-slide-toggle>
+            </div>
+        </div>
+        
+        <!--product type -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <md-select class="full-width" placeholder="Tipo de producto" [(ngModel)]="model.product_profile_id" name="product_profile_id" id="product_profile_id">
+                <md-option *ngFor="let item of product_type" [value]="item.id">{{item.value}}</md-option>
+            </md-select>
         </div>
 
-    </div>
+        <!-- medicamentos -->
+        <div class="col-sm-12 margin-bottom" *ngIf="model.product_profile_id == 30">
+            <div class="flex margin-bottom">
+                <div class="box-header no-padding-h">Medicamentos</div>
+                <span class="flex-spacer"></span>
+                <button type="button" type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openAddBankAccount()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Vía Administración</th>
+                            <th>Forma Farmaceutica</th>
+                            <th class="w-40"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of model.pharmaceutical_drugs">
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.routes_administration }}</td>
+                            <td>{{ item.dosage_form }}</td>
+                            <td class="w-40">
+                                <button type="button" type="button" md-icon-button (click)="removePharmaceutical(item)">
+                                    <md-icon>delete</md-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <!-- description -->
-    <div class='col-sm-12 margin-bottom'>
-        <md-input-container class="full-width">
-            <input required type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción">
-        </md-input-container>
-    </div>
-
-
-    <div class="col-sm-12">
-
+        <!-- description -->
+        <div class='col-sm-12 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción">
+            </md-input-container>
+        </div>
 
         <!-- comercial -->
-        <div class='col-sm-12 col-md-3'>
-            <div class="box-body">
-                <md-slide-toggle [labelPosition]="after" id="comercial" name="comercial" [(ngModel)]="model.comercial" (change)="model.comercial_name = model.comercial ? model.comercial_name : ''">Comercial</md-slide-toggle>
-            </div>
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <md-slide-toggle [labelPosition]="'after'" id="comercial" name="comercial" [(ngModel)]="model.comercial" (change)="model.comercial_name = model.comercial ? model.comercial_name : ''">Comercial</md-slide-toggle>
         </div>
 
         <!-- comercial_name -->
-        <div class='col-sm-12 col-md-6' *ngIf="!model.comercial">
-            <div class="box-body">
-                <md-input-container class="full-width">
-                    <input type="text" id="comercial_name" name="comercial_name" [(ngModel)]="model.comercial_name" mdInput placeholder="Nombre comercial">
-                </md-input-container>
-            </div>
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <md-input-container class="full-width">
+                <input [disabled]="!model.comercial" type="text" id="comercial_name" name="comercial_name" [(ngModel)]="model.comercial_name" mdInput placeholder="Nombre comercial">
+            </md-input-container>
         </div>
 
-
-        <!-- state -->
-        <div class='col-sm-12 col-md-3'>
-            <div class="box-body">
-                <md-slide-toggle [labelPosition]="after" id="state" name="state" [(ngModel)]="model.state">Estado</md-slide-toggle>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- content_unit_id -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-select class="full-width" placeholder="Unidad de contenido" [(ngModel)]="model.content_unit_id" name="content_unit_id"
-                id="content_unit_id">
+        <!-- content_unit_id -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <md-select class="full-width" placeholder="Unidad de contenido" [(ngModel)]="model.content_unit_id" name="content_unit_id" id="content_unit_id">
                 <md-option *ngFor="let i of content_unit" [value]="i.id">{{i.value}}</md-option>
             </md-select>
         </div>
-    </div>
 
-
-    <!-- units -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
+        <!-- units -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-input-container class="full-width">
                 <input required type="text" id="units" name="units" [(ngModel)]="model.units" mdInput placeholder="Unidades">
             </md-input-container>
         </div>
-    </div>
 
-    <!-- delivery_fraction -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
+         <!-- delivery_fraction -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="delivery_fraction" name="delivery_fraction" [(ngModel)]="model.delivery_fraction" mdInput
-                    placeholder="Fracción de entrega">
+                <input required type="text" id="delivery_fraction" name="delivery_fraction" [(ngModel)]="model.delivery_fraction" mdInput placeholder="Fracción de entrega">
             </md-input-container>
         </div>
-    </div>
 
-    <!-- cum_code -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
+        <!-- cum_code -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-input-container class="full-width">
                 <input required type="text" id="cum_code" name="cum_code" [(ngModel)]="model.cum_code" mdInput placeholder="Código CUM">
             </md-input-container>
         </div>
-    </div>
 
-    <!-- barcode -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
+        <!-- barcode -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-input-container class="full-width">
                 <input required type="text" id="barcode" name="barcode" [(ngModel)]="model.barcode" mdInput placeholder="Código de barras">
             </md-input-container>
         </div>
-    </div>
 
-    <!--lifetime -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
+        <!--lifetime -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-input-container class="full-width">
                 <input mdInput [mdDatepicker]="pickerLifetime" id="lifetime" name="lifetime" placeholder="Vida util" [(ngModel)]="model.lifetime">
                 <button type="button" mdSuffix [mdDatepickerToggle]="pickerLifetime"></button>
             </md-input-container>
             <md-datepicker #pickerLifetime></md-datepicker>
         </div>
-    </div>
 
-    <!-- institutional_use -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
+        <span class="col-sm-12"></span>
+
+        <!-- institutional_use -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-slide-toggle [labelPosition]="after" id="institutional_use" name="institutional_use" [(ngModel)]="model.institutional_use">Uso institucional</md-slide-toggle>
         </div>
-    </div>
 
-    <!-- serials_control -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
+         <!-- serials_control -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-slide-toggle [labelPosition]="after" id="batch_control" name="serials_control" [(ngModel)]="model.serials_control">Controla serial</md-slide-toggle>
         </div>
-    </div>
 
-    <!-- batch_control -->
-    <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
+        <!-- batch_control -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-slide-toggle [labelPosition]="after" id="batch_control" name="batch_control" [(ngModel)]="model.batch_control">Controla lotes</md-slide-toggle>
         </div>
-    </div>
 
-    <!-- bodega >
-    <div class="col-sm-12 col-md-6 margin-bottom">
-        <md-input-container class="full-width">
-            <input readonly mdInput type="text" placeholder="Bodega" [(ngModel)]="warehouse.name" id="warehouse" name="warehouse" />
-            <md-icon mdSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</md-icon>
-        </md-input-container>
-    </div-->
-
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <div class='col-md-10'>
-                <md-select disabled class="full-width" placeholder="Titular registro sanitario" [(ngModel)]="model.sanitary_registration_holder_id"
-                    name="sanitary_registration_holder_id" id="sanitary_registration_holder_id">
-                    <md-option *ngFor="let i of healthrecordholder" [value]="i.id">{{i.stakeholder_info.fullname}}</md-option>
-                </md-select>
-            </div>
-            <div class='col-md-2'>
-                <button type="button" (click)="openAddSanitaryRegistration()" md-mini-fab>
-                    <md-icon class="material-icons">search</md-icon>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- sanitary_registration -->
-    <div class='col-sm-12 col-md-3'>
-        <div class="box-body">
+        <!-- titular registro sanitario -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
             <md-input-container class="full-width">
-                <input required type="text" id="sanitary_registration" name="sanitary_registration" [(ngModel)]="model.sanitary_registration"
-                    mdInput placeholder="Registro sanitario">
+                <input readonly mdInput type="text" placeholder="Titular registro sanitario" [(ngModel)]="sanitary_registration_holder.businessname" id="sanitary_registration_holder" name="sanitary_registration_holder" />
+                <md-icon mdSuffix class="wh-24 pointer" (click)="openAddSanitaryRegistration()">search</md-icon>
             </md-input-container>
         </div>
-    </div>
 
-    <!-- validity_sanitary_registration -->
-    <div class='col-sm-12 col-md-3'>
-        <div class="box-body">
+        <!-- sanitary_registration -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input mdInput [mdDatepicker]="picker" id="validity_sanitary_registration" name="validity_sanitary_registration" placeholder="Vigencia de registro sanitario"
-                    [(ngModel)]="model.validity_sanitary_registration">
+                <input required type="text" id="sanitary_registration" name="sanitary_registration" [(ngModel)]="model.sanitary_registration" mdInput placeholder="Registro sanitario">
+            </md-input-container>
+        </div>
+
+        <!-- validity_sanitary_registration -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="picker" id="validity_sanitary_registration" name="validity_sanitary_registration" placeholder="Vigencia de registro sanitario" [(ngModel)]="model.validity_sanitary_registration">
                 <button type="button" mdSuffix [mdDatepickerToggle]="picker"></button>
             </md-input-container>
             <md-datepicker #picker></md-datepicker>
         </div>
-    </div>
 
-    <!-- supplier_id -->
-    <!-- <div class='col-sm-12 col-md-4'>
-            <div class="box-body">
-              
-                <div class='col-md-10'> 
-                    <md-input-container class="full-width">
-                        <input required type="text" placeholder="Proveedor" [(ngModel)]="model.supplier_id" name="supplier_id" id="supplier_id" mdInput>
-                    </md-input-container>
-                </div>
-                    
-                <div class='col-md-2'>
-                    <button type="button"  md-mini-fab>                        
-                        <md-icon class="material-icons">search</md-icon>
-                    </button>
-                </div>
-            
-            </div>
-        </div> -->
-
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <div class='col-md-10'>
-                <md-select disabled class="full-width" placeholder="Proveedor" [(ngModel)]="model.supplier_id" name="supplier_id" id="supplier_id">
-                    <md-option *ngFor="let item of suppliers" [value]="item.id">{{item.stakeholder_info.fullname}}</md-option>
-                </md-select>
-            </div>
-            <div class='col-md-2'>
-                <button type="button" (click)="openAddSupplier()" md-mini-fab>
-                    <md-icon class="material-icons">search</md-icon>
-                </button>
-            </div>
+        <!-- proveedor -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <md-input-container class="full-width">
+                <input readonly mdInput type="text" placeholder="Proveedor" [(ngModel)]="supplier.businessname" id="supplier" name="supplier" />
+                <md-icon mdSuffix class="wh-24 pointer" (click)="openAddSupplier()">search</md-icon>
+            </md-input-container>
         </div>
-    </div>
 
-    <!-- manufacturer_id -->
-    <!-- <div class='col-sm-12 col-md-4'>
-            <div class="box-body">
-              
-                <div class='col-md-10'> 
-                    <md-input-container class="full-width">
-                        <input required type="text" placeholder="Fabricante" [(ngModel)]="model.manufacturer_id" name="manufacturer_id" id="manufacturer_id" mdInput>
-                    </md-input-container>
-                </div>
-                    
-                <div class='col-md-2'>
-                    <button type="button"  md-mini-fab>                        
-                        <md-icon class="material-icons">search</md-icon>
-                    </button>
-                </div>
-            
-            </div>
-        </div> -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <div class='col-md-10'>
-                <md-select disabled class="full-width" placeholder="Fabricante" [(ngModel)]="model.manufacturer_id" name="manufacturer_id"
-                    id="manufacturer_id">
-                    <md-option *ngFor="let item of makers" [value]="item.id">{{item.stakeholder_info.fullname}}</md-option>
-                </md-select>
-            </div>
-            <div class='col-md-2'>
-                <button type="button" (click)="openAddMaker()" md-mini-fab>
-                    <md-icon class="material-icons">search</md-icon>
-                </button>
-            </div>
+        <!-- fabricante -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <md-input-container class="full-width">
+                <input readonly mdInput type="text" placeholder="Fabricante" [(ngModel)]="manufacturer.businessname" id="manufacturer" name="manufacturer" />
+                <md-icon mdSuffix class="wh-24 pointer" (click)="openAddMaker()">search</md-icon>
+            </md-input-container>
         </div>
-    </div>
 
-    <!-- importer_id -->
-    <!-- <div class='col-sm-12 col-md-4'>
-            <div class="box-body">
-              
-                <div class='col-md-10'> 
-                    <md-input-container class="full-width">
-                        <input required type="text" placeholder="Importador" [(ngModel)]="model.importer_id" name="importer_id" id="importer_id" mdInput>
-                    </md-input-container>
-                </div>
-                    
-                <div class='col-md-2'>
-                    <button type="button"  md-mini-fab>                        
-                        <md-icon class="material-icons">search</md-icon>
-                    </button>
-                </div>
-            
-            </div>
-    </div> -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <div class='col-md-10'>
-                <md-select disabled class="full-width" placeholder="Importador" [(ngModel)]="model.importer_id" name="importer_id" id="importer_id">
-                    <md-option *ngFor="let item of importers" [value]="item.id">{{item.stakeholder_info.fullname}}</md-option>
-                </md-select>
-            </div>
-            <div class='col-md-2'>
-                <button type="button" (click)="openAddImporter()" md-mini-fab>
-                    <md-icon class="material-icons">search</md-icon>
-                </button>
-            </div>
+        <!-- importador -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <md-input-container class="full-width">
+                <input readonly mdInput type="text" placeholder="Importador" [(ngModel)]="importer.businessname" id="importer" name="importer" />
+                <md-icon mdSuffix class="wh-24 pointer" (click)="openAddImporter()">search</md-icon>
+            </md-input-container>
         </div>
-    </div>
 
-    <!-- security_time -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
+        <!-- security_time -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
                 <input required type="text" id="security_time" name="security_time" [(ngModel)]="model.security_time" mdInput placeholder="Tiempo de seguridad">
             </md-input-container>
         </div>
-    </div>
 
-    <!-- covered_period -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
+        <!-- covered_period -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
                 <input required type="text" id="covered_period" name="covered_period" [(ngModel)]="model.covered_period" mdInput placeholder="Periodo de cubrimiento">
             </md-input-container>
         </div>
-    </div>
 
-    <!-- replacment_time -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
+        <!-- replacment_time -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
                 <input required type="text" id="replacment_time" name="replacment_time" [(ngModel)]="model.replacment_time" mdInput placeholder="Tiempo de reposición">
             </md-input-container>
         </div>
-    </div>
 
-    <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button type="button" [disabled]="action_active ? false : !productForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
-            (click)="save()">{{str_action}}</button>
-    </div>
+        <div class="col-sm-12" [class.btn-action-container]="booActive">
+            <button type="button" [disabled]="action_active ? false : !productForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+                (click)="save()">{{str_action}}</button>
+        </div>
 
+    </div>
 </form>

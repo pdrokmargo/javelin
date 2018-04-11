@@ -23,10 +23,10 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     private str_action: string = 'Guardar';
     private content_unit: any[] = [];
     private product_type: any[] = [];
-    private makers: any[] = [];
-    private importers: any[] = [];
-    private suppliers: any[] = [];
-    private healthrecordholder: any[] = [];
+    private sanitary_registration_holder: any = {};
+    private supplier: any = {};
+    private manufacturer: any = {};
+    private importer: any = {};
     private pharmaceuticalDialogRef: MdDialogRef<ModalPharmaceuticalComponent>;
     private modalStakeHolderDialogRef: MdDialogRef<ModalStakeHolderComponent>;
 
@@ -45,10 +45,6 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     ngOnInit() {
         this.clean();
         this.getCollection();
-        this.getMaker();
-        this.getImporter();
-        this.getSupplier();
-        this.getHealthRecordHolder();
 
         if (this.numId != null && this.numId !== '') {
             // this.numId=this.route.snapshot.params['id'];
@@ -70,74 +66,6 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             const res = response.json();
             this.content_unit = res.CONTENT_UNIT;
             this.product_type = res.PRODUCT_TYPE;
-
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
-    }
-
-    private getMaker() {
-        this.loaderService.display(true);
-        this.helperService.GET(`/api/maker`)
-        .map((response: Response) => {
-
-            const res = response.json();
-            this.makers = res.data;
-
-        }).subscribe(
-            (error) =>{
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
-    }
-
-    private getImporter(){
-        this.loaderService.display(true);
-        this.helperService.GET(`/api/importer`)
-        .map((response: Response) => {
-
-            const res = response.json();
-            this.importers = res.data;
-
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
-    }
-
-    private getSupplier(){
-        this.loaderService.display(true);
-        this.helperService.GET(`/api/supplier`)
-        .map((response: Response) => {
-
-            const res = response.json();
-            this.suppliers = res.data;
-
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
-    }
-
-    private getHealthRecordHolder() {
-        this.loaderService.display(true);
-        this.helperService.GET(`/api/healthrecordholder`)
-        .map((response: Response) => {
-
-            const res = response.json();
-            this.healthrecordholder = res.data;
 
         }).subscribe(
             (error) => {
@@ -263,13 +191,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             }
         });
 
-        this.modalStakeHolderDialogRef
-        .afterClosed()
-        .pipe(filter( (stakeHolder) => stakeHolder))
-        .subscribe( (stakeHolder) => {
-            console.log(stakeHolder);
-            
-            this.model.sanitary_registration_holder_id = stakeHolder.x_id;
+        this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
+            this.sanitary_registration_holder = stakeHolder;
+            this.model.sanitary_registration_holder_id = stakeHolder.id;
         });
     }
 
@@ -282,11 +206,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             }
         });
 
-        this.modalStakeHolderDialogRef
-        .afterClosed()
-        .pipe(filter( (stakeHolder) => stakeHolder))
-        .subscribe( (stakeHolder) => {
-            this.model.supplier_id = stakeHolder.x_id;
+        this.modalStakeHolderDialogRef.afterClosed().pipe(filter( (stakeHolder) => stakeHolder)).subscribe( (stakeHolder) => {
+            this.supplier = stakeHolder;
+            this.model.supplier_id = stakeHolder.id;
         });
     }
 
@@ -303,7 +225,8 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         .afterClosed()
         .pipe(filter( (stakeHolder) => stakeHolder))
         .subscribe( (stakeHolder) => {
-            this.model.manufacturer_id = stakeHolder.x_id;
+            this.manufacturer = stakeHolder;
+            this.model.manufacturer_id = stakeHolder.id;
         });
     }
 
@@ -316,11 +239,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             }
         });
 
-        this.modalStakeHolderDialogRef
-        .afterClosed()
-        .pipe(filter( (stakeHolder) => stakeHolder))
-        .subscribe( (stakeHolder) => {
-            this.model.importer_id = stakeHolder.x_id;
+        this.modalStakeHolderDialogRef.afterClosed().pipe(filter( (stakeHolder) => stakeHolder)).subscribe( (stakeHolder) => {
+            this.importer = stakeHolder;
+            this.model.importer_id = stakeHolder.id;
         });
     }
 
