@@ -149,8 +149,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     private save() {
+        this.model.name = '';
         /** Update */
-        if (this.model.id > 0) {
+        if (this.model.id !== '') {
             this.loaderService.display(true);
             this.helperService.PUT(`/api/product/${this.numId}`, this.model)
             .map((response: Response) => {
@@ -242,6 +243,8 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         .afterClosed()
         .pipe(filter( (pharmaceuticalDrug) => pharmaceuticalDrug))
         .subscribe( (pharmaceuticalDrug) => {
+            console.log(pharmaceuticalDrug);
+            
             this.model.pharmaceutical_drugs.push(pharmaceuticalDrug);
         });
     }
@@ -264,6 +267,8 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         .afterClosed()
         .pipe(filter( (stakeHolder) => stakeHolder))
         .subscribe( (stakeHolder) => {
+            console.log(stakeHolder);
+            
             this.model.sanitary_registration_holder_id = stakeHolder.x_id;
         });
     }

@@ -69,96 +69,7 @@
                     </table>
                 </div>
             </div>
-            <!-- medicamentos -->
-            <div class="col-sm-12 margin-bottom">
 
-                <div class="flex margin-bottom">
-                    <div class="box-header no-padding-h">Medicamentos</div>
-                    <span class="flex-spacer"></span>
-                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalPharmaceutical()">Añadir</button>
-                </div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    <table class="mdl-data-table table-bordered table-striped no-margin">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Evento</th>
-                                <th>Tarifa</th>
-                                <th>Cápita</th>
-                                <th>PGP</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of _pharmadrugs; let index = index">
-                                <td>{{item.name}}</td>
-                                <td>
-                                    <md-slide-toggle id="p_event{{index}}" name="p_event{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
-                                </td>
-                                <td>
-                                    <md-input-container class="full-width">
-                                        <input mdInput type="text" [(ngModel)]="item.fare" id="p_fare{{index}}" name="p_fare{{index}}" />
-                                    </md-input-container>
-                                </td>
-                                <td>
-                                    <md-slide-toggle id="p_capita{{index}}" name="p_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>
-                                </td>
-                                <td>
-                                    <md-slide-toggle id="p_pgp{{index}}" name="p_pgp{{index}}" [(ngModel)]="item.pgp"></md-slide-toggle>
-                                </td>
-                                <td class="w-40">
-                                    <button type="button" md-icon-button (click)="deletePharmadrug()">
-                                        <md-icon>delete</md-icon>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-            <!-- puntos de dispensacion -->
-            <div class="col-sm-12 margin-bottom">
-
-                <div class="flex margin-bottom">
-                    <div class="box-header no-padding-h">Puntos de dispensación</div>
-                    <span class="flex-spacer"></span>
-                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalDeliveryPoints()">Añadir</button>
-                </div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    <table class="mdl-data-table table-bordered table-striped no-margin">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Evento</th>
-                                <th>Cápita</th>
-                                <th>PGP</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of model.delivery_points; let index = index">
-                                <td>{{item.name}}</td>
-                                <td>
-                                    <md-slide-toggle id="d_event{{index}}" name="_devent{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
-                                </td>
-                                <td>
-                                    <md-slide-toggle id="d_capita{{index}}" name="d_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>
-                                </td>
-                                <td>
-                                    <md-slide-toggle id="d_pgp{{index}}" name="d_pgp{{index}}" [(ngModel)]="item.pgp"></md-slide-toggle>
-                                </td>
-                                <td class="w-40">
-                                    <button type="button" md-icon-button (click)="deleteDeliveryPoints(item)">
-                                        <md-icon>delete</md-icon>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
         </div>
         <!--EVENTO-->
         <div class="row">
@@ -167,18 +78,18 @@
             </div>
         </div>
         <div class="row" *ngIf="booEvento">
-            <!-- numero de contracto -->
+            <!-- Numero de contrato -->
             <div class='col-sm-12 col-md-6 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="text" id="evento_contract_number" name="evento_contract_number" [(ngModel)]="objEvent.contract_number"
-                        mdInput placeholder="Numero de contracto">
+                    <input required type="text" id="evento_contract_number" name="evento_contract_number" [(ngModel)]="contract_number" mdInput
+                        placeholder="Numero de contrato">
                 </md-input-container>
             </div>
             <!-- inicio del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
                     <input mdInput [mdDatepicker]="pickerIssueDate2" id="evento_contract_start_date" name="evento_contract_start_date" placeholder="Inicio de contracto"
-                        [(ngModel)]="objEvent.contract_start_datet">
+                        [(ngModel)]="contract_start_datet">
                     <button mdSuffix [mdDatepickerToggle]="pickerIssueDate2"></button>
                 </md-input-container>
                 <md-datepicker #pickerIssueDate2></md-datepicker>
@@ -187,7 +98,7 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
                     <input mdInput [mdDatepicker]="pickerIssueDate1" id="evento_contract_expiration_date" name="evento_contract_expiration_date"
-                        placeholder="Vencimiento del contracto" [(ngModel)]="objEvent.contrct_expiration_date">
+                        placeholder="Vencimiento del contracto" [(ngModel)]="contrct_expiration_date">
                     <button mdSuffix [mdDatepickerToggle]="pickerIssueDate1"></button>
                 </md-input-container>
                 <md-datepicker #pickerIssueDate1></md-datepicker>
@@ -225,8 +136,8 @@
             </div>
             <!-- tipo de caracteres -->
             <div class="col-sm-12 col-md-4 col-lg-2 margin-bottom">
-                <md-select [disabled]="!objEvent.perauth" class="full-width" placeholder="Tipo caracteres" [(ngModel)]="objEvent.perauth_char_type" name="perauth_char_type"
-                    id="perauth_char_type">
+                <md-select [disabled]="!objEvent.perauth" class="full-width" placeholder="Tipo caracteres" [(ngModel)]="objEvent.perauth_char_type"
+                    name="perauth_char_type" id="perauth_char_type">
                     <md-option *ngFor="let item of arrPerauth_char_type" [value]="item.id">{{item.value}}</md-option>
                 </md-select>
             </div>
@@ -238,18 +149,18 @@
             </div>
         </div>
         <div class="row" *ngIf="booCapita">
-            <!-- numero de contracto -->
+            <!-- Numero de contrato -->
             <div class='col-sm-12 col-md-6 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="text" id="capita_contract_number" name="capita_contract_number" [(ngModel)]="objCapita.contract_number"
-                        mdInput placeholder="Numero de contracto">
+                    <input required type="text" id="capita_contract_number" name="capita_contract_number" [(ngModel)]="contract_number" mdInput
+                        placeholder="Numero de contrato">
                 </md-input-container>
             </div>
             <!-- inicio del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
                     <input mdInput [mdDatepicker]="pickerIssueDate" id="capita_contract_start_date" name="capita_contract_start_date" placeholder="Inicio de contracto"
-                        [(ngModel)]="objCapita.contract_start_date">
+                        [(ngModel)]="contract_start_date">
                     <button mdSuffix [mdDatepickerToggle]="pickerIssueDate"></button>
                 </md-input-container>
                 <md-datepicker #pickerIssueDate></md-datepicker>
@@ -258,7 +169,7 @@
             <div class='col-sm-12 col-md-3  margin-bottom'>
                 <md-input-container class="full-width">
                     <input mdInput [mdDatepicker]="pickerIssueDate3" id="capita_contract_expiration_date" name="capita_contract_expiration_date"
-                        placeholder="Vencimiento del contracto" [(ngModel)]="objCapita.contract_expiration_date">
+                        placeholder="Vencimiento del contracto" [(ngModel)]="contract_expiration_date">
                     <button mdSuffix [mdDatepickerToggle]="pickerIssueDate3"></button>
                 </md-input-container>
                 <md-datepicker #pickerIssueDate3></md-datepicker>
@@ -362,18 +273,17 @@
             </div>
         </div>
         <div class="row" *ngIf="booPgp">
-            <!-- numero de contracto -->
+            <!-- Numero de contrato -->
             <div class='col-sm-12 col-md-6 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="text" id="pgp_contract_number" name="pgp_contract_number" [(ngModel)]="objPgp.contract_number" mdInput
-                        placeholder="Numero de contracto">
+                    <input required type="text" id="pgp_contract_number" name="pgp_contract_number" [(ngModel)]="contract_number" mdInput placeholder="Numero de contrato">
                 </md-input-container>
             </div>
             <!-- inicio del contracto -->
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
                     <input mdInput [mdDatepicker]="pickerIssueDate4" id="pgp_contract_start_date" name="pgp_contract_start_date" placeholder="Inicio de contracto"
-                        [(ngModel)]="objPgp.contract_start_date">
+                        [(ngModel)]="contract_start_date">
                     <button mdSuffix [mdDatepickerToggle]="pickerIssueDate4"></button>
                 </md-input-container>
                 <md-datepicker #pickerIssueDate4></md-datepicker>
@@ -382,7 +292,7 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <md-input-container class="full-width">
                     <input mdInput [mdDatepicker]="pickerIssueDate5" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date" placeholder="Vencimiento del contracto"
-                        [(ngModel)]="objPgp.contract_expiration_date">
+                        [(ngModel)]="contract_expiration_date">
                     <button mdSuffix [mdDatepickerToggle]="pickerIssueDate5"></button>
                 </md-input-container>
                 <md-datepicker #pickerIssueDate5></md-datepicker>
@@ -390,7 +300,7 @@
             <!-- presupuesto -->
             <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
                 <md-input-container class="full-width">
-                    <input required type="text" id="pgp_budget" name="pgp_budget" [(ngModel)]="objPgp.budget" mdInput placeholder="Presupuesto">
+                    <input required type="text" id="pgp_budget" name="pgp_budget" [(ngModel)]="objPgp.budget" mdInput placeholder="Presupuesto Mensual">
                 </md-input-container>
             </div>
             <!-- Alerta -->
@@ -406,6 +316,100 @@
                     <input required type="text" id="pgp_percent_unable" name="pgp_percent_unable" [(ngModel)]="objPgp.percent_unable" mdInput
                         placeholder="Inactivación">
                 </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <!-- medicamentos -->
+            <div class="col-sm-12 margin-bottom">
+
+                <div class="flex margin-bottom">
+                    <div class="box-header no-padding-h">Medicamentos</div>
+                    <span class="flex-spacer"></span>
+                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalPharmaceutical()">Añadir</button>
+                </div>
+                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                    <table class="mdl-data-table table-bordered table-striped no-margin">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Evento</th>
+                                <th>Tarifa</th>
+                                <th>Cápita</th>
+                                <th>PGP</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of _pharmadrugs; let index = index">
+                                <td>{{item.name}}</td>
+                                <td>
+                                    <md-slide-toggle [disabled]="!booEvento" id="p_event{{index}}" name="p_event{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
+                                </td>
+                                <td>
+                                    
+                                    <md-input-container class="full-width">
+                                        <input [disabled]="!item.event" (change)="item.fare = (item.evetn ? item.fare : '')"  mdInput type="text" [(ngModel)]="item.fare"
+                                            id="p_fare{{index}}" name="p_fare{{index}}" />
+                                    </md-input-container>
+                                </td>
+                                <td>
+                                    <md-slide-toggle [disabled]="!booCapita" id="p_capita{{index}}" name="p_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>
+                                </td>
+                                <td>
+                                    <md-slide-toggle [disabled]="!booPgp" id="p_pgp{{index}}" name="p_pgp{{index}}" [(ngModel)]="item.pgp"></md-slide-toggle>
+                                </td>
+                                <td class="w-40">
+                                    <button type="button" md-icon-button (click)="deletePharmadrug()">
+                                        <md-icon>delete</md-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- puntos de dispensacion -->
+            <div class="col-sm-12 margin-bottom">
+
+                <div class="flex margin-bottom">
+                    <div class="box-header no-padding-h">Puntos de dispensación</div>
+                    <span class="flex-spacer"></span>
+                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalDeliveryPoints()">Añadir</button>
+                </div>
+                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                    <table class="mdl-data-table table-bordered table-striped no-margin">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Evento</th>
+                                <th>Cápita</th>
+                                <th>PGP</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of model.delivery_points; let index = index">
+                                <td>{{item.name}}</td>
+                                <td>
+                                    <md-slide-toggle id="d_event{{index}}" name="_devent{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
+                                </td>
+                                <td>
+                                    <md-slide-toggle id="d_capita{{index}}" name="d_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>
+                                </td>
+                                <td>
+                                    <md-slide-toggle id="d_pgp{{index}}" name="d_pgp{{index}}" [(ngModel)]="item.pgp"></md-slide-toggle>
+                                </td>
+                                <td class="w-40">
+                                    <button type="button" md-icon-button (click)="deleteDeliveryPoints(item)">
+                                        <md-icon>delete</md-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
         <div class="row">

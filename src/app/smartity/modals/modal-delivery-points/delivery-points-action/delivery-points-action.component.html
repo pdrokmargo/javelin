@@ -30,7 +30,7 @@
             </div>
             <!-- grupo de punto de dispensacion -->
             <div class="col-sm-12 col-md-6 margin-bottom">
-                <md-select class="full-width" placeholder="Grupo de punto de pispensación" [(ngModel)]="model.delivery_point_group_id" name="delivery_point_group_id"
+                <md-select class="full-width" placeholder="Grupos de puntos de dipensación" [(ngModel)]="model.delivery_point_group_id" name="delivery_point_group_id"
                     id="delivery_point_group_id">
                     <md-option *ngFor="let item of arrDelivery_point_group" [value]="item.id">{{item.value}}</md-option>
                 </md-select>

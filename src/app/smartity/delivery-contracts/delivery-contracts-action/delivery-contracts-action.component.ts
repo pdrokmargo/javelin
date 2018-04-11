@@ -24,6 +24,10 @@ import { ModalGeolocationComponent } from '../../modals/modal-geolocation/modal-
 
 export class DeliveryContractsActionComponent extends BaseModel implements OnInit {
 
+    private contract_number: string = '';
+    private contract_start_date: string = '';
+    private contract_expiration_date: string = '';
+
     private arrPopulation_type: Array<any> = [];
     private arrPerauth_char_type: Array<any> = [];
 
@@ -90,6 +94,23 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
 
     private save() {
+
+        if (this.booEvento) {
+            this.objEvent.contract_number = this.contract_number;
+            this.objEvent.contract_expiration_date = this.contract_expiration_date;
+            this.objEvent.contract_start_date = this.contract_start_date;
+        }
+        if (!this.booCapita) {
+            this.objCapita.contract_number = this.contract_number;
+            this.objCapita.contract_expiration_date = this.contract_expiration_date;
+            this.objCapita.contract_start_date = this.contract_start_date;
+        }
+        if (!this.booPgp) {
+            this.objPgp.contract_number = this.contract_number;
+            this.objPgp.contract_expiration_date = this.contract_expiration_date;
+            this.objPgp.contract_start_date = this.contract_start_date;
+        }
+
         this.model.pharmadrugs = JSON.stringify(this._pharmadrugs || []);
         this.model.ips = this._ips || [];
         this.model.conditional_alerts = JSON.stringify(this._conditional_alerts || []);
@@ -246,7 +267,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 data.event = false;
                 data.capita = false;
                 data.pgp = false;
-                data.fare = '0';
+                data.fare = '';
                 this._pharmadrugs.push(data);
             }
             var exist = false;
@@ -397,18 +418,30 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
     }
 
     private clearEvent() {
-        if (!this.booEvento) {
+        if (this.booEvento) {
             this.objEvent = {};
+            this._pharmadrugs.forEach(element => {
+                console.log(element.event);
+                element.fare = '';
+                element.event = false;
+                console.log(element.event);
+            });
         }
     }
     private clearCapita() {
-        if (!this.booCapita) {
+        if (this.booCapita) {
             this.objCapita = {};
+            this._pharmadrugs.forEach(element => {
+                element.capita = false;
+            });
         }
     }
     private clearPgp() {
-        if (!this.booPgp) {
+        if (this.booPgp) {
             this.objPgp = {};
+            this._pharmadrugs.forEach(element => {
+                element.pgp = false;
+            });
         }
     }
 }

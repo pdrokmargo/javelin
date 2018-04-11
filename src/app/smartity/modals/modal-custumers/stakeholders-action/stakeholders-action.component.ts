@@ -39,6 +39,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     private tax_regime: any[] = [];
     private withholding: any[] = [];
     private document_type: any[] = [];
+    private document_type_n: any[] = [];
+    private document_type_j: any[] = [];
     private persons_type: any[] = [];
     private action_active: boolean = false;
     private str_action: string = 'Guardar';
@@ -94,13 +96,23 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 const res = response.json();
                 this.countries = res.COUNTRIES;
                 this.tax_regime = res.TAX_REGIME;
-                this.document_type = res.TYPES_OF_DOCUMENTS;
+                var document_type = res.TYPES_OF_DOCUMENTS;
                 this.portfolio_type = res.PORTFOLIO_TYPE;
                 this.persons_type = res.PERSONS_TYPE;
                 this.conditions_payment = res.PAYMENT_CONDITION;
                 this.suppliers_class = res.SUPPLIERS_CLASS;
                 this.customers_class = res.CUSTOMERS_CLASS;
 
+                document_type.filter(item => {
+                    if (item.value !== 'NIT') {
+                        this.document_type_n.push(item);
+                    }
+                });
+                document_type.filter(item => {
+                    if (item.value == 'NIT') {
+                        this.document_type_j.push(item);
+                    }
+                });
             }).subscribe(
                 (error) => {
                     this.loaderService.display(false);
@@ -472,6 +484,16 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 }
             });
 
+    }
+
+    private selectPersonType() {
+        if (this.model.person_type_id == 39) {
+            this.model.rut = true;
+            this.document_type = this.document_type_j;
+        } else {
+            this.model.rut = false;
+            this.document_type = this.document_type_n;
+        }
     }
 
 } 

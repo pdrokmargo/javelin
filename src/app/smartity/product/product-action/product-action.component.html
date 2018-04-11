@@ -1,93 +1,85 @@
 <!-- FORM -->
-
 <form #productForm="ngForm" autocomplete="off">
 
     <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
-        <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+        <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+    </div>
+    <!-- name>
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="name" name="name" [(ngModel)]="model.name" mdInput placeholder="Nombre">
+        </md-input-container>
+    </div-->
+    <!--product type -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <md-select class="full-width" placeholder="Tipo de producto" [(ngModel)]="model.product_profile_id" name="product_profile_id"
+            id="product_profile_id">
+            <md-option *ngFor="let item of product_type" [value]="item.id">{{item.value}}</md-option>
+        </md-select>
+    </div>
+    <!-- medicamentos -->
+    <div class="col-sm-12 margin-bottom" *ngIf="model.product_profile_id == 30">
+
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Medicamentos</div>
+            <span class="flex-spacer"></span>
+            <button type="button" type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openAddBankAccount()">Añadir</button>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Vía Administración</th>
+                        <th>Forma Farmaceutica</th>
+                        <th class="w-40"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of model.pharmaceutical_drugs">
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.routes_administration }}</td>
+                        <td>{{ item.dosage_form }}</td>
+                        <td class="w-40">
+                            <button type="button" type="button" md-icon-button (click)="removePharmaceutical(item)">
+                                <md-icon>delete</md-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
+    <!-- description -->
+    <div class='col-sm-12 margin-bottom'>
+        <md-input-container class="full-width">
+            <input required type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción">
+        </md-input-container>
+    </div>
+
+
     <div class="col-sm-12">
-        <!-- name -->
-        <div class='col-sm-12 col-md-6'>
+
+
+        <!-- comercial -->
+        <div class='col-sm-12 col-md-3'>
             <div class="box-body">
-                <md-input-container class="full-width">
-                    <input required type="text" id="name" name="name" [(ngModel)]="model.name" mdInput placeholder="Nombre">
-                </md-input-container>
-            </div>
-        </div>
-
-        <!--product type -->
-        <div class='col-sm-12 col-md-6'>
-            <div class="box-body">
-                <md-select class="full-width" placeholder="Tipo de producto" [(ngModel)]="model.product_profile_id" name="product_profile_id"
-                    id="product_profile_id">
-                    <md-option *ngFor="let item of product_type" [value]="item.id">{{item.value}}</md-option>
-                </md-select>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-12">
-            <article class="article">
-                <div class="col-sm-12">
-                    <div class="col-sm-6">
-                        <div class="box-header no-padding-h">Medicamentos</div>
-                    </div>
-                    <div class="col-sm-6">
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddBankAccount()">Añadir</button>
-                    </div>
-                </div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-
-                    <table class="mdl-data-table table-bordered table-striped cf no-margin">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Concentración</th>
-                                <th colspan="2"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of model.pharmaceutical_drugs">
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.concentration }}</td>
-                                <td class="text-center" title="Remover">
-                                    <a style="cursor: pointer;" class="text-danger" (click)="removePharmaceutical(item)">
-                                        <i class="fa fa-trash fa-2x"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </article>
-        </div>
-
-        <!-- description -->
-        <div class='col-sm-12 col-md-12'>
-            <div class="box-body">
-                <md-input-container class="full-width">
-                    <input required type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción">
-                </md-input-container>
-            </div>
-        </div>
-
-         <!-- comercial -->
-         <div class='col-sm-12 col-md-3'>
-            <div class="box-body">
-                <md-slide-toggle [labelPosition]="after" id="comercial" name="comercial" [(ngModel)]="model.comercial">Comercial</md-slide-toggle>
+                <md-slide-toggle [labelPosition]="after" id="comercial" name="comercial" [(ngModel)]="model.comercial" (change)="model.comercial_name = model.comercial ? model.comercial_name : ''">Comercial</md-slide-toggle>
             </div>
         </div>
 
         <!-- comercial_name -->
-        <div class='col-sm-12 col-md-6'>
+        <div class='col-sm-12 col-md-6' *ngIf="!model.comercial">
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input [disabled]="!model.comercial" type="text" id="comercial_name" name="comercial_name" [(ngModel)]="model.comercial_name" mdInput placeholder="Nombre comercial">
+                    <input type="text" id="comercial_name" name="comercial_name" [(ngModel)]="model.comercial_name" mdInput placeholder="Nombre comercial">
                 </md-input-container>
             </div>
         </div>
 
-       
+
         <!-- state -->
         <div class='col-sm-12 col-md-3'>
             <div class="box-body">
@@ -150,7 +142,7 @@
         <div class="box-body">
             <md-input-container class="full-width">
                 <input mdInput [mdDatepicker]="pickerLifetime" id="lifetime" name="lifetime" placeholder="Vida util" [(ngModel)]="model.lifetime">
-                <button mdSuffix [mdDatepickerToggle]="pickerLifetime"></button>
+                <button type="button" mdSuffix [mdDatepickerToggle]="pickerLifetime"></button>
             </md-input-container>
             <md-datepicker #pickerLifetime></md-datepicker>
         </div>
@@ -177,37 +169,27 @@
         </div>
     </div>
 
-    <!-- sanitary_registration_holder_id -->
-    <!-- <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-          
-            <div class='col-md-10'> 
-                <md-input-container class="full-width">
-                        <input required type="text" name="sanitary_registration_holder_id" id="sanitary_registration_holder_id" mdInput placeholder="Titular registro sanitario" [(ngModel)]="model.sanitary_registration_holder_id" mdInput>
-                </md-input-container>
-            </div>
-                
-            <div class='col-md-2'>
-                <button  md-mini-fab>                        
-                    <md-icon class="material-icons">search</md-icon>
-                </button>
-            </div>
-        
-        </div>
-    </div> -->
+    <!-- bodega >
+    <div class="col-sm-12 col-md-6 margin-bottom">
+        <md-input-container class="full-width">
+            <input readonly mdInput type="text" placeholder="Bodega" [(ngModel)]="warehouse.name" id="warehouse" name="warehouse" />
+            <md-icon mdSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</md-icon>
+        </md-input-container>
+    </div-->
+
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
-            <div class='col-md-10'> 
-                <md-select disabled class="full-width" placeholder="Titular registro sanitario" [(ngModel)]="model.sanitary_registration_holder_id" name="sanitary_registration_holder_id"
-                id="sanitary_registration_holder_id">
+            <div class='col-md-10'>
+                <md-select disabled class="full-width" placeholder="Titular registro sanitario" [(ngModel)]="model.sanitary_registration_holder_id"
+                    name="sanitary_registration_holder_id" id="sanitary_registration_holder_id">
                     <md-option *ngFor="let i of healthrecordholder" [value]="i.id">{{i.stakeholder_info.fullname}}</md-option>
-                </md-select> 
+                </md-select>
             </div>
             <div class='col-md-2'>
-                <button (click)="openAddSanitaryRegistration()"  md-mini-fab>                        
+                <button type="button" (click)="openAddSanitaryRegistration()" md-mini-fab>
                     <md-icon class="material-icons">search</md-icon>
                 </button>
-            </div>   
+            </div>
         </div>
     </div>
 
@@ -227,7 +209,7 @@
             <md-input-container class="full-width">
                 <input mdInput [mdDatepicker]="picker" id="validity_sanitary_registration" name="validity_sanitary_registration" placeholder="Vigencia de registro sanitario"
                     [(ngModel)]="model.validity_sanitary_registration">
-                <button mdSuffix [mdDatepickerToggle]="picker"></button>
+                <button type="button" mdSuffix [mdDatepickerToggle]="picker"></button>
             </md-input-container>
             <md-datepicker #picker></md-datepicker>
         </div>
@@ -244,7 +226,7 @@
                 </div>
                     
                 <div class='col-md-2'>
-                    <button  md-mini-fab>                        
+                    <button type="button"  md-mini-fab>                        
                         <md-icon class="material-icons">search</md-icon>
                     </button>
                 </div>
@@ -260,10 +242,10 @@
                 </md-select>
             </div>
             <div class='col-md-2'>
-                <button (click)="openAddSupplier()" md-mini-fab>                        
+                <button type="button" (click)="openAddSupplier()" md-mini-fab>
                     <md-icon class="material-icons">search</md-icon>
                 </button>
-            </div>   
+            </div>
         </div>
     </div>
 
@@ -278,7 +260,7 @@
                 </div>
                     
                 <div class='col-md-2'>
-                    <button  md-mini-fab>                        
+                    <button type="button"  md-mini-fab>                        
                         <md-icon class="material-icons">search</md-icon>
                     </button>
                 </div>
@@ -288,15 +270,16 @@
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <div class='col-md-10'>
-                <md-select disabled class="full-width" placeholder="Fabricante" [(ngModel)]="model.manufacturer_id" name="manufacturer_id" id="manufacturer_id">
+                <md-select disabled class="full-width" placeholder="Fabricante" [(ngModel)]="model.manufacturer_id" name="manufacturer_id"
+                    id="manufacturer_id">
                     <md-option *ngFor="let item of makers" [value]="item.id">{{item.stakeholder_info.fullname}}</md-option>
                 </md-select>
             </div>
             <div class='col-md-2'>
-                <button (click)="openAddMaker()" md-mini-fab>                        
+                <button type="button" (click)="openAddMaker()" md-mini-fab>
                     <md-icon class="material-icons">search</md-icon>
                 </button>
-            </div>   
+            </div>
         </div>
     </div>
 
@@ -311,7 +294,7 @@
                 </div>
                     
                 <div class='col-md-2'>
-                    <button  md-mini-fab>                        
+                    <button type="button"  md-mini-fab>                        
                         <md-icon class="material-icons">search</md-icon>
                     </button>
                 </div>
@@ -326,10 +309,10 @@
                 </md-select>
             </div>
             <div class='col-md-2'>
-                <button (click)="openAddImporter()" md-mini-fab>                        
+                <button type="button" (click)="openAddImporter()" md-mini-fab>
                     <md-icon class="material-icons">search</md-icon>
                 </button>
-            </div>   
+            </div>
         </div>
     </div>
 
@@ -361,7 +344,7 @@
     </div>
 
     <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button [disabled]="action_active ? false : !productForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+        <button type="button" [disabled]="action_active ? false : !productForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
             (click)="save()">{{str_action}}</button>
     </div>
 

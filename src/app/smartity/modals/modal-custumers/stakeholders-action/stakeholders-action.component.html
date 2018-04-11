@@ -8,8 +8,8 @@
     <!-- person type -->
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <md-select required class="full-width" placeholder="Tipo de persona" [(ngModel)]="model.person_type_id" name="person_type_id"
-            id="person_type_id">
-            <md-option *ngFor="let item of persons_type" [value]="item.id">{{item.value}}</md-option>
+            id="person_type_id" (change)="selectPersonType()">
+            <md-option *ngFor="let item of persons_type" [value]="item.id">{{ item.id }} {{ item.value }}</md-option>
         </md-select>
     </div>
 
@@ -17,10 +17,10 @@
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <div class="flex">
             <span class="flex-spacer"></span>
-            <md-slide-toggle [labelPosition]="after" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
+            <md-slide-toggle [disabled]="true" [labelPosition]="'before'" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
         </div>
     </div>
-
+    <div class="col-sm-12"></div>
     <!-- document type -->
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <md-select required class="full-width" placeholder="Tipo de documento" [(ngModel)]="model.document_type_id" name="document_type_id"
@@ -30,14 +30,31 @@
     </div>
 
     <!-- document number -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required NumberOnly type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput
-                    placeholder="Número de documento">
-            </md-input-container>
+    <div class='col-sm-12 col-md-6  margin-bottom' *ngIf="!model.rut">
+        <md-input-container class="full-width">
+            <input required type="text" (keypress)="keyPress($event)" id="document_number" name="document_number" [(ngModel)]="model.document_number"
+                mdInput placeholder="Número de documento">
+        </md-input-container>
+    </div>
+
+    <!-- document number -->
+    <div class='col-sm-12 col-md-6 margin-bottom' *ngIf="model.rut">
+        <div class="row">
+            <div class='col-sm-12 col-md-10'>
+                <md-input-container class="full-width">
+                    <input required (keypress)="keyPress($event)" (focusout)="getRutDigit()" type="text" id="document_number" name="document_number"
+                        [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
+                </md-input-container>
+            </div>
+            <div class='col-sm-12 col-md-2'>
+                <md-input-container class="full-width">
+                    <input [disabled]="true" type="text" id="document_number_digit" name="document_number_digit" [(ngModel)]="model.document_number_digit"
+                        mdInput placeholder="Dígito">
+                </md-input-container>
+            </div>
         </div>
     </div>
+
 
     <div class='col-sm-12 col-md-4 margin-bottom'>
         <md-input-container class="full-width">
