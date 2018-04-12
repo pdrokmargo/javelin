@@ -7,7 +7,11 @@ export * from './modal-pharmaceutical/modal-pharmaceutical.component';
 export * from './modal-pharmaceutical/pharmaceutical-drug-action/pharmaceutical-drug-action.component';
 export * from './modal-pharmaceutical/pharmaceutical-drug-list/pharmaceutical-drug-list.component';
 export * from './modal-warehouse/modal-warehouse.component';
-export * from './modal-custumers/modal-custumers.component';
+
+export * from './modal-customers/modal-customers.component';
+export * from './modal-customers/customers-action/customers-action.component';
+export * from './modal-customers/customers-list/customers-list.component';
+
 export * from './modal-users/modal-users.component';
 export * from './modal-active-ingredients/modal-active-ingredients.component';
 export * from './modal-delivery-points/modal-delivery-points.component';
@@ -21,7 +25,6 @@ export * from './modal-warehouse/warehouse-action/warehouse-action.component';
 export * from './modal-warehouse/warehouse-list/warehouse-list.component';
 export * from './modal-users/user-action/user-action.component';
 export * from './modal-users/user-list/user-list.component';
-
-export * from './modal-custumers/stakeholders-action/stakeholders-action.component';
-export * from './modal-custumers/stakeholders-list/stakeholders-list.component';
-export * from './modal-stake-holder/modal-stake-holder.component';
+export * from './modal-stakeholder/modal-stakeholder.component';
+export * from './modal-stakeholder/stakeholder-list/stakeholder-list.component';
+export * from './modal-stakeholder/stakeholder-action/stakeholder-action.component';

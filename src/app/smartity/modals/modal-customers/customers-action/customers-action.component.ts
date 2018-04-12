@@ -11,8 +11,8 @@ import { BaseModel } from '../../../bases/base-model';
 import { LoaderService, HelperService } from '../../../../shared';
 
 @Component({
-    selector: 'stakeholders-action-cmp',
-    templateUrl: 'stakeholders-action.component.html',
+    selector: 'customers-action-cmp',
+    templateUrl: 'customers-action.component.html',
     styles: [
         `
         h2 {
@@ -25,11 +25,10 @@ import { LoaderService, HelperService } from '../../../../shared';
       `
     ]
 })
-export class StakeholdersActionComponent extends BaseModel implements OnInit {
-
+export class CustomersActionComponent extends BaseModel implements OnInit {
+    
     @Output() select = new EventEmitter();
     @Input() type: string;
-
     private countries: any[] = [];
     private departments: any[] = [];
     private cities: any[] = [];

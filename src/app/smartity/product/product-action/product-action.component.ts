@@ -8,7 +8,7 @@ import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
 import { ProductComponent } from '../product.component';
 import { BaseModel } from '../../bases/base-model';
-import { ModalPharmaceuticalComponent, ModalStakeHolderComponent } from '../../modals';
+import { ModalPharmaceuticalComponent, ModalStakeholderComponent } from '../../modals';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -28,7 +28,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     private manufacturer: any = {};
     private importer: any = {};
     private pharmaceuticalDialogRef: MdDialogRef<ModalPharmaceuticalComponent>;
-    private modalStakeHolderDialogRef: MdDialogRef<ModalStakeHolderComponent>;
+    private modalStakeHolderDialogRef: MdDialogRef<ModalStakeholderComponent>;
 
     constructor(private loaderService: LoaderService,
                 private helperService: HelperService,
@@ -183,7 +183,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     openAddSanitaryRegistration() {
-        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeHolderComponent,{
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent,{
             hasBackdrop: false,
             data: {
                 title: 'Titular registro sanitario',
@@ -198,7 +198,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     openAddSupplier() {
-        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeHolderComponent,{
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent,{
             hasBackdrop: false,
             data: {
                 title: 'Proveedores',
@@ -213,7 +213,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     openAddMaker() {
-        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeHolderComponent,{
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent,{
             hasBackdrop: false,
             data: {
                 title: 'Fabricantes',
@@ -231,7 +231,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     openAddImporter() {
-        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeHolderComponent,{
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent,{
             hasBackdrop: false,
             data: {
                 title: 'Fabricantes',

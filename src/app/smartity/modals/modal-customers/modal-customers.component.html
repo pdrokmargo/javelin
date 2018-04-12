@@ -12,9 +12,9 @@
             </p>
         </div>
     </div>
-    <stakeholders-action-cmp *ngIf="radio.option==='2'" [type]="'custumers'" (select)="select($event)"></stakeholders-action-cmp>
+    <customers-action-cmp *ngIf="radio.option==='2'" [type]="'customers'"  (select)="select($event)"></customers-action-cmp>
     <div class="col-sm-12">
-        <stakeholders-list-cmp *ngIf="radio.option==='1'" [type]="'custumers'" (select)="select($event)"></stakeholders-list-cmp>
+        <customers-list-cmp *ngIf="radio.option==='1'" [type]="'customers'" (select)="select($event)"></customers-list-cmp>
     </div>
 </md-dialog-content>
 <md-dialog-actions>

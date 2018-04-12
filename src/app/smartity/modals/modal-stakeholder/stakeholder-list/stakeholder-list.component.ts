@@ -1,49 +1,39 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, Input, EventEmitter } from '@angular/core';
 import { DataTableResource } from 'angular-4-data-table';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
 import { MdSnackBar } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Response } from '@angular/http';
 import { BaseList } from '../../../bases/base-list';
 import { LoaderService, HelperService } from '../../../../shared';
 
 @Component({
-    selector: 'stakeholders-list-cmp',
-    templateUrl: 'stakeholders-list.component.html',
+    selector: 'stakeholder-list-cmp',
+    templateUrl: 'stakeholder-list.component.html',
     styles: []
 })
 
-export class StakeholdersListComponent extends BaseList implements OnInit {
+export class StakeholderListComponent extends BaseList implements OnInit {
 
+    @Input() option: string;
     @Output() select = new EventEmitter();
-    @Input() type: string;
     numItemSelected = -1;
 
-    constructor(
+    constructor(public router: Router,
         public loaderService: LoaderService,
         public helperService: HelperService) {
         super(loaderService, helperService);
+
     }
 
     ngOnInit() {
-        console.log(this.type);
-        if (this.type != '') {
-            switch (this.type) {
-                case 'custumers':
-                    this.urlApi = '/api/stakeholders-custumers';
-                    break;
-            }
-            this.getAll();
-        } else {
-            this.urlApi = '/api/stakeholders';
-            this.getAll();
-        }
-
+        this.urlApi = `/api/search_stake_holder/${this.option}`;
+        this.getAll();
     }
-
-
 
     private view(row: any) {
         this.select.emit(row);
     }
+
 }

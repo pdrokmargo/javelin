@@ -7,10 +7,10 @@ import { isNumber, isNullOrUndefined } from 'util';
 import { BaseList } from '../../bases/base-list';
 
 @Component({
-    templateUrl: './modal-custumers.component.html'
+    templateUrl: './modal-customers.component.html'
 })
 
-export class ModalCustumersComponent {
+export class ModalCustomersComponent {
 
     private model: any;
     radio = {
@@ -19,7 +19,7 @@ export class ModalCustumersComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private dialogRef: MdDialogRef<ModalCustumersComponent>,
+        private dialogRef: MdDialogRef<ModalCustomersComponent>,
         @Inject(MD_DIALOG_DATA) private data
     ) { }
 
