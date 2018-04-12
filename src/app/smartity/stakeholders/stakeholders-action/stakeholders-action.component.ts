@@ -697,10 +697,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
 
     private selectPersonType() {
         if (this.model.person_type_id == 39) {
-            this.model.rut = true;
             this.document_type = this.document_type_j;
         } else {
-            this.model.rut = false;
             this.document_type = this.document_type_n;
         }
     }
