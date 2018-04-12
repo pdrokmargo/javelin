@@ -133,6 +133,10 @@ export class ProductActionComponent extends BaseModel implements OnInit {
 
             const res = response.json();
             this.model = res['data'];
+            this.importer = res['data']['importer'] || {};
+            this.sanitary_registration_holder = res['data']['sanitary_registration_holder'] || {};
+            this.supplier = res['data']['supplier'] || {};
+            this.manufacturer = res['data']['manufacturer'] || {};
 
         }).subscribe(
             (error) => {

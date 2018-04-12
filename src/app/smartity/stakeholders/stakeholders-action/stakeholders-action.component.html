@@ -18,7 +18,7 @@
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <div class="flex">
             <span class="flex-spacer"></span>
-            <md-slide-toggle [disabled]="true" [labelPosition]="'before'" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
+            <md-slide-toggle *ngIf="model.rut == true" [labelPosition]="'before'" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
         </div>
     </div>
     <div class="col-sm-12"></div>

@@ -66,9 +66,9 @@
         </div>
 
         <!-- comercial_name -->
-        <div class='col-sm-12 col-md-4 margin-bottom'>
+        <div class='col-sm-12 col-md-4 margin-bottom' *ngIf="model.comercial">
             <md-input-container class="full-width">
-                <input [disabled]="!model.comercial" type="text" id="comercial_name" name="comercial_name" [(ngModel)]="model.comercial_name" mdInput placeholder="Nombre comercial">
+                <input type="text" id="comercial_name" name="comercial_name" [(ngModel)]="model.comercial_name" mdInput placeholder="Nombre comercial">
             </md-input-container>
         </div>
 
@@ -78,6 +78,8 @@
                 <md-option *ngFor="let i of content_unit" [value]="i.id">{{i.value}}</md-option>
             </md-select>
         </div>
+
+        <span class="col-sm-12"></span>
 
         <!-- units -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
