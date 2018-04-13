@@ -18,11 +18,15 @@ export class DeliveryPointsListComponent extends BaseList implements OnInit {
 
     @Output() select = new EventEmitter();
 
-    constructor(public router: Router,
-        public loaderService: LoaderService,
-        public helperService: HelperService,
-        private comp: DeliveryPointsComponent) {
+    constructor(
+        public router: Router, 
+        public loaderService: LoaderService, 
+        public helperService: HelperService, 
+        private comp: DeliveryPointsComponent
+    ) {
+        
         super(loaderService, helperService);
+        
         this.urlApi = '/api/delivery-points';
     }
 
@@ -30,14 +34,16 @@ export class DeliveryPointsListComponent extends BaseList implements OnInit {
         this.getAll();
     }
 
-    private NEW(row: any) {
+    private CUD(action:string, row?:any){
+        this.comp.strAction = action;
+        switch (action) {
+            case 'Guardar':
+                this.comp.id = undefined;
+                break;
+            default:
+                this.comp.id = row.id;
+                break;
+        }
         this.comp.openActions();
-        this.comp.id = '';
     }
-
-    private view(row: any) {
-        this.comp.id = row.id;
-        this.comp.openActions();
-    }
-
 }

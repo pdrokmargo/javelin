@@ -33,10 +33,6 @@ import { isNullOrUndefined } from 'util';
 })
 export class StakeholdersActionComponent extends BaseModel implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
-    @Input() type: string;
-
     private countries: any[] = [];
     private departments: any[] = [];
     private cities: any[] = [];
@@ -49,8 +45,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     private document_type_n: any[] = [];
     private document_type_j: any[] = [];
     private persons_type: any[] = [];
-    private action_active: boolean = false;
-    private str_action: string = 'Guardar';
     private comercial_stakeholders_info: any = {};
     private customer: any = {};
     private supplier: any = {};
@@ -67,52 +61,36 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     private customers_class: any[] = [];
     private tempDocumentType: any[] = [];
     private payment_method: any[] = [];
+    private pattern = /[0-9\+\-\ ]/;
 
     /**
      *
      */
-    constructor(private loaderService: LoaderService,
+    constructor(
+        private loaderService: LoaderService,
         private helperService: HelperService,
         public snackBar: MdSnackBar,
         private route: ActivatedRoute,
         private router: Router,
         private comp: StakeholdersComponent,
-        private dialog: MdDialog) {
+        private dialog: MdDialog
+    ) {
         super();
-
     }
 
     ngOnInit() {
-
         this.clean();
         this.getCollection();
         this.getSalesRepresentative();
-        this.model.is_customer = false;
-        this.model.is_supplier = false;
-        this.model.is_seller = false;
-        this.model.is_employee = false;
-
-        if (!isNullOrUndefined(this.numId) && this.numId !== '') {
-            // this.numId=this.route.snapshot.params['id'];
-            this.str_action = 'Actualizar';
+        if (this.numId !== undefined) {
             this.getDataById();
-        } else {
-            this.str_action = 'Guardar';
         }
-
     }
-
-    /**
-     * get the country and the tax regime with the collection of names
-     */
+    
     private getCollection() {
         this.loaderService.display(true);
-        this.helperService.POST(`/api/collections`, ['COUNTRIES', 'TAX_REGIME',
-            'TYPES_OF_DOCUMENTS', 'PORTFOLIO_TYPE', 'PERSONS_TYPE', 'PAYMENT_CONDITION',
-            'SUPPLIERS_CLASS', 'CUSTOMERS_CLASS', 'PAYMENT_METHOD'])
-            .map((response: Response) => {
-
-                const res = response.json();
+        this.helperService.POST(`/api/collections`, ['COUNTRIES', 'TAX_REGIME', 'TYPES_OF_DOCUMENTS', 'PORTFOLIO_TYPE', 'PERSONS_TYPE', 'PAYMENT_CONDITION', 'SUPPLIERS_CLASS', 'CUSTOMERS_CLASS', 'PAYMENT_METHOD']).subscribe(rs => {
+                const res = rs.json();
                 this.countries = res.COUNTRIES;
                 this.tax_regime = res.TAX_REGIME;
                 var document_type = res.TYPES_OF_DOCUMENTS;
@@ -135,142 +113,121 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                         this.document_type_j.push(item);
                     }
                 });
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                },
-                (done) => {
-                    this.loaderService.display(false);
-                });
+                this.loaderService.display(false);
+            }, err => {
+                console.log(err);
+                this.loaderService.display(false);
+            });
     }
 
     private getSalesRepresentative() {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/sales_representatives?all=all`)
-            .map((response: Response) => {
-
-                const res = response.json();
-                this.sales_representatives = res.data;
-
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                },
-                (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/sales_representatives?all=all`).subscribe(rs => {
+            const res = rs.json();
+            this.sales_representatives = res.data;
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);
+            this.loaderService.display(false);
+        });
     }
 
     private getDepartments() {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/departamentos?pais_id=${this.model.country_id}`)
-            .map((response: Response) => {
-
-                const res = response.json();
-                this.departments = res['departamentos'];
-
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                },
-                (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/departamentos?pais_id=${this.model.country_id}`).subscribe(rs => {
+            const res = rs.json();
+            this.departments = res['departamentos'];
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);            
+            this.loaderService.display(false);
+        });
     }
 
     private getCities() {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/ciudades?departamento_id=${this.model.department_id}`)
-            .map((response: Response) => {
-
-                const res = response.json();
-                this.cities = res['ciudades'];
-
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                },
-                (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/ciudades?departamento_id=${this.model.department_id}`).subscribe(rs => {
+            const res = rs.json();
+            this.cities = res['ciudades'];
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);
+            this.loaderService.display(false);
+        });
     }
 
     private save() {
-        /** Update */
-        if (this.model.id !== '' && this.model.id != null) {
-            this.model.customer = this.customer;
-            this.model.comercial_stakeholders_info = this.comercial_stakeholders_info;
-            this.model.supplier = this.supplier;
+        const formData: FormData = new FormData();
 
-            const formData: FormData = new FormData();
-            formData.append('data', JSON.stringify(this.model));
-            if (this.model.customer.institutional_sale_contract != null) {
-                this.model.customer.institutional_sale_contract.forEach((obj) => {
-                    if (obj.is_file === true) {
-                        formData.append(obj.contract_number + '_file', obj.file);
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.model.customer = this.customer;
+                this.model.comercial_stakeholders_info = this.comercial_stakeholders_info;
+                this.model.supplier = this.supplier;
+                formData.append('data', JSON.stringify(this.model));
+                if (this.model.customer.institutional_sale_contract !== null) {
+                    this.model.customer.institutional_sale_contract.forEach((obj) => {
+                        if (obj.is_file === true) {
+                            formData.append(obj.contract_number + '_file', obj.file);
+                        }
+                    });
+                }
+                
+                this.helperService.POSTFORMDATA(`/api/stakeholders`, formData).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                        this.goList();
                     }
+                }, err => {
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                    this.loaderService.display(false);
                 });
-            }
-
-            this.loaderService.display(true);
-            this.helperService.POSTFORMDATA(`/api/update_stake_holder`, formData)
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Actualización', {
-                            duration: 3500,
-                        });
-                        // this.router.navigate(['app/company-list']);
+            break;
+            case 'Actualizar':
+                this.model.customer = this.customer;
+                this.model.comercial_stakeholders_info = this.comercial_stakeholders_info;
+                this.model.supplier = this.supplier;
+                formData.append('data', JSON.stringify(this.model));
+                if (this.model.customer.institutional_sale_contract != null) {
+                    this.model.customer.institutional_sale_contract.forEach((obj) => {
+                        if (obj.is_file === true) {
+                            formData.append(obj.contract_number + '_file', obj.file);
+                        }
+                    });
+                }
+                this.helperService.PUTFORMDATA(`/api/update_stake_holder/${this.numId}`, formData).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
                         this.comp.openList();
                     }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    },
-                    (done) => {
-                        this.loaderService.display(false);
-                    });
-        } else {
-            /** Create */
-            this.model.customer = this.customer;
-            this.model.comercial_stakeholders_info = this.comercial_stakeholders_info;
-            this.model.supplier = this.supplier;
-
-            const formData: FormData = new FormData();
-            formData.append('data', JSON.stringify(this.model));
-            if (this.model.customer.institutional_sale_contract !== null) {
-                this.model.customer.institutional_sale_contract.forEach((obj) => {
-                    if (obj.is_file === true) {
-                        formData.append(obj.contract_number + '_file', obj.file);
-                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+                    this.loaderService.display(true);
                 });
-            }
-
-            this.loaderService.display(true);
-            this.helperService.POSTFORMDATA(`/api/stakeholders`, formData)
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                        this.goList();
-                        // if(this.noaction){
-                        //     this.select.emit(res.data);
-                        // }
-                    }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    },
-                    (done) => {
-                        this.loaderService.display(false);
+            break;
+            case 'Eliminar':
+                formData.append('data', JSON.stringify(this.model));
+                if (this.model.customer.institutional_sale_contract != null) {
+                    this.model.customer.institutional_sale_contract.forEach((obj) => {
+                        if (obj.is_file === true) {
+                            formData.append(obj.contract_number + '_file', obj.file);
+                        }
                     });
+                }
+                this.helperService.DELETE(`/api/stakeholders/${this.numId}`).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                    this.loaderService.display(true);
+                });
+            break;
         }
 
     }
@@ -393,19 +350,10 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     }
 
     openAddSucursal() {
-        this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent, {
-            hasBackdrop: false,
-            // height: 'auto',
-            // width: '700px',
+        this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent, { hasBackdrop: false });
+        this.sucursalDialogRef.afterClosed().pipe(filter((shipping_point) => shipping_point)).subscribe((shipping_point) => {
+            this.customer.shipping_points.push(shipping_point);
         });
-
-        this.sucursalDialogRef
-            .afterClosed()
-            .pipe(filter((shipping_point) => shipping_point))
-            .subscribe((shipping_point) => {
-                this.customer.shipping_points.push(shipping_point);
-            });
-
     }
 
     private checked(opcion: any) {
@@ -681,14 +629,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         // return(digitov)
     }
 
-    keyPress(event: any) {
-        const pattern = /[0-9\+\-\ ]/;
-
-        const inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode !== 8 && !pattern.test(inputChar)) {
-            event.preventDefault();
-        }
-    }
+    
 
     submit(e) {
         /* form code */

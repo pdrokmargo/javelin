@@ -27,143 +27,124 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
     private cities: any[] = [];
     private warehouses: any[] = [];
     private operations_centre_groups: any[] = [];
-    private action_active: boolean;
-    private str_action: string = 'Guardar';
-    // id de registro seleccionado de la tabla
 
-    constructor(private loaderService: LoaderService,
+    constructor(
+        private loaderService: LoaderService,
         private helperService: HelperService,
         public snackBar: MdSnackBar,
         private route: ActivatedRoute,
         private router: Router,
-        private comp: WarehouseComponent) {
+        private comp: WarehouseComponent
+    ) {
         super();
-
     }
 
     ngOnInit() {
-
         this.clean();
         this.getCollection();
-        console.log(this.numId);
-
-        if (!isNullOrUndefined(this.numId) && this.numId !== '') {
-            this.str_action = 'Actualizar';
+        if (this.numId !== undefined) {
             this.getDataById();
-        } else {
-            this.str_action = 'Guardar';
         }
     }
 
-    /**
-     * get the country and the tax regime with the collection of names
-     */
     private getCollection() {
-        this.helperService.POST(`/api/collections`, ['COUNTRIES', 'OPERATIONS_CENTRE_GROUPS', 'WAREHOUSE_TYPE'])
-            .map((response: Response) => {
-                const res = response.json();
-                this.countries = res.COUNTRIES;
-                this.operations_centre_groups = res.OPERATIONS_CENTRE_GROUPS;
-                this.warehouses = res.WAREHOUSE_TYPE;
-            }).subscribe(
-                (error) => {
-                    console.log(error);
-                }, (done) => { });
+        this.loaderService.display(true);
+        this.helperService.POST(`/api/collections`, ['COUNTRIES', 'OPERATIONS_CENTRE_GROUPS', 'WAREHOUSE_TYPE']).subscribe(rs => {
+            const res = rs.json();
+            this.countries = res.COUNTRIES;
+            this.operations_centre_groups = res.OPERATIONS_CENTRE_GROUPS;
+            this.warehouses = res.WAREHOUSE_TYPE;
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);            
+            this.loaderService.display(false);
+        });
     }
 
     private getDepartments() {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/departamentos?pais_id=${this.model.country_id}`)
-            .map((response: Response) => {
-                const res = response.json();
-                console.log(res);
-                this.departments = res.departamentos;
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                }, (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/departamentos?pais_id=${this.model.country_id}`).subscribe(rs => {
+            const res = rs.json();
+            this.departments = res.departamentos;
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);            
+            this.loaderService.display(false);
+        });
     }
 
     private getCities() {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/ciudades?departamento_id=${this.model.department_id}`)
-            .map((response: Response) => {
-                const res = response.json();
-                this.cities = res.ciudades;
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                }, (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/ciudades?departamento_id=${this.model.department_id}`).subscribe(rs => {
+            const res = rs.json();
+            this.cities = res.ciudades;
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);            
+            this.loaderService.display(false);
+        });
     }
 
     private save() {
-        /** Update */
-        if (this.numId != '') {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/warehouse/${this.numId}`, this.model)
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Actualización', {
-                            duration: 3500,
-                        });
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+            this.helperService.POST(`/api/warehouse`, this.model).subscribe(rs => {
+                const res = rs.json();
+                if (res.store) {
+                    this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                    this.comp.openList();
+                }
+            }, err => {
+                this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                this.loaderService.display(false);
+            });
+            break;
+            case 'Actualizar': 
+                this.helperService.PUT(`/api/warehouse/${this.numId}`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
                         this.comp.openList();
-
                     }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    }, (done) => {
-                        this.loaderService.display(false);
-                    });
-        } else {
-            /** Create */
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/warehouse`, this.model)
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                    }
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    }, (done) => {
-                        this.loaderService.display(false);
-                    });
+                }, err => {
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+            break;
+            case 'Eliminar': 
+            this.helperService.DELETE(`/api/warehouse/${this.numId}`).subscribe(rs => {
+                const res = rs.json();
+                if (res.delete) {
+                    this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                    this.comp.openList();
+                }
+            }, err => {
+                this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                this.loaderService.display(false);
+            });
+        break;
         }
+ 
+
 
     }
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/warehouse/${this.numId}`)
-            .map((response: Response) => {
-
-                const res = response.json();
-                this.model = res.data;
-                this.departments.push(this.model.geolocation.department);
-                this.cities.push(this.model.geolocation.city);
-                this.model.country_id = this.model.geolocation.country_id;
-                this.model.department_id = this.model.geolocation.department_id;
-                this.model.city_id = this.model.geolocation.city_id;
-
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                }, (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/warehouse/${this.numId}`).subscribe(rs => {
+            const res = rs.json();
+            this.model = res.data;
+            this.departments.push(this.model.geolocation.department);
+            this.cities.push(this.model.geolocation.city);
+            this.model.country_id = this.model.geolocation.country_id;
+            this.model.department_id = this.model.geolocation.department_id;
+            this.model.city_id = this.model.geolocation.city_id;
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);            
+            this.loaderService.display(false);
+        });
     }
 
     private clean() {

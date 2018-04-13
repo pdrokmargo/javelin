@@ -22,126 +22,103 @@ export class OperationscentreActionComponent extends BaseModel implements OnInit
     private departments: any[] = [];
     private cities: any[] = [];
     private operations_centre_groups: any[] = [];
-    private action_active: boolean;
-    private str_action: string = 'Guardar';
-    // id de registro seleccionado de la tabla
+    private pattern = /[0-9\+\-\ ]/;
 
-    constructor(private loaderService: LoaderService,
-                private helperService: HelperService,
-                public snackBar: MdSnackBar,
-                private route: ActivatedRoute,
-                private router: Router,
-                private comp: OperationscentreComponent) {
+    constructor(
+        private loaderService: LoaderService,
+        private helperService: HelperService,
+        public snackBar: MdSnackBar,
+        private route: ActivatedRoute,
+        private router: Router,
+        private comp: OperationscentreComponent
+    ) {
         super();
-
     }
 
     ngOnInit() {
-
         this.clean();
         this.getCollection();
-
-        if (this.numId > 0) {
-            // this.numId=this.route.snapshot.params['id'];
-            this.str_action = 'Actualizar';
+        if (this.numId != undefined) {
             this.getDataById();
-        } else {
-            this.str_action = 'Guardar';
         }
     }
-
-    /**
-     * get the country and the tax regime with the collection of names
-     */
+    
     private getCollection(){
-        this.helperService.POST(`/api/collections`, ['COUNTRIES', 'OPERATIONS_CENTRE_GROUPS'])
-        .map((response: Response) => {
-            const res = response.json();
+        this.loaderService.display(true);
+        this.helperService.POST(`/api/collections`, ['COUNTRIES', 'OPERATIONS_CENTRE_GROUPS']).subscribe(rs => {
+            const res = rs.json();
             this.countries = res.COUNTRIES;
             this.operations_centre_groups = res.OPERATIONS_CENTRE_GROUPS;
-        }).subscribe(
-            (error) =>{
-                console.log(error);
-            },
-            (done) => {});
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);
+            this.loaderService.display(false);
+        });
     }
 
     private getDepartments(){
         this.loaderService.display(true);
-        this.helperService.GET(`/api/departamentos?pais_id=${this.model.country_id}`)
-        .map((response: Response) => {
-            const res = response.json();
-            console.log(res);
+        this.helperService.GET(`/api/departamentos?pais_id=${this.model.country_id}`).subscribe(rs => {
+            const res = rs.json();
             this.departments = res.departamentos;
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);
+            this.loaderService.display(false);
+        });
     }
 
     private getCities(){
         this.loaderService.display(true);
-        this.helperService.GET(`/api/ciudades?departamento_id=${this.model.department_id}`)
-        .map((response: Response) => {
-            const res = response.json();
+        this.helperService.GET(`/api/ciudades?departamento_id=${this.model.department_id}`).subscribe(rs => {
+            const res = rs.json();
             this.cities = res.ciudades;
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);            
+            this.loaderService.display(false);
+        });
     }
 
     private save(){
-        /** Update */
-        if (this.model.id > 0) {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/operationscentres/${this.numId}`, this.model)
-            .map((response: Response) => {
-
-                const res = response.json();
-                if (res.status === 'success') {
-                    this.snackBar.open(res.message, 'Actualización', {
-                        duration: 3500,
-                    });
-                    // this.router.navigate(['app/operations-centres-list']);
-                    this.comp.openList();
-                }
-
-            }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
-        } else {
-            /** Create */
-            this.loaderService.display(true); 
-            this.helperService.POST(`/api/operationscentres`, this.model)
-            .map((response: Response) => {
-
-                const res = response.json();
-                if (res.status === 'success') {
-                    this.snackBar.open(res.message, 'Guardado', {
-                        duration: 3500,
-                    });
-                    this.clean();
-                    this.goList();
-                }
-
-            }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.helperService.POST(`/api/operationscentres`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                        this.goList();
+                    }
+                }, err => {
+                    this.loaderService.display(false);
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                });
+            break;
+            case 'Actualizar':
+                this.helperService.PUT(`/api/operationscentres/${this.numId}`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+            break;
+            case 'Eliminar':
+                this.helperService.DELETE(`/api/operationscentres/${this.numId}`).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+            break;
         }
 
     }
@@ -180,13 +157,5 @@ export class OperationscentreActionComponent extends BaseModel implements OnInit
         this.comp.openList();
     }
 
-    keyPress(event: any) {
-        const pattern = /[0-9\+\-\ ]/;
-
-        const inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode != 8 && !pattern.test(inputChar)) {
-          event.preventDefault();
-        }
-      }
 
 }

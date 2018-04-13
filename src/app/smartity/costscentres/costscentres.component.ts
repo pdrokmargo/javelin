@@ -16,8 +16,5 @@ export class CostscentresComponent extends Base implements OnInit {
     }
    
     ngOnInit() {
-      
     }
-    
-      
 }

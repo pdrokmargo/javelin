@@ -33,16 +33,16 @@ export class StakeholdersListComponent extends BaseList implements OnInit {
         this.getAll();
     }
 
-    private NEW(row: any) {
-        this.comp.openActions();
-        this.comp.id = '';
-    }
-
-    private view(row: any) {
-        if (this.noaction) {
-            this.select.emit(row);
+    private CUD(action:string, row?:any){
+        this.comp.strAction = action;
+        switch (action) {
+            case 'Guardar':
+                this.comp.id = undefined;
+                break;
+            default:
+                this.comp.id = row.id;
+                break;
         }
         this.comp.openActions();
-        this.comp.id = row.id;
     }
 }

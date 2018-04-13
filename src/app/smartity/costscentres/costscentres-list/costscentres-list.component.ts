@@ -17,10 +17,12 @@ import { CostscentresComponent } from '../costscentres.component';
 
 export class CostscentresListComponent  extends BaseList implements  OnInit{
     
-    constructor(public router: Router,
-                public loaderService:LoaderService, 
-                public helperService:HelperService,
-                private comp: CostscentresComponent) {
+    constructor(
+        public router: Router,
+        public loaderService:LoaderService, 
+        public helperService:HelperService,
+        private comp: CostscentresComponent
+    ) {
         super(loaderService, helperService);
         this.urlApi='/api/costscentres';
     }
@@ -29,14 +31,17 @@ export class CostscentresListComponent  extends BaseList implements  OnInit{
         this.getAll(); 
     }
             
-    private NEW(row: any) {               
+    private CUD(action:string, row?:any){
+        this.comp.strAction = action;
+        switch (action) {
+            case 'Guardar':
+                this.comp.id = undefined;
+                break;
+            default:
+                this.comp.id = row.id;
+                break;
+        }
         this.comp.openActions();
-        this.comp.id=0;
-    } 
-
-    private view(row: any) {               
-        this.comp.openActions();        
-        this.comp.id=row.id;
-    } 
+    }
        
 }

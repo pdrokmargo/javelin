@@ -17,10 +17,12 @@ import { ProductComponent } from '../product.component';
 
 export class ProductListComponent  extends BaseList implements  OnInit{
 
-    constructor(public router: Router,
-                public loaderService: LoaderService, 
-                public helperService: HelperService,
-                private comp: ProductComponent) {
+    constructor(
+        public router: Router,
+        public loaderService: LoaderService, 
+        public helperService: HelperService,
+        private comp: ProductComponent
+    ) {
         super(loaderService, helperService);
         this.urlApi = '/api/product';
     }
@@ -29,14 +31,17 @@ export class ProductListComponent  extends BaseList implements  OnInit{
         this.getAll();
     }
 
-    private NEW(row: any) {
+    private CUD(action:string, row?:any){
+        this.comp.strAction = action;
+        switch (action) {
+            case 'Guardar':
+                this.comp.id = undefined;
+                break;
+            default:
+                this.comp.id = row.id;
+                break;
+        }
         this.comp.openActions();
-        this.comp.id = '';
-    }
-
-    private view(row: any) {
-        this.comp.openActions();
-        this.comp.id = row.id;
     }
 
 }

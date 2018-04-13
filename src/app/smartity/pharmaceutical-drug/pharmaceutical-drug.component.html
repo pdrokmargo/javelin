@@ -9,10 +9,8 @@
         <div class="container-fluid with-maxwidth">
             <div class="box box-default">
                 <div class="box-body">
-                   
-                    <pharmaceutical-drug-action-cmp *ngIf="isOpenActions" [numId]="id"></pharmaceutical-drug-action-cmp>
+                    <pharmaceutical-drug-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></pharmaceutical-drug-action-cmp>
                     <pharmaceutical-drug-list-cmp *ngIf="isOpenList"></pharmaceutical-drug-list-cmp>
-                   
                 </div>               
             </div>
         </div>

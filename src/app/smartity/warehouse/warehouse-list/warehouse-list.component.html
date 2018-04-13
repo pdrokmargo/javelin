@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
+        <button md-raised-button (click)="CUD('Guardar')" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
     </div>
     <div class="col-sm-12">
 
@@ -32,18 +32,24 @@
                         <th (click)="sort('w.state')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='w.state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th></th>
+                        <th class="w-40"></th>
+                        <th class="w-40"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of list.data" (click)="view(item)">
+                    <tr *ngFor="let item of list.data">
                         <td class="noAuto">{{ item.id }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.city }}</td>
                         <td>{{ item.state ? 'Activa' : 'Inactiva' }}</td>
                         <td class="w-40">
-                            <button type="button" md-icon-button class="text-primary" (click)="view(item)">
+                            <button type="button" md-icon-button class="text-primary" (click)="CUD('Actualizar',item)">
                                 <md-icon>mode_edit</md-icon>
+                            </button>
+                        </td>
+                        <td class="w-40">
+                            <button type="button" md-icon-button class="text-danger" (click)="CUD('Eliminar',item)">
+                                <md-icon>delete</md-icon>
                             </button>
                         </td>
                     </tr>
