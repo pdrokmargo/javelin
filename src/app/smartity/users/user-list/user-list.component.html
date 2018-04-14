@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
+            <button md-raised-button (click)="CUD('Guardar')" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
         </div>
         <div class="col-sm-12">
 
@@ -36,27 +36,33 @@
                             <th (click)="sort('c.name')">Empresa
                                 <span class="glyphicon sort-icon" *ngIf="key =='c.name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                            <th (click)="sort('last_access')">Ultimo Acceso
+                            <!--th (click)="sort('last_access')">Ultimo Acceso
                                 <span class="glyphicon sort-icon" *ngIf="key =='last_access'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                            </th>
+                            </th-->
                             <th (click)="sort('u.status')">Estado
                                 <span class="glyphicon sort-icon" *ngIf="key =='u.status'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                            <th></th>
+                            <th class="w-40"></th>
+                            <th class="w-40"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of list.data" (click)="view(item)">
+                        <tr *ngFor="let item of list.data">
                             <td class="noAuto">{{ item.id }}</td>
                             <td>{{ item.username }}</td>
                             <td>{{ item.firstname + ' ' + item.lastname }}</td>
                             <td>{{ item.user_profile }}</td>
                             <td>{{ item.company }}</td>
-                            <td>{{ item.last_access }}</td>
+                            <!--td>{{ item.last_access }}</td-->
                             <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>
                             <td class="w-40">
-                                <button type="button" md-icon-button class="text-primary" (click)="view(item)">
+                                <button type="button" md-icon-button class="text-primary" (click)="CUD('Actualizar',item)">
                                     <md-icon>mode_edit</md-icon>
+                                </button>
+                            </td>
+                            <td class="w-40">
+                                <button type="button" md-icon-button class="text-danger" (click)="CUD('Eliminar',item)">
+                                    <md-icon>delete</md-icon>
                                 </button>
                             </td>
                         </tr>

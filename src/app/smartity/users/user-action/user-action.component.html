@@ -3,7 +3,7 @@
     <!--FORM-->
 
     <form #modelForm="ngForm" autocomplete="off">
-        <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
+        <div class="col-sm-12 margin-bottom" >
             <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
         </div>
         <div class="col-sm-12 margin-bottom">
@@ -115,9 +115,9 @@
 
         </div>
     </div>
-    <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
-            (click)="save()">{{str_action}}</button>
+    <div class="col-sm-12" >
+        <button [disabled]="!modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{strAction}}</button>
     </div>
 
 

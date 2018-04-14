@@ -102,7 +102,7 @@
         <md-slide-toggle [labelPosition]="after" id="is_pos" name="is_pos" [(ngModel)]="model.is_pos">POS</md-slide-toggle>
     </div>
     <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button type="button" [disabled]="action_active ? false : !pharmeceuticalForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
-            (click)="save()">{{str_action}}</button>
+        <button type="button" [disabled]="!pharmeceuticalForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{strAction}}</button>
     </div>
 </form>

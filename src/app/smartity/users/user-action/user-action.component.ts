@@ -23,8 +23,6 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
     private companies: any[] = [];
     private user_profiles: any[] = [];
-    private action_active: boolean;
-    private str_action: string = 'Guardar';
     private model_user_company: any = {};
 
     constructor(public loaderService: LoaderService,
@@ -43,12 +41,8 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.getUserProfiles();
         this.getCompanies();
 
-        if (!isNullOrUndefined(this.numId) && this.numId !== '') {
-            // this.numId=this.route.snapshot.params['id'];
-            this.str_action = 'Actualizar';
+        if (this.numId != undefined) {
             this.getDataById();
-        } else {
-            this.str_action = 'Guardar';
         }
     }
 
@@ -82,59 +76,49 @@ export class UserActionComponent extends BaseModel implements OnInit {
         /** Update */
         if (this.model.usersprivileges.length === 0) {
             this.snackBar.open('Agregue una empresa para continuar.', 'Error', {
-                duration: 3500,
+                duration: 4000,
             });
             return false;
         }
-        if (!isNullOrUndefined(this.model.id) && this.model.id !== '') {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/users/${this.numId}`, this.model)
-                .map((response: Response) => {
 
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Actualización', {
-                            duration: 3500,
-                        });
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.helperService.POST(`/api/users`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                        this.goList();
+                    }
+                }, err => {
+                    this.loaderService.display(false);
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                });
+                break;
+            case 'Actualizar':
+                this.helperService.PUT(`/api/users/${this.numId}`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
                         this.comp.openList();
                     }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    }, (done) => {
-                        this.loaderService.display(false);
-                    });
-
-        } else {
-            /** Create */
-            if (this.model.usersprivileges.length === 0) {
-                this.snackBar.open('Agregue una empresa para continuar.', 'Error', {
-                    duration: 3500,
+                }, err => {
+                    this.loaderService.display(false);
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
                 });
-                return false;
-            }
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/users`, this.model)
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
-                        if (this.noaction) {
-                            this.select.emit(res.data);
-                        }
+                break;
+            case 'Eliminar':
+                this.helperService.DELETE(`/api/users/${this.numId}`).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.comp.openList();
                     }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    }, (done) => {
-                        this.loaderService.display(false);
-                    });
+                }, err => {
+                    this.loaderService.display(false);
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                });
+                break;
         }
 
     }
@@ -190,7 +174,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
         if (obj.id > 0 && obj.company_id === this.model.company_default_id) {
             this.snackBar.open('Usted no puede remover una empresa activa!', 'Error', {
-                duration: 3500,
+                duration: 4000,
             });
 
             return false;

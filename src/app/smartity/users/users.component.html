@@ -12,7 +12,7 @@
         <div class="container-fluid with-maxwidth">
             <div class="box box-default">
                 
-                <user-action-cmp [numId]="id" *ngIf="isOpenActions"></user-action-cmp>
+                <user-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></user-action-cmp>
                 <user-list-cmp *ngIf="isOpenList"></user-list-cmp>
 
             </div>

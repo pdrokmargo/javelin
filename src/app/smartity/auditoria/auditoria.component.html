@@ -44,9 +44,9 @@
                                     <th (click)="sort('a.action')">Acción
                                         <span class="glyphicon sort-icon" *ngIf="key =='a.action'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                     </th>
-                                    <th (click)="sort('a.description')">Descripción
+                                    <!--th (click)="sort('a.description')">Descripción
                                         <span class="glyphicon sort-icon" *ngIf="key =='a.description'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                                    </th>
+                                    </th-->
                                     <th (click)="sort('a.created_at')">Fecha
                                         <span class="glyphicon sort-icon" *ngIf="key =='a.created_at'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                                     </th>                                                                                                 
@@ -58,7 +58,7 @@
                                       <td>{{ item.company }}</td>
                                       <td>{{ item.view }}</td>
                                       <td>{{ item.action }}</td>
-                                      <td>{{ item.description }}</td>
+                                      <!--td>{{ item.description }}</td-->
                                       <td>{{ item.enter_date }}</td>
                                   </tr>                                          
                               </tbody>
