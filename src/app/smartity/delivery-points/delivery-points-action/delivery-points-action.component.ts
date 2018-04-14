@@ -72,7 +72,6 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
                     let res = rs.json();
                     if (res.store) {
                         this.snackBar.open(res.message, 'Guardado', { duration: 3500 });
-                        this.clean();
                         this.comp.openList();
                         this.loaderService.display(false);
                     }
@@ -96,7 +95,7 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
             case 'Eliminar':
                 this.helperService.DELETE(`/api/delivery-points/${this.numId}`).subscribe(rs => {
                     let res = rs.json();
-                    if (res.update) {
+                    if (res.delete) {
                         this.snackBar.open(res.message, 'Eliminación', { duration: 3500 });
                         this.comp.openList();
                     }

@@ -113,6 +113,9 @@ tr.active {
 .noAuto {
   width: 1px;
   white-space: nowrap;
+  overflow: hidden;
+  max-width: 120px;
+  text-overflow: ellipsis;
 }
 
 .flex {
