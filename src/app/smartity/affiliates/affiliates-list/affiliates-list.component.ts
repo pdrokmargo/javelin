@@ -16,9 +16,6 @@ import { AffiliatesComponent } from '../affiliates.component';
 
 export class AffiliatesListComponent extends BaseList implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
-
     constructor(public router: Router,
         public loaderService: LoaderService,
         public helperService: HelperService,
@@ -34,15 +31,13 @@ export class AffiliatesListComponent extends BaseList implements OnInit {
     private NEW(row: any) {
         this.comp.openActions();
         this.comp.id = '';
+        this.comp.strAction = 'Guardar';
     }
 
-    private view(row: any) {
-        if (this.noaction) {
-            this.select.emit(row);
-        } else {
-            this.comp.id = row.id;
-            this.comp.openActions();
-        }
+    private view(row: any, action: string) {
+        this.comp.id = row.id;
+        this.comp.strAction = action;
+        this.comp.openActions();
     }
 
 }

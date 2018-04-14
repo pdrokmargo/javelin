@@ -36,7 +36,8 @@
                         <th (click)="sort('state')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='ct.state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th></th>
+                        <th class="w-40"></th>
+                        <th class="w-40"></th>
                     </tr>
                 </thead>
                 <tbody *ngIf="list.data">
@@ -47,8 +48,13 @@
                         <td>{{item.contracts_payment_method}}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>
                         <td class="w-40">
-                            <button type="button" md-icon-button class="text-primary" (click)="view(item)">
+                            <button type="button" md-icon-button class="text-primary" (click)="view(item,'Actualizar')">
                                 <md-icon>mode_edit</md-icon>
+                            </button>
+                        </td>
+                        <td class="w-40">
+                            <button type="button" md-icon-button class="text-danger" (click)="view(item, 'Eliminar')">
+                                <md-icon>delete</md-icon>
                             </button>
                         </td>
                     </tr>

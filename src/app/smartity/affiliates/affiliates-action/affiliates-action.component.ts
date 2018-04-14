@@ -36,7 +36,7 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
 
     private arrDelivery_point_group: Array<any> = [];
     private action_active: boolean;
-    private str_action: string = 'Guardar';
+    //private str_action: string = 'Guardar';
 
 
     constructor(public snackBar: MdSnackBar,
@@ -58,11 +58,12 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
         this.getCollection();
         this.loadDepartment();
         this.loadDeliveryContract();
-        if (this.numId == undefined || this.numId == null || this.numId == '') {
-            this.str_action = 'Guardar';
-        } else {
-            this.str_action = 'Actualizar';
-            this.getDataById();
+
+        switch (this.strAction) {
+            case 'Actualizar':
+            case 'Eliminar':
+                this.getDataById();
+                break;
         }
     }
 
@@ -117,46 +118,56 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
     }
 
     private save() {
+        this.loaderService.display(true);
+
         this.model.geolocation = JSON.stringify({
             "department": this.model.department,
             "city": this.model.city
         });
-        if (this.numId == '') {
-            /**Create */
-            this.model.delivery_contracts = '';
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/affiliates`, this.model).subscribe(rs => {
+        switch (this.strAction) {
+            case 'Guardar':
+                this.model.delivery_contracts = '';
 
-                let res = rs.json();
-                if (res.store) {
-                    this.snackBar.open(res.message, 'Guardado', {
-                        duration: 3500,
-                    });
-                    this.clean();
+                this.helperService.POST(`/api/affiliates`, this.model).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 3500 });
+                        this.clean();
+                        this.loaderService.display(false);
+                        this.comp.openList();
+                    }
+                }, err => {
                     this.loaderService.display(false);
-                    this.comp.openList();
-                }
-
-            }, err => {
-                this.loaderService.display(false);
-            });
-
-        } else {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/affiliates/${this.numId}`, this.model).subscribe(rs => {
-                let res = rs.json();
-                if (res.update) {
-                    this.snackBar.open(res.message, 'Actualización', {
-                        duration: 3500,
-                    });
-                    this.comp.openList();
-                }
-
-            }, err => {
-                this.loaderService.display(false);
-            });
-
+                });
+                break;
+            case 'Actualizar':
+                this.helperService.PUT(`/api/affiliates/${this.numId}`, this.model).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', {
+                            duration: 3500,
+                        });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.loaderService.display(false);
+                });
+                break;
+            case 'Eliminar':
+                this.helperService.DELETE(`/api/affiliates/${this.numId}`).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', {
+                            duration: 3500,
+                        });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.loaderService.display(false); 
+                });
+                break;
         }
+
 
     }
 

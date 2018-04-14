@@ -2,8 +2,9 @@ export abstract class Base {
   private isOpenList: boolean = true;
   private isOpenActions: boolean = false;
   public id: any;
+  public strAction: string = '';
 
-  constructor() {}
+  constructor() { }
 
   public openList() {
     this.isOpenActions = false;
