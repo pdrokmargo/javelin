@@ -20,16 +20,16 @@ import { ModalUsersComponent } from '../../modals/modal-users/modal-users.compon
 
 export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
-    @Output() select = new EventEmitter();
-
     private arrDelivery_point_group: Array<any> = [];
-    private action_active: boolean;
-    private str_action: string = 'Guardar';
     private modalWarehouse: MdDialogRef<ModalWarehouseComponent>;
     private modalUsers: MdDialogRef<ModalUsersComponent>;
     private warehouse: any = {};
+    private arrDelivery_contracts = [];    
 
-    constructor(public snackBar: MdSnackBar,
+    @Output() select = new EventEmitter();   
+
+    constructor(
+        public snackBar: MdSnackBar,
         private route: ActivatedRoute,
         private router: Router,
         private loaderService: LoaderService,
@@ -41,104 +41,96 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
 
     }
 
-
     ngOnInit() {
         this.clean();
         this.getCollection();
-        if (this.numId == undefined || this.numId == null || this.numId == '') {
-            this.str_action = 'Guardar';
-        } else {
-            this.str_action = 'Actualizar';
+        if (this.numId !== undefined) {
             this.getDataById();
         }
     }
 
     private getCollection() {
+        this.loaderService.display(true);
         this.helperService.POST(`/api/collections`, ["DELIVERY_POINTS_GROUPS"]).subscribe(rs => {
             let res = rs.json();
             this.arrDelivery_point_group = res.DELIVERY_POINTS_GROUPS;
-        }, err => { console.log(err); });
+            this.loaderService.display(false);
+        }, err => { 
+            console.log(err); 
+            this.loaderService.display(false);
+        });
     }
 
 
-    arrDelivery_contracts = [];
+    
     private save() {
-
-        if (this.numId == '') {
-            /**Create */
-            this.model.delivery_contracts = '[]';
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/delivery-points`, this.model)
-                .subscribe(rs => {
-
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.model.delivery_contracts = '[]';
+                this.helperService.POST(`/api/delivery-points`, this.model).subscribe(rs => {
                     let res = rs.json();
                     if (res.store) {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
+                        this.snackBar.open(res.message, 'Guardado', { duration: 3500 });
                         this.clean();
                         this.comp.openList();
                         this.loaderService.display(false);
                     }
-
                 }, err => {
+                    this.snackBar.open(err.message, 'Guardado', { duration: 3500 });
                     this.loaderService.display(false);
                 });
-
-        } else {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/delivery-points/${this.numId}`, this.model).subscribe(rs => {
-                let res = rs.json();
-                if (res.update) {
-                    this.snackBar.open(res.message, 'Actualización', {
-                        duration: 3500,
-                    });
-                    this.comp.openList();
-                }
-
-            }, err => {
-                this.loaderService.display(false);
-            });
-
+                break;
+            case 'Actualizar':
+                this.helperService.PUT(`/api/delivery-points/${this.numId}`, this.model).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 3500 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Actualización', { duration: 3500 });
+                    this.loaderService.display(false);
+                });
+                break;
+            case 'Eliminar':
+                this.helperService.DELETE(`/api/delivery-points/${this.numId}`).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 3500 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 3500 });
+                    this.loaderService.display(false);
+                });
+                break;
         }
-
     }
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/delivery-points/${this.numId}`)
-            .map((response: Response) => {
-
-
-                let res = response.json();
-                this.model = res.data;
-                console.log(this.model);
-
-                console.log(this.model.contract_point);
-                
-                this.arrDelivery_contracts = [];
-                this.model.contract_point.forEach(element => {
-                    console.log(element);
-                    
-                    element.config = JSON.parse(element.config);
-                    this.arrDelivery_contracts.push({
-                        id: element.delivery_contracts.id,
-                        name: element.delivery_contracts.name,
-                        event: element.config.event || false,
-                        capita: element.config.capita || false,
-                        pgp: element.config.pgp || false,
-                    });
+        this.helperService.GET(`/api/delivery-points/${this.numId}`).map((response: Response) => {
+            let res = response.json();
+            this.model = res.data;
+            this.arrDelivery_contracts = [];
+            this.model.contract_point.forEach(element => {
+                element.config = JSON.parse(element.config);
+                this.arrDelivery_contracts.push({
+                    id: element.delivery_contracts.id,
+                    name: element.delivery_contracts.name,
+                    event: element.config.event || false,
+                    capita: element.config.capita || false,
+                    pgp: element.config.pgp || false,
                 });
-                //this.arrDelivery_contracts = JSON.parse(this.model.delivery_contracts);
-                this.warehouse = this.model.warehouses;
-                this.model.operation_cost_centre_id = this.model.root == true ? 'co-' + this.model.operation_cost_centre_id : 'cc-' + this.model.operation_cost_centre_id;
-
-            }).subscribe(
-                error => {
-                    this.loaderService.display(false);
-                }, done => {
-                    this.loaderService.display(false);
-                });
+            });
+            this.warehouse = this.model.warehouses;
+            this.model.operation_cost_centre_id = this.model.root == true ? 'co-' + this.model.operation_cost_centre_id : 'cc-' + this.model.operation_cost_centre_id;
+        }).subscribe(error => {
+            this.loaderService.display(false);
+        }, done => {
+            this.loaderService.display(false);
+        });
     }
 
     private clean() {

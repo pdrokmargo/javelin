@@ -9,13 +9,10 @@
         <div class="container-fluid with-maxwidth">
             <div class="box box-default">
                 <div class="box-body">
-
-                    <stakeholders-action-cmp *ngIf="isOpenActions" [numId]="id"></stakeholders-action-cmp>
+                    <stakeholders-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></stakeholders-action-cmp>
                     <stakeholders-list-cmp *ngIf="isOpenList"></stakeholders-list-cmp>
-
                 </div>               
             </div>
-
         </div>
     </article>
 </section>

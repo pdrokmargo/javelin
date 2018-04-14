@@ -66,7 +66,6 @@ export class AuthenticationService {
     var user = JSON.parse(localStorage.getItem('objUser'));
     this.PUT(`users/chenge_company/${user.id}`, {'company_id':obj.id}).subscribe(res => {
       if (res.status == 'success') {   
-        
         var views = res.data['usercompany']["userprofile"]["privileges"];
         localStorage.setItem('view', JSON.stringify(views));
         localStorage.setItem('objUser', JSON.stringify(res.data));

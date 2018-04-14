@@ -23,28 +23,30 @@ import { ModalGeolocationComponent } from '../../modals/modal-geolocation/modal-
 
 export class DeliveryContractsActionComponent extends BaseModel implements OnInit {
 
+    private modalCostumer: MdDialogRef<ModalCustomersComponent>;
+    private modalPharmaceutical: MdDialogRef<ModalPharmaceuticalComponent>;
+    private modalDeliveryPoints: MdDialogRef<ModalDeliveryPointsComponent>;
+    private modalIpsNetwork: MdDialogRef<ModalIpsNetworkComponent>;
+    private modalGeolocation: MdDialogRef<ModalGeolocationComponent>
+
     private contract_number: string = '';
     private contract_start_date: string = '';
     private contract_expiration_date: string = '';
 
     private arrPopulation_type: Array<any> = [];
     private arrPerauth_char_type: Array<any> = [];
-
-    private _pharmadrugs: any = [];
-    private _conditional_alerts: any = [];
-    private _ips: any = [];
-
-    private action_active: boolean;
-    private str_action: string = 'Guardar';
-
+    
     private booEvento: boolean = false;
     private booCapita: boolean = false;
     private booPgp: boolean = false;
 
+    private customers: any = {};
+    private _conditional_alerts: any = [];
+    private _pharmadrugs: any = [];
+    private _ips: any = [];
     private objEvent: any;
     private objCapita: any;
     private objPgp: any;
-
     private _model: any = {
         delivery_contracts: {
             state: true,
@@ -62,26 +64,17 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         private comp: DeliveryContractsComponent,
         private dialog: MdDialog) {
         super();
-
     }
 
 
     ngOnInit() {
-
         this.clean();
         this.getCollection();
-
-        if (this.numId != '') {
-            this.str_action = 'Actualizar';
+        if (this.numId !== undefined) {
             this.getDataById();
-        } else {
-            this.str_action = 'Guardar';
         }
     }
 
-    /**
-     * get the country and the tax regime with the collection of names
-     */
     private getCollection() {
         this.helperService.POST(`/api/collections`, ["POPULATION_TYPE", "PREAUTH_CHAR_TYPE"]).subscribe(rs => {
             let res = rs.json();
@@ -89,8 +82,6 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
             this.arrPerauth_char_type = res.PREAUTH_CHAR_TYPE;
         }, err => { });
     }
-
-
 
     private save() {
 
@@ -127,94 +118,84 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
             this.model.pgp = null;
         }
 
-
-        /** Update */
-        if (this.numId != '') {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/delivery-contracts/${this.numId}`, this.model)
-                .map((response: Response) => {
-
-                    let res = response.json();
-                    if (res.status == 'success') {
-                        this.snackBar.open(res.message, 'Actualización', {
-                            duration: 3500,
-                        });
-                        this.goList();
-                    }
-
-                }).subscribe(
-                    error => {
-                        this.loaderService.display(false);
-                    }, done => {
-                        this.loaderService.display(false);
-                    });
-
-        } else {
-            /**Create */
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/delivery-contracts`, this.model)
-                .map((response: Response) => {
-
-                    let res = response.json();
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.helperService.POST(`/api/delivery-contracts`, this.model).subscribe(rs => {
+                    let res = rs.json();
                     if (res.store) {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
                         this.goList();
-                        this.clean();
-
                     }
-
-                }).subscribe(
-                    error => {
-                        this.loaderService.display(false);
-                    }, done => {
-                        this.loaderService.display(false);
-                    });
-
+                }, err => {
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+            break;
+            case 'Actualizar': 
+                this.helperService.PUT(`/api/delivery-contracts/${this.numId}`, this.model).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
+                        this.goList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+            break;
+            case 'Eliminar': 
+                this.helperService.DELETE(`/api/delivery-contracts/${this.numId}`).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.goList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+            break;
         }
-
     }
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/delivery-contracts/${this.numId}`)
-            .map((response: Response) => {
-                let res = response.json();
-                this.model = res.data;
-                var delivery_points = [];
-                this.model.contract_point.forEach((element, index) => {
-                    element.config = JSON.parse(element.config);
-                    delivery_points.push({
-                        id: element.delivery_points.id,
-                        name: element.delivery_points.name,
-                        event: element.config.event || false,
-                        capita: element.config.capita || false,
-                        pgp: element.config.pgp || false,
-                    });
-                    if (this.model.contract_point.length - 1 == index) {
-                        console.log(delivery_points);
-                        this.model.delivery_points = delivery_points;
-                    }
+        this.helperService.GET(`/api/delivery-contracts/${this.numId}`).subscribe(rs => {
+            let res = rs.json();
+            this.model = res.data;
+            var delivery_points = [];
+            this.model.contract_point.forEach((element, index) => {
+                element.config = JSON.parse(element.config);
+                delivery_points.push({
+                    id: element.delivery_points.id,
+                    name: element.delivery_points.name,
+                    event: element.config.event || false,
+                    capita: element.config.capita || false,
+                    pgp: element.config.pgp || false,
                 });
-
-                this.customers = this.model.customers;
-                this._pharmadrugs = JSON.parse(this.model.pharmadrugs);
-                this._conditional_alerts = JSON.parse(this.model.conditional_alerts);
-                this._ips = this.model.ips;
-                this.booEvento = true;
-                this.objEvent = JSON.parse(this.model.event);
-                this.booPgp = true;
-                this.objPgp = JSON.parse(this.model.pgp);
-                this.booCapita = true;
-                this.objCapita = JSON.parse(this.model.capita);
-
-            }).subscribe(
-                error => {
-                    this.loaderService.display(false);
-                }, done => {
-                    this.loaderService.display(false);
-                });
+                
+                if (this.model.contract_point.length - 1 == index) {
+                    this.model.delivery_points = delivery_points;
+                }
+            });
+            
+            this.customers = this.model.customers;
+            this._pharmadrugs = JSON.parse(this.model.pharmadrugs);
+            this._conditional_alerts = JSON.parse(this.model.conditional_alerts);
+            this._ips = this.model.ips;
+            this.booEvento = true;
+            this.objEvent = JSON.parse(this.model.event);
+            this.booPgp = true;
+            this.objPgp = JSON.parse(this.model.pgp);
+            this.booCapita = true;
+            this.objCapita = JSON.parse(this.model.capita);
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);
+            this.loaderService.display(false);
+        });
+        
     }
 
     private clean() {
@@ -230,9 +211,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
     private goList() {
         this.comp.openList();
     }
-
-    private modalCostumer: MdDialogRef<ModalCustomersComponent>;
-    private customers: any = {};
+    
     private openModalCostumers() {
         this.modalCostumer = this.dialog.open(ModalCustomersComponent, {
             hasBackdrop: false,
@@ -246,9 +225,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
             this.customers = data;
         });
     }
-
-    private modalPharmaceutical: MdDialogRef<ModalPharmaceuticalComponent>;
-
+    
     private openModalPharmaceutical() {
         this.modalPharmaceutical = this.dialog.open(ModalPharmaceuticalComponent, {
             hasBackdrop: false,
@@ -256,7 +233,6 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
                 title: 'Medicamentos'
             }
         });
-
         this.modalPharmaceutical.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
             data.pharmadrug_id = data.id;
             if (!this._pharmadrugs) {
@@ -287,7 +263,6 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         });
     }
 
-    private modalDeliveryPoints: MdDialogRef<ModalDeliveryPointsComponent>;
     private openModalDeliveryPoints() {
         this.modalDeliveryPoints = this.dialog.open(ModalDeliveryPointsComponent, {
             hasBackdrop: false,
@@ -323,6 +298,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
             });
         });
     }
+
     private deleteDeliveryPoints(item) {
         this.model.delivery_points.splice(this._ips.indexOf(item), 1);
     }
@@ -331,7 +307,6 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         this._pharmadrugs.splice(this._pharmadrugs.indexOf(item), 1);
     }
 
-    private modalIpsNetwork: MdDialogRef<ModalIpsNetworkComponent>;
     private openModalIpsNetwork() {
         this.modalIpsNetwork = this.dialog.open(ModalIpsNetworkComponent, {
             hasBackdrop: false,
@@ -360,11 +335,11 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
         });
     }
+
     private deleteIps(item) {
         this._ips.splice(this._ips.indexOf(item), 1);
     }
 
-    private modalGeolocation: MdDialogRef<ModalGeolocationComponent>
     private openModalGeolocation() {
         this.modalGeolocation = this.dialog.open(ModalGeolocationComponent, {
             hasBackdrop: false,
@@ -405,6 +380,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
 
     }
+
     private deleteDetailedCapita(item) {
         item.state = false;
     }
@@ -420,13 +396,12 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         if (this.booEvento) {
             this.objEvent = {};
             this._pharmadrugs.forEach(element => {
-                console.log(element.event);
                 element.fare = '';
                 element.event = false;
-                console.log(element.event);
             });
         }
     }
+
     private clearCapita() {
         if (this.booCapita) {
             this.objCapita = {};
@@ -435,6 +410,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
             });
         }
     }
+
     private clearPgp() {
         if (this.booPgp) {
             this.objPgp = {};

@@ -422,8 +422,8 @@
                 </div>
             </div>
             <div class="col-sm-12" [class.btn-action-container]="booActive">
-                <button type="button" [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button class="btn-w-md no-margin-left btn-right"
-                    (click)="save()">{{str_action}}</button>
+                <button type="button" [disabled]="!modelForm.form.valid" md-raised-button class="btn-w-md no-margin-left btn-right"
+                    (click)="save()">{{strAction}}</button>
             </div>
         </div>
     </div>

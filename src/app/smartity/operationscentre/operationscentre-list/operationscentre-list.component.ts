@@ -17,10 +17,12 @@ import { OperationscentreComponent } from '../operationscentre.component';
 
 export class OperationscentreListComponent extends BaseList implements  OnInit{
 
-    constructor(public loaderService: LoaderService, 
-                public helperService: HelperService, 
-                public router: Router,
-                private comp: OperationscentreComponent) {
+    constructor(
+        public loaderService: LoaderService, 
+        public helperService: HelperService, 
+        public router: Router,
+        private comp: OperationscentreComponent
+    ) {
         super(loaderService, helperService);
         this.urlApi = '/api/operationscentres';
     }
@@ -29,14 +31,17 @@ export class OperationscentreListComponent extends BaseList implements  OnInit{
         this.getAll();
     }
 
-    private NEW(row: any) {
+    private CUD(action:string, row?:any){
+        this.comp.strAction = action;
+        switch (action) {
+            case 'Guardar':
+                this.comp.id = undefined;
+                break;
+            default:
+                this.comp.id = row.id;
+                break;
+        }
         this.comp.openActions();
-        this.comp.id = 0;
-    }
-
-    private view(row: any) {
-        this.comp.openActions();
-        this.comp.id = row.id;
     }
 
 }

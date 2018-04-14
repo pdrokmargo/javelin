@@ -31,13 +31,10 @@
         </md-select>
     </div>
 
-
-
     <!-- document number -->
     <div class='col-sm-12 col-md-6  margin-bottom' *ngIf="!model.rut">
         <md-input-container class="full-width">
-            <input required type="text" (keypress)="keyPress($event)" id="document_number" name="document_number" [(ngModel)]="model.document_number"
-                mdInput placeholder="Número de documento">
+            <input required type="text" [pattern]="pattern" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
         </md-input-container>
     </div>
 
@@ -46,14 +43,12 @@
         <div class="row">
             <div class='col-sm-12 col-md-10'>
                 <md-input-container class="full-width">
-                    <input required (keypress)="keyPress($event)" (focusout)="getRutDigit()" type="text" id="document_number" name="document_number"
-                        [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
+                    <input required [pattern]="pattern" (focusout)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
                 </md-input-container>
             </div>
             <div class='col-sm-12 col-md-2'>
                 <md-input-container class="full-width">
-                    <input [disabled]="true" type="text" id="document_number_digit" name="document_number_digit" [(ngModel)]="model.document_number_digit"
-                        mdInput placeholder="Dígito">
+                    <input [disabled]="true" type="text" id="document_number_digit" name="document_number_digit" [(ngModel)]="model.document_number_digit" mdInput placeholder="Dígito">
                 </md-input-container>
             </div>
         </div>
@@ -782,13 +777,7 @@
     </div>
 
     <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button [disabled]="action_active ? false : !stakeHolderForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
-            (click)="save()">{{str_action}}</button>
-    </div>
-
-    <div class='col-sm-12 col-md-12'>
-
-
-
+        <button [disabled]="!stakeHolderForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{strAction}}</button>
     </div>
 </form>

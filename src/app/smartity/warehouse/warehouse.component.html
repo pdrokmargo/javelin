@@ -9,10 +9,8 @@
         <div class="container-fluid with-maxwidth">
             <div class="box box-default">
                 <div class="box-body">
-
-                    <warehouse-action-cmp [numId]="id" *ngIf="isOpenActions"></warehouse-action-cmp>
+                    <warehouse-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></warehouse-action-cmp>
                     <warehouse-list-cmp *ngIf="isOpenList"></warehouse-list-cmp>
-
                 </div>                 
             </div>
         </div>

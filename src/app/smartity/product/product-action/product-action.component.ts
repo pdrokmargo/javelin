@@ -19,8 +19,6 @@ import { filter } from 'rxjs/operators';
 
 export class ProductActionComponent extends BaseModel implements OnInit {
 
-    private action_active: boolean = false;
-    private str_action: string = 'Guardar';
     private content_unit: any[] = [];
     private product_type: any[] = [];
     private sanitary_registration_holder: any = {};
@@ -31,120 +29,95 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     private modalStakeHolderDialogRef: MdDialogRef<ModalStakeholderComponent>;
 
     constructor(private loaderService: LoaderService,
-                private helperService: HelperService,
-                public snackBar: MdSnackBar,
-                private route: ActivatedRoute,
-                private router: Router,
-                private comp: ProductComponent,
-                private dialog: MdDialog) {
+        private helperService: HelperService,
+        public snackBar: MdSnackBar,
+        private route: ActivatedRoute,
+        private router: Router,
+        private comp: ProductComponent,
+        private dialog: MdDialog
+    ) {
         super();
-        // paramatro enviado desde la url
-
     }
 
     ngOnInit() {
         this.clean();
         this.getCollection();
-
-        if (this.numId != null && this.numId !== '') {
-            // this.numId=this.route.snapshot.params['id'];
-            this.str_action = 'Actualizar';
+        if (this.numId !== undefined) {
             this.getDataById();
-        } else {
-            this.str_action = 'Guardar';
         }
     }
 
-    /**
-     * get the country and the tax regime with the collection of names
-     */
+
     private getCollection(){
         this.loaderService.display(true);
-        this.helperService.POST(`/api/collections`, ['CONTENT_UNIT', 'PRODUCT_TYPE'])
-        .map((response: Response) => {
-
-            const res = response.json();
+        this.helperService.POST(`/api/collections`, ['CONTENT_UNIT', 'PRODUCT_TYPE']).subscribe(rs =>{
+            const res = rs.json();
             this.content_unit = res.CONTENT_UNIT;
             this.product_type = res.PRODUCT_TYPE;
-
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
+            this.loaderService.display(false);
+        }, err =>{
+            this.loaderService.display(false);
+        });
     }
 
     private save() {
         this.model.name = '';
-        /** Update */
-        if (this.model.id !== '') {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/product/${this.numId}`, this.model)
-            .map((response: Response) => {
 
-                const res = response.json();
-                if (res.status === 'success') {
-                    this.snackBar.open(res.message, 'Actualización', {
-                        duration: 3500,
-                    });
-                    // this.router.navigate(['app/product-list']);
-                    this.comp.openList();
-                }
-
-            }).subscribe(
-                (error) =>{
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.helperService.POST(`/api/product`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                        this.goList();
+                    }
+                }, err => {
                     this.loaderService.display(false);
-                },
-                (done) => {
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                });
+            break;
+            case 'Actualizar': 
+                this.helperService.PUT(`/api/product/${this.numId}`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
                     this.loaderService.display(false);
                 });
-        } else {
-            /** Create */
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/product`, this.model)
-            .map((response: Response) => {
-
-                const res = response.json();
-                if (res.status === 'success') {
-                    this.snackBar.open(res.message, 'Guardado', {
-                        duration: 3500,
-                    });
-                    this.clean();
-                    this.goList();
-                }
-
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                },
-                (done) => {
+            break;
+            case 'Eliminar': 
+                this.helperService.DELETE(`/api/product/${this.numId}`).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
                     this.loaderService.display(false);
                 });
+            break;
         }
-
     }
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/product/${this.numId}`)
-        .map((response: Response) => {
-
-            const res = response.json();
+        this.helperService.GET(`/api/product/${this.numId}`).subscribe(rs => {
+            const res = rs.json();
             this.model = res['data'];
             this.importer = res['data']['importer'] || {};
             this.sanitary_registration_holder = res['data']['sanitary_registration_holder'] || {};
             this.supplier = res['data']['supplier'] || {};
             this.manufacturer = res['data']['manufacturer'] || {};
-
-        }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            },
-            (done) => {
-                this.loaderService.display(false);
-            });
+            this.loaderService.display(false);
+        }, err => {
+            console.log(err);            
+            this.loaderService.display(false);
+        });
     }
 
     private clean() {

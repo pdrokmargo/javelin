@@ -20,43 +20,33 @@ import { filter } from 'rxjs/operators';
 
 export class PharmaceuticalDrugActionComponent extends BaseModel implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
-
-    private action_active: boolean = false;
-    private str_action: string = 'Guardar';
+    private modalActiveIngredients: MdDialogRef<ModalActiveIngredientsComponent>;
     private pharmaceutical_form: any[] = [];
     private routes_administration: any[] = [];
     private storage_condition: any[] = [];
     private arrActive_ingredients: any[] = [];
     private arrMeasurement_unit: any[] = [];
 
-    constructor(private loaderService: LoaderService,
+    constructor(
+        private loaderService: LoaderService,
         private helperService: HelperService,
         public snackBar: MdSnackBar,
         private route: ActivatedRoute,
         private router: Router,
         private comp: PharmaceuticalDrugComponent,
-        private dialog: MdDialog) {
+        private dialog: MdDialog
+    ) {
         super();
-        // paramatro enviado desde la url
-
     }
 
     ngOnInit() {
         this.clean();
         this.getCollection();
-        if (this.numId == undefined || this.numId == null || this.numId == '') {
-            this.str_action = 'Guardar';
-        } else {
-            this.str_action = 'Actualizar';
+        if (this.numId !== undefined){
             this.getDataById();
         }
     }
 
-    /**
-     * get the country and the tax regime with the collection of names
-     */
     private getCollection() {
         this.loaderService.display(true);
         this.helperService.POST(`/api/collections`, ['PHARMACEUTICAL_FORM', 'ROUTES_ADMINISTRATION', 'STORAGE_CONDITION', 'MEASUREMENT_UNIT'])
@@ -78,77 +68,64 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
     }
 
     private save() {
-        /** Update */
-        if (!isNullOrUndefined(this.model.id) && this.model.id !== '') {
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/pharmaceuticaldrug/${this.numId}`, { "drug": this.model, "active_ingredients": this.arrActive_ingredients })
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Actualización', {
-                            duration: 3500,
-                        });
-                        // this.router.navigate(['app/product-list']);
-                        this.comp.openList();
-                    }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    },
-                    (done) => {
-                        this.loaderService.display(false);
-                    });
-        } else {
-            /** Create */
-            this.loaderService.display(true);
-            this.helperService.POST(`/api/pharmaceuticaldrug`, { "drug": this.model, "active_ingredients": this.arrActive_ingredients })
-                .map((response: Response) => {
-
-                    const res = response.json();
-                    if (res.status === 'success') {
-                        this.snackBar.open(res.message, 'Guardado', {
-                            duration: 3500,
-                        });
-                        this.clean();
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.helperService.POST(`/api/pharmaceuticaldrug`, { "drug": this.model, "active_ingredients": this.arrActive_ingredients }).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
                         this.goList();
                     }
-                    if (this.noaction) {
-                        this.select.emit(res.data);
+                }, err =>{
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+            break;
+            case 'Actualizar':
+                this.helperService.PUT(`/api/pharmaceuticaldrug/${this.numId}`, { "drug": this.model, "active_ingredients": this.arrActive_ingredients }).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
+                        this.comp.openList();
                     }
-
-                }).subscribe(
-                    (error) => {
-                        this.loaderService.display(false);
-                    },
-                    (done) => {
-                        this.loaderService.display(false);
-                    });
+                }, err => {
+                    this.loaderService.display(false);
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+                });
+            break;
+            case 'Eliminar':
+                this.helperService.DELETE(`/api/pharmaceuticaldrug/${this.numId}`).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.loaderService.display(false);
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                });
+            break;
         }
+
+
 
     }
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/pharmaceuticaldrug/${this.numId}`)
-            .map((response: Response) => {
-
-                const res = response.json();
-                this.model = res['data']["model"];
-                this.arrActive_ingredients = res["data"]["active_ingredients"];
-                this.arrActive_ingredients.forEach(element => {
-                    element.name = element.active_ingredient.name;
-                    element.id = element.active_ingredient.id;
-                });
-
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                },
-                (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/pharmaceuticaldrug/${this.numId}`).subscribe(rs=>{
+            const res = rs.json();
+            this.model = res['data']["model"];
+            this.arrActive_ingredients = res["data"]["active_ingredients"];
+            this.arrActive_ingredients.forEach(element => {
+                element.name = element.active_ingredient.name;
+                element.id = element.active_ingredient.id;
+            });
+            this.loaderService.display(false);
+        },err=>{
+            this.loaderService.display(false);
+        });
     }
 
     private clean() {
@@ -164,7 +141,6 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
         this.comp.openList();
     }
 
-    private modalActiveIngredients: MdDialogRef<ModalActiveIngredientsComponent>;
     private openModalActiveIngredients() {
         this.modalActiveIngredients = this.dialog.open(ModalActiveIngredientsComponent, {
             hasBackdrop: false,

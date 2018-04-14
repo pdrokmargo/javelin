@@ -9,10 +9,8 @@
         <div class="container-fluid with-maxwidth">
             <div class="box box-default">
                 <div class="box-body">
-                   
-                    <product-action-cmp *ngIf="isOpenActions" [numId]="id"></product-action-cmp>
+                    <product-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></product-action-cmp>
                     <product-list-cmp *ngIf="isOpenList"></product-list-cmp>
-                   
                 </div>               
             </div>
         </div>

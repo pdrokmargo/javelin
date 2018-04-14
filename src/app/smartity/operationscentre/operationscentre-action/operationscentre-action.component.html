@@ -1,6 +1,6 @@
 <form #modelForm="ngForm" autocomplete="off">
     
-    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
+    <div class="col-sm-12 margin-bottom" >
         <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
     </div>                            
     
@@ -12,15 +12,6 @@
             </md-input-container>
         </div>
     </div>   
-
-    <!-- codigo -->
-    <!-- <div class='col-sm-12 col-md-4'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input type="text" id="codigo" name="codigo" [(ngModel)]="model.code" mdInput placeholder="Código" readonly>
-            </md-input-container>
-        </div>
-    </div> -->
 
     <!-- estado -->
     <div class='col-sm-12 col-md-4'>
@@ -82,7 +73,8 @@
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-input-container class="full-width">
-                <input (keypress)="keyPress($event)" required type="text" id="phone" name="phone" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
+                <md-icon mdPrefix>phone</md-icon> 
+                <input [pattern]="pattern" required type="text" id="phone" name="phone" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
             </md-input-container>
         </div>                            
     </div>
@@ -97,15 +89,8 @@
         </div>                                                                    
     </div>
                                                                                         
-    <div class="col-sm-12" [class.btn-action-container]="booActive">
-            
-        <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary"
-        class="btn-w-md no-margin-left btn-right" (click)="save()">{{str_action}}</button>
-        <!-- <button *ngIf="strAction==''" md-raised-button class="btn-w-md no-margin-left btn-right" (click)="DELETE()">Eliminar</button>
-        <button *ngIf="strAction==''" md-raised-button class="btn-w-md no-margin-left btn-right" (click)="EDIT()">Editar</button>
-        <button *ngIf="!(strAction=='')" [disabled]="booActive ? false : !modelForm.form.valid" md-raised-button color="primary"
-            class="btn-w-md no-margin-left btn-right" (click)="actionCrud.event()">{{strAction}}</button>
-        <button *ngIf="!(strAction=='') && !(strAction=='Guardar')" md-raised-button class="btn-w-md no-margin-left btn-right" (click)="__cancel()">Cancelar</button> -->
+    <div class="col-sm-12" >
+        <button [disabled]="!modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
     </div>
 
 </form>              

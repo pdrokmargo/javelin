@@ -17,13 +17,12 @@ import { PharmaceuticalDrugComponent } from '../pharmaceutical-drug.component';
 
 export class PharmaceuticalDrugListComponent extends BaseList implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
-
-    constructor(public router: Router,
+    constructor(
+        public router: Router,
         public loaderService: LoaderService,
         public helperService: HelperService,
-        private comp: PharmaceuticalDrugComponent) {
+        private comp: PharmaceuticalDrugComponent
+    ) {
         super(loaderService, helperService);
         this.urlApi = '/api/pharmaceuticaldrug';
     }
@@ -32,19 +31,17 @@ export class PharmaceuticalDrugListComponent extends BaseList implements OnInit 
         this.getAll();
     }
 
-    private NEW(row: any) {
-        this.comp.openActions();
-        this.comp.id = 0;
-    }
-
-    private view(row: any) {
-        if (this.noaction) {
-            this.select.emit(row);
-        } else {
-            this.comp.openActions();
-            this.comp.id = row.id;
+    private CUD(action:string, row?:any){
+        this.comp.strAction = action;
+        switch (action) {
+            case 'Guardar':
+                this.comp.id = undefined;
+                break;
+            default:
+                this.comp.id = row.id;
+                break;
         }
-
+        this.comp.openActions();
     }
 
 }
