@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, Input, EventEmitter, ElementRef } from '@angular/core';
 import { DataTableResource } from 'angular-4-data-table';
-import { FormControl } from '@angular/forms';
+import { FormControl, NgControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
 import { MdSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,12 +18,12 @@ import { isNullOrUndefined } from 'util';
 
 export class UserActionComponent extends BaseModel implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
-
     private companies: any[] = [];
     private user_profiles: any[] = [];
     private model_user_company: any = {};
+    private booEmail: boolean;
+    private booEmailValid: boolean = false;
+    private emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
     constructor(public loaderService: LoaderService,
         public helperService: HelperService,
@@ -36,7 +36,6 @@ export class UserActionComponent extends BaseModel implements OnInit {
     }
 
     ngOnInit() {
-
         this.clean();
         this.getUserProfiles();
         this.getCompanies();
@@ -174,9 +173,8 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
         if (obj.id > 0 && obj.company_id === this.model.company_default_id) {
             this.snackBar.open('Usted no puede remover una empresa activa!', 'Error', {
-                duration: 4000,
+                duration: 4000
             });
-
             return false;
         }
         const index = this.model.usersprivileges.indexOf(obj);

@@ -157,7 +157,8 @@ import { IpsNetworkListComponent } from './smartity/modals/modal-ips-network/ips
     ModalGeolocationComponent,
     ModalStakeholderComponent,
     StakeholderActionComponent,
-    StakeholderListComponent
+    StakeholderListComponent,
+    
   ],
   providers: [
     AuthGuard,
@@ -170,7 +171,8 @@ import { IpsNetworkListComponent } from './smartity/modals/modal-ips-network/ips
     CustomersActionComponent,
     StakeholderActionComponent,
     StakeholderListComponent,
-    HelperService
+    HelperService,
+    
   ],
   bootstrap: [AppComponent],
   entryComponents: [

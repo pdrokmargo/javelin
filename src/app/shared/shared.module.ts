@@ -6,6 +6,8 @@ import { EChartsDirective } from './echarts.directive';
 import { SlimScrollDirective } from './slim-scroll.directive';
 import { DataTableModule } from 'angular-4-data-table';
 import { LrvDataTableModule } from '../smartity/lrv-data-table/lrv-data-table.module';
+import { UserEmailValid } from '../smartity/directive/user-email-valid.directive';
+
 
 @NgModule({
   imports: [
@@ -18,6 +20,7 @@ import { LrvDataTableModule } from '../smartity/lrv-data-table/lrv-data-table.mo
     EChartsDirective,
     SlimScrollDirective,
     EqualValidatorDirective,
+    UserEmailValid,
   ],
   exports: [
     EChartsDirective,
@@ -27,7 +30,8 @@ import { LrvDataTableModule } from '../smartity/lrv-data-table/lrv-data-table.mo
     ReactiveFormsModule,
     MaterialModule,
     EqualValidatorDirective,
-    LrvDataTableModule,    
+    LrvDataTableModule,  
+    UserEmailValid,
   ]
 })
 
