@@ -32,7 +32,7 @@
     <!-- document number -->
     <div class='col-sm-12 col-md-6  margin-bottom' *ngIf="!model.rut">
         <md-input-container class="full-width">
-            <input required type="text" (keypress)="keyPress($event)" id="document_number" name="document_number" [(ngModel)]="model.document_number"
+            <input required type="text" NumberOnly id="document_number" name="document_number" [(ngModel)]="model.document_number"
                 mdInput placeholder="Número de documento">
         </md-input-container>
     </div>
@@ -42,7 +42,7 @@
         <div class="row">
             <div class='col-sm-12 col-md-10'>
                 <md-input-container class="full-width">
-                    <input required (keypress)="keyPress($event)" (focusout)="getRutDigit()" type="text" id="document_number" name="document_number"
+                    <input required NumberOnly (focusout)="getRutDigit()" type="text" id="document_number" name="document_number"
                         [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
                 </md-input-container>
             </div>
@@ -292,7 +292,7 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount"
+                        <input NumberOnly type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount"
                             mdInput placeholder="Descuento Global">
                     </md-input-container>
                 </div>
@@ -321,7 +321,7 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="customer.days_early_payment"
+                        <input NumberOnly type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="customer.days_early_payment"
                             mdInput placeholder="Días de pronto pago">
                     </md-input-container>
                 </div>
@@ -601,7 +601,7 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount"
+                        <input NumberOnly type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount"
                             mdInput placeholder="Descuento Global">
                     </md-input-container>
                 </div>
@@ -621,7 +621,7 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="supplier_days_early_payment" name="supplier_days_early_payment" [(ngModel)]="supplier.days_early_payment"
+                        <input NumberOnly type="text" id="supplier_days_early_payment" name="supplier_days_early_payment" [(ngModel)]="supplier.days_early_payment"
                             mdInput placeholder="Días de pronto pago">
                     </md-input-container>
                 </div>

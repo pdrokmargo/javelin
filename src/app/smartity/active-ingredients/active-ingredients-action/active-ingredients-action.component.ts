@@ -21,9 +21,6 @@ import { ActiveIngredientsComponent } from '../active-ingredients.component';
 
 export class ActiveIngredientsActionComponent extends BaseModel implements OnInit {
 
-    @Output() select = new EventEmitter();
-    @Input() noaction: boolean;
-
     private action_active: boolean;
     private str_action: string = 'Guardar';
 
@@ -55,23 +52,13 @@ export class ActiveIngredientsActionComponent extends BaseModel implements OnIni
             this.model.delivery_contracts = '';
             this.loaderService.display(true);
             this.helperService.POST(`/api/active-ingredients`, this.model).subscribe(rs => {
+                
                 let res = rs.json();
-                if (res.store) {
-                    this.snackBar.open(res.message, 'Guardado', {
-                        duration: 3500,
-                    });
-                    this.clean();
-                    this.loaderService.display(false);
-                }
-                if (this.noaction) {
-                    this.select.emit(res.data);
-                }
-
+                this.loaderService.display(false);
+                this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
             }, err => {
                 console.log(err);
-                this.snackBar.open(err.message, 'Guardado', {
-                    duration: 3500,
-                });                
+                this.snackBar.open(err.message, 'Guardado', { duration: 4000, });                
                 this.loaderService.display(false);
             });
         } else {
@@ -80,7 +67,7 @@ export class ActiveIngredientsActionComponent extends BaseModel implements OnIni
                 let res = rs.json();
                 if (res.update) {
                     this.snackBar.open(res.message, 'Actualización', {
-                        duration: 3500,
+                        duration: 4000,
                     });
                     this.comp.openList();
                 }

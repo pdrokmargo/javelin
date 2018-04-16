@@ -11,7 +11,7 @@ export class MycurrencyPipe implements PipeTransform {
   private suffix:string;
 
   constructor(){
-    this.prefix='Rp.';
+    this.prefix='';
     this.suffix='';
     this.decimal_separator='.';
     this.thousands_separator = ',';

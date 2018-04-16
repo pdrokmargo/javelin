@@ -146,7 +146,7 @@
     <div class='col-sm-12 col-md-4'>
         <div class="box-body">
             <md-input-container class="full-width">
-                <input required (keypress)="keyPress($event)" type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number"
+                <input required NumberOnly type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number"
                     mdInput placeholder="Teléfono">
             </md-input-container>
         </div>
@@ -314,7 +314,7 @@
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input (keypress)="keyPress($event)" required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit"
+                    <input NumberOnly required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit"
                         mdInput placeholder="Cupo crédito">
                 </md-input-container>
             </div>
@@ -335,7 +335,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input (keypress)="keyPress($event)" required type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount"
+                        <input NumberOnly  type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount"
                             mdInput placeholder="Descuento Global">
                     </md-input-container>
                 </div>
@@ -364,7 +364,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input (keypress)="keyPress($event)" required type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="customer.days_early_payment"
+                        <input NumberOnly type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="customer.days_early_payment"
                             mdInput placeholder="Días de pronto pago">
                     </md-input-container>
                 </div>
@@ -374,7 +374,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input (keypress)="keyPress($event)" required type="text" id="days_grace" name="days_grace" [(ngModel)]="customer.days_grace"
+                        <input NumberOnly required type="text" id="days_grace" name="days_grace" [(ngModel)]="customer.days_grace"
                             mdInput placeholder="Días de gracia">
                     </md-input-container>
                 </div>
@@ -407,7 +407,7 @@
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input (keypress)="keyPress($event)" type="text" id="phone_purchases_contact" name="phone_purchases_contact" [(ngModel)]="customer.purchases_contact.phone"
+                    <input NumberOnly type="text" id="phone_purchases_contact" name="phone_purchases_contact" [(ngModel)]="customer.purchases_contact.phone"
                         mdInput placeholder="Teléfono del contacto de compras">
                 </md-input-container>
             </div>
@@ -440,7 +440,7 @@
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input type="text" (keypress)="keyPress($event)" id="phone_debt_contact" name="phone_debt_contact" [(ngModel)]="customer.debt_contact.phone"
+                    <input type="text" NumberOnly id="phone_debt_contact" name="phone_debt_contact" [(ngModel)]="customer.debt_contact.phone"
                         mdInput placeholder="Teléfono del contacto de cartera">
                 </md-input-container>
             </div>
@@ -635,7 +635,7 @@
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input (keypress)="keyPress($event)" required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="supplier.credit_limit"
+                    <input NumberOnly required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="supplier.credit_limit"
                         mdInput placeholder="Cupo de crédito">
                 </md-input-container>
             </div>
@@ -646,7 +646,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input (keypress)="keyPress($event)" required type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount"
+                        <input NumberOnly required type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount"
                             mdInput placeholder="Descuento Global">
                     </md-input-container>
                 </div>
@@ -666,7 +666,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input (keypress)="keyPress($event)" required type="text" id="supplier_days_early_payment" name="supplier_days_early_payment"
+                        <input NumberOnly type="text" id="supplier_days_early_payment" name="supplier_days_early_payment"
                             [(ngModel)]="supplier.days_early_payment" mdInput placeholder="Días de pronto pago">
                     </md-input-container>
                 </div>
@@ -755,7 +755,7 @@
             <div class='col-sm-12 col-md-6'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input (keypress)="keyPress($event)" required type="text" id="phone_sales_contact" name="phone_sales_contact" [(ngModel)]="supplier.sales_contact.phone"
+                        <input NumberOnly required type="text" id="phone_sales_contact" name="phone_sales_contact" [(ngModel)]="supplier.sales_contact.phone"
                             mdInput placeholder="Teléfono del contacto de compras">
                     </md-input-container>
                 </div>

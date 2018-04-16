@@ -7,6 +7,8 @@ import { SlimScrollDirective } from './slim-scroll.directive';
 import { DataTableModule } from 'angular-4-data-table';
 import { LrvDataTableModule } from '../smartity/lrv-data-table/lrv-data-table.module';
 import { UserEmailValid } from '../smartity/directive/user-email-valid.directive';
+import { MycurrencyDirective } from '../smartity/directive/currency.directive';
+import { NumberOnlyDirective } from '../smartity/directive/number-only.directive';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { UserEmailValid } from '../smartity/directive/user-email-valid.directive
     SlimScrollDirective,
     EqualValidatorDirective,
     UserEmailValid,
+    MycurrencyDirective,
+    NumberOnlyDirective,
   ],
   exports: [
     EChartsDirective,
@@ -32,6 +36,8 @@ import { UserEmailValid } from '../smartity/directive/user-email-valid.directive
     EqualValidatorDirective,
     LrvDataTableModule,  
     UserEmailValid,
+    MycurrencyDirective,
+    NumberOnlyDirective,
   ]
 })
 

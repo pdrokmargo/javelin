@@ -48,59 +48,62 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
 
-    private getCollection(){
+    private getCollection() {
         this.loaderService.display(true);
-        this.helperService.POST(`/api/collections`, ['CONTENT_UNIT', 'PRODUCT_TYPE']).subscribe(rs =>{
+        this.helperService.POST(`/api/collections`, ['CONTENT_UNIT', 'PRODUCT_TYPE']).subscribe(rs => {
             const res = rs.json();
             this.content_unit = res.CONTENT_UNIT;
             this.product_type = res.PRODUCT_TYPE;
             this.loaderService.display(false);
-        }, err =>{
+        }, err => {
             this.loaderService.display(false);
         });
     }
 
     private save() {
         this.model.name = '';
-
-        this.loaderService.display(true);
-        switch (this.strAction) {
-            case 'Guardar':
-                this.helperService.POST(`/api/product`, this.model).subscribe(rs => {
-                    const res = rs.json();
-                    if (res.store) {
-                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
-                        this.goList();
-                    }
-                }, err => {
-                    this.loaderService.display(false);
-                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
-                });
-            break;
-            case 'Actualizar': 
-                this.helperService.PUT(`/api/product/${this.numId}`, this.model).subscribe(rs => {
-                    const res = rs.json();
-                    if (res.update) {
-                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
-                        this.comp.openList();
-                    }
-                }, err => {
-                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
-                    this.loaderService.display(false);
-                });
-            break;
-            case 'Eliminar': 
-                this.helperService.DELETE(`/api/product/${this.numId}`).subscribe(rs => {
-                    const res = rs.json();
-                    if (res.delete) {
-                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
-                        this.comp.openList();
-                    }
-                }, err => {
-                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
-                    this.loaderService.display(false);
-                });
-            break;
+        if (this.model.pharmaceutical_drugs.length == 0 && this.model.product_profile_id == 30) {
+            this.snackBar.open('Seleccione por lo menos un medicamento', 'Error', { duration: 4000 });
+        } else {
+            this.loaderService.display(true);
+            switch (this.strAction) {
+                case 'Guardar':
+                    this.helperService.POST(`/api/product`, this.model).subscribe(rs => {
+                        const res = rs.json();
+                        if (res.store) {
+                            this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                            this.goList();
+                        }
+                    }, err => {
+                        this.loaderService.display(false);
+                        this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                    });
+                    break;
+                case 'Actualizar':
+                    this.helperService.PUT(`/api/product/${this.numId}`, this.model).subscribe(rs => {
+                        const res = rs.json();
+                        if (res.update) {
+                            this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
+                            this.comp.openList();
+                        }
+                    }, err => {
+                        this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+                        this.loaderService.display(false);
+                    });
+                    break;
+                case 'Eliminar':
+                    this.helperService.DELETE(`/api/product/${this.numId}`).subscribe(rs => {
+                        const res = rs.json();
+                        if (res.delete) {
+                            this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                            this.comp.openList();
+                        }
+                    }, err => {
+                        this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                        this.loaderService.display(false);
+                    });
+                    break;
+            }
         }
     }
 
@@ -115,7 +118,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             this.manufacturer = res['data']['manufacturer'] || {};
             this.loaderService.display(false);
         }, err => {
-            console.log(err);            
+            console.log(err);
             this.loaderService.display(false);
         });
     }
@@ -132,12 +135,12 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         this.model.comercial_name = '';
     }
 
-    private goList(){
+    private goList() {
         this.comp.openList();
     }
 
     openAddBankAccount() {
-        this.pharmaceuticalDialogRef = this.dialog.open(ModalPharmaceuticalComponent,{
+        this.pharmaceuticalDialogRef = this.dialog.open(ModalPharmaceuticalComponent, {
             hasBackdrop: false,
             data: {
                 title: 'Medicamentos'
@@ -145,13 +148,13 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         });
 
         this.pharmaceuticalDialogRef
-        .afterClosed()
-        .pipe(filter( (pharmaceuticalDrug) => pharmaceuticalDrug))
-        .subscribe( (pharmaceuticalDrug) => {
-            console.log(pharmaceuticalDrug);
-            
-            this.model.pharmaceutical_drugs.push(pharmaceuticalDrug);
-        });
+            .afterClosed()
+            .pipe(filter((pharmaceuticalDrug) => pharmaceuticalDrug))
+            .subscribe((pharmaceuticalDrug) => {
+                console.log(pharmaceuticalDrug);
+
+                this.model.pharmaceutical_drugs.push(pharmaceuticalDrug);
+            });
     }
 
     removePharmaceutical(obj) {
@@ -160,7 +163,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     openAddSanitaryRegistration() {
-        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent,{
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent, {
             hasBackdrop: false,
             data: {
                 title: 'Titular registro sanitario',
@@ -175,7 +178,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     openAddSupplier() {
-        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent,{
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent, {
             hasBackdrop: false,
             data: {
                 title: 'Proveedores',
@@ -183,14 +186,14 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             }
         });
 
-        this.modalStakeHolderDialogRef.afterClosed().pipe(filter( (stakeHolder) => stakeHolder)).subscribe( (stakeHolder) => {
+        this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
             this.supplier = stakeHolder;
             this.model.supplier_id = stakeHolder.id;
         });
     }
 
     openAddMaker() {
-        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent,{
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent, {
             hasBackdrop: false,
             data: {
                 title: 'Fabricantes',
@@ -199,16 +202,16 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         });
 
         this.modalStakeHolderDialogRef
-        .afterClosed()
-        .pipe(filter( (stakeHolder) => stakeHolder))
-        .subscribe( (stakeHolder) => {
-            this.manufacturer = stakeHolder;
-            this.model.manufacturer_id = stakeHolder.id;
-        });
+            .afterClosed()
+            .pipe(filter((stakeHolder) => stakeHolder))
+            .subscribe((stakeHolder) => {
+                this.manufacturer = stakeHolder;
+                this.model.manufacturer_id = stakeHolder.id;
+            });
     }
 
     openAddImporter() {
-        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent,{
+        this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent, {
             hasBackdrop: false,
             data: {
                 title: 'Fabricantes',
@@ -216,7 +219,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             }
         });
 
-        this.modalStakeHolderDialogRef.afterClosed().pipe(filter( (stakeHolder) => stakeHolder)).subscribe( (stakeHolder) => {
+        this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
             this.importer = stakeHolder;
             this.model.importer_id = stakeHolder.id;
         });

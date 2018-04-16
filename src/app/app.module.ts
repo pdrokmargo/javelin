@@ -66,7 +66,6 @@ import {
   StakeholderListComponent,
 
 } from './smartity/modals';
-import { NumberOnlyDirective } from './smartity/directive/number-only.directive';
 import { NgxMaskModule } from 'ngx-mask';
 import { InputFileComponent } from './smartity/component/index';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -79,6 +78,7 @@ import { DeliveryPointsActionComponent } from './smartity/modals/modal-delivery-
 import { DeliveryPointsListComponent } from './smartity/modals/modal-delivery-points/delivery-points-list/delivery-points-list.component';
 import { IpsNetworkActionComponent } from './smartity/modals/modal-ips-network/ips-network-action/ips-network-action.component';
 import { IpsNetworkListComponent } from './smartity/modals/modal-ips-network/ips-network-list/ips-network-list.component';
+import { MycurrencyPipe } from './smartity/pipe/mycurrency.pipe';
 
 
 @NgModule({
@@ -138,7 +138,6 @@ import { IpsNetworkListComponent } from './smartity/modals/modal-ips-network/ips
     WarehouseListComponent,
     ModalIpsNetworkComponent,
     InputFileComponent,
-    NumberOnlyDirective,
     WarehouseActionComponent,
     CustomersListComponent,
     CustomersActionComponent,
@@ -161,6 +160,7 @@ import { IpsNetworkListComponent } from './smartity/modals/modal-ips-network/ips
     
   ],
   providers: [
+    MycurrencyPipe,
     AuthGuard,
     AuthenticationService,
     PrivilegeGuard,
