@@ -9,7 +9,7 @@
         </md-radio-group>
     </div>
     <!-- FORM -->
-    <active-ingredients-action-cmp *ngIf="radio.option==='2'" (select)="select($event)" [noaction]="true"></active-ingredients-action-cmp>
+    <active-ingredients-action-cmp *ngIf="radio.option==='2'"></active-ingredients-action-cmp>
     <!-- LIST -->
     <div class="col-sm-12">
         <active-ingredients-list-cmp *ngIf="radio.option==='1'" (select)="select($event)" [noaction]="true"></active-ingredients-list-cmp>
