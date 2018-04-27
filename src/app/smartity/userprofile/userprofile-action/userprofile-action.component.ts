@@ -18,16 +18,15 @@ import { UserprofileComponent } from '../userprofile.component';
 export class UserprofileActionComponent extends BaseModel implements OnInit {
 
     private viewactions: any[] = [];
-    private action_active: boolean = false;
-    private str_action: string = 'Guardar';
+    //private action_active: boolean = false;
     private booActive: boolean = false;
 
     constructor(private loaderService: LoaderService,
-                private helperService: HelperService,
-                public snackBar: MdSnackBar,
-                private route: ActivatedRoute,
-                private router: Router,
-                private comp: UserprofileComponent) {
+        private helperService: HelperService,
+        public snackBar: MdSnackBar,
+        private route: ActivatedRoute,
+        private router: Router,
+        private comp: UserprofileComponent) {
 
         super();
 
@@ -37,128 +36,128 @@ export class UserprofileActionComponent extends BaseModel implements OnInit {
 
         this.clean();
         this.getViewActions();
-        if (this.numId > 0) {
-            this.str_action = 'Actualizar';
+        if (this.numId != undefined) {
+
             this.getDataById();
-        } else {
-            this.str_action = 'Guardar';
         }
     }
 
-    private getViewActions(){
+    private getViewActions() {
         this.loaderService.display(true);
         this.helperService.GET(`/api/viewactions`)
-        .map((response: Response) => {
+            .map((response: Response) => {
 
-            let res = response.json();
-            this.viewactions = res['data'];
+                let res = response.json();
+                this.viewactions = res['data'];
 
-        }).subscribe(
-        (error) =>{
-            this.loaderService.display(false);
-        }, (done) => {
-            this.loaderService.display(false);
-        });
+            }).subscribe(
+                (error) => {
+                    this.loaderService.display(false);
+                }, (done) => {
+                    this.loaderService.display(false);
+                });
     }
 
-    private save(){
-        /** Update */
-        if(this.model.id > 0){
-            this.model.privileges = [];
-            this.viewactions.forEach( (item) => {
-                let i = 0;
-                item.actions.forEach((act) => {
-                    if (act.status) {
-                        if (i === 0) {
-                            this.model.privileges.push(item);
-                            i++;
+    private save() {
+
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.viewactions.forEach((item) => {
+                    let i = 0;
+                    item.actions.forEach((act) => {
+                        if (act.status) {
+                            if (i === 0) {
+                                this.model.privileges.push(item);
+                                i++;
+                            }
                         }
-                    }
-                });
-            });
-            this.loaderService.display(true);
-            this.helperService.PUT(`/api/userprofile/${this.numId}`, this.model)
-            .map((response: Response) => {
-
-                const res = response.json();
-                if (res.status === 'success') {
-                    this.snackBar.open(res.message, 'Actualización', {
-                        duration: 3500,
                     });
-                    this.comp.openList();
-                }
+                });
+                this.helperService.POST(`/api/userprofile`, this.model).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                        this.comp.openList();
+                        this.loaderService.display(false);
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
 
-            }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            }, (done) => {
-                this.loaderService.display(false);
-            });
 
-        } else{
-            /** Create */
-
-            this.viewactions.forEach( (item) => {
-                let i = 0;
-                item.actions.forEach( (act) => {
-                    if (act.status) {
-                        if (i === 0){
-                            this.model.privileges.push(item);
-                            i++;
+                break;
+            case 'Actualizar':
+                this.model.privileges = [];
+                this.viewactions.forEach((item) => {
+                    let i = 0;
+                    item.actions.forEach((act) => {
+                        if (act.status) {
+                            if (i === 0) {
+                                this.model.privileges.push(item);
+                                i++;
+                            }
                         }
-                    }
-                });
-            });
-            this.helperService.POST(`/api/userprofile`, this.model)
-            .map((response: Response) => {
-
-                const res = response.json();
-                if (res.status === 'success') {
-                    this.snackBar.open(res.message, 'Guardado', {
-                        duration: 3500,
                     });
-                    this.clean();
-                }
-
-            }).subscribe(
-            (error) => {
-                this.loaderService.display(false);
-            }, (done) => {
-                this.loaderService.display(false);
-            });
-
+                });
+                this.helperService.PUT(`/api/userprofile/${this.numId}`, this.model).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+                break;
+            case 'Eliminar':
+                this.helperService.DELETE(`/api/userprofile/${this.numId}`).subscribe(rs => {
+                    let res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+                break;
         }
+
+
 
     }
 
     private getDataById(): void {
         this.loaderService.display(true);
         this.helperService.GET(`/api/userprofile/${this.numId}`)
-        .map((response: Response) => {
+            .map((response: Response) => {
 
-            const res = response.json();
-            this.model = res['data'];
-            // mostrar los permisos chequeados
-            this.viewactions.forEach( (item) => {
-                item.actions.forEach((act) => {
-                    this.model.privileges.forEach((priv) => {
-                        if (priv.view_id === item.view_id) {
-                            priv.actions.forEach((actPriv) => {
-                               if (act.action === actPriv.action) {
-                                   act.status = actPriv.status;
-                               }
-                            });
-                        }
+                const res = response.json();
+                this.model = res['data'];
+                // mostrar los permisos chequeados
+                this.viewactions.forEach((item) => {
+                    item.actions.forEach((act) => {
+                        this.model.privileges.forEach((priv) => {
+                            if (priv.view_id === item.view_id) {
+                                priv.actions.forEach((actPriv) => {
+                                    if (act.action === actPriv.action) {
+                                        act.status = actPriv.status;
+                                    }
+                                });
+                            }
+                        });
                     });
                 });
-            });
 
-        }).subscribe(
-        (error) =>{
-            this.loaderService.display(false);
-        }, (done) => {
-            this.loaderService.display(false);
-        });
+            }).subscribe(
+                (error) => {
+                    this.loaderService.display(false);
+                }, (done) => {
+                    this.loaderService.display(false);
+                });
 
     }
 
@@ -168,7 +167,7 @@ export class UserprofileActionComponent extends BaseModel implements OnInit {
         this.model.privileges = [];
     }
 
-    private expandPrivileges(item: any){
+    private expandPrivileges(item: any) {
         item.expand = !item.expand;
     }
 
@@ -178,7 +177,7 @@ export class UserprofileActionComponent extends BaseModel implements OnInit {
         });
     }
 
-    private goList(){
+    private goList() {
         this.comp.openList();
     }
 

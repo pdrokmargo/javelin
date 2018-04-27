@@ -38,7 +38,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of model.pharmaceutical_drugs">
+                        <tr *ngFor="let item of model.pharmaceutical_drug">
                             <td>{{ item.name }}</td>
                             <td>{{ item.routes_administration }}</td>
                             <td>{{ item.dosage_form }}</td>
@@ -98,7 +98,7 @@
         <!-- cum_code -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="cum_code" name="cum_code" [(ngModel)]="model.cum_code" mdInput placeholder="Código CUM">
+                <input required type="text" id="cum_code" name="cum_code" [(ngModel)]="model.cums" mdInput placeholder="Código CUM">
             </md-input-container>
         </div>
 

@@ -3,7 +3,9 @@
 <form #stakeHolderForm="ngForm" autocomplete="off">
 
     <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
-        <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+        <button type="button" md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+            <md-icon>keyboard_arrow_left</md-icon> Regresar
+        </button>
     </div>
     <!-- person type -->
     <div class='col-sm-12 col-md-6 margin-bottom'>
@@ -32,8 +34,8 @@
     <!-- document number -->
     <div class='col-sm-12 col-md-6  margin-bottom' *ngIf="!model.rut">
         <md-input-container class="full-width">
-            <input required type="text" NumberOnly id="document_number" name="document_number" [(ngModel)]="model.document_number"
-                mdInput placeholder="Número de documento">
+            <input required type="text" NumberOnly id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput
+                placeholder="Número de documento">
         </md-input-container>
     </div>
 
@@ -42,8 +44,8 @@
         <div class="row">
             <div class='col-sm-12 col-md-10'>
                 <md-input-container class="full-width">
-                    <input required NumberOnly (focusout)="getRutDigit()" type="text" id="document_number" name="document_number"
-                        [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
+                    <input required NumberOnly (focusout)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number"
+                        mdInput placeholder="Número de documento">
                 </md-input-container>
             </div>
             <div class='col-sm-12 col-md-2'>
@@ -292,8 +294,8 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount"
-                            mdInput placeholder="Descuento Global">
+                        <input NumberOnly type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount" mdInput
+                            placeholder="Descuento Global">
                     </md-input-container>
                 </div>
             </div>

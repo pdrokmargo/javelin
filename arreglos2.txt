@@ -10,6 +10,6 @@
 [OK] 10. Quitar nombre en creación de medicamento. (nombre del medicamento es el principio Activo)
 [OK] 11. No sirve crear los principios activos.
 [OK] 12. No permite crear los medicamentos en el sistema
-     13. Al intentar actualizar un producto, el sistema no permite actualizar
+[OK] 13. Al intentar actualizar un producto, el sistema no permite actualizar
      14. En la creación de contratos de dispensación, la vista de la Red Adscrita debe ser diferente porque son muchas entidades.
      15. Se intentó crear un afiliado y el sistema ni lo permitió crear.

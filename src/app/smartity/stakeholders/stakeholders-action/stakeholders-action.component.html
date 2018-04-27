@@ -3,14 +3,16 @@
 <form #stakeHolderForm="ngForm" autocomplete="off" (ngSubmit)="submit($event)">
 
     <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
-        <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+        <button md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+            <md-icon>keyboard_arrow_left</md-icon> Regresar
+        </button>
     </div>
 
     <!-- person type -->
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <md-select required class="full-width" placeholder="Tipo de persona" [(ngModel)]="model.person_type_id" name="person_type_id"
             id="person_type_id" (change)="selectPersonType()">
-            <md-option *ngFor="let item of persons_type" [value]="item.id">{{ item.value }}</md-option>
+            <md-option *ngFor="let item of persons_type" [value]="item.id">{{ item.id }} {{ item.value }}</md-option>
         </md-select>
     </div>
 
@@ -18,7 +20,7 @@
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <div class="flex">
             <span class="flex-spacer"></span>
-            <md-slide-toggle *ngIf="model.person_type_id == 38" [labelPosition]="'before'" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
+            <md-slide-toggle [labelPosition]="'before'" id="rut" name="rut" [(ngModel)]="model.rut">RUT</md-slide-toggle>
         </div>
     </div>
     <div class="col-sm-12"></div>
@@ -34,7 +36,8 @@
     <!-- document number -->
     <div class='col-sm-12 col-md-6  margin-bottom' *ngIf="!model.rut">
         <md-input-container class="full-width">
-            <input required type="text" [pattern]="pattern" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
+            <input required type="text" [pattern]="pattern" id="document_number" name="document_number" [(ngModel)]="model.document_number"
+                mdInput placeholder="Número de documento">
         </md-input-container>
     </div>
 
@@ -43,12 +46,14 @@
         <div class="row">
             <div class='col-sm-12 col-md-10'>
                 <md-input-container class="full-width">
-                    <input required [pattern]="pattern" (focusout)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" mdInput placeholder="Número de documento">
+                    <input required [pattern]="pattern" (focusout)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number"
+                        mdInput placeholder="Número de documento">
                 </md-input-container>
             </div>
             <div class='col-sm-12 col-md-2'>
                 <md-input-container class="full-width">
-                    <input [disabled]="true" type="text" id="document_number_digit" name="document_number_digit" [(ngModel)]="model.document_number_digit" mdInput placeholder="Dígito">
+                    <input [disabled]="true" type="text" id="document_number_digit" name="document_number_digit" [(ngModel)]="model.document_number_digit"
+                        mdInput placeholder="Dígito">
                 </md-input-container>
             </div>
         </div>
@@ -146,8 +151,7 @@
     <div class='col-sm-12 col-md-4'>
         <div class="box-body">
             <md-input-container class="full-width">
-                <input required NumberOnly type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number"
-                    mdInput placeholder="Teléfono">
+                <input required NumberOnly type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
             </md-input-container>
         </div>
     </div>
@@ -314,8 +318,8 @@
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input NumberOnly required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit"
-                        mdInput placeholder="Cupo crédito">
+                    <input NumberOnly required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="customer.credit_limit" mdInput
+                        placeholder="Cupo crédito">
                 </md-input-container>
             </div>
         </div>
@@ -335,8 +339,8 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly  type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount"
-                            mdInput placeholder="Descuento Global">
+                        <input NumberOnly type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount" mdInput
+                            placeholder="Descuento Global">
                     </md-input-container>
                 </div>
             </div>
@@ -374,8 +378,7 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly required type="text" id="days_grace" name="days_grace" [(ngModel)]="customer.days_grace"
-                            mdInput placeholder="Días de gracia">
+                        <input NumberOnly required type="text" id="days_grace" name="days_grace" [(ngModel)]="customer.days_grace" mdInput placeholder="Días de gracia">
                     </md-input-container>
                 </div>
             </div>
@@ -666,8 +669,8 @@
             <div class='col-sm-12 col-md-3'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly type="text" id="supplier_days_early_payment" name="supplier_days_early_payment"
-                            [(ngModel)]="supplier.days_early_payment" mdInput placeholder="Días de pronto pago">
+                        <input NumberOnly type="text" id="supplier_days_early_payment" name="supplier_days_early_payment" [(ngModel)]="supplier.days_early_payment"
+                            mdInput placeholder="Días de pronto pago">
                     </md-input-container>
                 </div>
             </div>

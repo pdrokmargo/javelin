@@ -2,8 +2,10 @@
 
 <form #modelForm="ngForm" autocomplete="off">
 
-    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
-        <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+    <div class="col-sm-12 margin-bottom-40">
+        <button md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+            <md-icon>keyboard_arrow_left</md-icon> Regresar
+        </button>
     </div>
 
     <!-- name -->
@@ -22,45 +24,36 @@
 
     </div>
 
-    <article class="col-sm-12 article">
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">Privilegios</h1>
-            </div>
-            <p class="hero-tagline">Selecciona un componente sobre el cual desea modificar sus privilegios de acceso para este perfil</p>
-        </section>
 
-        <div class="col-xl-12" *ngFor="let item of viewactions">
-            <div class="box" *ngIf="item.views.link!=''">
-                <div class="box-header" style="cursor:pointer;background: #eaeaea" (click)="item.expand=!item.expand">
-                    <a style="cursor:pointer;" (click)="item.expand=!item.expand">
-                        <i class="fa fa-plus-square-o" [hidden]="item.expand" aria-hidden="true"></i>
-                        <i class="fa fa-minus-square-o" [hidden]="!item.expand" aria-hidden="true"></i>
-                    </a>
-                    {{ item.views.title }}
-
-                    <a style="cursor:pointer;" class="pull-right" style="cursor:pointer;" (click)="item.expand=!item.expand">
-                        <i [hidden]="item.expand" class="fa fa-angle-double-up" aria-hidden="true"></i>
-                        <i [hidden]="!item.expand" class="fa fa-angle-double-down" aria-hidden="true"></i>
-                    </a>
-                </div>
-                <div class="box-body bg-color-white" [hidden]="!item.expand">
-                    <p>
-                        <md-checkbox (change)="item.check=!item.check;checkAll(item)" [checked]="item.check">Seleccionar</md-checkbox>
-                    </p>
-                    <p *ngFor="let act of item.actions">
-                        <md-checkbox (change)="act.status=!act.status;" [checked]="act.status">{{ act.action }}</md-checkbox>
-                    </p>
+    <div class="col-sm-12" *ngFor="let item of viewactions">
+        <div class="max-width-700" [ngStyle]="{ 'margin-bottom' : !item.expand ? '10px' : '0px' }">
+            <button class="full-width" type="button" md-raised-button color="{{ item.expand ? 'primary' : 'secundary' }}" (click)="item.expand = !item.expand">
+                <span class="flex flex-center">
+                    <div class="flex-spacer text-left">
+                        {{ item.views.title }}
+                    </div>
+                    <md-icon> {{item.expand ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}} </md-icon>
+                </span>
+            </button>
+            <div class="box-body" style="background: #f0f0f0; margin-bottom: 10px" [hidden]="!item.expand">
+                <div class="col-sm-12">
+                    <md-checkbox class="margin-bottom" (change)="item.check=!item.check;checkAll(item)" [checked]="item.check">Seleccionar</md-checkbox>
+                    <div class="flex space-between">
+                        <span *ngFor="let act of item.actions">
+                            <md-checkbox (change)="act.status=!act.status;" [checked]="act.status">{{ act.action }}</md-checkbox>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
 
-    </article>
+    </div>
 
-    <div class="col-sm-12" [class.btn-action-container]="booActive">
 
-        <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
-            (click)="save()">{{str_action}}</button>
+    <div class="col-sm-12">
+
+        <button [disabled]="!modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{strAction}}</button>
 
     </div>
 

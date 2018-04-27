@@ -1,11 +1,12 @@
-
 <!-- FORM -->
 
 <form #companyForm="ngForm" autocomplete="off">
 
-    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
-        <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
-    </div>                            
+    <div class="col-sm-12 margin-bottom" >
+        <button md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+            <md-icon>keyboard_arrow_left</md-icon> Regresar
+        </button>
+    </div>
 
     <!-- name -->
     <div class='col-sm-12 col-md-6'>
@@ -32,7 +33,7 @@
                 <input required type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción">
             </md-input-container>
         </div>
-    </div>  
+    </div>
 
     <!-- email -->
     <div class='col-sm-12 col-md-6'>
@@ -41,44 +42,43 @@
                 <input required type="text" id="email" name="email" [(ngModel)]="model.email" mdInput placeholder="Correo Eletrónico">
             </md-input-container>
         </div>
-    </div>                                    
+    </div>
 
     <!--country -->
     <div class='col-sm-12 col-md-4'>
         <div class="box-body">
-            <md-select class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id"
-            (change)="getDepartments()" id="country_id">
+            <md-select class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id" (change)="getDepartments()"
+                id="country_id">
                 <md-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</md-option>
-            </md-select>  
+            </md-select>
         </div>
-    </div>  
+    </div>
 
     <!-- department -->
     <div class='col-sm-12 col-md-4'>
         <div class="box-body">
-            <md-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department_id"
-            (change)="getCities()" id="department_id">
+            <md-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department_id" (change)="getCities()"
+                id="department_id">
                 <md-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</md-option>
-            </md-select>  
+            </md-select>
         </div>
     </div>
 
     <!--city -->
     <div class='col-sm-12 col-md-4'>
         <div class="box-body">
-            <md-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id"
-            id="city_id">
+            <md-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id" id="city_id">
                 <md-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</md-option>
-            </md-select>  
-        </div>    
+            </md-select>
+        </div>
     </div>
 
     <!-- address -->
     <div class='col-sm-12 col-md-12'>
-        <div class="box-body">                              
+        <div class="box-body">
             <md-input-container class="full-width">
                 <input required type="text" id="address" name="address" [(ngModel)]="model.address" mdInput placeholder="Dirección">
-            </md-input-container>                               
+            </md-input-container>
         </div>
     </div>
 
@@ -97,7 +97,7 @@
             <md-input-container class="full-width">
                 <input required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" mdInput placeholder="Teléfono">
             </md-input-container>
-        </div>                                
+        </div>
     </div>
 
     <div class="col-sm-12 col-md-12">
@@ -105,7 +105,8 @@
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
                 <md-input-container class="full-width">
-                    <input required type="text" id="economic_activity" name="economic_activity" [(ngModel)]="model.economic_activity" mdInput placeholder="Actividad económica">
+                    <input required type="text" id="economic_activity" name="economic_activity" [(ngModel)]="model.economic_activity" mdInput
+                        placeholder="Actividad económica">
                 </md-input-container>
             </div>
         </div>
@@ -113,21 +114,20 @@
         <!-- tax regimen -->
         <div class='col-sm-12 col-md-6'>
             <div class="box-body">
-                <md-select class="full-width" placeholder="Tipo de régimen" [(ngModel)]="model.tax_regime_id" name="tax_regime_id"
-                id="tax_regime_id">
+                <md-select class="full-width" placeholder="Tipo de régimen" [(ngModel)]="model.tax_regime_id" name="tax_regime_id" id="tax_regime_id">
                     <md-option *ngFor="let item of tax_regime" [value]="item.id">{{item.value}}</md-option>
-                </md-select>    
-            </div>                                    
-        </div>                            
-    </div>  
+                </md-select>
+            </div>
+        </div>
+    </div>
 
     <!-- withholding_income_sales_id -->
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-select class="full-width" placeholder="Reterenta en Ventas" [(ngModel)]="model.withholding_income_sales_id" name="withholding_income_sales_id"
-            id="withholding_income_sales_id">
+                id="withholding_income_sales_id">
                 <md-option *ngFor="let i of withholding" [value]="i.id">{{i.value}}</md-option>
-            </md-select>    
+            </md-select>
         </div>
     </div>
 
@@ -135,19 +135,19 @@
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-select class="full-width" placeholder="Reterenta en compras" [(ngModel)]="model.withholding_income_purchases_id" name="withholding_income_purchases_id"
-            id="withholding_income_purchases_id">
+                id="withholding_income_purchases_id">
                 <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
-            </md-select>    
-        </div>                            
+            </md-select>
+        </div>
     </div>
 
     <!-- withholding_vat_sales_id -->
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-select class="full-width" placeholder="Reteiva en Ventas" [(ngModel)]="model.withholding_vat_sales_id" name="withholding_vat_sales_id"
-            id="withholding_vat_sales_id">
+                id="withholding_vat_sales_id">
                 <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
-            </md-select>    
+            </md-select>
         </div>
     </div>
 
@@ -155,19 +155,19 @@
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-select class="full-width" placeholder="Reteiva en compras" [(ngModel)]="model.withholding_vat_purchases_id" name="withholding_vat_purchases_id"
-            id="withholding_vat_purchases_id">
+                id="withholding_vat_purchases_id">
                 <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
-            </md-select>    
-        </div>                            
-    </div>                           
+            </md-select>
+        </div>
+    </div>
 
     <!-- withholding_vat_sales_id -->
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-select class="full-width" placeholder="Reteica en Ventas" [(ngModel)]="model.withholding_ica_sales_id" name="withholding_ica_sales_id"
-            id="withholding_ica_sales_id">
+                id="withholding_ica_sales_id">
                 <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
-            </md-select>    
+            </md-select>
         </div>
     </div>
 
@@ -175,11 +175,11 @@
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-select class="full-width" placeholder="Reteica en compras" [(ngModel)]="model.withholding_ica_purchases_id" name="withholding_ica_purchases_id"
-            id="withholding_ica_purchases_id">
+                id="withholding_ica_purchases_id">
                 <md-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</md-option>
-            </md-select>    
-        </div>                            
-    </div>                    
+            </md-select>
+        </div>
+    </div>
 
     <!-- big_contributor -->
     <div class='col-sm-12 col-md-6'>
@@ -192,23 +192,22 @@
     <div class='col-sm-12 col-md-6'>
         <div class="box-body">
             <md-slide-toggle [labelPosition]="after" id="selfholder" name="selfholder" [(ngModel)]="model.selfholder">Autoretenedor</md-slide-toggle>
-        </div>                            
-    </div>                            
+        </div>
+    </div>
 
     <!-- big_contributor_resolution -->
     <div class='col-sm-12 col-md-6' *ngIf="model.big_contributor">
         <div class="box-body">
             <md-input-container class="full-width">
-                 <input required type="text" id="big_contributor_resolution" name="big_contributor_resolution" [(ngModel)]="model.big_contributor_resolution" mdInput placeholder="Resolución No.">
-            </md-input-container>                                        
+                <input required type="text" id="big_contributor_resolution" name="big_contributor_resolution" [(ngModel)]="model.big_contributor_resolution"
+                    mdInput placeholder="Resolución No.">
+            </md-input-container>
         </div>
     </div>
-    
-    <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button [disabled]="action_active ? false : !companyForm.form.valid" md-raised-button color="primary"
-        class="btn-w-md no-margin-left btn-right" (click)="save()">{{str_action}}</button>
+
+    <div class="col-sm-12" >
+        <button [disabled]="!companyForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{strAction}}</button>
     </div>
 
 </form>
-                   
-               

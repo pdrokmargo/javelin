@@ -1,6 +1,8 @@
 <form #modelForm="ngForm" autocomplete="off">
-    <div class="col-sm-12 margin-bottom-40" >
-        <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+    <div class="col-sm-12 margin-bottom-40">
+        <button type="button" md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+            <md-icon>keyboard_arrow_left</md-icon> Regresar
+        </button>
     </div>
     <!-- document_type_id -->
     <div class="col-sm-12 col-md-6 margin-bottom">
@@ -165,7 +167,7 @@
             <md-option *ngFor="let item of arrPublic_health_condition" [value]="item.id">{{item.value}}</md-option>
         </md-select>
     </div>
-    <div class="col-sm-12" >
+    <div class="col-sm-12">
         <button [disabled]="action_active ? false : !modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
             (click)="save()">{{strAction}}</button>
     </div>

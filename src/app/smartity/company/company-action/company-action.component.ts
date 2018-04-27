@@ -8,6 +8,7 @@ import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
 import { CompanyComponent } from '../company.component';
 import { BaseModel } from '../../bases/base-model';
+import { read } from 'fs';
 
 @Component({
   selector: 'company-action-cmp',
@@ -20,8 +21,6 @@ export class CompanyActionComponent extends BaseModel implements OnInit {
   private cities: any[] = [];
   private tax_regime: any[] = [];
   private withholding: any[] = [];
-  private action_active: boolean = false;
-  private str_action: string = 'Guardar';
 
   constructor(
     private loaderService: LoaderService,
@@ -39,12 +38,8 @@ export class CompanyActionComponent extends BaseModel implements OnInit {
     this.clean();
     this.getCollection();
 
-    if (this.numId > 0) {
-      // this.numId=this.route.snapshot.params['id'];
-      this.str_action = 'Actualizar';
+    if (this.numId != undefined) {
       this.getDataById();
-    } else {
-      this.str_action = 'Guardar';
     }
   }
 
@@ -107,6 +102,27 @@ export class CompanyActionComponent extends BaseModel implements OnInit {
   }
 
   private save() {
+    this.loaderService.display(true);
+    switch (this.strAction) {
+      case 'Guardar':
+        this.helperService.POST(`/api/company`, this.model).subscribe(rs => {
+          let res = rs.json();
+          if (res.store) {
+            this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+            this.comp.openList();
+            this.loaderService.display(false);
+          }
+        }, err => {
+          this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+          this.loaderService.display(false);
+        });
+        break;
+      case 'Actualizar': 
+      
+      break;
+      case 'Eliminar': break;
+    }
+
     /** Update */
     if (this.model.id > 0) {
       this.loaderService.display(true);
@@ -132,26 +148,7 @@ export class CompanyActionComponent extends BaseModel implements OnInit {
         );
     } else {
       /** Create */
-      this.loaderService.display(true);
-      this.helperService
-        .POST(`/api/company`, this.model)
-        .map((response: Response) => {
-          const res = response.json();
-          if (res.status === 'success') {
-            this.snackBar.open(res.message, 'Guardado', {
-              duration: 3500
-            });
-            this.clean();
-          }
-        })
-        .subscribe(
-          (error) => {
-            this.loaderService.display(false);
-          },
-          (done) => {
-            this.loaderService.display(false);
-          }
-        );
+
     }
   }
 

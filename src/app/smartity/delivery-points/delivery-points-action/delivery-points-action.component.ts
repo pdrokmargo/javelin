@@ -71,12 +71,12 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
                 this.helperService.POST(`/api/delivery-points`, this.model).subscribe(rs => {
                     let res = rs.json();
                     if (res.store) {
-                        this.snackBar.open(res.message, 'Guardado', { duration: 3500 });
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
                         this.comp.openList();
                         this.loaderService.display(false);
                     }
                 }, err => {
-                    this.snackBar.open(err.message, 'Guardado', { duration: 3500 });
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
                     this.loaderService.display(false);
                 });
                 break;
@@ -84,11 +84,11 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
                 this.helperService.PUT(`/api/delivery-points/${this.numId}`, this.model).subscribe(rs => {
                     let res = rs.json();
                     if (res.update) {
-                        this.snackBar.open(res.message, 'Actualización', { duration: 3500 });
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
                         this.comp.openList();
                     }
                 }, err => {
-                    this.snackBar.open(err.message, 'Actualización', { duration: 3500 });
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
                     this.loaderService.display(false);
                 });
                 break;
@@ -96,11 +96,11 @@ export class DeliveryPointsActionComponent extends BaseModel implements OnInit {
                 this.helperService.DELETE(`/api/delivery-points/${this.numId}`).subscribe(rs => {
                     let res = rs.json();
                     if (res.delete) {
-                        this.snackBar.open(res.message, 'Eliminación', { duration: 3500 });
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
                         this.comp.openList();
                     }
                 }, err => {
-                    this.snackBar.open(err.message, 'Eliminación', { duration: 3500 });
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
                     this.loaderService.display(false);
                 });
                 break;

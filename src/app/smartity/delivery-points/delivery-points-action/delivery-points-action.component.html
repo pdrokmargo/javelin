@@ -2,7 +2,9 @@
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
-                <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+                <button type="button" md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+                    <md-icon>keyboard_arrow_left</md-icon> Regresar
+                </button>
             </div>
             <!-- name -->
             <div class='col-sm-12 col-md-6 margin-bottom'>
@@ -34,8 +36,8 @@
             </div>
             <!-- grupo de punto de dispensacion -->
             <div class="col-sm-12 col-md-6 margin-bottom">
-                <md-select class="full-width" placeholder="Grupos de puntos de dispensación" [(ngModel)]="model.delivery_point_group_id" name="delivery_point_group_id"
-                    id="delivery_point_group_id">
+                <md-select class="full-width" placeholder="Grupos de puntos de dispensación" [(ngModel)]="model.delivery_point_group_id"
+                    name="delivery_point_group_id" id="delivery_point_group_id">
                     <md-option *ngFor="let item of arrDelivery_point_group" [value]="item.id">{{item.value}}</md-option>
                 </md-select>
             </div>

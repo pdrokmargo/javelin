@@ -11,7 +11,9 @@
         </div>
     </div>
     <div class="col-md-6" *ngIf="!noaction">
-        <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">Nuevo</button>
+        <button md-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">
+            <md-icon>add_circle_outline</md-icon> Nuevo
+        </button>
     </div>
 
     <div class="col-sm-12">

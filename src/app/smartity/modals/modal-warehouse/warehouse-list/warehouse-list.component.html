@@ -23,7 +23,7 @@
                         <th (click)="sort('c.value')">Ubicación
                             <span class="glyphicon sort-icon" *ngIf="key =='c.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('w.state')">Estado
+                        <th class="noAuto" (click)="sort('w.state')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='w.state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                     </tr>
@@ -32,7 +32,7 @@
                     <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
                         <td>{{ item.name }}</td>
                         <td>{{ item.city }}</td>
-                        <td>{{ item.state ? 'Activa' : 'Inactiva' }}</td>
+                        <td class="noAuto">{{ item.state ? 'Activa' : 'Inactiva' }}</td>
                     </tr>
                 </tbody>
             </table>

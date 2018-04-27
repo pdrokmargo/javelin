@@ -3,8 +3,10 @@
     <!--FORM-->
 
     <form #modelForm="ngForm" autocomplete="off">
-        <div class="col-sm-12 margin-bottom" >
-            <button md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+        <div class="col-sm-12 margin-bottom">
+            <button md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+                <md-icon>keyboard_arrow_left</md-icon> Regresar
+            </button>
         </div>
         <div class="col-sm-12 margin-bottom">
             <div class="flex">
@@ -44,14 +46,12 @@
 
         <div class="col-sm-12 col-md-6 margin-bottom">
             <md-input-container class="full-width">
-                <input #email="ngModel" userEmailValid [pattern]="emailPattern" required type="email" id="email" name="email" [(ngModel)]="model.email" mdInput placeholder="Correo electrónico">
+                <input #email="ngModel" userEmailValid [pattern]="emailPattern" required type="email" id="email" name="email" [(ngModel)]="model.email"
+                    mdInput placeholder="Correo electrónico">
                 <md-icon *ngIf="booEmailValid" mdSuffix>cached</md-icon>
-                <md-error *ngIf="email.errors?.userEmailValid">Correo electrónico ya se encuentra registrado  en el sistema</md-error>
+                <md-error *ngIf="email.errors?.userEmailValid">Correo electrónico ya se encuentra registrado en el sistema</md-error>
                 <md-error *ngIf="email.errors?.pattern">Formato errado</md-error>
             </md-input-container>
-            <p>
-                {{email.errors | json}}
-            </p>
         </div>
 
 
@@ -121,7 +121,7 @@
 
         </div>
     </div>
-    <div class="col-sm-12" >
+    <div class="col-sm-12">
         <button [disabled]="!modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
     </div>
 

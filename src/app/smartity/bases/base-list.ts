@@ -15,11 +15,14 @@ export abstract class BaseList {
   public key: string = null;
   public reverse: boolean = false;
   public orderType: string = null;
+  public actions = [];
 
   constructor(
     public loaderService: LoaderService,
     public helperService: HelperService
   ) {
+    this.actions = JSON.parse(localStorage.getItem('view_actual'))['actions'];
+    console.log(JSON.parse(localStorage.getItem('view_actual')));
     this.loadPagination();
   }
 
