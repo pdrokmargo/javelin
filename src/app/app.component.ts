@@ -27,7 +27,10 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private loaderService: LoaderService) {
 
     this.loaderService.status.subscribe((val: boolean) => {
-      this.showLoader = val;
+      setTimeout(() => {
+        this.showLoader = val;
+      });
+
     });
 
   }

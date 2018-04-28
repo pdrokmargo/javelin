@@ -117,7 +117,12 @@ tr.active {
   max-width: 90px;
   text-overflow: ellipsis;
 }
-
+.padding-bottom-0 {
+  padding-bottom: 0 !important;
+}
+.max-w-100 {
+  max-width: 100px;
+}
 .flex {
   display: flex;
 }

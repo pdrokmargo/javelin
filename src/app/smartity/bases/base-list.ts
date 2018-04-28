@@ -22,7 +22,6 @@ export abstract class BaseList {
     public helperService: HelperService
   ) {
     this.actions = JSON.parse(localStorage.getItem('view_actual'))['actions'];
-    console.log(JSON.parse(localStorage.getItem('view_actual')));
     this.loadPagination();
   }
 

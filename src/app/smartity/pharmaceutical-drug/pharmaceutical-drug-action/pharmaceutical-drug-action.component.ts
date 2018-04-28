@@ -20,12 +20,14 @@ import { filter } from 'rxjs/operators';
 
 export class PharmaceuticalDrugActionComponent extends BaseModel implements OnInit {
 
+    measurement_unit_id;
     private modalActiveIngredients: MdDialogRef<ModalActiveIngredientsComponent>;
     private pharmaceutical_form: any[] = [];
     private routes_administration: any[] = [];
     private storage_condition: any[] = [];
     private arrActive_ingredients: any[] = [];
     private arrMeasurement_unit: any[] = [];
+    all_concentration = 0;
 
     constructor(
         private loaderService: LoaderService,
@@ -42,7 +44,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
     ngOnInit() {
         this.clean();
         this.getCollection();
-        if (this.numId !== undefined){
+        if (this.numId !== undefined) {
             this.getDataById();
         }
     }
@@ -68,6 +70,10 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
     }
 
     private save() {
+        this.arrActive_ingredients.forEach(element => {
+            element.measurement_unit_id = this.measurement_unit_id;
+        });
+
         this.loaderService.display(true);
         switch (this.strAction) {
             case 'Guardar':
@@ -77,11 +83,11 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                         this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
                         this.goList();
                     }
-                }, err =>{
+                }, err => {
                     this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
                     this.loaderService.display(false);
                 });
-            break;
+                break;
             case 'Actualizar':
                 this.helperService.PUT(`/api/pharmaceuticaldrug/${this.numId}`, { "drug": this.model, "active_ingredients": this.arrActive_ingredients }).subscribe(rs => {
                     const res = rs.json();
@@ -93,7 +99,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                     this.loaderService.display(false);
                     this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
                 });
-            break;
+                break;
             case 'Eliminar':
                 this.helperService.DELETE(`/api/pharmaceuticaldrug/${this.numId}`).subscribe(rs => {
                     const res = rs.json();
@@ -105,7 +111,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                     this.loaderService.display(false);
                     this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
                 });
-            break;
+                break;
         }
 
 
@@ -114,7 +120,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/pharmaceuticaldrug/${this.numId}`).subscribe(rs=>{
+        this.helperService.GET(`/api/pharmaceuticaldrug/${this.numId}`).subscribe(rs => {
             const res = rs.json();
             this.model = res['data']["model"];
             this.arrActive_ingredients = res["data"]["active_ingredients"];
@@ -123,7 +129,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                 element.id = element.active_ingredient.id;
             });
             this.loaderService.display(false);
-        },err=>{
+        }, err => {
             this.loaderService.display(false);
         });
     }
@@ -150,7 +156,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
         });
 
         this.modalActiveIngredients.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
-            
+
             if (this.arrActive_ingredients.length == 0) {
                 this.arrActive_ingredients.push(data);
             } else {
@@ -169,5 +175,12 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
 
         });
 
+    }
+
+    private all() {
+        this.all_concentration = 0;
+        this.arrActive_ingredients.forEach(element => {
+            this.all_concentration += parseInt(element.concentration);
+        });
     }
 }
