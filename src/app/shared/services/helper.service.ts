@@ -52,8 +52,8 @@ export class HelperService {
 
     headerFormData(): RequestOptions {
         let header = new Headers({
-            // "Content-Type": "multipart/form-data",
-            // "Accept": "application/json",
+            //"Content-Type": "multipart/form-data",
+            //"Accept": "application/json",
             "Authorization": "Bearer " + JSON.parse(localStorage.getItem('currentUser'))["access_token"]
         });
         return new RequestOptions({ headers: header });

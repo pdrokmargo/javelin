@@ -48,7 +48,7 @@
                     <tr *ngFor="let item of list.data">
                         <td class="noAuto">{{ item.id }}</td>
                         <td *ngIf="item.person_type_id === 38">{{ item.name }}</td>
-                        <td *ngIf="item.person_type_id === 39">{{ item.legalname }}</td>
+                        <td *ngIf="item.person_type_id === 39">{{ item.businessname }}</td>
                         <td>{{ item.document_number }}</td>
                         <td>{{ item.geolocation }}</td>
                         <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>

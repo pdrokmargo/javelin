@@ -24,9 +24,16 @@
 
     </div>
 
-
+    <div class="col-sm-12">
+        <div class="max-width-700">
+            <h3>Modulos</h3>
+            <p class="hero-tagline">
+                Seleccione los permisos de las vistas al cual tendrá acceso el perfil de usuario
+            </p>
+        </div>
+    </div>
     <div class="col-sm-12" *ngFor="let item of viewactions">
-        <div class="max-width-700" [ngStyle]="{ 'margin-bottom' : !item.expand ? '10px' : '0px' }">
+        <div class="max-width-700" [ngStyle]="{ 'margin-bottom' : (!item.expand ? '10px' : '0px'), 'padding': (item.views.have_child ? '0px' : '0px 25px') }">
             <button class="full-width" type="button" md-raised-button color="{{ item.expand ? 'primary' : 'secundary' }}" (click)="item.expand = !item.expand">
                 <span class="flex flex-center">
                     <div class="flex-spacer text-left">
@@ -52,8 +59,7 @@
 
     <div class="col-sm-12">
 
-        <button [disabled]="!modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
-            (click)="save()">{{strAction}}</button>
+        <button [disabled]="!modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
 
     </div>
 
