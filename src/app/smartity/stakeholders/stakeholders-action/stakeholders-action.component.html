@@ -6,7 +6,8 @@
     </div>
     <!-- person_type_id -->
     <div class='col-sm-12 col-md-6 margin-bottom'>
-        <md-select required class="full-width" placeholder="Tipo de persona" [(ngModel)]="_model.stakeholders_info.person_type_id" name="person_type_id" id="person_type_id" (change)="selectPersonType()">
+        <md-select required class="full-width" placeholder="Tipo de persona" [(ngModel)]="_model.stakeholders_info.person_type_id"
+            name="person_type_id" id="person_type_id" (change)="selectPersonType()">
             <md-option *ngFor="let item of persons_type" [value]="item.id">{{ item.value }}</md-option>
         </md-select>
     </div>
@@ -19,7 +20,8 @@
     </div>
     <!-- document_type_id -->
     <div class='col-sm-12 col-md-6 margin-bottom'>
-        <md-select required class="full-width" placeholder="Tipo de documento" [(ngModel)]="_model.stakeholders_info.document_type_id" name="document_type_id" id="document_type_id">
+        <md-select required class="full-width" placeholder="Tipo de documento" [(ngModel)]="_model.stakeholders_info.document_type_id"
+            name="document_type_id" id="document_type_id">
             <md-option *ngFor="let item of document_type" [value]="item.id">{{item.value}}</md-option>
         </md-select>
     </div>
@@ -67,32 +69,37 @@
     </ng-container>
     <!-- ######################################## IF PERSON NATURAL ######################################## -->
     <!-- legalname -->
-    <div class='col-sm-12 margin-bottom' [ngClass]="{ 'col-md-6' : _model.stakeholders_info.rut, 'col-md-12' : !_model.stakeholders_info.rut }" *ngIf="_model.stakeholders_info.person_type_id === 39">
+    <div class='col-sm-12 margin-bottom' [ngClass]="{ 'col-md-6' : _model.stakeholders_info.rut, 'col-md-12' : !_model.stakeholders_info.rut }"
+        *ngIf="_model.stakeholders_info.person_type_id === 39">
         <md-input-container class="full-width">
             <input type="text" id="legalname" name="legalname" [(ngModel)]="_model.stakeholders_info.legalname" mdInput placeholder="Razón Social">
         </md-input-container>
     </div>
     <!-- business name -->
-    <div class='col-sm-12 margin-bottom' [ngClass]="{ 'col-md-6' : _model.stakeholders_info.person_type_id === 39 , 'col-md-12' :  _model.stakeholders_info.person_type_id !== 39 }" *ngIf="_model.stakeholders_info.rut">
+    <div class='col-sm-12 margin-bottom' [ngClass]="{ 'col-md-6' : _model.stakeholders_info.person_type_id === 39 , 'col-md-12' :  _model.stakeholders_info.person_type_id !== 39 }"
+        *ngIf="_model.stakeholders_info.rut">
         <md-input-container class="full-width">
             <input type="text" id="businessname" name="businessname" [(ngModel)]="_model.stakeholders_info.businessname" mdInput placeholder="Nombre del Establecimiento">
         </md-input-container>
     </div>
     <!--country -->
     <div class='col-sm-12 col-md-4 margin-bottom'>
-        <md-select required class="full-width" placeholder="Pais" [(ngModel)]="country_id" name="country_id" (change)="getDepartments()" id="country_id">
+        <md-select required class="full-width" placeholder="Pais" [(ngModel)]="country_id" name="country_id" (change)="getDepartments()"
+            id="country_id">
             <md-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</md-option>
         </md-select>
     </div>
     <!-- department -->
     <div class='col-sm-12 col-md-4 margin-bottom'>
-        <md-select required class="full-width" placeholder="Departamento" [(ngModel)]="department_id" name="department_id" (change)="getCities()" id="department_id">
+        <md-select required class="full-width" placeholder="Departamento" [(ngModel)]="department_id" name="department_id" (change)="getCities()"
+            id="department_id">
             <md-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</md-option>
         </md-select>
     </div>
     <!--city -->
     <div class='col-sm-12 col-md-4 margin-bottom'>
-        <md-select required class="full-width" placeholder="Ciudad" [(ngModel)]="_model.stakeholders_info.geolocation_id" name="city_id" id="city_id">
+        <md-select required class="full-width" placeholder="Ciudad" [(ngModel)]="_model.stakeholders_info.geolocation_id" name="city_id"
+            id="city_id">
             <md-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</md-option>
         </md-select>
     </div>
@@ -119,7 +126,9 @@
 
     <div class="col-sm-12 mark">
         <!--  -->
-        <div class="col-sm-12"><h4>Perfiles como tercero</h4></div>
+        <div class="col-sm-12">
+            <h4>Perfiles como tercero</h4>
+        </div>
         <!--  -->
         <div class='col-sm-12 col-md-3'>
             <md-checkbox id="is_customer" name="is_customer" [(ngModel)]="_model.profile.is_customer">Cliente</md-checkbox>
@@ -154,7 +163,8 @@
         </div>
         <!-- tax_regime_id -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
-            <md-select required class="full-width" placeholder="Tipo de regimen" [(ngModel)]="_model.comercial_stakeholders_info.tax_regime_id" name="tax_regime_id" id="tax_regime_id">
+            <md-select required class="full-width" placeholder="Tipo de regimen" [(ngModel)]="_model.comercial_stakeholders_info.tax_regime_id"
+                name="tax_regime_id" id="tax_regime_id">
                 <md-option *ngFor="let item of tax_regime" [value]="item.id">{{item.value}}</md-option>
             </md-select>
         </div>
@@ -174,7 +184,8 @@
         <!-- code_iva_percent -->
         <div class='col-sm-12 col-md-3 margin-bottom' *ngIf="_model.comercial_stakeholders_info.codes.iva">
             <md-input-container class="full-width">
-                <input NumberOnly required type="text" id="code_iva_percent" name="code_iva_percent" [(ngModel)]="_model.comercial_stakeholders_info.codes.iva_percent" mdInput>
+                <input NumberOnly required type="text" id="code_iva_percent" name="code_iva_percent" [(ngModel)]="_model.comercial_stakeholders_info.codes.iva_percent"
+                    mdInput>
                 <span matSuffix>% &nbsp;</span>
             </md-input-container>
         </div>
@@ -194,7 +205,8 @@
         <!-- codes_ciiu -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="codes_ica" name="codes_ica" [(ngModel)]="_model.comercial_stakeholders_info.codes.ciiu" mdInput placeholder="Código CIIU">
+                <input required type="text" id="codes_ica" name="codes_ica" [(ngModel)]="_model.comercial_stakeholders_info.codes.ciiu" mdInput
+                    placeholder="Código CIIU">
             </md-input-container>
         </div>
     </div>
@@ -205,13 +217,15 @@
         </div>
         <!-- customer_class_id -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
-            <md-select class="full-width" placeholder="Clases de cliente" [(ngModel)]="_model.customer.customer_class_id" name="customer_class_id" id="customer_class_id">
+            <md-select class="full-width" placeholder="Clases de cliente" [(ngModel)]="_model.customer.customer_class_id" name="customer_class_id"
+                id="customer_class_id">
                 <md-option *ngFor="let item of customers_class" [value]="item.id">{{item.value}}</md-option>
             </md-select>
         </div>
         <!-- debt_type_id -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
-            <md-select required class="full-width" placeholder="Tipo de cartera" [(ngModel)]="_model.customer.debt_type_id" name="debt_type_id" id="city_id">
+            <md-select required class="full-width" placeholder="Tipo de cartera" [(ngModel)]="_model.customer.debt_type_id" name="debt_type_id"
+                id="city_id">
                 <md-option *ngFor="let item of portfolio_type" [value]="item.id">{{item.value}}</md-option>
             </md-select>
         </div>
@@ -238,7 +252,8 @@
         </div>
         <!-- payment_condition -->
         <div *ngIf="_model.customer.debt_type_id == 18" class='col-sm-12 col-md-3 margin-bottom'>
-            <md-select [required]="_model.customer.debt_type_id == 17" class="full-width" placeholder="Condición de pago" [(ngModel)]="_model.customer.payment_condition_id" name="payment_condition" id="payment_condition">
+            <md-select [required]="_model.customer.debt_type_id == 17" class="full-width" placeholder="Condición de pago" [(ngModel)]="_model.customer.payment_condition_id"
+                name="payment_condition" id="payment_condition">
                 <md-option *ngFor="let item of conditions_payment" [value]="item.id">{{item.value}}</md-option>
             </md-select>
         </div>
@@ -590,6 +605,7 @@
     </div>
 
     <div class="col-sm-12" [class.btn-action-container]="booActive">
-        <button type="button" [disabled]="!stakeHolderForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
+        <button type="button" [disabled]="!stakeHolderForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{strAction}}</button>
     </div>
 </form>

@@ -140,14 +140,17 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         this.loaderService.display(true);
         const formData: FormData = new FormData();
         formData.append('data', JSON.stringify(this._model));
-        
-        if (this._model.customer.institutional_sale_contract !== null) {
-            this._model.customer.institutional_sale_contract.forEach((obj) => {
-                if (obj.is_file === true) {
-                    formData.append(obj.contract_number + '_file', obj.file);
-                }
-            });
+        if (this._model.customer) {
+            if (this._model.customer.institutional_sale_contract) {
+                this._model.customer.institutional_sale_contract.forEach((obj) => {
+                    if (obj.is_file === true) {
+                        formData.append(obj.contract_number + '_file', obj.file);
+                    }
+                });
+            }
         }
+
+
         switch (this.strAction) {
             case 'Guardar':
                 this.helperService.POSTFORMDATA(`/api/stakeholders`, formData).subscribe(rs => {

@@ -10,7 +10,7 @@
             <div class="box box-default">
                 <div class="box-body">
 
-                    <userprofile-action-cmp [numId]="id" *ngIf="isOpenActions"></userprofile-action-cmp>
+                    <userprofile-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></userprofile-action-cmp>
                     <userprofile-list-cmp *ngIf="isOpenList"></userprofile-list-cmp>
 
                 </div>                     
