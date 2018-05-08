@@ -28,7 +28,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         },
         employee: {},
         supplier: {
-            bank_accounts: []
+            bank_accounts: [],
+            sales_contact: {}
         },
         profile: {}
     }
@@ -221,7 +222,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             },
             employee: {},
             supplier: {
-                bank_accounts: []
+                bank_accounts: [],
+                sales_contact: {}
             },
             profile: {}
         }
