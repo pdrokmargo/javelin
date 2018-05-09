@@ -18,7 +18,6 @@ import { UserprofileComponent } from '../userprofile.component';
 export class UserprofileActionComponent extends BaseModel implements OnInit {
 
     private viewactions: any[] = [];
-    //private action_active: boolean = false;
     private booActive: boolean = false;
 
     constructor(private loaderService: LoaderService,
@@ -36,26 +35,22 @@ export class UserprofileActionComponent extends BaseModel implements OnInit {
 
         this.clean();
         this.getViewActions();
-        if (this.numId != undefined) {
 
-            this.getDataById();
-        }
     }
 
     private getViewActions() {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/viewactions`)
-            .map((response: Response) => {
-
-                let res = response.json();
-                this.viewactions = res['data'];
-
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                }, (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/viewactions`).map((response: Response) => {
+            let res = response.json();
+            this.viewactions = res['data'];
+            if (this.numId != undefined) {
+                this.getDataById();
+            }
+        }).subscribe((error) => {
+            this.loaderService.display(false);
+        }, (done) => {
+            this.loaderService.display(false);
+        });
     }
 
     private save() {
@@ -132,32 +127,30 @@ export class UserprofileActionComponent extends BaseModel implements OnInit {
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/userprofile/${this.numId}`)
-            .map((response: Response) => {
-
-                const res = response.json();
-                this.model = res['data'];
-                // mostrar los permisos chequeados
-                this.viewactions.forEach((item) => {
-                    item.actions.forEach((act) => {
-                        this.model.privileges.forEach((priv) => {
-                            if (priv.view_id === item.view_id) {
-                                priv.actions.forEach((actPriv) => {
-                                    if (act.action === actPriv.action) {
-                                        act.status = actPriv.status;
-                                    }
-                                });
-                            }
-                        });
+        this.helperService.GET(`/api/userprofile/${this.numId}`).map((response: Response) => {
+            const res = response.json();
+            this.model = res['data'];
+            this.viewactions.forEach((item) => {
+                item.actions.forEach((act) => {
+                    this.model.privileges.forEach((priv) => {
+                        if (priv.view_id === item.view_id) {
+                            item.expand = true;
+                            priv.actions.forEach((actPriv) => {
+                                if (act.action === actPriv.action) {
+                                    act.status = actPriv.status;
+                                }
+                            });
+                        }
                     });
                 });
+            });
 
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                }, (done) => {
-                    this.loaderService.display(false);
-                });
+        }).subscribe(
+            (error) => {
+                this.loaderService.display(false);
+            }, (done) => {
+                this.loaderService.display(false);
+            });
 
     }
 

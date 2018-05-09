@@ -129,7 +129,6 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
                 let res = response.json();
                 this.model = res.data;
-                this.refreshCompany();
 
             }).subscribe(
                 (error) => {
@@ -145,28 +144,39 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.model.status = true;
     }
 
-    private refreshCompany() {
-        let j = 0;
-        for (j = 0; j < this.companies.length; j++) {
-            let i = 0;
-            for (i = 0; i < this.model.usersprivileges.length; i++) {
-                if (this.model.usersprivileges[i].company_id === this.companies[j].id) {
-                    this.companies[j].hide = true;
-                } else {
-                    this.companies[j].hide = false;
-                }
+    private addCompany() {
+        if (this.model.usersprivileges) {
+            this.model_user_company.company_id = this.model_user_company.company.id;
+            this.model_user_company.user_profile_id = this.model_user_company.userprofile.id;
+
+            if (this.model.usersprivileges.length == 0) {
+                this._addCompany();
+            } else {
+                var exist = false;
+                this.model.usersprivileges.forEach((element, index) => {
+                    console.log(index);
+                    console.log(element);
+
+
+                    if (element.company_id == this.model_user_company.company_id) {
+                        exist = true;
+                    }
+                    if (index == this.model.usersprivileges.length - 1) {
+                        if (!exist) {
+                            this._addCompany();
+                        } else {
+                            this.snackBar.open('El usuario ya tiene un perfil registrado en esta empresa', 'Error', {
+                                duration: 4000,
+                            });
+                        }
+                    }
+                });
             }
         }
-
     }
-
-    private addCompany() {
-        this.model_user_company.company_id = this.model_user_company.company.id;
-        this.model_user_company.user_profile_id = this.model_user_company.userprofile.id;
+    private _addCompany() {
         this.model.usersprivileges.push(this.model_user_company);
         this.model_user_company = {};
-        this.model_user_company.id = 0;
-        this.refreshCompany();
     }
 
     private removeCompany(obj: any) {
@@ -179,7 +189,6 @@ export class UserActionComponent extends BaseModel implements OnInit {
         }
         const index = this.model.usersprivileges.indexOf(obj);
         this.model.usersprivileges.splice(index, 1);
-        this.refreshCompany();
     }
 
     private goList() {

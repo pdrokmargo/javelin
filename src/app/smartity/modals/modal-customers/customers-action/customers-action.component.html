@@ -1,12 +1,6 @@
 <!-- FORM -->
 
 <form #stakeHolderForm="ngForm" autocomplete="off">
-
-    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
-        <button type="button" md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
-            <md-icon>keyboard_arrow_left</md-icon> Regresar
-        </button>
-    </div>
     <!-- person type -->
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <md-select required class="full-width" placeholder="Tipo de persona" [(ngModel)]="model.person_type_id" name="person_type_id"

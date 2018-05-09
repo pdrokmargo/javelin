@@ -62,8 +62,8 @@ import {
   PharmaceuticalDrugActionComponent,
   PharmaceuticalDrugListComponent,
   ModalGeolocationComponent,
-  StakeholderActionComponent,
-  StakeholderListComponent,
+  StakeholdersActionComponent,
+  StakeholdersListComponent
 
 } from './smartity/modals';
 import { NgxMaskModule } from 'ngx-mask';
@@ -155,9 +155,9 @@ import { MycurrencyPipe } from './smartity/pipe/mycurrency.pipe';
     IpsNetworkListComponent,
     ModalGeolocationComponent,
     ModalStakeholderComponent,
-    StakeholderActionComponent,
-    StakeholderListComponent,
-    
+    StakeholdersActionComponent,
+    StakeholdersListComponent,
+
   ],
   providers: [
     MycurrencyPipe,
@@ -169,16 +169,16 @@ import { MycurrencyPipe } from './smartity/pipe/mycurrency.pipe';
     ActiveIngredientsComponent,
     CustomersListComponent,
     CustomersActionComponent,
-    StakeholderActionComponent,
-    StakeholderListComponent,
+    StakeholdersActionComponent,
+    StakeholdersListComponent,
     HelperService,
-    
+
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     ModalStakeholderComponent,
-    StakeholderActionComponent,
-    StakeholderListComponent,
+    StakeholdersActionComponent,
+    StakeholdersListComponent,
     ModalGeolocationComponent,
     ModalSucursalComponent,
     ModalConfirmationComponent,

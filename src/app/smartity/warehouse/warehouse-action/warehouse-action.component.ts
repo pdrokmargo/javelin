@@ -56,7 +56,7 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
             this.warehouses = res.WAREHOUSE_TYPE;
             this.loaderService.display(false);
         }, err => {
-            console.log(err);            
+            console.log(err);
             this.loaderService.display(false);
         });
     }
@@ -68,7 +68,7 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
             this.departments = res.departamentos;
             this.loaderService.display(false);
         }, err => {
-            console.log(err);            
+            console.log(err);
             this.loaderService.display(false);
         });
     }
@@ -80,7 +80,7 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
             this.cities = res.ciudades;
             this.loaderService.display(false);
         }, err => {
-            console.log(err);            
+            console.log(err);
             this.loaderService.display(false);
         });
     }
@@ -89,18 +89,18 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
         this.loaderService.display(true);
         switch (this.strAction) {
             case 'Guardar':
-            this.helperService.POST(`/api/warehouse`, this.model).subscribe(rs => {
-                const res = rs.json();
-                if (res.store) {
-                    this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
-                    this.comp.openList();
-                }
-            }, err => {
-                this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
-                this.loaderService.display(false);
-            });
-            break;
-            case 'Actualizar': 
+                this.helperService.POST(`/api/warehouse`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+                break;
+            case 'Actualizar':
                 this.helperService.PUT(`/api/warehouse/${this.numId}`, this.model).subscribe(rs => {
                     const res = rs.json();
                     if (res.update) {
@@ -111,21 +111,21 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
                     this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
                     this.loaderService.display(false);
                 });
-            break;
-            case 'Eliminar': 
-            this.helperService.DELETE(`/api/warehouse/${this.numId}`).subscribe(rs => {
-                const res = rs.json();
-                if (res.delete) {
-                    this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
-                    this.comp.openList();
-                }
-            }, err => {
-                this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
-                this.loaderService.display(false);
-            });
-        break;
+                break;
+            case 'Eliminar':
+                this.helperService.DELETE(`/api/warehouse/${this.numId}`).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+                break;
         }
- 
+
 
 
     }
@@ -142,7 +142,7 @@ export class WarehouseActionComponent extends BaseModel implements OnInit {
             this.model.city_id = this.model.geolocation.city_id;
             this.loaderService.display(false);
         }, err => {
-            console.log(err);            
+            console.log(err);
             this.loaderService.display(false);
         });
     }

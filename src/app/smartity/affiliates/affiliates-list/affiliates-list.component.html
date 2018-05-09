@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody *ngIf="list.data">
-                    <tr *ngFor="let item of list.data" (click)="view(item)">
+                    <tr *ngFor="let item of list.data">
                         <td class="noAuto">{{ item.id }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.contract }}</td>

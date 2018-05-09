@@ -1,60 +1,60 @@
+<!-- LIST -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar" [(ngModel)]="search" (keydown)="enter($event)">
+            <div style="width: 34px" class="input-group-addon">
+                <a style="cursor:pointer" (click)="getAll()">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 
-            <!-- LIST -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">                                    
-                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar"
-                        [(ngModel)]="search" (keydown)="enter($event)">
-                        <div style="width: 34px" class="input-group-addon">
-                            <a style="cursor:pointer" (click)="getAll()"><i class="fa fa-search"></i></a> 
-                        </div>
-                    </div>
-                </div>
-            
-            <div class="col-sm-12">
-                
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    
-                    <table class="mdl-data-table table-bordered table-striped cf no-margin">
-                    <thead>
-                        <tr>
-                            <!-- <th (click)="sort('i.id')">ID
+    <div class="col-sm-12">
+
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
+            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <thead>
+                    <tr>
+                        <!-- <th (click)="sort('i.id')">ID
                                     <span class="glyphicon sort-icon" *ngIf="key =='i.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th> -->
-                            <th (click)="sort('firstname')">Nombre
-                                <span class="glyphicon sort-icon" *ngIf="key =='firstname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                            </th>
-                            <th (click)="sort('document_number')">Número de documento
-                                <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                            </th>
+                        <th (click)="sort('firstname')">Nombre
+                            <span class="glyphicon sort-icon" *ngIf="key =='firstname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('document_number')">Número de documento
+                            <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
 
-                            <th (click)="sort('c.value')">Ubicación
-                                <span class="glyphicon sort-icon" *ngIf="key =='c.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                            </th>
-                            <!-- <th (click)="sort('state')">Estado
+                        <th (click)="sort('c.value')">Ubicación
+                            <span class="glyphicon sort-icon" *ngIf="key =='c.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <!-- <th (click)="sort('state')">Estado
                                 <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>     -->
-                            <th (click)="sort('i.status')">Estado
-                                <span class="glyphicon sort-icon" *ngIf="key =='i.status'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                            </th>
-                                                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
-                            <!-- <td>{{ item.id }}</td> -->
-                            <td *ngIf="item.document_type_id != 14">{{ item.name }}</td>
-                            <td *ngIf="item.document_type_id == 14">{{ item.businessname }}</td>
-                            <td>{{ item.document_number }}</td>
-                            <td>{{ item.geolocation }}</td>
-                            <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>
-                        </tr>                                          
-                    </tbody>
-                    </table>
-                    
-                </div>
-                <ngb-pagination [pageSize]="pageSize" [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="6" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>
-                
-            </div>
-        </div>                  
-            
+                        <th (click)="sort('i.status')">Estado
+                            <span class="glyphicon sort-icon" *ngIf="key =='i.status'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
+                        <!-- <td>{{ item.id }}</td> -->
+                        <td *ngIf="item.document_type_id != 14">{{ item.name }}</td>
+                        <td *ngIf="item.document_type_id == 14">{{ item.businessname }}</td>
+                        <td>{{ item.document_number }}</td>
+                        <td>{{ item.geolocation }}</td>
+                        <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <ngb-pagination [pageSize]="pageSize" [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="6" [rotate]="true"
+            [ellipses]="false" [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>
+
+    </div>
+</div>

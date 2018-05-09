@@ -26,5 +26,5 @@ export * from './modal-warehouse/warehouse-list/warehouse-list.component';
 export * from './modal-users/user-action/user-action.component';
 export * from './modal-users/user-list/user-list.component';
 export * from './modal-stakeholder/modal-stakeholder.component';
-export * from './modal-stakeholder/stakeholder-list/stakeholder-list.component';
-export * from './modal-stakeholder/stakeholder-action/stakeholder-action.component';
+export * from './modal-stakeholder/stakeholders-list/stakeholders-list.component';
+export * from './modal-stakeholder/stakeholders-action/stakeholders-action.component';

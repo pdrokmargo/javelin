@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { MdSnackBar, MdDialogRef, MdDialog } from '@angular/material';
-import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
-import { StakeholdersComponent } from '../stakeholders.component';
-import { BaseModel } from '../../bases/base-model';
-import { ModalConfirmationComponent, ModalSucursalComponent, ModalResolutionComponent, ModalInstitucionalSaleContractComponent, ModalBankAccountComponent } from '../../modals';
 import { filter } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
+import { BaseModel } from '../../../bases/base-model';
+import { LoaderService, HelperService } from '../../../../shared';
+import { ModalSucursalComponent, ModalConfirmationComponent, ModalResolutionComponent, ModalInstitucionalSaleContractComponent, ModalBankAccountComponent } from '../..';
 
 @Component({
     selector: 'stakeholders-action-cmp',
@@ -68,7 +67,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         private loaderService: LoaderService,
         private helperService: HelperService,
         public snackBar: MdSnackBar,
-        private comp: StakeholdersComponent,
         private dialog: MdDialog
     ) {
         super();
@@ -158,7 +156,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                     const res = rs.json();
                     if (res.store) {
                         this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
-                        this.goList();
                     }
                 }, err => {
                     this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
@@ -170,7 +167,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                     const res = rs.json();
                     if (res.update) {
                         this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
-                        this.comp.openList();
                     }
                 }, err => {
                     this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
@@ -182,7 +178,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                     const res = rs.json();
                     if (res.delete) {
                         this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
-                        this.comp.openList();
                     }
                 }, err => {
                     this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
@@ -227,9 +222,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             },
             profile: {}
         }
-    }
-    private goList() {
-        this.comp.openList();
     }
     private openAddSucursal() {
         this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent, { hasBackdrop: false });

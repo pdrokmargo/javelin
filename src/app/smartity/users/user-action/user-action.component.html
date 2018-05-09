@@ -68,14 +68,14 @@
 
         <!-- company -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
-            <md-select required class="full-width" placeholder="Empresa" [(ngModel)]="model_user_company.company" name="company_id" id="company_id">
+            <md-select class="full-width" placeholder="Empresa" [(ngModel)]="model_user_company.company" name="company_id" id="company_id">
                 <md-option *ngFor="let item of companies" [value]="item" [hidden]="item.hide">{{item.name}}</md-option>
             </md-select>
         </div>
 
         <!-- user profile -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
-            <md-select required class="full-width" placeholder="Perfil de usuario" [(ngModel)]="model_user_company.userprofile" name="user_profile_id"
+            <md-select class="full-width" placeholder="Perfil de usuario" [(ngModel)]="model_user_company.userprofile" name="user_profile_id"
                 id="user_profile_id">
                 <md-option *ngFor="let item of user_profiles" [value]="item">{{item.up_description}}</md-option>
             </md-select>

@@ -10,7 +10,7 @@ import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
 import { DeliveryContractsComponent } from '../delivery-contracts.component';
 import { filter } from 'rxjs/operators';
-import { ModalPharmaceuticalComponent, ModalCustomersComponent } from '../../modals';
+import { ModalPharmaceuticalComponent, ModalStakeholderComponent } from '../../modals';
 import { ModalDeliveryPointsComponent } from '../../modals/modal-delivery-points/modal-delivery-points.component';
 import { ModalIpsNetworkComponent } from '../../modals/modal-ips-network/modal-ips-network.component';
 import { ModalGeolocationComponent } from '../../modals/modal-geolocation/modal-geolocation.component';
@@ -23,7 +23,7 @@ import { ModalGeolocationComponent } from '../../modals/modal-geolocation/modal-
 
 export class DeliveryContractsActionComponent extends BaseModel implements OnInit {
 
-    private modalCostumer: MdDialogRef<ModalCustomersComponent>;
+    private modalCostumer: MdDialogRef<ModalStakeholderComponent>;
     private modalPharmaceutical: MdDialogRef<ModalPharmaceuticalComponent>;
     private modalDeliveryPoints: MdDialogRef<ModalDeliveryPointsComponent>;
     private modalIpsNetwork: MdDialogRef<ModalIpsNetworkComponent>;
@@ -213,7 +213,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
     }
     
     private openModalCostumers() {
-        this.modalCostumer = this.dialog.open(ModalCustomersComponent, {
+        this.modalCostumer = this.dialog.open(ModalStakeholderComponent, {
             hasBackdrop: false,
             data: {
                 title: 'Clientes',
