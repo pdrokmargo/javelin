@@ -32,9 +32,9 @@
                         <th (click)="sort('contract')">Contrato
                             <span class="glyphicon sort-icon" *ngIf="key =='contract'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('contract')">Modalidad
+                        <!--th (click)="sort('contract')">Modalidad
                             <span class="glyphicon sort-icon" *ngIf="key =='contract'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                        </th>
+                        </th-->
                         <th (click)="sort('state')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='ct.state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
@@ -47,7 +47,7 @@
                         <td class="noAuto">{{ item.id }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.contract }}</td>
-                        <td>{{item.contracts_payment_method}}</td>
+                        <!--td>{{item.contracts_payment_method}}</td-->
                         <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>
                         <td *ngIf="actions[2].status" class="w-40">
                             <button type="button" md-icon-button class="text-primary" (click)="view(item,'Actualizar')">

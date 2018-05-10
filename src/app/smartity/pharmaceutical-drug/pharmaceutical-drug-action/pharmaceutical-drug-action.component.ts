@@ -124,6 +124,8 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
             const res = rs.json();
             this.model = res['data']["model"];
             this.arrActive_ingredients = res["data"]["active_ingredients"];
+            this.measurement_unit_id = res["data"]["active_ingredients"][0]["measurement_unit_id"];
+            this.all();
             this.arrActive_ingredients.forEach(element => {
                 element.name = element.active_ingredient.name;
                 element.id = element.active_ingredient.id;

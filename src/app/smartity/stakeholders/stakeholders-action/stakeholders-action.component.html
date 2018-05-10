@@ -376,7 +376,7 @@
                     <div class="flex" style="margin-bottom: 15px;height: 51px;">
                         <div class="box-header no-padding-h">Contrato institucional</div>
                         <span class="flex-spacer"></span>
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddInstitucionalSale()">Añadir</button>
+                        <button  md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddInstitucionalSale()">Añadir</button>
                     </div>
                     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">
@@ -454,7 +454,7 @@
                     <div class="flex" style="margin-bottom: 15px;height: 51px;">
                         <div class="box-header no-padding-h">Resoluciones de monopolio</div>
                         <span class="flex-spacer"></span>
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddMonopolyResolution()">Añadir</button>
+                        <button [disabled]="_model.customer.shipping_points.length == 0" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddMonopolyResolution()">Añadir</button>
                     </div>
                     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">

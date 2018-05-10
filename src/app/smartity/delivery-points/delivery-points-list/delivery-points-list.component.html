@@ -40,7 +40,7 @@
                     </tr>
                 </thead>
                 <tbody *ngIf="list.data">
-                    <tr *ngFor="let item of list.data" (click)="view(item)">
+                    <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
                         <td class="noAuto">{{ item.id }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.delivery_points_groups.value }}</td>

@@ -42,7 +42,7 @@
                                 <td></td>
                                 <td class="max-w-100 padding-bottom-0"></td>
                                 <td class="max-w-100 padding-bottom-0">
-                                    <md-select class="full-width" [(ngModel)]="measurement_unit_id" name="measurement_unit_id{{index}}" id="measurement_unit_id{{index}}">
+                                    <md-select class="full-width" [(ngModel)]="measurement_unit_id" name="measurement_unit_id" id="measurement_unit_id">
                                         <md-option *ngFor="let item of arrMeasurement_unit" [value]="item.id">{{item.value.trim()}}</md-option>
                                     </md-select>
                                 </td>

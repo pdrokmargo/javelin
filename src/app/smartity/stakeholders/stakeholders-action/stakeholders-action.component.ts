@@ -197,12 +197,36 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         this.helperService.GET(`/api/stakeholders/${this.numId}`).subscribe(rs => {
             const res = rs.json();
             this._model = res['data'];
-            this.selectPersonType();
+            this.selectPersonType(false);
             this.country_id = res.country_id;
             this.getDepartments();
             this.department_id = res.department_id;
             this.getCities();
             this.getRutDigit();
+
+            if(!this._model.comercial_stakeholders_info) {
+                this._model.comercial_stakeholders_info = {
+                    codes: {}
+                }
+            }
+            if(!this._model.customer){
+                this._model.customer = {
+                    purchases_contact: {},
+                    debt_contact: {},
+                    shipping_points: [],
+                    institutional_sale_contract: [],
+                    controlled_resolution: []
+                }
+            }
+            if(!this._model.employee) {
+                this._model.employee = {}
+            }
+            if(!this._model.supplier) {
+                this._model.supplier = {
+                    bank_accounts: [],
+                    sales_contact: {}
+                }
+            }
         }, err => {
             this.loaderService.display(false);
         });
@@ -407,7 +431,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         return i_valor
     }
     private getRutDigit() {
-        if (this._model.stakeholders_info.document_type_id == 14) {
+        if (this._model.stakeholders_info.document_type_id == 14 || this._model.stakeholders_info.rut) {
             let i_rut = this._model.stakeholders_info.document_number;
             let pesos = [71, 67, 59, 53, 47, 43, 41, 37, 29, 23, 19, 17, 13, 7, 3];
             let rut_fmt = this.zero_fill(i_rut, 15)
@@ -429,9 +453,12 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this.document_number_digit = undefined;
         }
     }
-    private selectPersonType() {
-        this._model.stakeholders_info.rut = false;
-        this._model.stakeholders_info.document_type_id = undefined;
+    private selectPersonType(est = true) {
+        if (est) {
+            this._model.stakeholders_info.rut = false;
+            this._model.stakeholders_info.document_type_id = undefined;
+        }
+
         if (this._model.stakeholders_info.person_type_id == 39) {
             this.document_type = this.document_type_j;
         } else {

@@ -18,6 +18,7 @@ import { isNullOrUndefined } from 'util';
 
 export class UserActionComponent extends BaseModel implements OnInit {
 
+    private ref = undefined;
     private companies: any[] = [];
     private user_profiles: any[] = [];
     private model_user_company: any = {};
@@ -126,8 +127,9 @@ export class UserActionComponent extends BaseModel implements OnInit {
         this.loaderService.display(true);
         this.helperService.GET(`/api/users/${this.numId}`)
             .map((response: Response) => {
-
+                
                 let res = response.json();
+                this.ref = res.data.email;
                 this.model = res.data;
 
             }).subscribe(

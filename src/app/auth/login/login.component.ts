@@ -36,6 +36,8 @@ export class PageLoginComponent implements OnInit {
        
           this.service.GET(`login`).subscribe(res => {
 
+            console.log(res);
+
             if(!res['usercompany']){
               this.snackBar.open('Usted no tiene una empresa asignada.', 'Error', {
                 duration: 3500,

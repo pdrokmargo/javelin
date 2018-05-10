@@ -54,7 +54,7 @@ export class UserprofileActionComponent extends BaseModel implements OnInit {
     }
 
     private save() {
-
+        
         this.loaderService.display(true);
         switch (this.strAction) {
             case 'Guardar':
