@@ -16,13 +16,6 @@
                     placeholder="Número de resolución">
             </md-input-container>
         </div>
-        <!-- resolution_number -->
-        <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
-            <md-input-container class="full-width">
-                <input required type="text" id="resolution_number" name="resolution_number" [(ngModel)]="model.resolution_number" mdInput
-                    placeholder="Número de resolución">
-            </md-input-container>
-        </div>
         <!-- issue_date -->
         <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
             <md-input-container class="full-width">
@@ -51,7 +44,7 @@
             <div class="flex" style="margin-bottom: 15px;height: 51px;">
                 <div class="box-header no-padding-h">Productos asociados</div>
                 <span class="flex-spacer"></span>
-                <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right">Añadir</button>
+                <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openPharmaceutical()">Añadir</button>
             </div>
             <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                 <table class="mdl-data-table table-bordered table-striped cf no-margin">
@@ -62,10 +55,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of data.products">
-                            <td>{{ item.name }}</td>
+                        <tr *ngFor="let item of model.pharmaceutical_drugs">
+                            <td>{{ item.dosage_form }}</td>
                             <td class="text-center" title="Remover empresa">
-                                <a style="cursor: pointer;" class="text-danger" (click)="removeSucursal(item)">
+                                <a style="cursor: pointer;" class="text-danger" (click)="removePharmaceutical(item)">
                                     <i class="fa fa-trash fa-2x"></i>
                                 </a>
                             </td>

@@ -24,7 +24,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             debt_contact: {},
             shipping_points: [],
             institutional_sale_contract: [],
-            controlled_resolution: []
+            controlled_resolution: [],
+            monopoly_resolution: []
         },
         employee: {},
         supplier: {
@@ -204,12 +205,12 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this.getCities();
             this.getRutDigit();
 
-            if(!this._model.comercial_stakeholders_info) {
+            if (!this._model.comercial_stakeholders_info) {
                 this._model.comercial_stakeholders_info = {
                     codes: {}
                 }
             }
-            if(!this._model.customer){
+            if (!this._model.customer) {
                 this._model.customer = {
                     purchases_contact: {},
                     debt_contact: {},
@@ -218,10 +219,10 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                     controlled_resolution: []
                 }
             }
-            if(!this._model.employee) {
+            if (!this._model.employee) {
                 this._model.employee = {}
             }
-            if(!this._model.supplier) {
+            if (!this._model.supplier) {
                 this._model.supplier = {
                     bank_accounts: [],
                     sales_contact: {}
@@ -242,7 +243,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 debt_contact: {},
                 shipping_points: [],
                 institutional_sale_contract: [],
-                controlled_resolution: []
+                controlled_resolution: [],
+                monopoly_resolution: []
             },
             employee: {},
             supplier: {
@@ -317,8 +319,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             }
         });
 
-        this.resolutionDialogRef.afterClosed().pipe(filter(mnp_resolution => mnp_resolution)).subscribe(mnp_resolution => {
-            this._model.customer.monopoly_resolution.push(mnp_resolution);
+        this.resolutionDialogRef.afterClosed().pipe().subscribe(data => {
+            this._model.customer.monopoly_resolution.push(data);
         });
 
     }
