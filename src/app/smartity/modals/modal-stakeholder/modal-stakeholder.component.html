@@ -13,10 +13,10 @@
         </div>
     </div>
     <!-- FORM -->
-    <stakeholders-action-cmp *ngIf="radio.option==='2'" [strAction]="'Guardar'"></stakeholders-action-cmp>
+    <stakeholders-action-cmp *ngIf="radio.option === '2'" [strAction]="'Guardar'"></stakeholders-action-cmp>
     <!-- LIST -->
     <div class="col-sm-12">
-        <stakeholders-list-cmp *ngIf="radio.option==='1'" (select)="select($event)"></stakeholders-list-cmp>
+        <stakeholders-list-cmp [type]="option" *ngIf="radio.option === '1'" (select)="select($event)"></stakeholders-list-cmp>
     </div>
 </md-dialog-content>
 

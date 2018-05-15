@@ -22,8 +22,9 @@ export class ModalStakeholderComponent {
         private formBuilder: FormBuilder,
         private dialogRef: MdDialogRef<ModalStakeholderComponent>,
         @Inject(MD_DIALOG_DATA) private data
-    ) { 
+    ) {
         this.option = data.option;
+        console.log(this.option);
     }
 
     add() {

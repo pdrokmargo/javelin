@@ -1,10 +1,10 @@
 <form #productForm="ngForm" autocomplete="off">
     <div class="row">
 
-        <div class="col-sm-12 margin-bottom" >
+        <div class="col-sm-12 margin-bottom">
             <button type="button" md-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
         </div>
-        
+
         <!-- state -->
         <div class='col-sm-12 margin-bottom'>
             <div class="flex">
@@ -12,10 +12,11 @@
                 <md-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</md-slide-toggle>
             </div>
         </div>
-        
+
         <!--product type -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
-            <md-select class="full-width" placeholder="Tipo de producto" [(ngModel)]="model.product_profile_id" name="product_profile_id" id="product_profile_id">
+            <md-select class="full-width" placeholder="Tipo de producto" [(ngModel)]="model.product_profile_id" name="product_profile_id"
+                id="product_profile_id">
                 <md-option *ngFor="let item of product_type" [value]="item.id">{{item.value}}</md-option>
             </md-select>
         </div>
@@ -74,7 +75,8 @@
 
         <!-- content_unit_id -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
-            <md-select class="full-width" placeholder="Unidad de contenido" [(ngModel)]="model.content_unit_id" name="content_unit_id" id="content_unit_id">
+            <md-select class="full-width" placeholder="Unidad de contenido" [(ngModel)]="model.content_unit_id" name="content_unit_id"
+                id="content_unit_id">
                 <md-option *ngFor="let i of content_unit" [value]="i.id">{{i.value}}</md-option>
             </md-select>
         </div>
@@ -88,10 +90,11 @@
             </md-input-container>
         </div>
 
-         <!-- delivery_fraction -->
+        <!-- delivery_fraction -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="delivery_fraction" name="delivery_fraction" [(ngModel)]="model.delivery_fraction" mdInput placeholder="Fracción de entrega">
+                <input required type="text" id="delivery_fraction" name="delivery_fraction" [(ngModel)]="model.delivery_fraction" mdInput
+                    placeholder="Fracción de entrega">
             </md-input-container>
         </div>
 
@@ -125,7 +128,7 @@
             <md-slide-toggle [labelPosition]="after" id="institutional_use" name="institutional_use" [(ngModel)]="model.institutional_use">Uso institucional</md-slide-toggle>
         </div>
 
-         <!-- serials_control -->
+        <!-- serials_control -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-slide-toggle [labelPosition]="after" id="batch_control" name="serials_control" [(ngModel)]="model.serials_control">Controla serial</md-slide-toggle>
         </div>
@@ -138,7 +141,8 @@
         <!-- titular registro sanitario -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <md-input-container class="full-width">
-                <input readonly mdInput type="text" placeholder="Titular registro sanitario" [(ngModel)]="sanitary_registration_holder.businessname" id="sanitary_registration_holder" name="sanitary_registration_holder" />
+                <input required readonly mdInput type="text" placeholder="Titular registro sanitario" [(ngModel)]="sanitary_registration_holder.businessname"
+                    id="sanitary_registration_holder" name="sanitary_registration_holder" />
                 <md-icon mdSuffix class="wh-24 pointer" (click)="openAddSanitaryRegistration()">search</md-icon>
             </md-input-container>
         </div>
@@ -146,14 +150,16 @@
         <!-- sanitary_registration -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="sanitary_registration" name="sanitary_registration" [(ngModel)]="model.sanitary_registration" mdInput placeholder="Registro sanitario">
+                <input required type="text" id="sanitary_registration" name="sanitary_registration" [(ngModel)]="model.sanitary_registration"
+                    mdInput placeholder="Registro sanitario">
             </md-input-container>
         </div>
 
         <!-- validity_sanitary_registration -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input mdInput [mdDatepicker]="picker" id="validity_sanitary_registration" name="validity_sanitary_registration" placeholder="Vigencia de registro sanitario" [(ngModel)]="model.validity_sanitary_registration">
+                <input mdInput [mdDatepicker]="picker" id="validity_sanitary_registration" name="validity_sanitary_registration" placeholder="Vigencia de registro sanitario"
+                    [(ngModel)]="model.validity_sanitary_registration">
                 <button type="button" mdSuffix [mdDatepickerToggle]="picker"></button>
             </md-input-container>
             <md-datepicker #picker></md-datepicker>
@@ -162,7 +168,8 @@
         <!-- proveedor -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <md-input-container class="full-width">
-                <input readonly mdInput type="text" placeholder="Proveedor" [(ngModel)]="supplier.businessname" id="supplier" name="supplier" />
+                <input required readonly mdInput type="text" placeholder="Proveedor" [(ngModel)]="supplier.businessname" id="supplier" name="supplier"
+                />
                 <md-icon mdSuffix class="wh-24 pointer" (click)="openAddSupplier()">search</md-icon>
             </md-input-container>
         </div>
@@ -170,7 +177,8 @@
         <!-- fabricante -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <md-input-container class="full-width">
-                <input readonly mdInput type="text" placeholder="Fabricante" [(ngModel)]="manufacturer.businessname" id="manufacturer" name="manufacturer" />
+                <input required readonly mdInput type="text" placeholder="Fabricante" [(ngModel)]="manufacturer.businessname" id="manufacturer"
+                    name="manufacturer" />
                 <md-icon mdSuffix class="wh-24 pointer" (click)="openAddMaker()">search</md-icon>
             </md-input-container>
         </div>
@@ -178,7 +186,8 @@
         <!-- importador -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <md-input-container class="full-width">
-                <input readonly mdInput type="text" placeholder="Importador" [(ngModel)]="importer.businessname" id="importer" name="importer" />
+                <input required readonly mdInput type="text" placeholder="Importador" [(ngModel)]="importer.businessname" id="importer" name="importer"
+                />
                 <md-icon mdSuffix class="wh-24 pointer" (click)="openAddImporter()">search</md-icon>
             </md-input-container>
         </div>
@@ -186,25 +195,28 @@
         <!-- security_time -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="security_time" name="security_time" [(ngModel)]="model.security_time" mdInput placeholder="Tiempo de seguridad">
+                <input NumberOnly required type="text" id="security_time" name="security_time" [(ngModel)]="model.security_time" mdInput
+                    placeholder="Tiempo de seguridad">
             </md-input-container>
         </div>
 
         <!-- covered_period -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="covered_period" name="covered_period" [(ngModel)]="model.covered_period" mdInput placeholder="Periodo de cubrimiento">
+                <input NumberOnly required type="text" id="covered_period" name="covered_period" [(ngModel)]="model.covered_period" mdInput
+                    placeholder="Periodo de cubrimiento">
             </md-input-container>
         </div>
 
         <!-- replacment_time -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="replacment_time" name="replacment_time" [(ngModel)]="model.replacment_time" mdInput placeholder="Tiempo de reposición">
+                <input NumberOnly required type="text" id="replacment_time" name="replacment_time" [(ngModel)]="model.replacment_time" mdInput
+                    placeholder="Tiempo de reposición">
             </md-input-container>
         </div>
 
-        <div class="col-sm-12" >
+        <div class="col-sm-12">
             <button type="button" [disabled]="!productForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
                 (click)="save()">{{strAction}}</button>
         </div>

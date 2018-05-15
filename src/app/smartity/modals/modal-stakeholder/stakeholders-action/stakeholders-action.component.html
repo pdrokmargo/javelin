@@ -10,7 +10,7 @@
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <div class="flex height-30">
             <span class="flex-spacer"></span>
-            <md-slide-toggle *ngIf="_model.stakeholders_info.person_type_id == 38 && _model.stakeholders_info.document_type_id == 12"
+            <md-slide-toggle *ngIf="(_model.stakeholders_info.person_type_id == 38 && _model.stakeholders_info.document_type_id == 12)"
                 [labelPosition]="'before'" id="rut" name="rut" [(ngModel)]="_model.stakeholders_info.rut">RUT</md-slide-toggle>
         </div>
     </div>
@@ -69,15 +69,17 @@
     </ng-container>
     <!-- ######################################## IF PERSON NATURAL ######################################## -->
     <!-- legalname -->
-    <div class='col-sm-12 margin-bottom' [ngClass]="{ 'col-md-6' : _model.stakeholders_info.rut, 'col-md-12' : !_model.stakeholders_info.rut }"
-        *ngIf="_model.stakeholders_info.person_type_id === 39">
+    <div class='col-sm-12 margin-bottom' [ngClass]="{ 
+        'col-md-6' : _model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14), 
+        'col-md-12' : !_model.stakeholders_info.rut && _model.stakeholders_info.person_type_id != 39  }" *ngIf="_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14">
         <md-input-container class="full-width">
             <input type="text" id="legalname" name="legalname" [(ngModel)]="_model.stakeholders_info.legalname" mdInput placeholder="Razón Social">
         </md-input-container>
     </div>
     <!-- business name -->
-    <div class='col-sm-12 margin-bottom' [ngClass]="{ 'col-md-6' : _model.stakeholders_info.person_type_id === 39 , 'col-md-12' :  _model.stakeholders_info.person_type_id !== 39 }"
-        *ngIf="_model.stakeholders_info.rut">
+    <div class='col-sm-12 margin-bottom' [ngClass]="{ 
+        'col-md-6' : _model.stakeholders_info.person_type_id === 39 , 
+        'col-md-12' :  _model.stakeholders_info.person_type_id !== 39 }" *ngIf="_model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14)">
         <md-input-container class="full-width">
             <input type="text" id="businessname" name="businessname" [(ngModel)]="_model.stakeholders_info.businessname" mdInput placeholder="Nombre del Establecimiento">
         </md-input-container>
@@ -167,6 +169,15 @@
                 name="tax_regime_id" id="tax_regime_id">
                 <md-option *ngFor="let item of tax_regime" [value]="item.id">{{item.value}}</md-option>
             </md-select>
+        </div>
+        <!-- constitution_date -->
+        <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerConstitutionDate" id="constitution_date" name="constitution_date" placeholder="Fecha de constitución"
+                    [(ngModel)]="model.constitution_date">
+                <button type="button" mdSuffix [mdDatepickerToggle]="pickerConstitutionDate"></button>
+            </md-input-container>
+            <md-datepicker #pickerConstitutionDate></md-datepicker>
         </div>
         <span class="col-sm-12"></span>
         <!-- retention_for_rent -->
@@ -451,7 +462,8 @@
                     <div class="flex" style="margin-bottom: 15px;height: 51px;">
                         <div class="box-header no-padding-h">Resoluciones de monopolio</div>
                         <span class="flex-spacer"></span>
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddMonopolyResolution()">Añadir</button>
+                        <button [disabled]="_model.customer.shipping_points.length == 0" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+                            (click)="openAddMonopolyResolution()">Añadir</button>
                     </div>
                     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">

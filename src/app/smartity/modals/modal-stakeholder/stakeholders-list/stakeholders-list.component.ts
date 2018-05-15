@@ -25,10 +25,12 @@ export class StakeholdersListComponent extends BaseList implements OnInit {
         public helperService: HelperService
     ) {
         super(loaderService, helperService);
-        this.urlApi = '/api/stakeholders';
+
     }
 
     ngOnInit() {
+        console.log(this.type);
+        this.urlApi = `/api/search_stake_holder/${this.type}`;
         this.getAll();
     }
 

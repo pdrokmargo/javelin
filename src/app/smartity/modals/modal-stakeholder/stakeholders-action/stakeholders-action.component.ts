@@ -1,11 +1,17 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { MdSnackBar, MdDialogRef, MdDialog } from '@angular/material';
 import { Response } from '@angular/http';
+import {
+    ModalConfirmationComponent,
+    ModalSucursalComponent,
+    ModalResolutionComponent,
+    ModalInstitucionalSaleContractComponent,
+    ModalBankAccountComponent
+} from '../../../modals';
 import { filter } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 import { BaseModel } from '../../../bases/base-model';
 import { LoaderService, HelperService } from '../../../../shared';
-import { ModalSucursalComponent, ModalConfirmationComponent, ModalResolutionComponent, ModalInstitucionalSaleContractComponent, ModalBankAccountComponent } from '../..';
 
 @Component({
     selector: 'stakeholders-action-cmp',
@@ -23,7 +29,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             debt_contact: {},
             shipping_points: [],
             institutional_sale_contract: [],
-            controlled_resolution: []
+            controlled_resolution: [],
+            monopoly_resolution: []
         },
         employee: {},
         supplier: {
@@ -77,9 +84,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         this.clean();
         this.getCollection();
         this.getSalesRepresentative();
-        if (this.numId !== undefined) {
-            this.getDataById();
-        }
     }
     private getCollection() {
         this.loaderService.display(true);
@@ -156,52 +160,17 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                     const res = rs.json();
                     if (res.store) {
                         this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                        this.loaderService.display(false);
                     }
                 }, err => {
                     this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
                     this.loaderService.display(false);
                 });
                 break;
-            case 'Actualizar':
-                this.helperService.POSTFORMDATA(`/api/update_stake_holder/${this.numId}`, formData).subscribe(rs => {
-                    const res = rs.json();
-                    if (res.update) {
-                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
-                    }
-                }, err => {
-                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
-                    this.loaderService.display(true);
-                });
-                break;
-            case 'Eliminar':
-                this.helperService.DELETE(`/api/stakeholders/${this.numId}`).subscribe(rs => {
-                    const res = rs.json();
-                    if (res.delete) {
-                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
-                    }
-                }, err => {
-                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
-                    this.loaderService.display(true);
-                });
-                break;
         }
 
     }
-    private getDataById(): void {
-        this.loaderService.display(true);
-        this.helperService.GET(`/api/stakeholders/${this.numId}`).subscribe(rs => {
-            const res = rs.json();
-            this._model = res['data'];
-            this.selectPersonType();
-            this.country_id = res.country_id;
-            this.getDepartments();
-            this.department_id = res.department_id;
-            this.getCities();
-            this.getRutDigit();
-        }, err => {
-            this.loaderService.display(false);
-        });
-    }
+
     private clean() {
         this._model = {
             stakeholders_info: {},
@@ -213,7 +182,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 debt_contact: {},
                 shipping_points: [],
                 institutional_sale_contract: [],
-                controlled_resolution: []
+                controlled_resolution: [],
+                monopoly_resolution: []
             },
             employee: {},
             supplier: {
@@ -223,6 +193,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             profile: {}
         }
     }
+
     private openAddSucursal() {
         this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent, { hasBackdrop: false });
         this.sucursalDialogRef.afterClosed().pipe(filter((shipping_point) => shipping_point)).subscribe((shipping_point) => {
@@ -285,8 +256,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             }
         });
 
-        this.resolutionDialogRef.afterClosed().pipe(filter(mnp_resolution => mnp_resolution)).subscribe(mnp_resolution => {
-            this._model.customer.monopoly_resolution.push(mnp_resolution);
+        this.resolutionDialogRef.afterClosed().pipe().subscribe(data => {
+            this._model.customer.monopoly_resolution.push(data);
         });
 
     }
@@ -399,7 +370,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         return i_valor
     }
     private getRutDigit() {
-        if (this._model.stakeholders_info.document_type_id == 14) {
+        if (this._model.stakeholders_info.document_type_id == 14 || this._model.stakeholders_info.rut) {
             let i_rut = this._model.stakeholders_info.document_number;
             let pesos = [71, 67, 59, 53, 47, 43, 41, 37, 29, 23, 19, 17, 13, 7, 3];
             let rut_fmt = this.zero_fill(i_rut, 15)
@@ -421,9 +392,12 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this.document_number_digit = undefined;
         }
     }
-    private selectPersonType() {
-        this._model.stakeholders_info.rut = false;
-        this._model.stakeholders_info.document_type_id = undefined;
+    private selectPersonType(est = true) {
+        if (est) {
+            this._model.stakeholders_info.rut = false;
+            this._model.stakeholders_info.document_type_id = undefined;
+        }
+
         if (this._model.stakeholders_info.person_type_id == 39) {
             this.document_type = this.document_type_j;
         } else {

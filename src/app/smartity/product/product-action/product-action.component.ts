@@ -63,10 +63,10 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     private save() {
         this.model.name = '';
 
-        if(this.model.pharmaceutical_drug ===  undefined) {
+        if (this.model.pharmaceutical_drug === undefined) {
             this.model.pharmaceutical_drug = [];
         }
-        
+
         if (this.model.pharmaceutical_drug.length == 0 && this.model.product_profile_id == 30) {
             this.snackBar.open('Seleccione por lo menos un medicamento', 'Error', { duration: 4000 });
         } else {
@@ -131,7 +131,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
 
     private clean() {
         this.model = {};
-        
+
         this.model.batch_control = false;
         this.model.serials_control = false;
         this.model.institutional_use = false;
@@ -179,6 +179,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         });
 
         this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
+            if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
             this.sanitary_registration_holder = stakeHolder;
             this.model.sanitary_registration_holder_id = stakeHolder.id;
         });
@@ -194,6 +195,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         });
 
         this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
+            if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
             this.supplier = stakeHolder;
             this.model.supplier_id = stakeHolder.id;
         });
@@ -212,6 +214,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             .afterClosed()
             .pipe(filter((stakeHolder) => stakeHolder))
             .subscribe((stakeHolder) => {
+                if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
                 this.manufacturer = stakeHolder;
                 this.model.manufacturer_id = stakeHolder.id;
             });
@@ -227,6 +230,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         });
 
         this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
+            if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
             this.importer = stakeHolder;
             this.model.importer_id = stakeHolder.id;
         });
