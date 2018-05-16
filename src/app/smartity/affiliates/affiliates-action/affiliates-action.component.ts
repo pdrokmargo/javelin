@@ -57,9 +57,12 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
         this.clean();
         this.getCollection();
         this.loadDepartment();
-        this.loadDeliveryContract();
+
 
         switch (this.strAction) {
+            case 'Guardar':
+                this.loadDeliveryContract();
+                break;
             case 'Actualizar':
             case 'Eliminar':
                 this.getDataById();
@@ -172,21 +175,27 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
     }
 
     private getDataById(): void {
-        this.loaderService.display(true);
-        this.helperService.GET(`/api/affiliates/${this.numId}`)
-            .map((response: Response) => {
-                let res = response.json();
-                this.model = res.data;
-                this.model.geolocation = JSON.parse(this.model.geolocation);
-                this.model.department = this.model.geolocation.department;
-                this.loadCity();
-                this.loadIpsNetword(this.arrDelivery_contract.filter(x => x.id === this.model.delivery_contract_id));
-            }).subscribe(
-                error => {
+        this.helperService.GET(`/api/delivery-contracts`).subscribe(rs => {
+            let res = rs.json();
+            this.arrDelivery_contract = res.data;
+            this.loaderService.display(true);
+            this.helperService.GET(`/api/affiliates/${this.numId}`)
+                .map((response: Response) => {
+                    let res = response.json();
+                    this.model = res.data;
+                    this.model.geolocation = JSON.parse(this.model.geolocation);
+                    this.model.department = this.model.geolocation.department;
+                    this.loadCity();
+                    this.loadIpsNetword(this.arrDelivery_contract.filter(x => x.id == this.model.delivery_contract_id)[0]);
+                }).subscribe(error => {
                     this.loaderService.display(false);
                 }, done => {
                     this.loaderService.display(false);
                 });
+
+        }, err => {
+            console.log(err);
+        });
     }
 
     private clean() {
@@ -200,8 +209,6 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
     }
 
     private loadIpsNetword(item) {
-        console.log(item);
-
         this.arrIps_network = item.ips;
     }
 }
