@@ -10,7 +10,7 @@
     <div class='col-sm-12 col-md-6 margin-bottom'>
         <div class="flex height-30">
             <span class="flex-spacer"></span>
-            <md-slide-toggle *ngIf="(_model.stakeholders_info.person_type_id == 38 && _model.stakeholders_info.document_type_id == 12)"
+            <md-slide-toggle *ngIf="_model.stakeholders_info.person_type_id == 38 && _model.stakeholders_info.document_type_id == 12"
                 [labelPosition]="'before'" id="rut" name="rut" [(ngModel)]="_model.stakeholders_info.rut">RUT</md-slide-toggle>
         </div>
     </div>
