@@ -163,7 +163,7 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
                         this.comp.openList();
                     }
                 }, err => {
-                    this.loaderService.display(false); 
+                    this.loaderService.display(false);
                 });
                 break;
         }
@@ -180,7 +180,7 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
                 this.model.geolocation = JSON.parse(this.model.geolocation);
                 this.model.department = this.model.geolocation.department;
                 this.loadCity();
-
+                this.loadIpsNetword(this.arrDelivery_contract.filter(x => x.id === this.model.delivery_contract_id));
             }).subscribe(
                 error => {
                     this.loaderService.display(false);
@@ -200,6 +200,8 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
     }
 
     private loadIpsNetword(item) {
+        console.log(item);
+
         this.arrIps_network = item.ips;
     }
 }
