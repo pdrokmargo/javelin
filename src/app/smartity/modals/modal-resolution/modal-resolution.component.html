@@ -36,7 +36,7 @@
         <!-- shipping_point -->
         <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
             <md-select class="full-width" placeholder="Punto de envío" [(ngModel)]="model.shipping_point" name="shipping_point_id" id="shipping_point_">
-                <md-option *ngFor="let item of data.shipping_points" [value]="item">{{item.name}}</md-option>
+                <md-option *ngFor="let item of data.shipping_points" [value]="item.name">{{item.name}}</md-option>
             </md-select>
         </div>
         <!-- TABLE -->
@@ -51,16 +51,16 @@
                     <thead>
                         <tr>
                             <th>Nombre del producto</th>
-                            <th></th>
+                            <th class="w-40"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of model.pharmaceutical_drugs">
-                            <td>{{ item.dosage_form }}</td>
-                            <td class="text-center" title="Remover empresa">
-                                <a style="cursor: pointer;" class="text-danger" (click)="removePharmaceutical(item)">
-                                    <i class="fa fa-trash fa-2x"></i>
-                                </a>
+                            <td>{{ item.name }}</td>
+                            <td class="w-40">
+                                <button type="button" md-icon-button class="text-danger" (click)="removePharmaceutical(item)">
+                                    <md-icon>delete</md-icon>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -73,7 +73,7 @@
     <div class="col-sm-12">
         <div class="flex">
             <span class="flex-spacer"></span>
-            <button md-button type="button" [disabled]="action_active ? false : !resolutionForm.form.valid" (click)="add()">Agregar</button>
+            <button *ngIf="booShow" md-button type="button" [disabled]="action_active ? false : !resolutionForm.form.valid" (click)="add()">Agregar</button>
             <button md-button type="button" md-dialog-close>Cerrar</button>
         </div>
     </div>

@@ -33,7 +33,10 @@
         </div>
     </div>
     <div class="col-sm-12" *ngFor="let item of viewactions">
-        <div class="max-width-700" [ngStyle]="{ 'margin-bottom' : (!item.expand ? '10px' : '0px'), 'padding': (item.views.have_child ? '0px' : '0px 25px') }">
+        <div class="max-width-700" [ngStyle]="{ 
+            'margin-bottom' : (!item.expand ? '10px' : '0px'), 
+            'padding': (item.views.have_child ? '0px' : '0px 25px') 
+        }">
             <button class="full-width" type="button" md-raised-button color="{{ item.expand ? 'primary' : 'secundary' }}" (click)="item.expand = !item.expand">
                 <span class="flex flex-center">
                     <div class="flex-spacer text-left">
@@ -44,10 +47,10 @@
             </button>
             <div class="box-body" style="background: #f0f0f0; margin-bottom: 10px" [hidden]="!item.expand">
                 <div class="col-sm-12">
-                    <md-checkbox class="margin-bottom" (change)="item.check=!item.check;checkAll(item)" [checked]="item.check">Seleccionar</md-checkbox>
+                    <md-checkbox class="margin-bottom" (change)="item.check=!item.check; checkAll(item)" [checked]="item.check">Seleccionar</md-checkbox>
                     <div class="flex space-between">
                         <span *ngFor="let act of item.actions">
-                            <md-checkbox (change)="act.status=!act.status;" [checked]="act.status">{{ act.action }}</md-checkbox>
+                            <md-checkbox (change)="act.status =! act.status;" [checked]="act.status">{{ act.action }}</md-checkbox>
                         </span>
                     </div>
                 </div>

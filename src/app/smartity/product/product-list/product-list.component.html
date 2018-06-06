@@ -32,10 +32,9 @@
                         <th (click)="sort('comercial_name')">Nombre Comercial
                             <span class="glyphicon sort-icon" *ngIf="key =='comercial_name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('units')">Inventario
+                        <th (click)="sort('units')">Unidades
                             <span class="glyphicon sort-icon" *ngIf="key =='units'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-
                         <th (click)="sort('state')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
@@ -49,7 +48,7 @@
                         <td>{{ item.barcode }}</td>
                         <td>{{ item.comercial_name }}</td>
                         <td>{{ item.units }}</td>
-                        <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>
+                        <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
                         <td *ngIf="actions[2].status" class="w-40">
                             <button type="button" md-icon-button class="text-primary" (click)="CUD('Actualizar',item)">
                                 <md-icon>mode_edit</md-icon>

@@ -1,9 +1,6 @@
 import { AuthGuard } from './auth/guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-// Page Layouts
-import { PageLayoutFullscreenComponent } from './page-layouts/fullscreen/fullscreen.component';
 
 const AppRoutes: Routes = [
   { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },

@@ -30,10 +30,10 @@
     <div class=" margin-bottom" [ngClass]="
     { 
         'col-sm-8 col-md-4' : _model.stakeholders_info.document_type_id == 14 || _model.stakeholders_info.rut, 
-        'col-sm-12 col-md-6' : _model.stakeholders_info.document_type_id != 14 && !_model.stakeholders_info.rut 
+        'col-sm-4 col-md-6' : _model.stakeholders_info.document_type_id != 14 && !_model.stakeholders_info.rut 
     }">
         <md-input-container class="full-width">
-            <input required NumberOnly (focusout)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="_model.stakeholders_info.document_number"
+            <input required NumberOnly (keyup)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="_model.stakeholders_info.document_number"
                 mdInput placeholder="Número de documento">
         </md-input-container>
     </div>
@@ -45,7 +45,8 @@
         </md-input-container>
     </div>
     <!-- ######################################## IF PERSON NATURAL ######################################## -->
-    <ng-container *ngIf="_model.stakeholders_info.person_type_id === 38 && !_model.stakeholders_info.rut">
+    <!--&& !_model.stakeholders_info.rut-->
+    <ng-container *ngIf="_model.stakeholders_info.person_type_id === 38">
         <!-- firstname -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
@@ -76,7 +77,7 @@
     <!-- legalname -->
     <div class='col-sm-12 margin-bottom' [ngClass]="{ 
         'col-md-6' : _model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14), 
-        'col-md-12' : !_model.stakeholders_info.rut && _model.stakeholders_info.person_type_id != 39 }" *ngIf="_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14 ">
+        'col-md-12' : !_model.stakeholders_info.rut && _model.stakeholders_info.person_type_id != 39 }" *ngIf="_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14">
         <md-input-container class="full-width">
             <input type="text" id="legalname" name="legalname" [(ngModel)]="_model.stakeholders_info.legalname" mdInput placeholder="Razón Social">
         </md-input-container>
@@ -165,7 +166,7 @@
     <!-- ######################################## PROFILE ######################################## -->
 
     <!-- ######################################################################################### -->
-    <div class="col-sm-12 mark" *ngIf="_model.stakeholders_info.person_type_id == 39 && (_model.profile.is_supplier || _model.profile.is_customer)">
+    <div class="col-sm-12 mark" *ngIf="(_model.stakeholders_info.rut || _model.stakeholders_info.document_type_id === 14) && (_model.profile.is_supplier || _model.profile.is_customer)">
         <div class="col-sm-12">
             <h2 class="article-title text-center margin-10">Información Tributaria</h2>
         </div>
@@ -180,7 +181,7 @@
         <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
             <md-input-container class="full-width">
                 <input mdInput [mdDatepicker]="pickerConstitutionDate" id="constitution_date" name="constitution_date" placeholder="Fecha de constitución"
-                    [(ngModel)]="model.constitution_date">
+                    [(ngModel)]="_model.comercial_stakeholders_info.constitution_date">
                 <button type="button" mdSuffix [mdDatepickerToggle]="pickerConstitutionDate"></button>
             </md-input-container>
             <md-datepicker #pickerConstitutionDate></md-datepicker>
@@ -201,7 +202,7 @@
         <!-- code_iva_percent -->
         <div class='col-sm-12 col-md-3 margin-bottom' *ngIf="_model.comercial_stakeholders_info.codes.iva">
             <md-input-container class="full-width">
-                <input NumberOnly required type="text" id="code_iva_percent" name="code_iva_percent" [(ngModel)]="_model.comercial_stakeholders_info.codes.iva_percent"
+                <input NumberOnly required type="text" id="code_iva_percent" name="code_iva_percent" placeholder="Porcentaje" [(ngModel)]="_model.comercial_stakeholders_info.codes.iva_percent"
                     mdInput>
                 <span matSuffix>% &nbsp;</span>
             </md-input-container>
@@ -213,7 +214,7 @@
         <!-- code_ica_percent -->
         <div class='col-sm-12 col-md-3 margin-bottom' *ngIf="_model.comercial_stakeholders_info.codes.ica">
             <md-input-container class="full-width">
-                <input NumberOnly required type="text" id="code_ica_percent" name="code_ica_percent" [(ngModel)]="_model.comercial_stakeholders_info.codes.ica_percent"
+                <input NumberOnly required type="text" id="code_ica_percent" name="code_ica_percent" placeholder="Porcentaje" [(ngModel)]="_model.comercial_stakeholders_info.codes.ica_percent"
                     mdInput>
                 <span matSuffix>% &nbsp;</span>
             </md-input-container>
@@ -222,8 +223,7 @@
         <!-- codes_ciiu -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="codes_ica" name="codes_ica" [(ngModel)]="_model.comercial_stakeholders_info.codes.ciiu" mdInput
-                    placeholder="Código CIIU">
+                <input required type="text" id="ciiu" name="ciiu" [(ngModel)]="_model.comercial_stakeholders_info.codes.ciiu" mdInput placeholder="Código CIIU">
             </md-input-container>
         </div>
     </div>
@@ -249,8 +249,9 @@
         <!-- credit_limit -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
-                <input NumberOnly required type="text" id="credit_limit" name="credit_limit" [(ngModel)]="_model.customer.credit_limit" mdInput
-                    placeholder="Cupo crédito">
+                    <span mdPrefix><b>$</b> &nbsp;</span>
+                <input appMycurrency required type="text" id="customer_credit_limit" name="customer_credit_limit" [(ngModel)]="_model.customer.credit_limit"
+                    mdInput placeholder="Cupo del crédito">
             </md-input-container>
         </div>
         <!-- sales_representative_id -->
@@ -263,8 +264,9 @@
         <!-- global_discount -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input NumberOnly type="text" id="global_discount" name="global_discount" [(ngModel)]="_model.customer.global_discount" mdInput
-                    placeholder="Descuento Global">
+                    <span mdPrefix><b>$</b> &nbsp;</span>
+                <input appMycurrency type="text" id="global_discount" name="global_discount" [(ngModel)]="_model.customer.global_discount"
+                    mdInput placeholder="Descuento Global">
             </md-input-container>
         </div>
         <!-- payment_condition -->
@@ -282,7 +284,8 @@
         <!-- days_early_payment -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input NumberOnly type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="_model.customer.days_early_payment"
+                    <span mdPrefix><b>$</b> &nbsp;</span>
+                <input appMycurrency type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="_model.customer.days_early_payment"
                     mdInput placeholder="Descuento de pronto pago">
             </md-input-container>
         </div>
@@ -356,25 +359,33 @@
                     <div class="flex" style="margin-bottom: 15px;height: 51px;">
                         <div class="box-header no-padding-h">Puntos de envío</div>
                         <span class="flex-spacer"></span>
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddSucursal()">Añadir</button>
+                        <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddSucursal()">Añadir</button>
                     </div>
                     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">
                             <thead>
                                 <tr>
+
                                     <th>Sucursal</th>
                                     <th>Ubicación</th>
-                                    <th></th>
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.customer.shipping_points">
+
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.country.value + ', ' + item.department.value + ', ' + item.city.value }}</td>
-                                    <td class="text-center" title="Remover empresa">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeSucursal(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeSucursal(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
+                                    </td>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openSucursal(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -384,37 +395,46 @@
             </div>
         </div>
         <!-- TABLE -->
+
         <div class="col-sm-12 margin-bottom">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="flex" style="margin-bottom: 15px;height: 51px;">
                         <div class="box-header no-padding-h">Contrato institucional</div>
                         <span class="flex-spacer"></span>
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddInstitucionalSale()">Añadir</button>
+                        <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddInstitucionalSale()">Añadir</button>
                     </div>
                     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">
                             <thead>
                                 <tr>
+
                                     <th>No. Contrato</th>
                                     <th>Entidad contratante</th>
-                                    <th></th>
-                                    <th></th>
+                                    <!--th></th-->
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.customer.institutional_sale_contract">
+
                                     <td>{{ item.contract_number }}</td>
                                     <td>{{ item.contracting_entity }}</td>
-                                    <td>
+                                    <!--td>
                                         <a *ngIf="item.file !== '' && item.file !== null" href="{{ item.file }}">
                                             <i class="fa fa-paperclip fa-2x" aria-hidden="true"></i>
                                         </a>
+                                    </td-->
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeInstitucionalSale(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
                                     </td>
-                                    <td class="text-center" title="Remover empresa">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeInstitucionalSale(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openInstitucionalSale(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -430,7 +450,7 @@
                     <div class="flex" style="margin-bottom: 15px;height: 51px;">
                         <div class="box-header no-padding-h">Resoluciones de controlado</div>
                         <span class="flex-spacer"></span>
-                        <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddControlledResolution()">Añadir</button>
+                        <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddControlledResolution()">Añadir</button>
                     </div>
                     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">
@@ -440,19 +460,27 @@
                                     <th>Fecha de as</th>
                                     <th>Fecha de expiración</th>
                                     <th>Estado</th>
-                                    <th colspan="2"></th>
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.customer.controlled_resolution">
+
                                     <td>{{ item.resolution_number }}</td>
                                     <td>{{ item.issue_date | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{ item.expiration_date | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{ item.state ? 'Actvo' : 'Inactivo' }}</td>
-                                    <td class="text-center" title="Remover empresa">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeControlledResolution(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeControlledResolution(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
+                                    </td>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openControlledResolution(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -468,7 +496,7 @@
                     <div class="flex" style="margin-bottom: 15px;height: 51px;">
                         <div class="box-header no-padding-h">Resoluciones de monopolio</div>
                         <span class="flex-spacer"></span>
-                        <button [disabled]="_model.customer.shipping_points.length == 0" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+                        <button type="button" [disabled]="_model.customer.shipping_points.length == 0" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
                             (click)="openAddMonopolyResolution()">Añadir</button>
                     </div>
                     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
@@ -479,19 +507,27 @@
                                     <th>Fecha de as</th>
                                     <th>Fecha de expiración</th>
                                     <th>Estado</th>
-                                    <th></th>
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.customer.monopoly_resolution">
+
                                     <td>{{ item.resolution_number }}</td>
                                     <td>{{ item.issue_date | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{ item.expiration_date | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{ item.state ? 'Actvo' : 'Inactivo' }}</td>
-                                    <td class="text-center" title="Remover">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeMonopolyResolution(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeMonopolyResolution(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
+                                    </td>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openMonopolyResolution(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -517,14 +553,16 @@
         <!-- credit_limit -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
-                <input NumberOnly required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="_model.supplier.credit_limit"
+                <span mdPrefix><b>$</b> &nbsp;</span>
+                <input appMycurrency required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="_model.supplier.credit_limit"
                     mdInput placeholder="Cupo de crédito">
             </md-input-container>
         </div>
         <!-- supplier_global_discount -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input NumberOnly type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="_model.supplier.global_discount"
+                    <span mdPrefix><b>$</b> &nbsp;</span>
+                <input appMycurrency type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="_model.supplier.global_discount"
                     mdInput placeholder="Descuento Global">
             </md-input-container>
         </div>
@@ -565,7 +603,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="flex margin-bottom">
-                        <div class="box-header no-padding-h">Ceuntas bancarias</div>
+                        <div class="box-header no-padding-h">Cuentas bancarias</div>
                         <span class="flex-spacer"></span>
                         <button md-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openAddBankAccount()">Añadir</button>
                     </div>
@@ -573,21 +611,29 @@
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">
                             <thead>
                                 <tr>
+
                                     <th>Nombre</th>
                                     <th>Cuenta</th>
                                     <th>Tipo de cuenta</th>
-                                    <th></th>
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.supplier.bank_accounts">
+
                                     <td>{{ item.bank?.value }}</td>
                                     <td>{{ item?.account_number }}</td>
                                     <td>{{ item.bank_account_type?.value }}</td>
-                                    <td class="text-center" title="Remover">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeBankAccount(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeBankAccount(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
+                                    </td>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openBankAccount(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

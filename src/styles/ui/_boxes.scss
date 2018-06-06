@@ -91,9 +91,16 @@ td .mat-input-container {
   margin-bottom: 15px !important;
 }
 
-td.w-40 {
-  width: 40px !important;
+td.w-40,
+th.w-40 {
+  max-width: 51px !important;
+  width: 51px !important;
   padding: 12px 18px;
+}
+td.w-108,
+th.w-108 {
+  max-width: 108px !important;
+  width: 108px !important;
 }
 .mdl-data-table {
   td.w-40 {

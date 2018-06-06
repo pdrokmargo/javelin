@@ -13,15 +13,37 @@ import { isNullOrUndefined } from 'util';
 @Component({
     selector: 'user-action-cmp',
     templateUrl: 'user-action.component.html',
-    styles: []
+    styles: [
+        `.add-company-panel {
+            width: 100%;
+            max-width: 700px;
+            margin: 15px auto;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            padding: 20px 0;
+            border-radius: 4px;
+        }
+        .add-company-panel h3 {
+            color: #b7b7b7;
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+        `
+    ]
 })
 
 export class UserActionComponent extends BaseModel implements OnInit {
 
+    private _model: any = {
+        user: {
+            status: true
+        },
+        userprofiles: []
+    }
+
     private ref = undefined;
     private companies: any[] = [];
-    private user_profiles: any[] = [];
-    private model_user_company: any = {};
+    private userprofiles: any[] = [];
+    private company_userprofile: any = {};
     private booEmail: boolean;
     private booEmailValid: boolean = false;
     private emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
@@ -37,7 +59,6 @@ export class UserActionComponent extends BaseModel implements OnInit {
     }
 
     ngOnInit() {
-        this.clean();
         this.getUserProfiles();
         this.getCompanies();
 
@@ -47,44 +68,44 @@ export class UserActionComponent extends BaseModel implements OnInit {
     }
 
     private getUserProfiles() {
-
-        this.helperService.GET(`/api/userprofile?all=1`).map((response: Response) => {
-            const res = response.json();
-            this.user_profiles = res.data;
-        }).subscribe(
-            (error) => {
-                // this.loaderService.display(false);
-            }, (done) => {
-                // this.loaderService.display(false);
-            });
+        this.helperService.GET(`/api/userprofile?all=1`).subscribe(rs => {
+            const res = rs.json();
+            this.userprofiles = res.data;
+        }, err => {
+            console.log(err);
+        });
     }
 
     private getCompanies() {
-        this.helperService.GET(`/api/company`)
-            .map((response: Response) => {
-                const res = response.json();
-                this.companies = res['data'];
-            }).subscribe(
-                (error) => {
-                    // this.loaderService.display(false);
-                }, (done) => {
-                    // this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/company`).subscribe(rs => {
+            const res = rs.json();
+            this.companies = res['data'];
+        }, err => {
+            console.log(err);
+
+        });
     }
 
     private save() {
-        /** Update */
-        if (this.model.usersprivileges.length === 0) {
-            this.snackBar.open('Agregue una empresa para continuar.', 'Error', {
+        if (this._model.userprofiles.length === 0) {
+            this.snackBar.open('El usuario debe estar vinculado por lo menos a una empresa', 'Error', {
                 duration: 4000,
             });
             return false;
         }
 
+        this._model.userprofiles.map(x => {
+            if (x.default) {
+                this._model.user.company_default_id = x.company_id;
+                this._model.user.user_profile_id = x.user_profile_id;
+            }
+        });
+
+
         this.loaderService.display(true);
         switch (this.strAction) {
             case 'Guardar':
-                this.helperService.POST(`/api/users`, this.model).subscribe(rs => {
+                this.helperService.POST(`/api/users`, this._model).subscribe(rs => {
                     const res = rs.json();
                     if (res.store) {
                         this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
@@ -96,7 +117,7 @@ export class UserActionComponent extends BaseModel implements OnInit {
                 });
                 break;
             case 'Actualizar':
-                this.helperService.PUT(`/api/users/${this.numId}`, this.model).subscribe(rs => {
+                this.helperService.PUT(`/api/users/${this.numId}`, this._model).subscribe(rs => {
                     const res = rs.json();
                     if (res.update) {
                         this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
@@ -125,72 +146,73 @@ export class UserActionComponent extends BaseModel implements OnInit {
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/users/${this.numId}`)
-            .map((response: Response) => {
-                
-                let res = response.json();
-                this.ref = res.data.email;
-                this.model = res.data;
-
-            }).subscribe(
-                (error) => {
-                    this.loaderService.display(false);
-                }, (done) => {
-                    this.loaderService.display(false);
-                });
+        this.helperService.GET(`/api/users/${this.numId}`).subscribe(rs => {
+            let res = rs.json();
+            this.ref = res.data.user.email;
+            this._model = res.data;
+            this._model.userprofiles.map(x => {
+                x.default = false;
+                if (x.company_id == this._model.user.company_default_id) {
+                    x.default = true;
+                }
+            });
+            this.loaderService.display(false);
+        }, err => {
+            this.loaderService.display(false);
+            console.log(err);
+        });
     }
-
-    private clean() {
-        this.model = {};
-        this.model.usersprivileges = [];
-        this.model.status = true;
+    private isDefault(item) {
+        this._model.userprofiles.map(x => {
+            x.default = false
+        });
+        item.default = true;
     }
-
     private addCompany() {
-        if (this.model.usersprivileges) {
-            this.model_user_company.company_id = this.model_user_company.company.id;
-            this.model_user_company.user_profile_id = this.model_user_company.userprofile.id;
 
-            if (this.model.usersprivileges.length == 0) {
-                this._addCompany();
-            } else {
-                var exist = false;
-                this.model.usersprivileges.forEach((element, index) => {
-                    console.log(index);
-                    console.log(element);
+        var cu_relation: any = {
+            company_id: this.company_userprofile.company.id,
+            company_name: this.company_userprofile.company.name,
+            user_profile_id: this.company_userprofile.userprofile.id,
+            user_profile_description: this.company_userprofile.userprofile.up_description,
+            default: false
+        };
 
 
-                    if (element.company_id == this.model_user_company.company_id) {
-                        exist = true;
+        if (this._model.userprofiles.length == 0) {
+            cu_relation.default = true;
+            this._addCompany(cu_relation);
+        } else {
+            var exist = false;
+            this._model.userprofiles.forEach((element, index) => {
+                if (element.company_id == cu_relation.company_id) {
+                    exist = true;
+                }
+                if (index == this._model.userprofiles.length - 1) {
+                    if (!exist) {
+                        this._addCompany(cu_relation);
+                    } else {
+                        this.snackBar.open('El usuario ya tiene un perfil registrado en esta empresa', 'Error', {
+                            duration: 4000,
+                        });
                     }
-                    if (index == this.model.usersprivileges.length - 1) {
-                        if (!exist) {
-                            this._addCompany();
-                        } else {
-                            this.snackBar.open('El usuario ya tiene un perfil registrado en esta empresa', 'Error', {
-                                duration: 4000,
-                            });
-                        }
-                    }
-                });
-            }
+                }
+            });
+
         }
     }
-    private _addCompany() {
-        this.model.usersprivileges.push(this.model_user_company);
-        this.model_user_company = {};
+    private _addCompany(data) {
+        this._model.userprofiles.push(data);
+        this.company_userprofile = {};
     }
 
     private removeCompany(obj: any) {
-
-        if (obj.id > 0 && obj.company_id === this.model.company_default_id) {
-            this.snackBar.open('Usted no puede remover una empresa activa!', 'Error', {
-                duration: 4000
-            });
-            return false;
+        if (this._model.userprofiles.length > 0) {
+            if (obj.default) {
+                this._model.userprofiles[0].default = true;
+            }
         }
-        const index = this.model.usersprivileges.indexOf(obj);
-        this.model.usersprivileges.splice(index, 1);
+        this._model.userprofiles.splice(this._model.userprofiles.indexOf(obj), 1);
     }
 
     private goList() {

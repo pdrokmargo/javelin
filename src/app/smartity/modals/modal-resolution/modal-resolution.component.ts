@@ -10,7 +10,7 @@ import { ModalPharmaceuticalComponent } from '..';
 })
 
 export class ModalResolutionComponent implements OnInit {
-
+    private booShow = true;
     private model: any = {
         pharmaceutical_drugs: []
     };
@@ -31,6 +31,12 @@ export class ModalResolutionComponent implements OnInit {
         this.model = {
             pharmaceutical_drugs: []
         };
+        if (this.data.data) {
+            this.data.data.expiration_date = new Date(this.data.data.expiration_date);
+            this.data.data.issue_date = new Date(this.data.data.issue_date);
+            this.model = this.data.data;
+            this.booShow = false;
+        }
     }
 
     add() {
@@ -69,11 +75,14 @@ export class ModalResolutionComponent implements OnInit {
                 if (this.model.pharmaceutical_drugs.length == 0) {
                     this.model.pharmaceutical_drugs.push({
                         id: data.id,
+                        name: data.name,
                         dosage_form: data.dosage_form
                     });
                 } else {
                     var exist = false;
                     this.model.pharmaceutical_drugs.forEach((element, index) => {
+                        console.log(element);
+
                         if (element.id == data.id) {
                             exist = true;
                         }
@@ -81,6 +90,7 @@ export class ModalResolutionComponent implements OnInit {
                             if (!exist) {
                                 this.model.pharmaceutical_drugs.push({
                                     id: data.id,
+                                    name: data.name,
                                     dosage_form: data.dosage_form
                                 });
                             }

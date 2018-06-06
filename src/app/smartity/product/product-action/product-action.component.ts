@@ -121,6 +121,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             this.importer = res['data']['importer'] || {};
             this.sanitary_registration_holder = res['data']['sanitary_registration_holder'] || {};
             this.supplier = res['data']['supplier'] || {};
+            if (this.supplier.businessname == '') {
+                this.supplier.businessname = this.supplier.fullname;
+            }
             this.manufacturer = res['data']['manufacturer'] || {};
             this.loaderService.display(false);
         }, err => {
@@ -224,7 +227,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent, {
             hasBackdrop: false,
             data: {
-                title: 'Fabricantes',
+                title: 'Importador',
                 option: '5'
             }
         });

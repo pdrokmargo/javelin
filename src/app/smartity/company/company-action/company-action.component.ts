@@ -117,10 +117,32 @@ export class CompanyActionComponent extends BaseModel implements OnInit {
           this.loaderService.display(false);
         });
         break;
-      case 'Actualizar': 
-      
-      break;
-      case 'Eliminar': break;
+      case 'Actualizar':
+        this.helperService.PUT(`/api/company/${this.numId}`, this.model).subscribe(rs => {
+          let res = rs.json();
+          if (res.update) {
+            this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
+            this.comp.openList();
+            this.loaderService.display(false);
+          }
+        }, err => {
+          this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+          this.loaderService.display(false);
+        });
+        break;
+      case 'Eliminar':
+        this.helperService.DELETE(`/api/company/${this.numId}`).subscribe(rs => {
+          let res = rs.json();
+          if (res.delete) {
+            this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+            this.comp.openList();
+            this.loaderService.display(false);
+          }
+        }, err => {
+          this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+          this.loaderService.display(false);
+        });
+        break;
     }
 
     /** Update */

@@ -71,7 +71,7 @@
     <!-- legalname -->
     <div class='col-sm-12 margin-bottom' [ngClass]="{ 
         'col-md-6' : _model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14), 
-        'col-md-12' : !_model.stakeholders_info.rut && _model.stakeholders_info.person_type_id != 39  }" *ngIf="_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14">
+        'col-md-12' : !_model.stakeholders_info.rut && _model.stakeholders_info.person_type_id != 39 }" *ngIf="_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14 ">
         <md-input-container class="full-width">
             <input type="text" id="legalname" name="legalname" [(ngModel)]="_model.stakeholders_info.legalname" mdInput placeholder="Razón Social">
         </md-input-container>
@@ -79,7 +79,8 @@
     <!-- business name -->
     <div class='col-sm-12 margin-bottom' [ngClass]="{ 
         'col-md-6' : _model.stakeholders_info.person_type_id === 39 , 
-        'col-md-12' :  _model.stakeholders_info.person_type_id !== 39 }" *ngIf="_model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14)">
+        'col-md-12' :  _model.stakeholders_info.person_type_id !== 39 
+    }" *ngIf="_model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14)">
         <md-input-container class="full-width">
             <input type="text" id="businessname" name="businessname" [(ngModel)]="_model.stakeholders_info.businessname" mdInput placeholder="Nombre del Establecimiento">
         </md-input-container>
@@ -174,7 +175,7 @@
         <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
             <md-input-container class="full-width">
                 <input mdInput [mdDatepicker]="pickerConstitutionDate" id="constitution_date" name="constitution_date" placeholder="Fecha de constitución"
-                    [(ngModel)]="model.constitution_date">
+                    [(ngModel)]="_model.comercial_stakeholders_info.constitution_date">
                 <button type="button" mdSuffix [mdDatepickerToggle]="pickerConstitutionDate"></button>
             </md-input-container>
             <md-datepicker #pickerConstitutionDate></md-datepicker>
@@ -195,7 +196,7 @@
         <!-- code_iva_percent -->
         <div class='col-sm-12 col-md-3 margin-bottom' *ngIf="_model.comercial_stakeholders_info.codes.iva">
             <md-input-container class="full-width">
-                <input NumberOnly required type="text" id="code_iva_percent" name="code_iva_percent" [(ngModel)]="_model.comercial_stakeholders_info.codes.iva_percent"
+                <input NumberOnly required type="text" id="code_iva_percent" name="code_iva_percent" placeholder="Porcentaje" [(ngModel)]="_model.comercial_stakeholders_info.codes.iva_percent"
                     mdInput>
                 <span matSuffix>% &nbsp;</span>
             </md-input-container>
@@ -207,7 +208,7 @@
         <!-- code_ica_percent -->
         <div class='col-sm-12 col-md-3 margin-bottom' *ngIf="_model.comercial_stakeholders_info.codes.ica">
             <md-input-container class="full-width">
-                <input NumberOnly required type="text" id="code_ica_percent" name="code_ica_percent" [(ngModel)]="_model.comercial_stakeholders_info.codes.ica_percent"
+                <input NumberOnly required type="text" id="code_ica_percent" name="code_ica_percent" placeholder="Porcentaje" [(ngModel)]="_model.comercial_stakeholders_info.codes.ica_percent"
                     mdInput>
                 <span matSuffix>% &nbsp;</span>
             </md-input-container>
@@ -216,8 +217,7 @@
         <!-- codes_ciiu -->
         <div class='col-sm-12 col-md-6 margin-bottom'>
             <md-input-container class="full-width">
-                <input required type="text" id="codes_ica" name="codes_ica" [(ngModel)]="_model.comercial_stakeholders_info.codes.ciiu" mdInput
-                    placeholder="Código CIIU">
+                <input required type="text" id="ciiu" name="ciiu" [(ngModel)]="_model.comercial_stakeholders_info.codes.ciiu" mdInput placeholder="Código CIIU">
             </md-input-container>
         </div>
     </div>
@@ -356,19 +356,27 @@
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">
                             <thead>
                                 <tr>
+
                                     <th>Sucursal</th>
                                     <th>Ubicación</th>
-                                    <th></th>
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.customer.shipping_points">
+
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.country.value + ', ' + item.department.value + ', ' + item.city.value }}</td>
-                                    <td class="text-center" title="Remover empresa">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeSucursal(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeSucursal(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
+                                    </td>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openSucursal(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -378,6 +386,7 @@
             </div>
         </div>
         <!-- TABLE -->
+
         <div class="col-sm-12 margin-bottom">
             <div class="row">
                 <div class="col-sm-12">
@@ -390,25 +399,33 @@
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">
                             <thead>
                                 <tr>
+
                                     <th>No. Contrato</th>
                                     <th>Entidad contratante</th>
-                                    <th></th>
-                                    <th></th>
+                                    <!--th></th-->
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.customer.institutional_sale_contract">
+
                                     <td>{{ item.contract_number }}</td>
                                     <td>{{ item.contracting_entity }}</td>
-                                    <td>
+                                    <!--td>
                                         <a *ngIf="item.file !== '' && item.file !== null" href="{{ item.file }}">
                                             <i class="fa fa-paperclip fa-2x" aria-hidden="true"></i>
                                         </a>
+                                    </td-->
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeInstitucionalSale(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
                                     </td>
-                                    <td class="text-center" title="Remover empresa">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeInstitucionalSale(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openInstitucionalSale(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -434,19 +451,27 @@
                                     <th>Fecha de as</th>
                                     <th>Fecha de expiración</th>
                                     <th>Estado</th>
-                                    <th colspan="2"></th>
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.customer.controlled_resolution">
+
                                     <td>{{ item.resolution_number }}</td>
                                     <td>{{ item.issue_date | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{ item.expiration_date | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{ item.state ? 'Actvo' : 'Inactivo' }}</td>
-                                    <td class="text-center" title="Remover empresa">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeControlledResolution(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeControlledResolution(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
+                                    </td>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openControlledResolution(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -473,19 +498,27 @@
                                     <th>Fecha de as</th>
                                     <th>Fecha de expiración</th>
                                     <th>Estado</th>
-                                    <th></th>
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.customer.monopoly_resolution">
+
                                     <td>{{ item.resolution_number }}</td>
                                     <td>{{ item.issue_date | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{ item.expiration_date | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{ item.state ? 'Actvo' : 'Inactivo' }}</td>
-                                    <td class="text-center" title="Remover">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeMonopolyResolution(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeMonopolyResolution(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
+                                    </td>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openMonopolyResolution(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -567,21 +600,29 @@
                         <table class="mdl-data-table table-bordered table-striped cf no-margin">
                             <thead>
                                 <tr>
+
                                     <th>Nombre</th>
                                     <th>Cuenta</th>
                                     <th>Tipo de cuenta</th>
-                                    <th></th>
+                                    <th class="w-40"></th>
+                                    <th class="w-40"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of _model.supplier.bank_accounts">
+
                                     <td>{{ item.bank?.value }}</td>
                                     <td>{{ item?.account_number }}</td>
                                     <td>{{ item.bank_account_type?.value }}</td>
-                                    <td class="text-center" title="Remover">
-                                        <a style="cursor: pointer;" class="text-danger" (click)="removeBankAccount(item)">
-                                            <i class="fa fa-trash fa-2x"></i>
-                                        </a>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button class="text-danger" (click)="removeBankAccount(item)">
+                                            <md-icon>delete</md-icon>
+                                        </button>
+                                    </td>
+                                    <td class="w-40">
+                                        <button type="button" md-icon-button (click)="openBankAccount(item)">
+                                            <md-icon>remove_red_eye</md-icon>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

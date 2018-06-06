@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { MdSnackBar, MdDialogRef, MdDialog } from '@angular/material';
+import { LoaderService, HelperService } from '../../../../shared';
 import { Response } from '@angular/http';
+import { BaseModel } from '../../../bases/base-model';
 import {
     ModalConfirmationComponent,
     ModalSucursalComponent,
@@ -9,9 +11,7 @@ import {
     ModalBankAccountComponent
 } from '../../../modals';
 import { filter } from 'rxjs/operators';
-import { isNullOrUndefined } from 'util';
-import { BaseModel } from '../../../bases/base-model';
-import { LoaderService, HelperService } from '../../../../shared';
+import { isNullOrUndefined, log } from 'util';
 
 @Component({
     selector: 'stakeholders-action-cmp',
@@ -64,6 +64,10 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
      */
     private sucursalDialogRef: MdDialogRef<ModalSucursalComponent>;
     private confirmDialogRef: MdDialogRef<ModalConfirmationComponent>;
+    private confirmDialogRef1: MdDialogRef<ModalConfirmationComponent>;
+    private confirmDialogRef2: MdDialogRef<ModalConfirmationComponent>;
+    private confirmDialogRef3: MdDialogRef<ModalConfirmationComponent>;
+    private confirmDialogRef4: MdDialogRef<ModalConfirmationComponent>;
     private resolutionDialogRef: MdDialogRef<ModalResolutionComponent>;
     private institutionalSaleDialogRef: MdDialogRef<ModalInstitucionalSaleContractComponent>;
     private bankAccountDialogRef: MdDialogRef<ModalBankAccountComponent>;
@@ -84,6 +88,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         this.clean();
         this.getCollection();
         this.getSalesRepresentative();
+        this.strAction = 'Guardar';
     }
     private getCollection() {
         this.loaderService.display(true);
@@ -142,8 +147,10 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     private save() {
         this.loaderService.display(true);
         const formData: FormData = new FormData();
+        console.log(this._model.comercial_stakeholders_info);
+
         formData.append('data', JSON.stringify(this._model));
-        if (this._model.customer) {
+        /*if (this._model.customer) {
             if (this._model.customer.institutional_sale_contract) {
                 this._model.customer.institutional_sale_contract.forEach((obj) => {
                     if (obj.is_file === true) {
@@ -151,7 +158,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                     }
                 });
             }
-        }
+        }*/
 
 
         switch (this.strAction) {
@@ -161,6 +168,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                     if (res.store) {
                         this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
                         this.loaderService.display(false);
+                        this.clean();
                     }
                 }, err => {
                     this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
@@ -170,7 +178,6 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         }
 
     }
-
     private clean() {
         this._model = {
             stakeholders_info: {},
@@ -193,17 +200,24 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             profile: {}
         }
     }
-
     private openAddSucursal() {
         this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent, { hasBackdrop: false });
         this.sucursalDialogRef.afterClosed().pipe(filter((shipping_point) => shipping_point)).subscribe((shipping_point) => {
-            this._model.customer.shipping_points.push(shipping_point);
+            if (shipping_point) {
+                this._model.customer.shipping_points.push(shipping_point);
+            }
+        });
+    }
+    private openSucursal(data) {
+        this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent, {
+            hasBackdrop: false,
+            data: data
         });
     }
     private removeSucursal(obj: any) {
         this.confirmDialogRef = this.dialog.open(ModalConfirmationComponent, {
             hasBackdrop: false, data: {
-                message: 'Desea remover la sucursal?',
+                message: 'Desea remover el registro?',
                 title: 'Confirmar',
                 button_confirm: 'Si',
                 button_close: 'No'
@@ -215,6 +229,79 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 this._model.customer.shipping_points.splice(index, 1);
             }
         });
+    }
+    private removeInstitucionalSale(obj: any) {
+        this.confirmDialogRef1 = this.dialog.open(ModalConfirmationComponent, {
+            hasBackdrop: false, data: {
+                message: 'Desea remover el registro?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
+        });
+        this.confirmDialogRef1.afterClosed().subscribe((confirmation) => {
+            if (confirmation) {
+                var index = this._model.customer.institutional_sale_contract.indexOf(obj);
+                this._model.customer.institutional_sale_contract.splice(index, 1);
+            }
+        });
+    }
+    private removeControlledResolution(obj: any) {
+        this.confirmDialogRef2 = this.dialog.open(ModalConfirmationComponent, {
+            hasBackdrop: false,
+            data: {
+                message: 'Desea remover el registro?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
+        });
+
+        this.confirmDialogRef2.afterClosed().subscribe(confirmation => {
+            if (confirmation) {
+                var index = this._model.customer.controlled_resolution.indexOf(obj);
+                this._model.customer.controlled_resolution.splice(index, 1);
+            }
+        });
+
+    }
+    private removeMonopolyResolution(obj: any) {
+        this.confirmDialogRef3 = this.dialog.open(ModalConfirmationComponent, {
+            hasBackdrop: false,
+            data: {
+                message: 'Desea remover el registro?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
+        });
+
+        this.confirmDialogRef3.afterClosed().subscribe(confirmation => {
+            if (confirmation) {
+                var index = this._model.customer.monopoly_resolution.indexOf(obj);
+                this._model.customer.monopoly_resolution.splice(index, 1);
+            }
+        });
+    }
+    private removeBankAccount(obj: any) {
+
+        this.confirmDialogRef4 = this.dialog.open(ModalConfirmationComponent, {
+            hasBackdrop: false,
+            data: {
+                message: 'Desea remover el registro?',
+                title: 'Confirmar',
+                button_confirm: 'Si',
+                button_close: 'No'
+            }
+        });
+
+        this.confirmDialogRef4.afterClosed().subscribe(confirmation => {
+            if (confirmation) {
+                var index = this._model.supplier.bank_accounts.indexOf(obj);
+                this._model.supplier.bank_accounts.splice(index, 1);
+            }
+        });
+
     }
     private openAddControlledResolution() {
         this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
@@ -228,58 +315,15 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this._model.customer.controlled_resolution.push(ctr_resolution);
         });
     }
-    private removeControlledResolution(obj: any) {
-        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
-            hasBackdrop: false,
-            data: {
-                message: 'Desea remover el registro?',
-                title: 'Confirmar',
-                button_confirm: 'Si',
-                button_close: 'No'
-            }
-        });
-
-        this.resolutionDialogRef.afterClosed().subscribe(confirmation => {
-            if (confirmation) {
-                var index = this._model.customer.controlled_resolution.indexOf(obj);
-                this._model.customer.controlled_resolution.splice(index, 1);
-            }
-        });
-
-    }
-    private openAddMonopolyResolution() {
+    private openControlledResolution(data) {
         this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
             hasBackdrop: false,
             data: {
                 shipping_points: this._model.customer.shipping_points,
-                title: 'Agregar Resolución de monopolio'
+                title: 'Agregar Resolución de controlado',
+                data: data
             }
         });
-
-        this.resolutionDialogRef.afterClosed().pipe().subscribe(data => {
-            this._model.customer.monopoly_resolution.push(data);
-        });
-
-    }
-    private removeMonopolyResolution(obj: any) {
-
-        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
-            hasBackdrop: false,
-            data: {
-                message: 'Desea remover el registro?',
-                title: 'Confirmar',
-                button_confirm: 'Si',
-                button_close: 'No'
-            }
-        });
-
-        this.resolutionDialogRef.afterClosed().subscribe(confirmation => {
-            if (confirmation) {
-                var index = this._model.customer.monopoly_resolution.indexOf(obj);
-                this._model.customer.monopoly_resolution.splice(index, 1);
-            }
-        });
-
     }
     private openAddInstitucionalSale() {
         this.institutionalSaleDialogRef = this.dialog.open(ModalInstitucionalSaleContractComponent, {
@@ -296,28 +340,41 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 this._model.customer.institutional_sale_contract.push(institutional_sale_contract);
             });
     }
-    private removeInstitucionalSale(obj: any) {
-
+    private openInstitucionalSale(data) {
         this.institutionalSaleDialogRef = this.dialog.open(ModalInstitucionalSaleContractComponent, {
             hasBackdrop: false,
             data: {
-                message: 'Desea remover el registro?',
-                title: 'Confirmar',
-                button_confirm: 'Si',
-                button_close: 'No'
+                title: 'Agregar Contrato institucional',
+                data: data
+            }
+        });
+    }
+    private openAddMonopolyResolution() {
+        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
+            hasBackdrop: false,
+            data: {
+                shipping_points: this._model.customer.shipping_points,
+                title: 'Agregar Resolución de monopolio'
             }
         });
 
-        this.institutionalSaleDialogRef
-            .afterClosed()
-            // .pipe(filter(confirmation => confirmation))
-            .subscribe(confirmation => {
-                if (confirmation) {
-                    var index = this._model.customer.institutional_sale_contract.indexOf(obj);
-                    this._model.customer.institutional_sale_contract.splice(index, 1);
-                }
-            });
+        this.resolutionDialogRef.afterClosed().pipe().subscribe(data => {
+            if (data) {
+                this._model.customer.monopoly_resolution.push(data);
+            }
+            console.log(data);
+        });
 
+    }
+    private openMonopolyResolution(data) {
+        this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
+            hasBackdrop: false,
+            data: {
+                shipping_points: this._model.customer.shipping_points,
+                title: 'Agregar Resolución de monopolio',
+                data: data
+            }
+        });
     }
     private openAddBankAccount() {
         this.bankAccountDialogRef = this.dialog.open(ModalBankAccountComponent, {
@@ -331,27 +388,15 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this._model.supplier.bank_accounts.push(bank_account);
         });
     }
-    private removeBankAccount(obj: any) {
-
+    private openBankAccount(data) {
         this.bankAccountDialogRef = this.dialog.open(ModalBankAccountComponent, {
             hasBackdrop: false,
             data: {
-                message: 'Desea remover el registro?',
-                title: 'Confirmar',
-                button_confirm: 'Si',
-                button_close: 'No'
+                title: 'Cuenta bancaria',
+                data: data
             }
         });
-
-        this.bankAccountDialogRef.afterClosed().subscribe(confirmation => {
-            if (confirmation) {
-                var index = this._model.supplier.bank_accounts.indexOf(obj);
-                this._model.supplier.bank_accounts.splice(index, 1);
-            }
-        });
-
     }
-
     private zero_fill(i_valor, num_ceros) {
         let relleno = '';
         let i = 1;

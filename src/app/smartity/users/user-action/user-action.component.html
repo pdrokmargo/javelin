@@ -1,116 +1,119 @@
-<div class="box-body">
-
-    <!--FORM-->
-
-    <form #modelForm="ngForm" autocomplete="off">
+<form #modelForm="ngForm" autocomplete="off">
+    <div class="row">
         <div class="col-sm-12 margin-bottom">
             <button md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
                 <md-icon>keyboard_arrow_left</md-icon> Regresar
             </button>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-12 margin-bottom">
             <div class="flex">
                 <span class="flex-spacer"></span>
-                <md-slide-toggle checked="true" id="status" name="status" [(ngModel)]="model.status"> Estado </md-slide-toggle>
+                <md-slide-toggle checked="true" id="status" name="status" [(ngModel)]="_model.user.status"> Estado </md-slide-toggle>
             </div>
         </div>
+        <!--user.firstname-->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <md-input-container class="full-width">
-                <input required type="text" id="firstname" name="firstname" [(ngModel)]="model.firstname" mdInput placeholder="Nombres">
+                <input required type="text" id="firstname" name="firstname" [(ngModel)]="_model.user.firstname" mdInput placeholder="Nombres">
             </md-input-container>
         </div>
+        <!--user.lastname-->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <md-input-container class="full-width">
-                <input required type="text" id="lastname" name="lastname" [(ngModel)]="model.lastname" mdInput placeholder="Apellidos">
+                <input required type="text" id="lastname" name="lastname" [(ngModel)]="_model.user.lastname" mdInput placeholder="Apellidos">
             </md-input-container>
         </div>
-
-        <div class="col-sm-12 col-md-6 margin-bottom">
+        <div class="col-sm-12 margin-bottom">
             <md-input-container class="full-width">
-                <input autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" required type="text" id="username" name="username"
-                    [(ngModel)]="model.username" mdInput placeholder="Nombre de Usuario">
-            </md-input-container>
-        </div>
-
-        <div class="col-sm-12 col-md-6 margin-bottom">
-            <md-input-container class="full-width">
-                <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" [required]="!model.id" [disabled]="model.id"
-                    type="password" id="password" name="password" [(ngModel)]="model.password" mdInput placeholder="Contraseña"
-                    reverse="true">
-            </md-input-container>
-        </div>
-
-        <div class="col-sm-12 col-md-6 margin-bottom">
-            <md-input-container class="full-width">
-                <input #email="ngModel" [userEmailValid]="ref" [pattern]="emailPattern" required type="email" id="email" name="email" [(ngModel)]="model.email"
+                <input #email="ngModel" [userEmailValid]="ref" [pattern]="emailPattern" required type="email" id="email" name="email" [(ngModel)]="_model.user.email"
                     mdInput placeholder="Correo electrónico">
-                <md-icon *ngIf="booEmailValid" mdSuffix>cached</md-icon>
                 <md-error *ngIf="email.errors?.userEmailValid">Correo electrónico ya se encuentra registrado en el sistema</md-error>
                 <md-error *ngIf="email.errors?.pattern">Formato errado</md-error>
             </md-input-container>
         </div>
-        <span class="col-sm-12"></span>
-        <!-- company -->
-        <div class='col-sm-12 col-md-4 margin-bottom'>
-            <md-select class="full-width" placeholder="Empresa" [(ngModel)]="model_user_company.company" name="company_id" id="company_id">
-                <md-option *ngFor="let item of companies" [value]="item" [hidden]="item.hide">{{item.name}}</md-option>
-            </md-select>
+        <!--user.username-->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <md-input-container class="full-width">
+                <input autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" required type="text" id="username" name="username"
+                    [(ngModel)]="_model.user.username" mdInput placeholder="Nombre de Usuario">
+            </md-input-container>
+        </div>
+        <!-- user.password -->
+        <div class="col-sm-12 col-md-6 margin-bottom" *ngIf="strAction == 'Guardar'">
+            <md-input-container class="full-width">
+                <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" required type="password" id="password"
+                    name="password" [(ngModel)]="_model.user.password" mdInput placeholder="Contraseña" reverse="true">
+            </md-input-container>
         </div>
 
-        <!-- user profile -->
-        <div class='col-sm-12 col-md-4 margin-bottom'>
-            <md-select class="full-width" placeholder="Perfil de usuario" [(ngModel)]="model_user_company.userprofile" name="user_profile_id"
-                id="user_profile_id">
-                <md-option *ngFor="let item of user_profiles" [value]="item">{{item.up_description}}</md-option>
-            </md-select>
-        </div>
-
-        <div class="col-sm-12 col-md-4 margin-bottom">
-            <div class="flex">
-                <span class="flex-spacer"></span>
-                <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left"
-                    (click)="addCompany()">Añadir Empresa</button>
+    </div>
+    <div class="row">
+        <div class="add-company-panel">
+            <div class="col-sm-12 margin-bottom">
+                <h3>Añadir Empresa</h3>
             </div>
-
-        </div>
-
-        <div class="col-sm-12">
-            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-
-                <table class="mdl-data-table table-bordered table-striped cf no-margin">
-                    <thead>
-                        <tr>
-                            <td class="w-40" *ngIf="str_action == 'Actualizar'"></td>
-                            <th>Empresa</th>
-                            <th>Perfil de Usuario</th>
-                            <th class="w-40"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of model.usersprivileges">
-                            <td class="w-40" *ngIf="str_action == 'Actualizar'">
-                                <md-icon title="Registro guardado" class="text-success" *ngIf="item.company_id == model.company_default_id">check</md-icon>
-                            </td>
-                            <td>{{ item.company?.name }}</td>
-                            <td>{{ item.userprofile?.up_description }}</td>
-
-                            <td class="w-40" title="Remover empresa">
-                                <button type="button" md-icon-button class="text-danger" (click)="removeCompany(item)">
-                                    <md-icon>delete</md-icon>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- company -->
+            <div class='col-sm-12 col-md-4 margin-bottom'>
+                <md-select class="full-width" placeholder="Empresa" [(ngModel)]="company_userprofile.company" name="company_id" id="company_id">
+                    <md-option *ngFor="let item of companies" [value]="item" [hidden]="item.hide">{{item.name}}</md-option>
+                </md-select>
+            </div>
+            <!-- user profile -->
+            <div class='col-sm-12 col-md-4 margin-bottom'>
+                <md-select class="full-width" placeholder="Perfil de usuario" [(ngModel)]="company_userprofile.userprofile" name="user_profile_id"
+                    id="user_profile_id">
+                    <md-option *ngFor="let item of userprofiles" [value]="item">{{item.up_description}}</md-option>
+                </md-select>
+            </div>
+            <div class="col-sm-12 col-md-4 margin-bottom">
+                <div class="flex">
+                    <span class="flex-spacer"></span>
+                    <button [disabled]="!(company_userprofile.company && company_userprofile.userprofile)" type="button" md-raised-button color="primary"
+                        class="btn-w-md no-margin-left" (click)="addCompany()">Añadir</button>
+                </div>
 
             </div>
+            <div class="col-sm-12">
+                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                    <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Perfil de Usuario</th>
+                                <th class="w-108"></th>
+                                <th class="w-40"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of _model.userprofiles">
+                                <td>{{ item.company_name }}</td>
+                                <td>{{ item.user_profile_description }}</td>
+                                <td class="w-108">
+                                    <button *ngIf="!item.default" type="button" md-button (click)="isDefault(item)">
+                                        <span style="color: #bfbaba">Default</span>
+                                    </button>
+                                    <button *ngIf="item.default" type="button" md-raised-button md-button (click)="isDefault(item)" color="primary"> Default </button>
+                                </td>
+                                <td class="w-40" title="Remover empresa">
+                                    <button type="button" md-icon-button class="text-danger" (click)="removeCompany(item)">
+                                        <md-icon>delete</md-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-sm-12">
             <button type="button" [disabled]="!modelForm.form.valid" md-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
                 (click)="save()">{{strAction}}</button>
         </div>
-
-    </form>
-
-
-</div>
+    </div>
+</form>

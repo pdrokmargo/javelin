@@ -11,10 +11,10 @@ import { Base } from '../bases/base';
 
 export class ProductComponent extends Base implements OnInit {
 
-    constructor(){
+    constructor() {
         super();
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
 }

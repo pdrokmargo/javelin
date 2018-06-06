@@ -11,10 +11,10 @@
     <article class="article padding-lg-v article-dark article-bordered">
         <div class="container-fluid with-maxwidth">
             <div class="box box-default">
-                
-                <user-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></user-action-cmp>
-                <user-list-cmp *ngIf="isOpenList"></user-list-cmp>
-
+                <div class="box-body">
+                    <user-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></user-action-cmp>
+                    <user-list-cmp *ngIf="isOpenList"></user-list-cmp>
+                </div>
             </div>
         </div>
     </article>

@@ -15,12 +15,18 @@
 
 
     <div class="brand hidden-md-down">
-      <h2><a [routerLink]="['/']">{{AppConfig.brand}}</a></h2>
+      <h2>
+        <a [routerLink]="['/']">{{AppConfig.brand}}</a>
+      </h2>
     </div>
 
     <div class="top-nav-left hidden-md-down">
       <ul class="list-unstyled list-inline">
-        <li class="list-inline-item"><button md-button class="md-button header-btn" myOpenSearchOverlay><i class="material-icons">search</i></button></li>
+        <li class="list-inline-item">
+          <button md-button class="md-button header-btn" myOpenSearchOverlay>
+            <i class="material-icons">search</i>
+          </button>
+        </li>
         <li class="list-inline-item" [hidden]="notifications.length == 0">
           <button md-button class="md-button header-btn" [mdMenuTriggerFor]="appNotification">
             <i class="material-icons">notifications_none</i>
@@ -33,23 +39,6 @@
                 <h4 md-line>{{n.caption}}</h4>
                 <p md-line class="text-muted">{{n.description}}</p>
               </md-list-item>
-              <!--              
-              <md-list-item>
-                <md-icon md-list-avatar>mail_outline</md-icon>
-                <h4 md-line>New mail from David</h4>
-                <p md-line class="text-muted">5 minutes ago</p>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar>chat_bubble_outline</md-icon>
-                <h4 md-line>Message from Jane</h4>
-                <p md-line class="text-muted">15 minutes ago</p>
-              </md-list-item>
-              <md-list-item>
-                <md-icon md-list-avatar>person_outline</md-icon>
-                <h4 md-line>New member John joined</h4>
-                <p md-line class="text-muted">1 hour ago</p>
-              </md-list-item>
-              -->
             </md-nav-list>
           </md-menu>
         </li>
@@ -61,7 +50,7 @@
         <li>
           <button md-button class="md-button header-btn" [mdMenuTriggerFor]="appLogout">
             <!--img src="assets/images/g1.jpg" alt="" class="rounded img30_30"-->
-            <md-icon>account_circle</md-icon>            
+            <md-icon>account_circle</md-icon>
             <!-- <span style="font-size: 11px;">{{user.firstname}}, </span>   
             <span style="font-size: 9px;">{{user.usercompany.userprofile.up_description}}</span>                   -->
           </button>
@@ -69,7 +58,8 @@
             <md-nav-list dense>
               <a md-list-item>
                 <md-icon md-list-icon>perm_identity</md-icon>
-                <h4 md-line>{{user.firstname}}({{user.usercompany.userprofile.up_description}})</h4>
+                <h4 md-line>
+                  <b>{{user.firstname}}</b> - ({{user.usercompany.userprofile.up_description}})</h4>
               </a>
               <hr>
               <a md-list-item [routerLink]="'/app/my-profile'">
@@ -78,7 +68,7 @@
               </a>
 
               <a md-list-item (click)="logout()">
-                <md-icon md-list-icon>subdirectory_arrow_left</md-icon>
+                <md-icon md-list-icon>power_settings_new</md-icon>
                 <h4 md-line>Salir</h4>
               </a>
             </md-nav-list>
@@ -88,29 +78,29 @@
         <!-- <li><button md-button class="md-button header-btn"><i class="material-icons">more_vert</i></button></li> -->
       </ul>
     </div>
-    
+
     <div class="top-nav-right" *ngIf="user.usersprivileges!=null && user.usersprivileges.length > 1">
-        <ul class="list-unstyled float-right">
-          <li>
-            <button md-button class="md-button header-btn" [mdMenuTriggerFor]="appCompany">
-              
-              <span>{{ user.usercompany.company.name }}</span>
-              <md-icon>keyboard_arrow_down</md-icon>            
-                            
-            </button>
-            <md-menu #appCompany="mdMenu" x-position="after" y-position="below" [overlapTrigger]="false">
-              <md-nav-list dense>
-                                 
-                <a md-list-item *ngFor="let item of user.usersprivileges" (click)="change_company(item.company)">
-                  <md-icon md-list-icon>view_array</md-icon>
-                  <h4 md-line>{{ item.company.name }}</h4>
-                </a>
-  
-              </md-nav-list>
-            </md-menu>
-          </li>         
-        </ul>
-      </div>
-      
+      <ul class="list-unstyled float-right">
+        <li>
+          <button md-button class="md-button header-btn" [mdMenuTriggerFor]="appCompany">
+
+            <span>{{ user.usercompany.company.name }}</span>
+            <md-icon>keyboard_arrow_down</md-icon>
+
+          </button>
+          <md-menu #appCompany="mdMenu" x-position="after" y-position="below" [overlapTrigger]="false">
+            <md-nav-list dense>
+
+              <a md-list-item *ngFor="let item of user.usersprivileges" (click)="change_company(item.company)">
+                <!--md-icon md-list-icon>view_array</md-icon-->
+                <h4 md-line>{{ item.company.name }}</h4>
+              </a>
+
+            </md-nav-list>
+          </md-menu>
+        </li>
+      </ul>
+    </div>
+
   </div>
 </section>

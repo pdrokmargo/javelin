@@ -2,7 +2,7 @@
 
 <md-dialog-content>
 
-    <div class='col-sm-12 col-md-12'>
+    <!--div class='col-sm-12 col-md-12'>
         <div class="box-body">
             <p>
                 <md-radio-group class="md-radio-group-spacing" [(ngModel)]="radio.option">
@@ -11,13 +11,11 @@
                 </md-radio-group>
             </p>
         </div>
-    </div>
+    </div-->
     <!-- FORM -->
-    <stakeholders-action-cmp *ngIf="radio.option === '2'" [strAction]="'Guardar'"></stakeholders-action-cmp>
+    <!--stakeholders-action-cmp *ngIf="radio.option === '2'"></stakeholders-action-cmp-->
     <!-- LIST -->
-    <div class="col-sm-12">
-        <stakeholders-list-cmp [type]="option" *ngIf="radio.option === '1'" (select)="select($event)"></stakeholders-list-cmp>
-    </div>
+    <stakeholders-list-cmp [type]="option" *ngIf="radio.option === '1'" (select)="select($event)"></stakeholders-list-cmp>
 </md-dialog-content>
 
 <md-dialog-actions>

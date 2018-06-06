@@ -1,436 +1,429 @@
 <form #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+        <div class="col-sm-12 margin-bottom-40" [class.btn-action-container]="booActive">
+            <button type="button" md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+                <md-icon>keyboard_arrow_left</md-icon> Regresar
+            </button>
+        </div>
+        <!-- name -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="name" name="name" [(ngModel)]="model.name" mdInput placeholder="Nombre">
+            </md-input-container>
+        </div>
+        <!-- estado -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <div class="flex">
+                <span class="flex-spacer"></span>
+                <md-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</md-slide-toggle>
+            </div>
+        </div>
+        <!--cliente-->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <md-input-container class="full-width">
+                <input readonly mdInput type="text" placeholder="Cliente" [(ngModel)]="customers.legalname" id="client" name="client" />
+                <md-icon mdSuffix class="wh-24 pointer" (click)="openModalCostumers()">search</md-icon>
+            </md-input-container>
+        </div>
+        <!-- tipo de poblacion -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <md-select class="full-width" placeholder="Tipo de población" [(ngModel)]="model.population_type_id" name="population_type_id"
+                id="population_type_id">
+                <md-option *ngFor="let item of arrPopulation_type" [value]="item.id">{{item.value}}</md-option>
+            </md-select>
+        </div>
+        <!--description-->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <md-input-container class="full-width">
+                <textarea type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción"></textarea>
+            </md-input-container>
+        </div>
+        <!--Red adscrita-->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <div class="flex margin-bottom">
+                <div class="box-header no-padding-h text-center">Red adscrita</div>
+                <span class="flex-spacer"></span>
 
-    <div class="col-sm-12">
+                <button type="button" color="primary" type="button" md-raised-button class="btn-w-md" (click)="openModalIpsNetwork()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped no-margin">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of _ips">
+                            <td>{{item.value}}</td>
+                            <td class="w-40">
+                                <button type="button" class="text-danger" type="button" md-icon-button (click)="deleteIps(item)">
+                                    <md-icon>delete</md-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--EVENTO-->
+    <div class="row">
+        <div class="col-sm-12 margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
+            <md-slide-toggle [labelPosition]="'before'" id="event" name="event" [(ngModel)]="booEvento">Evento</md-slide-toggle>
+        </div>
+    </div>
+    <div class="row" *ngIf="booEvento">
+        <!-- Numero de contrato -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="evento_contract_number" name="evento_contract_number" [(ngModel)]="contract_number" mdInput
+                    placeholder="Numero de contrato">
+            </md-input-container>
+        </div>
+        <!-- inicio del contrato -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerIssueDate2" id="evento_contract_start_date" name="evento_contract_start_date" placeholder="Inicio de contrato"
+                    [(ngModel)]="contract_start_date">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate2"></button>
+            </md-input-container>
+            <md-datepicker #pickerIssueDate2></md-datepicker>
+        </div>
+        <!-- Vencimiento del contrato -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerIssueDate1" id="evento_contract_expiration_date" name="evento_contract_expiration_date"
+                    placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate1"></button>
+            </md-input-container>
+            <md-datepicker #pickerIssueDate1></md-datepicker>
+        </div>
+        <!-- presupuesto -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="budget" name="budget" [(ngModel)]="objEvent.budget" mdInput placeholder="Presupuesto">
+            </md-input-container>
+        </div>
+        <!-- Alerta -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <span mdPrefix>% &nbsp;</span>
+                <input required type="text" id="percent_alert" name="percent_alert" [(ngModel)]="objEvent.percent_alert" mdInput placeholder="Alerta">
+            </md-input-container>
+        </div>
+        <!-- Inactivacion -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <span mdPrefix>% &nbsp;</span>
+                <input required type="text" id="percent_unable" name="percent_unable" [(ngModel)]="objEvent.percent_unable" mdInput placeholder="Inactivación">
+            </md-input-container>
+        </div>
+        <!-- autorizacion -->
+        <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
+            <md-slide-toggle (change)="activeperauth_length()" [labelPosition]="'before'" id="perauth" name="perauth" [(ngModel)]="objEvent.perauth">Autorización</md-slide-toggle>
+        </div>
+        <!-- longitud -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <input [disabled]="!objEvent.perauth" [required]="objEvent.perauth" type="text" id="perauth_length" name="perauth_length"
+                    [(ngModel)]="objEvent.perauth_length" mdInput placeholder="Longitud">
+            </md-input-container>
+        </div>
+        <!-- tipo de caracteres -->
+        <div class="col-sm-12 col-md-4 col-lg-2 margin-bottom">
+            <md-select [disabled]="!objEvent.perauth" class="full-width" placeholder="Tipo caracteres" [(ngModel)]="objEvent.perauth_char_type"
+                name="perauth_char_type" id="perauth_char_type">
+                <md-option *ngFor="let item of arrPerauth_char_type" [value]="item.id">{{item.value}}</md-option>
+            </md-select>
+        </div>
+    </div>
+    <!--CÁPITA-->
+    <div class="row">
+        <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
+            <md-slide-toggle [labelPosition]="'before'" id="capita" name="capita" [(ngModel)]="booCapita">Cápita</md-slide-toggle>
+        </div>
+    </div>
+    <div class="row" *ngIf="booCapita">
+        <!-- Numero de contrato -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="capita_contract_number" name="capita_contract_number" [(ngModel)]="contract_number" mdInput
+                    placeholder="Numero de contrato">
+            </md-input-container>
+        </div>
+        <!-- inicio del contrato -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerIssueDate" id="capita_contract_start_date" name="capita_contract_start_date" placeholder="Inicio de contrato"
+                    [(ngModel)]="contract_start_date">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate"></button>
+            </md-input-container>
+            <md-datepicker #pickerIssueDate></md-datepicker>
+        </div>
+        <!-- Vencimiento del contrato -->
+        <div class='col-sm-12 col-md-3  margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerIssueDate3" id="capita_contract_expiration_date" name="capita_contract_expiration_date"
+                    placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate3"></button>
+            </md-input-container>
+            <md-datepicker #pickerIssueDate3></md-datepicker>
+        </div>
+        <!-- Alerta -->
+        <div class='col-sm-12 col-md-3 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <span mdPrefix>% &nbsp;</span>
+                <input required type="text" id="capita_percent_alert" name="capita_percent_alert" [(ngModel)]="objCapita.percent_alert" mdInput
+                    placeholder="Alerta">
+            </md-input-container>
+        </div>
+        <!-- Inactivacion -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <span mdPrefix>% &nbsp;</span>
+                <input required type="text" id="capita_percent_unable" name="capita_percent_unable" [(ngModel)]="objCapita.percent_unable"
+                    mdInput placeholder="Inactivación">
+            </md-input-container>
+        </div>
+        <!-- afiliados -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="capita_affiliates_total_qty" name="capita_affiliates_total_qty" [(ngModel)]="objCapita.affiliates_total_qty"
+                    mdInput placeholder="Afiliados">
+            </md-input-container>
+        </div>
+        <div class="col-sm-12"></div>
+        <!-- Historico de afiliados -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <div class="box-header no-padding-h" style="height: 67px;">Histórico de afiliados</div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped no-margin">
+                    <thead>
+                        <tr>
+                            <th>Ubicación</th>
+                            <th>Fecha</th>
+                            <th>Afiliados</th>
+                            <th>Valor capita</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of objCapita.affiliates_qty_history_record">
+                            <td>{{item.department.value}}, {{item.city.value}}</td>
+                            <td>{{item.affiliates_number}}</td>
+                            <td>{{item.affiliates_number}}</td>
+                            <td>{{item.date | date:'dd-MM-yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Capita detallada -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <div class="flex margin-bottom">
+                <div class="box-header no-padding-h">Cápita detallada</div>
+                <span class="flex-spacer"></span>
+                <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalGeolocation()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped no-margin">
+                    <thead>
+                        <tr>
+                            <th>Ubicación</th>
+                            <th>Afiliados</th>
+                            <th>Valor cápita</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of objCapita.detailed_capita; let index = index">
 
-        <div class="row">
-            <div class="col-sm-12 margin-bottom-40" [class.btn-action-container]="booActive">
-                <button type="button" md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
-                    <md-icon>keyboard_arrow_left</md-icon> Regresar
-                </button>
+                        <tr *ngIf="item.state">
+                            <td>{{item.department.value}}, {{item.city.value}}</td>
+                            <td>
+                                <md-input-container class="full-width">
+                                    <input required type="text" id="affiliates_number{{index}}" name="affiliates_number{{index}}" [(ngModel)]="item.affiliates_number"
+                                        mdInput>
+                                </md-input-container>
+                            </td>
+                            <td>
+                                <md-input-container class="full-width">
+                                    <input required type="text" id="capita_fare{{index}}" name="capita_fare{{index}}" [(ngModel)]="item.capita_fare" mdInput>
+                                </md-input-container>
+                            </td>
+                            <td class="w-40">
+                                <button type="button" class="text-danger" md-icon-button (click)="deleteDetailedCapita(item)">
+                                    <md-icon>delete</md-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <!-- name -->
-            <div class='col-sm-12 col-md-6 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input required type="text" id="name" name="name" [(ngModel)]="model.name" mdInput placeholder="Nombre">
-                </md-input-container>
-            </div>
-            <!-- estado -->
-            <div class='col-sm-12 col-md-6 margin-bottom'>
-                <div class="flex">
-                    <span class="flex-spacer"></span>
-                    <md-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</md-slide-toggle>
-                </div>
-            </div>
-            <!--cliente-->
-            <div class="col-sm-12 col-md-6 margin-bottom">
-                <md-input-container class="full-width">
-                    <input readonly mdInput type="text" placeholder="Cliente" [(ngModel)]="customers.businessname" id="client" name="client"/>
-                    <md-icon mdSuffix class="wh-24 pointer" (click)="openModalCostumers()">search</md-icon>
-                </md-input-container>
-            </div>
-            <!-- tipo de poblacion -->
-            <div class="col-sm-12 col-md-6 margin-bottom">
-                <md-select class="full-width" placeholder="Tipo de población" [(ngModel)]="model.population_type_id" name="population_type_id"
-                    id="population_type_id">
-                    <md-option *ngFor="let item of arrPopulation_type" [value]="item.id">{{item.value}}</md-option>
-                </md-select>
-            </div>
-            <!--description-->
-            <div class='col-sm-12 col-md-6 margin-bottom'>
-                <md-input-container class="full-width">
-                    <textarea type="text" id="description" name="description" [(ngModel)]="model.description" mdInput placeholder="Descripción"></textarea>
-                </md-input-container>
-            </div>
-            <!--Red adscrita-->
-            <div class="col-sm-12 col-md-6 margin-bottom">
-                <div class="flex margin-bottom">
-                    <div class="box-header no-padding-h text-center">Red adscrita</div>
-                    <span class="flex-spacer"></span>
+        </div>
 
-                    <button type="button" color="primary" type="button" md-raised-button class="btn-w-md" (click)="openModalIpsNetwork()">Añadir</button>
-                </div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    <table class="mdl-data-table table-bordered table-striped no-margin">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of _ips">
-                                <td>{{item.value}}</td>
-                                <td class="w-40">
-                                    <button type="button" type="button" md-icon-button (click)="deleteIps(item)">
-                                        <md-icon>delete</md-icon>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    </div>
+    <!--PGP-->
+    <div class="row">
+        <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
+            <md-slide-toggle [labelPosition]="'before'" id="php" name="pgp" [(ngModel)]="booPgp">PGP </md-slide-toggle>
+        </div>
+    </div>
+    <div class="row" *ngIf="booPgp">
+        <!-- Numero de contrato -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="pgp_contract_number" name="pgp_contract_number" [(ngModel)]="contract_number" mdInput placeholder="Numero de contrato">
+            </md-input-container>
+        </div>
+        <!-- inicio del contrato -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerIssueDate4" id="pgp_contract_start_date" name="pgp_contract_start_date" placeholder="Inicio de contrato"
+                    [(ngModel)]="contract_start_date">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate4"></button>
+            </md-input-container>
+            <md-datepicker #pickerIssueDate4></md-datepicker>
+        </div>
+        <!-- Vencimiento del contrato -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerIssueDate5" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date" placeholder="Vencimiento del contrato"
+                    [(ngModel)]="contract_expiration_date">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate5"></button>
+            </md-input-container>
+            <md-datepicker #pickerIssueDate5></md-datepicker>
+        </div>
+        <!-- presupuesto -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="pgp_budget" name="pgp_budget" [(ngModel)]="objPgp.budget" mdInput placeholder="Presupuesto Mensual">
+            </md-input-container>
+        </div>
+        <!-- Alerta -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <span mdPrefix>% &nbsp;</span>
+                <input required type="text" id="pgp_percent_alert" name="pgp_percent_alert" [(ngModel)]="objPgp.percent_alert" mdInput placeholder="Alerta">
+            </md-input-container>
+        </div>
+        <!-- inactivacion -->
+        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+            <md-input-container class="full-width">
+                <input required type="text" id="pgp_percent_unable" name="pgp_percent_unable" [(ngModel)]="objPgp.percent_unable" mdInput
+                    placeholder="Inactivación">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <!-- medicamentos -->
+        <div class="col-sm-12 margin-bottom">
+
+            <div class="flex margin-bottom">
+                <div class="box-header no-padding-h">Medicamentos</div>
+                <span class="flex-spacer"></span>
+                <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalPharmaceutical()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped no-margin">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Evento</th>
+                            <th>Tarifa</th>
+                            <th>Cápita</th>
+                            <th>PGP</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of _pharmadrugs; let index = index">
+                            <td>{{item.name}}</td>
+                            <td>
+                                <md-slide-toggle [disabled]="!booEvento" id="p_event{{index}}" name="p_event{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
+                            </td>
+                            <td>
+                                <md-input-container class="full-width">
+                                    <input [disabled]="!item.event" mdInput type="text" [(ngModel)]="item.fare" id="p_fare{{index}}" name="p_fare{{index}}" />
+                                </md-input-container>
+                            </td>
+                            <td>
+                                <md-slide-toggle [disabled]="!booCapita" id="p_capita{{index}}" name="p_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>
+                            </td>
+                            <td>
+                                <md-slide-toggle [disabled]="!booPgp" id="p_pgp{{index}}" name="p_pgp{{index}}" [(ngModel)]="item.pgp"></md-slide-toggle>
+                            </td>
+                            <td class="w-40">
+                                <button type="button" class="text-danger" md-icon-button (click)="deletePharmadrug()">
+                                    <md-icon>delete</md-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
-        <!--EVENTO-->
-        <div class="row">
-            <div class="col-sm-12 margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle (click)="clearEvent()" [labelPosition]="'before'" id="event" name="event" [(ngModel)]="booEvento">Evento</md-slide-toggle>
-            </div>
-        </div>
-        <div class="row" *ngIf="booEvento">
-            <!-- Numero de contrato -->
-            <div class='col-sm-12 col-md-6 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input required type="text" id="evento_contract_number" name="evento_contract_number" [(ngModel)]="contract_number" mdInput
-                        placeholder="Numero de contrato">
-                </md-input-container>
-            </div>
-            <!-- inicio del contrato -->
-            <div class='col-sm-12 col-md-3 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="pickerIssueDate2" id="evento_contract_start_date" name="evento_contract_start_date" placeholder="Inicio de contrato"
-                        [(ngModel)]="contract_start_date">
-                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate2"></button>
-                </md-input-container>
-                <md-datepicker #pickerIssueDate2></md-datepicker>
-            </div>
-            <!-- Vencimiento del contrato -->
-            <div class='col-sm-12 col-md-3 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="pickerIssueDate1" id="evento_contract_expiration_date" name="evento_contract_expiration_date"
-                        placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
-                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate1"></button>
-                </md-input-container>
-                <md-datepicker #pickerIssueDate1></md-datepicker>
-            </div>
-            <!-- presupuesto -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input required type="text" id="budget" name="budget" [(ngModel)]="objEvent.budget" mdInput placeholder="Presupuesto">
-                </md-input-container>
-            </div>
-            <!-- Alerta -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <span mdPrefix>% &nbsp;</span>
-                    <input required type="text" id="percent_alert" name="percent_alert" [(ngModel)]="objEvent.percent_alert" mdInput placeholder="Alerta">
-                </md-input-container>
-            </div>
-            <!-- Inactivacion -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <span mdPrefix>% &nbsp;</span>
-                    <input required type="text" id="percent_unable" name="percent_unable" [(ngModel)]="objEvent.percent_unable" mdInput placeholder="Inactivación">
-                </md-input-container>
-            </div>
-            <!-- autorizacion -->
-            <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
-                <md-slide-toggle (change)="activeperauth_length()" [labelPosition]="'before'" id="perauth" name="perauth" [(ngModel)]="objEvent.perauth">Autorización</md-slide-toggle>
-            </div>
-            <!-- longitud -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input [disabled]="!objEvent.perauth" [required]="objEvent.perauth" type="text" id="perauth_length" name="perauth_length"
-                        [(ngModel)]="objEvent.perauth_length" mdInput placeholder="Longitud">
-                </md-input-container>
-            </div>
-            <!-- tipo de caracteres -->
-            <div class="col-sm-12 col-md-4 col-lg-2 margin-bottom">
-                <md-select [disabled]="!objEvent.perauth" class="full-width" placeholder="Tipo caracteres" [(ngModel)]="objEvent.perauth_char_type"
-                    name="perauth_char_type" id="perauth_char_type">
-                    <md-option *ngFor="let item of arrPerauth_char_type" [value]="item.id">{{item.value}}</md-option>
-                </md-select>
-            </div>
-        </div>
-        <!--CÁPITA-->
-        <div class="row">
-            <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle (click)="clearCapita()" [labelPosition]="'before'" id="capita" name="capita" [(ngModel)]="booCapita">Cápita</md-slide-toggle>
-            </div>
-        </div>
-        <div class="row" *ngIf="booCapita">
-            <!-- Numero de contrato -->
-            <div class='col-sm-12 col-md-6 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input required type="text" id="capita_contract_number" name="capita_contract_number" [(ngModel)]="contract_number" mdInput
-                        placeholder="Numero de contrato">
-                </md-input-container>
-            </div>
-            <!-- inicio del contrato -->
-            <div class='col-sm-12 col-md-3 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="pickerIssueDate" id="capita_contract_start_date" name="capita_contract_start_date" placeholder="Inicio de contrato"
-                        [(ngModel)]="contract_start_date">
-                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate"></button>
-                </md-input-container>
-                <md-datepicker #pickerIssueDate></md-datepicker>
-            </div>
-            <!-- Vencimiento del contrato -->
-            <div class='col-sm-12 col-md-3  margin-bottom'>
-                <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="pickerIssueDate3" id="capita_contract_expiration_date" name="capita_contract_expiration_date"
-                        placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
-                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate3"></button>
-                </md-input-container>
-                <md-datepicker #pickerIssueDate3></md-datepicker>
-            </div>
-            <!-- Alerta -->
-            <div class='col-sm-12 col-md-3 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <span mdPrefix>% &nbsp;</span>
-                    <input required type="text" id="capita_percent_alert" name="capita_percent_alert" [(ngModel)]="objCapita.percent_alert" mdInput
-                        placeholder="Alerta">
-                </md-input-container>
-            </div>
-            <!-- Inactivacion -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <span mdPrefix>% &nbsp;</span>
-                    <input required type="text" id="capita_percent_unable" name="capita_percent_unable" [(ngModel)]="objCapita.percent_unable"
-                        mdInput placeholder="Inactivación">
-                </md-input-container>
-            </div>
-            <!-- afiliados -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input required type="text" id="capita_affiliates_total_qty" name="capita_affiliates_total_qty" [(ngModel)]="objCapita.affiliates_total_qty"
-                        mdInput placeholder="Afiliados">
-                </md-input-container>
-            </div>
-            <div class="col-sm-12"></div>
-            <!-- Historico de afiliados -->
-            <div class="col-sm-12 col-md-6 margin-bottom">
-                <div class="box-header no-padding-h" style="height: 67px;">Histórico de afiliados</div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    <table class="mdl-data-table table-bordered table-striped no-margin">
-                        <thead>
-                            <tr>
-                                <th>Ubicación</th>
-                                <th>Fecha</th>
-                                <th>Afiliados</th>
-                                <th>Valor capita</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of objCapita.affiliates_qty_history_record">
-                                <td>{{item.department.value}}, {{item.city.value}}</td>
-                                <td>{{item.affiliates_number}}</td>
-                                <td>{{item.affiliates_number}}</td>
-                                <td>{{item.date | date:'dd-MM-yyyy'}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- Capita detallada -->
-            <div class="col-sm-12 col-md-6 margin-bottom">
-                <div class="flex margin-bottom">
-                    <div class="box-header no-padding-h">Cápita detallada</div>
-                    <span class="flex-spacer"></span>
-                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalGeolocation()">Añadir</button>
-                </div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    <table class="mdl-data-table table-bordered table-striped no-margin">
-                        <thead>
-                            <tr>
-                                <th>Ubicación</th>
-                                <th>Afiliados</th>
-                                <th>Valor cápita</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody *ngFor="let item of objCapita.detailed_capita; let index = index">
+        <!-- puntos de dispensacion -->
+        <div class="col-sm-12 margin-bottom">
 
-                            <tr *ngIf="item.state">
-                                <td>{{item.department.value}}, {{item.city.value}}</td>
-                                <td>
-                                    <md-input-container class="full-width">
-                                        <input required type="text" id="affiliates_number{{index}}" name="affiliates_number{{index}}" [(ngModel)]="item.affiliates_number"
-                                            mdInput>
-                                    </md-input-container>
-                                </td>
-                                <td>
-                                    <md-input-container class="full-width">
-                                        <input required type="text" id="capita_fare{{index}}" name="capita_fare{{index}}" [(ngModel)]="item.capita_fare" mdInput>
-                                    </md-input-container>
-                                </td>
-                                <td class="w-40">
-                                    <button type="button" md-icon-button (click)="deleteDetailedCapita(item)">
-                                        <md-icon>delete</md-icon>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="flex margin-bottom">
+                <div class="box-header no-padding-h">Puntos de dispensación</div>
+                <span class="flex-spacer"></span>
+                <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalDeliveryPoints()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped no-margin">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Evento</th>
+                            <th>Cápita</th>
+                            <th>PGP</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of model.delivery_points; let index = index">
+                            <td>{{item.name}}</td>
+                            <td>
+                                <md-slide-toggle id="d_event{{index}}" name="_devent{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
+                            </td>
+                            <td>
+                                <md-slide-toggle id="d_capita{{index}}" name="d_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>
+                            </td>
+                            <td>
+                                <md-slide-toggle id="d_pgp{{index}}" name="d_pgp{{index}}" [(ngModel)]="item.pgp"></md-slide-toggle>
+                            </td>
+                            <td class="w-40">
+                                <button type="button" class="text-danger" md-icon-button (click)="deleteDeliveryPoints(item)">
+                                    <md-icon>delete</md-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
-        <!--PGP-->
-        <div class="row">
-            <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-                <md-slide-toggle (click)="clearPgp()" [labelPosition]="'before'" id="php" name="pgp" [(ngModel)]="booPgp">PGP </md-slide-toggle>
+    </div>
+    <div class="row">
+        <!-- medicamentos -->
+        <div class="col-sm-12 margin-bottom">
+            <div class="box-header no-padding-h">Histórico alerta de contratos</div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped no-margin">
+                    <tbody>
+                        <tr *ngFor="let item of model.conditional_alers">
+                            <td>{{item.description}}</td>
+                            <td>{{item.issue_date}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="row" *ngIf="booPgp">
-            <!-- Numero de contrato -->
-            <div class='col-sm-12 col-md-6 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input required type="text" id="pgp_contract_number" name="pgp_contract_number" [(ngModel)]="contract_number" mdInput placeholder="Numero de contrato">
-                </md-input-container>
-            </div>
-            <!-- inicio del contrato -->
-            <div class='col-sm-12 col-md-3 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="pickerIssueDate4" id="pgp_contract_start_date" name="pgp_contract_start_date" placeholder="Inicio de contrato"
-                        [(ngModel)]="contract_start_date">
-                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate4"></button>
-                </md-input-container>
-                <md-datepicker #pickerIssueDate4></md-datepicker>
-            </div>
-            <!-- Vencimiento del contrato -->
-            <div class='col-sm-12 col-md-3 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input mdInput [mdDatepicker]="pickerIssueDate5" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date" placeholder="Vencimiento del contrato"
-                        [(ngModel)]="contract_expiration_date">
-                    <button mdSuffix [mdDatepickerToggle]="pickerIssueDate5"></button>
-                </md-input-container>
-                <md-datepicker #pickerIssueDate5></md-datepicker>
-            </div>
-            <!-- presupuesto -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input required type="text" id="pgp_budget" name="pgp_budget" [(ngModel)]="objPgp.budget" mdInput placeholder="Presupuesto Mensual">
-                </md-input-container>
-            </div>
-            <!-- Alerta -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <span mdPrefix>% &nbsp;</span>
-                    <input required type="text" id="pgp_percent_alert" name="pgp_percent_alert" [(ngModel)]="objPgp.percent_alert" mdInput placeholder="Alerta">
-                </md-input-container>
-            </div>
-            <!-- inactivacion -->
-            <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-                <md-input-container class="full-width">
-                    <input required type="text" id="pgp_percent_unable" name="pgp_percent_unable" [(ngModel)]="objPgp.percent_unable" mdInput
-                        placeholder="Inactivación">
-                </md-input-container>
-            </div>
-        </div>
-        <div class="row">
-            <!-- medicamentos -->
-            <div class="col-sm-12 margin-bottom">
-
-                <div class="flex margin-bottom">
-                    <div class="box-header no-padding-h">Medicamentos</div>
-                    <span class="flex-spacer"></span>
-                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalPharmaceutical()">Añadir</button>
-                </div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    <table class="mdl-data-table table-bordered table-striped no-margin">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Evento</th>
-                                <th>Tarifa</th>
-                                <th>Cápita</th>
-                                <th>PGP</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of _pharmadrugs; let index = index">
-                                <td>{{item.name}}</td>
-                                <td>
-                                    <md-slide-toggle [disabled]="!booEvento" id="p_event{{index}}" name="p_event{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
-                                </td>
-                                <td>
-
-                                    <md-input-container class="full-width">
-                                        <input [disabled]="!item.event" (change)="item.fare = (item.evetn ? item.fare : '')" mdInput type="text" [(ngModel)]="item.fare"
-                                            id="p_fare{{index}}" name="p_fare{{index}}" />
-                                    </md-input-container>
-                                </td>
-                                <td>
-                                    <md-slide-toggle [disabled]="!booCapita" id="p_capita{{index}}" name="p_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>
-                                </td>
-                                <td>
-                                    <md-slide-toggle [disabled]="!booPgp" id="p_pgp{{index}}" name="p_pgp{{index}}" [(ngModel)]="item.pgp"></md-slide-toggle>
-                                </td>
-                                <td class="w-40">
-                                    <button type="button" md-icon-button (click)="deletePharmadrug()">
-                                        <md-icon>delete</md-icon>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-            <!-- puntos de dispensacion -->
-            <div class="col-sm-12 margin-bottom">
-
-                <div class="flex margin-bottom">
-                    <div class="box-header no-padding-h">Puntos de dispensación</div>
-                    <span class="flex-spacer"></span>
-                    <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalDeliveryPoints()">Añadir</button>
-                </div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    <table class="mdl-data-table table-bordered table-striped no-margin">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Evento</th>
-                                <th>Cápita</th>
-                                <th>PGP</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of model.delivery_points; let index = index">
-                                <td>{{item.name}}</td>
-                                <td>
-                                    <md-slide-toggle id="d_event{{index}}" name="_devent{{index}}" [(ngModel)]="item.event"></md-slide-toggle>
-                                </td>
-                                <td>
-                                    <md-slide-toggle id="d_capita{{index}}" name="d_capita{{index}}" [(ngModel)]="item.capita"></md-slide-toggle>
-                                </td>
-                                <td>
-                                    <md-slide-toggle id="d_pgp{{index}}" name="d_pgp{{index}}" [(ngModel)]="item.pgp"></md-slide-toggle>
-                                </td>
-                                <td class="w-40">
-                                    <button type="button" md-icon-button (click)="deleteDeliveryPoints(item)">
-                                        <md-icon>delete</md-icon>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <!-- medicamentos -->
-            <div class="col-sm-12 margin-bottom">
-                <div class="box-header no-padding-h">Histórico alerta de contratos</div>
-                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                    <table class="mdl-data-table table-bordered table-striped no-margin">
-                        <tbody>
-                            <tr *ngFor="let item of model.conditional_alers">
-                                <td>{{item.description}}</td>
-                                <td>{{item.issue_date}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-sm-12" [class.btn-action-container]="booActive">
-                <button type="button" [disabled]="!modelForm.form.valid" md-raised-button class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
-            </div>
+        <div class="col-sm-12" [class.btn-action-container]="booActive">
+            <button type="button" [disabled]="!modelForm.form.valid" md-raised-button class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
         </div>
     </div>
 </form>

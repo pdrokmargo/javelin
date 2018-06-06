@@ -21,6 +21,7 @@ import { filter } from 'rxjs/operators';
 export class PharmaceuticalDrugActionComponent extends BaseModel implements OnInit {
 
     measurement_unit_id;
+    measurement_unit = {};
     private modalActiveIngredients: MdDialogRef<ModalActiveIngredientsComponent>;
     private pharmaceutical_form: any[] = [];
     private routes_administration: any[] = [];
@@ -47,6 +48,10 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
         if (this.numId !== undefined) {
             this.getDataById();
         }
+    }
+
+    getMeasurement_unit() {
+        this.measurement_unit = this.arrMeasurement_unit.filter(x => x.id === this.measurement_unit_id)[0];
     }
 
     private getCollection() {
@@ -130,6 +135,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                 element.name = element.active_ingredient.name;
                 element.id = element.active_ingredient.id;
             });
+            this.getMeasurement_unit();
             this.loaderService.display(false);
         }, err => {
             this.loaderService.display(false);

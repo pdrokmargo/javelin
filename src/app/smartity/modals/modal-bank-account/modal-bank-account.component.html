@@ -1,79 +1,84 @@
-<form #bankForm="ngForm" autocomplete="off">
-    <h1 md-dialog-title>{{ data.title }}</h1>
-    <md-dialog-content>
-     
-    <!-- banks -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-select class="full-width" placeholder="Banco" [(ngModel)]="model.bank" name="bank"
-             id="bank">
-                <md-option *ngFor="let item of banks" [value]="item">{{item.value}}</md-option>
-            </md-select>  
+<h1 md-dialog-title>{{ data.title }}</h1>
+
+
+<md-dialog-content>
+    <form #bankForm="ngForm" autocomplete="off">
+        <!-- banks -->
+        <div class='col-sm-12 col-md-6'>
+            <div class="box-body">
+                <md-select class="full-width" placeholder="Banco" [(ngModel)]="model.bank" name="bank" id="bank">
+                    <md-option *ngFor="let item of banks" [value]="item">{{item.value}}</md-option>
+                </md-select>
+            </div>
+        </div>
+
+        <!-- bank_account_type -->
+        <div class='col-sm-12 col-md-6'>
+            <div class="box-body">
+                <md-select class="full-width" placeholder="Tipo de cuenta" [(ngModel)]="model.bank_account_type" name="bank_account_type"
+                    id="bank_account">
+                    <md-option *ngFor="let item of bank_account_types" [value]="item">{{item.value}}</md-option>
+                </md-select>
+            </div>
+        </div>
+
+        <!-- account_number -->
+        <div class='col-sm-12 col-md-6'>
+            <div class="box-body">
+                <md-input-container class="full-width">
+                    <input required type="text" id="account_number" name="account_number" [(ngModel)]="model.account_number" mdInput placeholder="Número de cuenta">
+                </md-input-container>
+            </div>
+        </div>
+
+        <!-- owner -->
+        <div class='col-sm-12 col-md-6'>
+            <div class="box-body">
+                <md-input-container class="full-width">
+                    <input required type="text" id="owner" name="owner" [(ngModel)]="model.owner" mdInput placeholder="Nombre del dueño de la cuenta">
+                </md-input-container>
+            </div>
+        </div>
+
+        <!-- name_sales_representative -->
+        <div class='col-sm-12 col-md-6'>
+            <div class="box-body">
+                <md-input-container class="full-width">
+                    <input required type="text" id="name_sales_representative" name="name_sales_representative" [(ngModel)]="model.name_sales_representative"
+                        mdInput placeholder="Nombre del representante de ventas">
+                </md-input-container>
+            </div>
+        </div>
+
+        <!-- phone_sales_representative -->
+        <div class='col-sm-12 col-md-6'>
+            <div class="box-body">
+                <md-input-container class="full-width">
+                    <input required type="text" id="phone_sales_representative" name="phone_sales_representative" [(ngModel)]="model.phone_sales_representative"
+                        mdInput placeholder="Teléfono del representante de ventas">
+                </md-input-container>
+            </div>
+        </div>
+
+        <!-- email_sales_representative -->
+        <div class='col-sm-12 col-md-6'>
+            <div class="box-body">
+                <md-input-container class="full-width">
+                    <input required type="text" id="email_sales_representative" name="email_sales_representative" [(ngModel)]="model.email_sales_representative"
+                        mdInput placeholder="Correo del representante de ventas">
+                </md-input-container>
+            </div>
+        </div>
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions>
+    <div class="col-sm-12">
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <button *ngIf="booShow" md-button type="submit" [disabled]="action_active ? false : !bankForm.form.valid" (click)="add()">Agregar</button>
+            <button md-button type="button" md-dialog-close>Cerrar</button>
         </div>
     </div>
 
-    <!-- bank_account_type -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-select class="full-width" placeholder="Tipo de cuenta" [(ngModel)]="model.bank_account_type" name="bank_account_type"
-             id="bank_account">
-                <md-option *ngFor="let item of bank_account_types" [value]="item">{{item.value}}</md-option>
-            </md-select>  
-        </div>
-    </div>
-
-    <!-- account_number -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required type="text" id="account_number" name="account_number" [(ngModel)]="model.account_number" mdInput placeholder="Número de cuenta">
-            </md-input-container>
-        </div>
-    </div>
-
-    <!-- owner -->
-    <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required type="text" id="owner" name="owner" [(ngModel)]="model.owner" mdInput placeholder="Nombre del dueño de la cuenta">
-            </md-input-container>
-        </div>
-    </div>
-
-     <!-- name_sales_representative -->
-     <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required type="text" id="name_sales_representative" name="name_sales_representative" [(ngModel)]="model.name_sales_representative" mdInput placeholder="Nombre del representante de ventas">
-            </md-input-container>
-        </div>
-    </div>
-
-     <!-- phone_sales_representative -->
-     <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required type="text" id="phone_sales_representative" name="phone_sales_representative" [(ngModel)]="model.phone_sales_representative" mdInput placeholder="Teléfono del representante de ventas">
-            </md-input-container>
-        </div>
-    </div>
-
-     <!-- email_sales_representative -->
-     <div class='col-sm-12 col-md-6'>
-        <div class="box-body">
-            <md-input-container class="full-width">
-                <input required type="text" id="email_sales_representative" name="email_sales_representative" [(ngModel)]="model.email_sales_representative" mdInput placeholder="Correo del representante de ventas">
-            </md-input-container>
-        </div>
-    </div>
-   
-    </md-dialog-content>
-
-    <md-dialog-actions>
-      <button md-button type="submit" [disabled]="action_active ? false : !bankForm.form.valid" (click)="add()">Agregar</button>     
-      <button md-button type="button" md-dialog-close>Cerrar</button>
-    </md-dialog-actions>
-    
-  </form>
-
-  
+</md-dialog-actions>
