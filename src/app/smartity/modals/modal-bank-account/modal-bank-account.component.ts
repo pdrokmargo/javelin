@@ -35,6 +35,16 @@ export class ModalBankAccountComponent implements OnInit {
     }
 
     add() {
+        this.banks.map(x => {
+            if(x.id == this.model.bank) {
+                this.model.bank_name = x.value;
+            }
+        });
+        this.bank_account_types.map(x=>{
+            if(x.id == this.model.bank_account_type) {
+                this.model.bank_account_type_name = x.value;
+            }
+        });
         this.dialogRef.close(this.model);
     }
 

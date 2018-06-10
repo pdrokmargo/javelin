@@ -265,7 +265,7 @@
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
                     <span mdPrefix><b>$</b> &nbsp;</span>
-                <input appMycurrency type="text" id="global_discount" name="global_discount" [(ngModel)]="_model.customer.global_discount"
+                <input appMycurrency type="text" id="global_discount" name="global_discount" max="12" [(ngModel)]="_model.customer.global_discount"
                     mdInput placeholder="Descuento Global">
             </md-input-container>
         </div>
@@ -373,7 +373,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of _model.customer.shipping_points">
+                                <tr *ngFor="let item of _model.customer.shipping_points; let index = index">
 
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.country.value + ', ' + item.department.value + ', ' + item.city.value }}</td>
@@ -383,7 +383,7 @@
                                         </button>
                                     </td>
                                     <td class="w-40">
-                                        <button type="button" md-icon-button (click)="openSucursal(item)">
+                                        <button type="button" md-icon-button (click)="openSucursal(item, index)">
                                             <md-icon>remove_red_eye</md-icon>
                                         </button>
                                     </td>
@@ -417,7 +417,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of _model.customer.institutional_sale_contract">
+                                <tr *ngFor="let item of _model.customer.institutional_sale_contract; let index = index">
 
                                     <td>{{ item.contract_number }}</td>
                                     <td>{{ item.contracting_entity }}</td>
@@ -432,7 +432,7 @@
                                         </button>
                                     </td>
                                     <td class="w-40">
-                                        <button type="button" md-icon-button (click)="openInstitucionalSale(item)">
+                                        <button type="button" md-icon-button (click)="openInstitucionalSale(item, index)">
                                             <md-icon>remove_red_eye</md-icon>
                                         </button>
                                     </td>
@@ -513,7 +513,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of _model.customer.monopoly_resolution">
+                                <tr *ngFor="let item of _model.customer.monopoly_resolution; let index = index">
 
                                     <td>{{ item.resolution_number }}</td>
                                     <td>{{ item.issue_date | date: 'dd-MM-yyyy'}}</td>
@@ -525,7 +525,7 @@
                                         </button>
                                     </td>
                                     <td class="w-40">
-                                        <button type="button" md-icon-button (click)="openMonopolyResolution(item)">
+                                        <button type="button" md-icon-button (click)="openMonopolyResolution(item, index)">
                                             <md-icon>remove_red_eye</md-icon>
                                         </button>
                                     </td>
@@ -562,7 +562,7 @@
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
                     <span mdPrefix><b>$</b> &nbsp;</span>
-                <input appMycurrency type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="_model.supplier.global_discount"
+                <input appMycurrency type="text" id="supplier_global_discount" name="supplier_global_discount" max="12" [(ngModel)]="_model.supplier.global_discount"
                     mdInput placeholder="Descuento Global">
             </md-input-container>
         </div>
@@ -620,18 +620,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of _model.supplier.bank_accounts">
+                                <tr *ngFor="let item of _model.supplier.bank_accounts; let index = index">
 
-                                    <td>{{ item.bank?.value }}</td>
+                                    <td>{{ item.bank_name }}</td>
                                     <td>{{ item?.account_number }}</td>
-                                    <td>{{ item.bank_account_type?.value }}</td>
+                                    <td>{{ item.bank_account_type_name }}</td>
                                     <td class="w-40">
                                         <button type="button" md-icon-button class="text-danger" (click)="removeBankAccount(item)">
                                             <md-icon>delete</md-icon>
                                         </button>
                                     </td>
                                     <td class="w-40">
-                                        <button type="button" md-icon-button (click)="openBankAccount(item)">
+                                        <button type="button" md-icon-button (click)="openBankAccount(item, index)">
                                             <md-icon>remove_red_eye</md-icon>
                                         </button>
                                     </td>

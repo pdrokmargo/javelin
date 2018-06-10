@@ -288,7 +288,7 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly type="text" id="global_discount" name="global_discount" [(ngModel)]="customer.global_discount" mdInput
+                        <input appMycurrency type="text" id="global_discount" name="global_discount" max="12" [(ngModel)]="customer.global_discount" mdInput
                             placeholder="Descuento Global">
                     </md-input-container>
                 </div>
@@ -597,7 +597,7 @@
             <div class='col-sm-12 col-md-3 margin-bottom'>
                 <div class="box-body">
                     <md-input-container class="full-width">
-                        <input NumberOnly type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="supplier.global_discount"
+                        <input appMycurrency type="text" id="supplier_global_discount" name="supplier_global_discount" max="12" [(ngModel)]="supplier.global_discount"
                             mdInput placeholder="Descuento Global">
                     </md-input-container>
                 </div>

@@ -133,6 +133,19 @@ tr.active {
 .max-w-100 {
   max-width: 100px;
 }
+.btn-default {
+  background: rgba(0,0,0,.15);
+}
+.alert-secondary{
+  background: rgba(0,0,0,.15);
+  border-radius: 4px;
+}
+.mat-dialog-title{
+  padding: 0 15px;
+}
+.mat-dialog-actions button {
+  margin-left: 10px;
+}
 .flex {
   display: flex;
 }
@@ -150,7 +163,7 @@ tr.active {
 }
 
 .mat-slide-toggle-content {
-  min-width: 80px;
+  /*min-width: 80px;*/
 }
 
 td .mat-slide-toggle-content {

@@ -2,6 +2,7 @@
 
 <md-dialog-content>
     <form #resolutionForm="ngForm" autocomplete="off">
+        
         <!-- big_contributor -->
         <div class='col-sm-12 margin-bottom'>
             <div class="flex">
@@ -73,7 +74,7 @@
     <div class="col-sm-12">
         <div class="flex">
             <span class="flex-spacer"></span>
-            <button *ngIf="booShow" md-button type="button" [disabled]="action_active ? false : !resolutionForm.form.valid" (click)="add()">Agregar</button>
+            <button color="primary" md-raised-button type="button" [disabled]="action_active ? false : !resolutionForm.form.valid" (click)="add()">{{ booShow ? 'Agregar' : 'Editar' }}</button>
             <button md-button type="button" md-dialog-close>Cerrar</button>
         </div>
     </div>

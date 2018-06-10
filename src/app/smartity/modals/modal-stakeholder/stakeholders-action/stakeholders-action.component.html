@@ -257,7 +257,7 @@
         <!-- global_discount -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input NumberOnly type="text" id="global_discount" name="global_discount" [(ngModel)]="_model.customer.global_discount" mdInput
+                <input appMycurrency type="text" id="global_discount" name="global_discount" max="12" [(ngModel)]="_model.customer.global_discount" mdInput
                     placeholder="Descuento Global">
             </md-input-container>
         </div>
@@ -551,7 +551,7 @@
         <!-- supplier_global_discount -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input NumberOnly type="text" id="supplier_global_discount" name="supplier_global_discount" [(ngModel)]="_model.supplier.global_discount"
+                <input appMycurrency type="text" id="supplier_global_discount" name="supplier_global_discount" max="12" [(ngModel)]="_model.supplier.global_discount"
                     mdInput placeholder="Descuento Global">
             </md-input-container>
         </div>
@@ -611,9 +611,9 @@
                             <tbody>
                                 <tr *ngFor="let item of _model.supplier.bank_accounts">
 
-                                    <td>{{ item.bank?.value }}</td>
+                                    <td>{{ item.bank_name }}</td>
                                     <td>{{ item?.account_number }}</td>
-                                    <td>{{ item.bank_account_type?.value }}</td>
+                                    <td>{{ item.bank_account_type_name }}</td>
                                     <td class="w-40">
                                         <button type="button" md-icon-button class="text-danger" (click)="removeBankAccount(item)">
                                             <md-icon>delete</md-icon>

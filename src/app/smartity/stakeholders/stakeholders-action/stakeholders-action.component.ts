@@ -288,10 +288,19 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             }
         });
     }
-    private openSucursal(data) {
+    private openSucursal(data, index) {
+        let _data = Object.assign({}, data);
+        let cloned = Object.assign({}, data);
         this.sucursalDialogRef = this.dialog.open(ModalSucursalComponent, {
             hasBackdrop: false,
-            data: data
+            data: _data
+        });
+        this.sucursalDialogRef.afterClosed().subscribe(x => {
+            if (x) {
+                this._model.customer.shipping_points[index] = x;
+            } else {
+                data = cloned;
+            }
         });
     }
     private removeSucursal(obj: any) {
@@ -420,12 +429,21 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 this._model.customer.institutional_sale_contract.push(institutional_sale_contract);
             });
     }
-    private openInstitucionalSale(data) {
+    private openInstitucionalSale(data, index) {
+        let _data = Object.assign({}, data);
+        let cloned = Object.assign({}, data);
         this.institutionalSaleDialogRef = this.dialog.open(ModalInstitucionalSaleContractComponent, {
             hasBackdrop: false,
             data: {
                 title: 'Agregar Contrato institucional',
-                data: data
+                data: _data
+            }
+        });
+        this.institutionalSaleDialogRef.afterClosed().subscribe(x => {
+            if (x) {
+                this._model.customer.institutional_sale_contract[index] = x;
+            } else {
+                data = cloned
             }
         });
     }
@@ -446,13 +464,23 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
         });
 
     }
-    private openMonopolyResolution(data) {
+    private openMonopolyResolution(data, index) {
+        let _data = Object.assign({}, data);
+        let cloned = Object.assign({}, data);
         this.resolutionDialogRef = this.dialog.open(ModalResolutionComponent, {
             hasBackdrop: false,
             data: {
                 shipping_points: this._model.customer.shipping_points,
                 title: 'Agregar Resolución de monopolio',
-                data: data
+                data: _data
+            }
+        });
+        this.resolutionDialogRef.afterClosed().subscribe(x => {
+
+            if (x) {
+                this._model.customer.monopoly_resolution[index] = x
+            } else {
+                data = cloned;
             }
         });
     }
@@ -468,12 +496,22 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this._model.supplier.bank_accounts.push(bank_account);
         });
     }
-    private openBankAccount(data) {
+    private openBankAccount(data, index) {
+        let _data = Object.assign({}, data);
+        let cloned = Object.assign({}, data);
         this.bankAccountDialogRef = this.dialog.open(ModalBankAccountComponent, {
             hasBackdrop: false,
             data: {
                 title: 'Cuenta bancaria',
-                data: data
+                data: _data
+            }
+        });
+
+        this.bankAccountDialogRef.afterClosed().subscribe(x => {
+            if (x) {
+                this._model.supplier.bank_accounts[index] = x;
+            } else {
+                data = cloned;
             }
         });
     }
