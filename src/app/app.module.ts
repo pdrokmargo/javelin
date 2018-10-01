@@ -57,7 +57,10 @@ import {
   PharmaceuticalDrugListComponent,
   ModalGeolocationComponent,
   StakeholdersActionComponent,
-  StakeholdersListComponent
+  StakeholdersListComponent,
+  ModalProductsComponent,
+  ProductsActionComponent,
+  ProductsListComponent
 
 } from './smartity/modals';
 import { NgxMaskModule } from 'ngx-mask';
@@ -73,7 +76,10 @@ import { DeliveryPointsListComponent } from './smartity/modals/modal-delivery-po
 import { IpsNetworkActionComponent } from './smartity/modals/modal-ips-network/ips-network-action/ips-network-action.component';
 import { IpsNetworkListComponent } from './smartity/modals/modal-ips-network/ips-network-list/ips-network-list.component';
 import { MycurrencyPipe } from './smartity/pipe/mycurrency.pipe';
-
+import { SuppliersOrdersListComponent } from './smartity/suppliers-orders/suppliers-orders-list/suppliers-orders-list.component';
+import { SuppliersOrdersActionComponent } from './smartity/suppliers-orders/suppliers-orders-action/suppliers-orders-action.component';
+import { SuppliersQuotesListComponent } from './smartity/suppliers-quotes/suppliers-quotes-list/suppliers-quotes-list.component';
+import { SuppliersQuotesActionComponent } from './smartity/suppliers-quotes/suppliers-quotes-action/suppliers-quotes-action.component';
 
 @NgModule({
   imports: [
@@ -145,7 +151,9 @@ import { MycurrencyPipe } from './smartity/pipe/mycurrency.pipe';
     ModalStakeholderComponent,
     StakeholdersActionComponent,
     StakeholdersListComponent,
-
+    ModalProductsComponent,
+    ProductsActionComponent,
+    ProductsListComponent
   ],
   providers: [
     MycurrencyPipe,
@@ -180,6 +188,7 @@ import { MycurrencyPipe } from './smartity/pipe/mycurrency.pipe';
     ModalActiveIngredientsComponent,
     ModalDeliveryPointsComponent,
     ModalIpsNetworkComponent,
+    ModalProductsComponent,
     InputFileComponent,
     WarehouseActionComponent,
     WarehouseListComponent,
@@ -196,7 +205,7 @@ import { MycurrencyPipe } from './smartity/pipe/mycurrency.pipe';
 export class AppModule {
 
   constructor(public appRef: ApplicationRef) { }
-  
+
   /*hmrOnInit(store) { }
   
   hmrOnDestroy(store) {

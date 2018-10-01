@@ -19,7 +19,7 @@ export class ProductListComponent  extends BaseList implements  OnInit{
 
     constructor(
         public router: Router,
-        public loaderService: LoaderService, 
+        public loaderService: LoaderService,
         public helperService: HelperService,
         private comp: ProductComponent
     ) {

@@ -19,6 +19,8 @@ const routes: Routes = [
       { path: 'stakeholders', loadChildren: 'app/smartity/stakeholders/stakeholders.module#StakeholdersModule', canActivate: [PrivilegeGuard] },
       { path: 'warehouse', loadChildren: 'app/smartity/warehouse/warehouse.module#WarehouseModule', canActivate: [PrivilegeGuard] },
       { path: 'company', loadChildren: 'app/smartity/company/company.module#CompanyModule', canActivate: [PrivilegeGuard] },
+      { path: 'suppliers-quotes', loadChildren: 'app/smartity/suppliers-quotes/suppliers-quotes.module#SuppliersQuotesModule', canActivate: [PrivilegeGuard] },
+      { path: 'suppliers-orders', loadChildren: 'app/smartity/suppliers-orders/suppliers-orders.module#SuppliersOrdersModule', canActivate: [PrivilegeGuard] },
       { path: 'operations-centres', loadChildren: 'app/smartity/operationscentre/operationscentre.module#OperationscentreModule', canActivate: [PrivilegeGuard] },
       { path: 'costs-centres', loadChildren: 'app/smartity/costscentres/costscentres.module#CostscentresModule', canActivate: [PrivilegeGuard] },
       { path: 'product', loadChildren: 'app/smartity/product/product.module#ProductModule', canActivate: [PrivilegeGuard] },

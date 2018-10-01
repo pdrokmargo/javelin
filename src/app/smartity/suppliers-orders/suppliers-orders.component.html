@@ -1,0 +1,22 @@
+<section class="chapter">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Órdenes de compra</h1>
+        </div>
+        <p class="hero-tagline">
+            A través de esta opción, usted podrá administrar los usuario que acceden al sistema y definir perfiles que
+            permitan limitar
+            el uso de las vistas no autorizadas.
+        </p>
+    </section>
+    <article class="article padding-lg-v article-dark article-bordered">
+        <div class="container-fluid with-maxwidth">
+            <div class="box box-default">
+                <div class="box-body">
+                    <app-suppliers-orders-action *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></app-suppliers-orders-action>
+                    <app-suppliers-orders-list *ngIf="isOpenList"></app-suppliers-orders-list>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>

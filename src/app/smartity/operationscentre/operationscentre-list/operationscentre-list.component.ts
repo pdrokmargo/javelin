@@ -15,11 +15,11 @@ import { OperationscentreComponent } from '../operationscentre.component';
     styles: []
 })
 
-export class OperationscentreListComponent extends BaseList implements  OnInit{
+export class OperationscentreListComponent extends BaseList implements OnInit {
 
     constructor(
-        public loaderService: LoaderService, 
-        public helperService: HelperService, 
+        public loaderService: LoaderService,
+        public helperService: HelperService,
         public router: Router,
         private comp: OperationscentreComponent
     ) {
@@ -31,7 +31,7 @@ export class OperationscentreListComponent extends BaseList implements  OnInit{
         this.getAll();
     }
 
-    private CUD(action:string, row?:any){
+    private CUD(action: string, row?: any) {
         this.comp.strAction = action;
         switch (action) {
             case 'Guardar':

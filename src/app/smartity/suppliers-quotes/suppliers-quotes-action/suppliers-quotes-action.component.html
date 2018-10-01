@@ -1,0 +1,124 @@
+<form #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+        <div class="col-sm-12 margin-bottom-40" [class.btn-action-container]="booActive">
+            <button type="button" md-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+                <md-icon>keyboard_arrow_left</md-icon> Regresar
+            </button>
+        </div>
+        <!-- creado el -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerIssueDate2" id="evento_created_at_date" name="evento_created_at_date"
+                    placeholder="Creado el" [(ngModel)]="model.created_at">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate2"></button>
+            </md-input-container>
+            <md-datepicker #pickerIssueDate2></md-datepicker>
+        </div>
+        <!-- vence el -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <md-input-container class="full-width">
+                <input mdInput [mdDatepicker]="pickerIssueDate1" id="evento_expired_at_date" name="evento_expired_at_date"
+                    placeholder="Vence el" [(ngModel)]="model.expire_at">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate1"></button>
+            </md-input-container>
+            <md-datepicker #pickerIssueDate1></md-datepicker>
+        </div>
+        <!-- estado -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <div class="flex">
+                <span class="flex-spacer"></span>
+                <md-slide-toggle [labelPosition]="'before'" id="status" name="status" [(ngModel)]="model.status">Estado</md-slide-toggle>
+            </div>
+        </div>
+        <!-- proveedor -->
+        <div class="col-sm-12 col-md-4 margin-bottom">
+            <md-input-container class="full-width">
+                <input required readonly mdInput type="text" placeholder="Proveedor" [(ngModel)]="supplier.businessname"
+                    id="supplier" name="supplier" />
+                <md-icon mdSuffix class="wh-24 pointer" (click)="openAddSupplier()">search</md-icon>
+            </md-input-container>
+        </div>
+        <!-- contacto de compras -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <md-input-container class="full-width">
+                <input type="text" id="evento_contact_number" name="evento_contact_number" [(ngModel)]="contact_number"
+                    mdInput placeholder="Contacto de compras">
+            </md-input-container>
+        </div>
+        <!--condiciones de pago-->
+        <div class="col-sm-12 col-md-4 margin-bottom">
+            <md-select class="full-width" placeholder="Condición de pago" [(ngModel)]="model.payment_condition_id" name="payment_condition"
+                id="population_type_id">
+                <md-option *ngFor="let item of arrPayment_condition" [value]="item.id">{{item.value}}</md-option>
+            </md-select>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <!-- productos -->
+        <div class="col-sm-12 margin-bottom">
+
+            <div class="flex margin-bottom">
+                <div class="box-header no-padding-h">Productos</div>
+                <span class="flex-spacer"></span>
+                <button type="button" md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalProducts()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped no-margin">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Nombre del producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Descuento (%)</th>
+                            <th>Sub total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of _pharmadrugs; let index = index">
+                            <td>{{item.sku}}</td>
+                            <td>
+                                {{item.name}}
+                            </td>
+                            <td>
+                                {{item.units}}
+                            </td>
+                            <td>
+                                {{item.cost}}
+                            </td>
+                            <td>
+                                Descuento(%)
+                            </td>
+                            <td>
+                                Subtotal(Int)
+                            </td>
+                            <td class="w-40">
+                                <button type="button" class="text-danger" md-icon-button (click)="deletePharmadrug()">
+                                    <md-icon>delete</md-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!--notas-->
+        <div class='col-sm-12 col-md-12 margin-bottom'>
+            <md-input-container class="full-width">
+                <textarea type="text" id="notes" name="notes" [(ngModel)]="model.notes" mdInput placeholder="Nota"></textarea>
+            </md-input-container>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-sm-12" [class.btn-action-container]="booActive">
+            <button type="button" [disabled]="!modelForm.form.valid" md-raised-button class="btn-w-md no-margin-left btn-right"
+                (click)="save()">{{strAction}}</button>
+        </div>
+    </div>
+</form>

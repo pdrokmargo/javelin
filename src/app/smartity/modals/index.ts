@@ -28,3 +28,6 @@ export * from './modal-users/user-list/user-list.component';
 export * from './modal-stakeholder/modal-stakeholder.component';
 export * from './modal-stakeholder/stakeholders-list/stakeholders-list.component';
 export * from './modal-stakeholder/stakeholders-action/stakeholders-action.component';
+export * from './modal-products/modal-products.component';
+export * from './modal-products/products-list/products-list.component';
+export * from './modal-products/products-action/products-action.component';

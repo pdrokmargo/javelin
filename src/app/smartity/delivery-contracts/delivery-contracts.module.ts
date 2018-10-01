@@ -11,10 +11,10 @@ const routes: Routes = [{ path: '', component: DeliveryContractsComponent }];
 
 @NgModule({
     imports: [
-        CommonModule,        
+        CommonModule,
         RouterModule.forChild(routes),
         SharedModule,
-        NgbModule.forRoot()  
+        NgbModule.forRoot(),
     ],
     declarations: [
         DeliveryContractsComponent,

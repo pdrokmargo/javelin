@@ -11,7 +11,6 @@
     "watch": "webpack --watch --progress --profile",
     "build": "rimraf dist dll && webpack --config config/webpack.prod.js  --progress --profile --bail",
     "build:aot": "rimraf dist && webpack --config config/webpack.prod-aot.js  --progress --profile --bail",
-    "postinstall": "rimraf dist && webpack --config config/webpack.prod-aot.js  --progress --profile --bail",
     "lint": "npm run tslint \"src/**/*.ts\"",
     "lint-fix": "npm run tslint \"src/**/*.ts --fix\"",
     "tslint": "tslint",

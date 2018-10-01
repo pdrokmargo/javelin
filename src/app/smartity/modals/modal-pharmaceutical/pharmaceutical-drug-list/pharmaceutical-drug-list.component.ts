@@ -30,8 +30,6 @@ export class PharmaceuticalDrugListComponent extends BaseList implements OnInit 
         this.getAll();
     }
 
-
-
     private view(row: any) {
         this.select.emit(row);
     }

@@ -31,7 +31,7 @@ export class PharmaceuticalDrugListComponent extends BaseList implements OnInit 
         this.getAll();
     }
 
-    private CUD(action:string, row?:any){
+    private CUD(action: string, row?: any) {
         this.comp.strAction = action;
         switch (action) {
             case 'Guardar':
