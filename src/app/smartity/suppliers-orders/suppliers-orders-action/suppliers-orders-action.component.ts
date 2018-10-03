@@ -25,8 +25,9 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
     private modalWarehouse: MdDialogRef<ModalWarehouseComponent>;
 
     private contract_number: string = '';
-    private contract_start_date: string = '';
-    private contract_expiration_date: string = '';
+    private created_at: string = '';
+    private expire_at: string = '';
+    private estimate_delivery: string = '';
 
     private arrPopulation_type: Array<any> = [];
     private arrPerauth_char_type: Array<any> = [];
@@ -48,7 +49,7 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
     private objPgp: any;
     private _model: any = {
         delivery_contracts: {
-            state: true,
+            status: true,
             pharmadrug_monopoly: false,
             pharmadrug_control: false,
             cooled_products: false
@@ -98,151 +99,74 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
     }
 
     private save() {
-        if (this.model.delivery_points && this.model.delivery_points.length > 0) {
-
-            if (this.booEvento) {
-                this.objEvent.contract_number = this.contract_number;
-                this.objEvent.contract_expiration_date = this.contract_expiration_date;
-                this.objEvent.contract_start_date = this.contract_start_date;
-            }
-
-            if (!this.booCapita) {
-                this.objCapita.contract_number = this.contract_number;
-                this.objCapita.contract_expiration_date = this.contract_expiration_date;
-                this.objCapita.contract_start_date = this.contract_start_date;
-            }
-
-            if (!this.booPgp) {
-                this.objPgp.contract_number = this.contract_number;
-                this.objPgp.contract_expiration_date = this.contract_expiration_date;
-                this.objPgp.contract_start_date = this.contract_start_date;
-            }
-            this.model.pharmadrugs = JSON.stringify(this._pharmadrugs || []);
-            this.model.ips = this._ips || [];
-            this.model.conditional_alerts = JSON.stringify(this._conditional_alerts || []);
-            console.log(this.objEvent);
-
-            this.model.event = JSON.stringify(this.objEvent || {});
-            this.model.pgp = JSON.stringify(this.objPgp || {});
-            this.model.capita = JSON.stringify(this.objCapita || {});
-
-            if (!this.booEvento) {
-                this.model.event = null;
-            }
-            if (!this.booCapita) {
-                this.model.capita = null;
-            }
-            if (!this.booPgp) {
-                this.model.pgp = null;
-            }
-
-            this.loaderService.display(true);
-            switch (this.strAction) {
-                case 'Guardar':
-                    this.helperService.POST(`/api/delivery-contracts`, this.model).subscribe(rs => {
-                        let res = rs.json();
-                        if (res.store) {
-                            this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
-                            this.goList();
-                        }
-                    }, err => {
-                        this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
-                        this.loaderService.display(false);
-                    });
-                    break;
-                case 'Actualizar':
-                    this.helperService.PUT(`/api/delivery-contracts/${this.numId}`, this.model).subscribe(rs => {
-                        let res = rs.json();
-                        if (res.update) {
-                            this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
-                            this.goList();
-                        }
-                    }, err => {
-                        this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
-                        this.loaderService.display(false);
-                    });
+        this.model.products = JSON.stringify(this._pharmadrugs || []);  
+        console.log(this.model.products);
+        this.loaderService.display(true);
+        switch (this.strAction) {
+            case 'Guardar':
+                this.helperService.POST(`/api/suppliers-orders`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.store) {
+                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                        this.goList();
+                    }
+                }, err => {
                     this.loaderService.display(false);
-                    break;
-                case 'Eliminar':
-                    this.helperService.DELETE(`/api/delivery-contracts/${this.numId}`).subscribe(rs => {
-                        let res = rs.json();
-                        if (res.delete) {
-                            this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
-                            this.goList();
-                        }
-                    }, err => {
-                        this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
-                        this.loaderService.display(false);
-                    });
-                    break;
-            }
-        } else {
-            this.snackBar.open('No ha seleccionado ningún punto de dispensación', 'Error', { duration: 4000 });
-            return null;
+                    this.snackBar.open(err.message, 'Guardado', { duration: 4000 });
+                });
+                break;
+            case 'Actualizar':
+                this.helperService.PUT(`/api/suppliers-orders/${this.numId}`, this.model).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.update) {
+                        this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Actualización', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+                break;
+            case 'Eliminar':
+                this.helperService.DELETE(`/api/suppliers-orders/${this.numId}`).subscribe(rs => {
+                    const res = rs.json();
+                    if (res.delete) {
+                        this.snackBar.open(res.message, 'Eliminación', { duration: 4000 });
+                        this.comp.openList();
+                    }
+                }, err => {
+                    this.snackBar.open(err.message, 'Eliminación', { duration: 4000 });
+                    this.loaderService.display(false);
+                });
+                break;
         }
     }
 
     private getDataById(): void {
         this.loaderService.display(true);
-        this.helperService.GET(`/api/delivery-contracts/${this.numId}`).subscribe(rs => {
-            let res = rs.json();
+        this.helperService.GET(`/api/suppliers-quotes/${this.numId}`).subscribe(rs => {
+            const res = rs.json();
             this.model = res.data;
-            var delivery_points = [];
-            this.model.contract_point.forEach((element, index) => {
-                element.config = JSON.parse(element.config);
-                delivery_points.push({
-                    id: element.delivery_points.id,
-                    name: element.delivery_points.name,
-                    event: element.config.event || false,
-                    capita: element.config.capita || false,
-                    pgp: element.config.pgp || false,
-                });
-
-                if (this.model.contract_point.length - 1 == index) {
-                    this.model.delivery_points = delivery_points;
-                }
-            });
-
-            this.customers = this.model.customers;
-            this._pharmadrugs = JSON.parse(this.model.pharmadrugs);
-            this._conditional_alerts = JSON.parse(this.model.conditional_alerts);
-            this._ips = this.model.ips;
-
-            this.objEvent = JSON.parse(this.model.event);
-            this.booEvento = !(Object.keys(this.objEvent).length === 0);
-            if (this.booEvento) {
-                this.contract_number = this.objEvent.contract_number;
-                this.contract_expiration_date = this.objEvent.contract_expiration_date;
-                this.contract_start_date = this.objEvent.contract_start_date;
+            this.supplier = res['data']['stakeholder_info'] || {};
+            this.employees = res['data']['warehouses'] || {};
+            this._pharmadrugs = JSON.parse(this.model.products);
+            console.log(res);
+            if (this.supplier.businessname == '') {
+                this.supplier.businessname = this.supplier.fullname;
             }
-
-            this.objPgp = JSON.parse(this.model.pgp);
-            this.booPgp = !(Object.keys(this.objPgp).length === 0);
-            if (this.booPgp) {
-                this.contract_number = this.objPgp.contract_number;
-                this.contract_expiration_date = this.objPgp.contract_expiration_date;
-                this.contract_start_date = this.objPgp.contract_start_date;
+            if (this.employees.businessname == '') {
+                this.employees.businessname = this.employees.fullname;
             }
-
-            this.objCapita = JSON.parse(this.model.capita);
-            this.booCapita = !(Object.keys(this.objCapita).length === 0);
-            if (this.booCapita) {
-                this.contract_number = this.objCapita.contract_number;
-                this.contract_expiration_date = this.objCapita.contract_expiration_date;
-                this.contract_start_date = this.objCapita.contract_start_date;
-            }
-
             this.loaderService.display(false);
         }, err => {
             console.log(err);
             this.loaderService.display(false);
         });
-
     }
 
     private clean() {
         this.model = {};
-        this.model.state = true;
+        this.model.status = true;
         this._pharmadrugs = [];
         this._conditional_alerts = [];
         this.objEvent = {};
@@ -313,8 +237,8 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
 
         this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
             if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
-            this.supplier = stakeHolder;
-            this.model.supplier_id = stakeHolder.id;
+            this.employees = stakeHolder;
+            this.model.buyer_employee_id = stakeHolder.id;
         });
     }
 
@@ -330,13 +254,15 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
             if (!this._pharmadrugs) {
                 this._pharmadrugs = [];
             }
-            if (this._pharmadrugs.length == 0) {
-                data.event = false;
-                data.capita = false;
-                data.pgp = false;
-                data.fare = '';
-                this._pharmadrugs.push(data);
+            if (this._pharmadrugs.length === 0) {
+                this._pharmadrugs.push({
+                    "sku": data.sku,
+                    "name": data.name,
+                    "units": data.units,
+                    "cost": data.cost
+                });
             }
+
             var exist = false;
             this._pharmadrugs.forEach((element, index) => {
                 if (element.name == data.name) {
@@ -344,10 +270,6 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
                 }
                 if (this._pharmadrugs.length == index + 1) {
                     if (!exist) {
-                        data.event = false;
-                        data.capita = false;
-                        data.pgp = false;
-                        data.fare = '0';
                         this._pharmadrugs.push(data);
                     }
                 }
@@ -474,7 +396,7 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
     }
 
     private deleteDetailedCapita(item) {
-        item.state = false;
+        item.status = false;
     }
 
     private activeperauth_length() {

@@ -31,7 +31,7 @@
                             <span class="glyphicon sort-icon" *ngIf="key =='supplier_id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th (click)="sort('code')">Bodega des
-                            <span class="glyphicon sort-icon" *ngIf="key =='wherehouse_id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            <span class="glyphicon sort-icon" *ngIf="key =='warehouse_id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th (click)="sort('name')">Fecha de elaboración
                             <span class="glyphicon sort-icon" *ngIf="key =='created_at'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -42,18 +42,27 @@
                         <th (click)="sort('ct.value')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='status'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-
+                        <th *ngIf="actions[2].status" class="w-40"></th>
+                        <th *ngIf="actions[3].status" class="w-40"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of list.data">
                         <td class="noAuto">{{ item.id }}</td>
-                        <td>{{ item.supplier_id }}</td>
-                        <td>{{ item.wherehouse_id }}</td>
+                        <td>{{ item.stakeholder_info.firstname }}</td>
+                        <td>{{ item.warehouses.name }}</td>
                         <td>{{ item.created_at }}</td>
-                        <td>{{ item.estimate_delivery</td>
+                        <td>{{ item.estimate_delivery }}</td>
                         <td>{{ item.status ? 'Activo' : 'Inactiva' }}</td>
-
+                        <td *ngIf="actions[2].status" class="w-40">
+                            <button type="button" md-icon-button class="text-primary" (click)="CUD('Actualizar', item)">
+                                <md-icon>mode_edit</md-icon>
+                            </button>
+                        </td>
+                        <td *ngIf="actions[3].status" class="w-40">
+                            <button type="button" md-icon-button class="text-danger" (click)="CUD('Eliminar', item)">
+                                <md-icon>delete</md-icon>
+                            </button>
                     </tr>
                 </tbody>
             </table>

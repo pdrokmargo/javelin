@@ -16,8 +16,8 @@
         <!-- creada el -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input mdInput [mdDatepicker]="pickerIssueDate2" id="evento_contract_start_date" name="evento_contract_start_date"
-                    placeholder="Creada el" [(ngModel)]="contract_start_date">
+                <input mdInput [mdDatepicker]="pickerIssueDate2" id="created_at" name="created_at"
+                    placeholder="Creada el" [(ngModel)]="model.created_at">
                 <button mdSuffix [mdDatepickerToggle]="pickerIssueDate2"></button>
             </md-input-container>
             <md-datepicker #pickerIssueDate2></md-datepicker>
@@ -25,8 +25,8 @@
         <!-- vence el -->
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <md-input-container class="full-width">
-                <input mdInput [mdDatepicker]="pickerIssueDate1" id="evento_contract_expiration_date" name="evento_contract_expiration_date"
-                    placeholder="Vence el" [(ngModel)]="contract_expiration_date">
+                <input mdInput [mdDatepicker]="pickerIssueDate1" id="expire_at" name="expire_at"
+                    placeholder="Vence el" [(ngModel)]="model.expire_at">
                 <button mdSuffix [mdDatepickerToggle]="pickerIssueDate1"></button>
             </md-input-container>
             <md-datepicker #pickerIssueDate1></md-datepicker>
@@ -35,7 +35,7 @@
         <div class='col-sm-12 col-md-3 margin-bottom'>
             <div class="flex">
                 <span class="flex-spacer"></span>
-                <md-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</md-slide-toggle>
+                <md-slide-toggle [labelPosition]="'before'" id="status" name="status" [(ngModel)]="model.status">Estado</md-slide-toggle>
             </div>
         </div>
         <!-- proveedor -->
@@ -55,7 +55,7 @@
         </div>
         <!--condiciones de pago-->
         <div class="col-sm-12 col-md-4 margin-bottom">
-            <md-select class="full-width" placeholder="Condición de pago" [(ngModel)]="model.arrPayment_condition" name="payment_condition"
+            <md-select class="full-width" placeholder="Condición de pago" [(ngModel)]="model.payment_condition_id" name="payment_condition"
                 id="population_type_id">
                 <md-option *ngFor="let item of arrPayment_condition" [value]="item.id">{{item.value}}</md-option>
             </md-select>
@@ -78,11 +78,11 @@
         <!-- entrega estimada -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
             <md-input-container class="full-width">
-                <input mdInput [mdDatepicker]="pickerIssueDate" id="capita_contract_start_date" name="capita_contract_start_date"
-                    placeholder="Entrega estimada" [(ngModel)]="contract_start_date">
-                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate"></button>
+                <input mdInput [mdDatepicker]="pickerIssueDate3" id="estimate_delivery" name="estimate_delivery"
+                    placeholder="Entrega estimada" [(ngModel)]="model.estimate_delivery">
+                <button mdSuffix [mdDatepickerToggle]="pickerIssueDate3"></button>
             </md-input-container>
-            <md-datepicker #pickerIssueDate></md-datepicker>
+            <md-datepicker #pickerIssueDate3></md-datepicker>
         </div>
 
 
@@ -101,34 +101,32 @@
                 <table class="mdl-data-table table-bordered table-striped no-margin">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Evento</th>
-                            <th>Tarifa</th>
-                            <th>Cápita</th>
-                            <th>PGP</th>
+                            <th>SKU</th>
+                            <th>Nombre del producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Descuento (%)</th>
+                            <th>Sub total</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of _pharmadrugs; let index = index">
-                            <td>{{item.name}}</td>
+                            <td>{{item.sku}}</td>
                             <td>
-                                <md-slide-toggle [disabled]="!booEvento" id="p_event{{index}}" name="p_event{{index}}"
-                                    [(ngModel)]="item.event"></md-slide-toggle>
+                                {{item.name}}
                             </td>
                             <td>
-                                <md-input-container class="full-width">
-                                    <input [disabled]="!item.event" mdInput type="text" [(ngModel)]="item.fare" id="p_fare{{index}}"
-                                        name="p_fare{{index}}" />
-                                </md-input-container>
+                                {{item.units}}
                             </td>
                             <td>
-                                <md-slide-toggle [disabled]="!booCapita" id="p_capita{{index}}" name="p_capita{{index}}"
-                                    [(ngModel)]="item.capita"></md-slide-toggle>
+                                {{item.cost}}
                             </td>
                             <td>
-                                <md-slide-toggle [disabled]="!booPgp" id="p_pgp{{index}}" name="p_pgp{{index}}"
-                                    [(ngModel)]="item.pgp"></md-slide-toggle>
+                                Descuento(%)
+                            </td>
+                            <td>
+                                Subtotal(Int)
                             </td>
                             <td class="w-40">
                                 <button type="button" class="text-danger" md-icon-button (click)="deletePharmadrug()">
@@ -144,7 +142,7 @@
         <!--notas-->
         <div class='col-sm-12 col-md-12 margin-bottom'>
             <md-input-container class="full-width">
-                <textarea type="text" id="description" name="description" [(ngModel)]="model.description" mdInput
+                <textarea type="text" id="notes" name="notes" [(ngModel)]="model.notes" mdInput
                     placeholder="Nota"></textarea>
             </md-input-container>
         </div>
