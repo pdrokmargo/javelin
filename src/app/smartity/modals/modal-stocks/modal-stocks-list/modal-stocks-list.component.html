@@ -1,0 +1,57 @@
+<!-- LIST -->
+<div class="row">
+  <!-- <div class='col-md-4 margin-bottom'>
+      <mat-form-field class="full-width">
+  <mat-select class="full-width" placeholder="Seleccione una Bodega" (change)="filtrar($event)" [(ngModel)]="warehouse_id" name="warehouse_id">
+      <mat-option *ngFor="let item of warehouses" [value]="item.id">{{item.name}}</mat-option>
+  </mat-select>
+      </mat-form-field>
+</div> -->
+  <div class="col-sm-12">
+
+      <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
+          <table class="mdl-data-table table-bordered table-striped cf no-margin">
+              <thead>
+                  <tr>
+
+                      <th>PLU
+                          <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                      <th>Producto
+                          <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                      <th>Unidades
+                          <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                      <th>Fracciones
+                          <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                      <th>Lote
+                          <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                      <th>Ubicación
+                          <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index"
+                [ngClass]="{'active': numItemSelected == index }">
+                      <td>{{item.product.sku}}</td>
+                      <td>{{item.product.display_name}}</td>
+                      <td>{{item.set_stock}}</td>
+                      <td>{{item.fraction_stock}}</td>
+                      <td>{{item.batch}}</td>
+                      <td>{{item.location}}</td>
+                  </tr>
+              </tbody>
+          </table>
+
+      </div>
+
+      <ngb-pagination [pageSize]="pageSize" [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="maxSize"
+          [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>
+
+  </div>
+</div>

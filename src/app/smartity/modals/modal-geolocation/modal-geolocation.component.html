@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<mat-dialog-content>
+    <div class="col-sm-12 margin-bottom"></div>
+    <!-- conutry -->
+    <div class="col-sm-12  margin-bottom">
+        <mat-select [disabled]="arrCountry.length == 0" class="full-width" placeholder="Pais" [(ngModel)]="model.country" name="country" id="country" (change)="loadDepartment()">
+            <mat-option *ngFor="let item of arrCountry" [value]="item">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- conutry -->
+    <div class="col-sm-12  margin-bottom">
+        <mat-select [disabled]="arrDepartment.length == 0" class="full-width" placeholder="Departamento" [(ngModel)]="model.department" name="department" id="department" (change)="loadCity()">
+            <mat-option *ngFor="let item of arrDepartment" [value]="item">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- conutry -->
+    <div class="col-sm-12  margin-bottom">
+        <mat-select [disabled]="arrCity.length == 0" class="full-width" placeholder="Ciudad" [(ngModel)]="model.city" name="city" id="city" (change)="booGeolocation=true">
+            <mat-option *ngFor="let item of arrCity" [value]="item">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="flex full-width">
+        <span class="flex-spacer"></span>
+        <button [disabled]="!booGeolocation" class="ml-5" color="primary" mat-button type="button" (click)="add()">Seleccionar</button>
+        <button mat-dialog-close mat-button type="button">Cerrar</button>
+    </div>
+</mat-dialog-actions>

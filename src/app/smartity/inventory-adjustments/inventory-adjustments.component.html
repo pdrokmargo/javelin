@@ -1,0 +1,18 @@
+<section class="chapter">
+  <section class="hero">
+      <div class="hero-content">
+          <h1 class="hero-title">Ajustes de Inventario</h1>
+      </div>
+      <p class="hero-tagline">We provide amazing solutions that you can't miss</p>
+  </section>
+  <article class="article padding-lg-v article-dark article-bordered">
+      <div class="container-fluid with-maxwidth">
+          <div class="box box-default">
+              <div class="box-body">
+                  <inventory-adjustments-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></inventory-adjustments-action-cmp>
+                  <inventory-adjustments-list-cmp *ngIf="isOpenList"></inventory-adjustments-list-cmp>
+              </div>                 
+          </div>
+      </div>
+  </article>
+</section>            

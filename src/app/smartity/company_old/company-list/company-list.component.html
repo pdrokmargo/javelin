@@ -1,0 +1,70 @@
+<section class="chapter">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Empresa</h1>
+        </div>
+        <p class="hero-tagline">We provide amazing solutions that you can't miss</p>
+    </section>
+    <article class="article padding-lg-v article-dark article-bordered">
+        <div class="container-fluid with-maxwidth">
+            <div class="box box-default">
+                <div class="box-body">
+                    <!-- LIST -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar" [(ngModel)]="search" (keydown)="enter($event)">
+                                <div style="width: 34px" class="input-group-addon">
+                                    <a style="cursor:pointer" (click)="getAll()">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button mat-raised-button (click)="NEW()" color="primary" class="btn-w-md no-margin-left btn-right">
+                                <mat-icon>add_circle_outline</mat-icon> Nuevo
+                            </button>
+                        </div>
+
+                        <div class="col-sm-12">
+
+                            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
+                                <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                                    <thead>
+                                        <tr>
+                                            <th class="noAuto">ID</th>
+                                            <th>Nit</th>
+                                            <th>Nombre de Empresa</th>
+                                            <th class="noAuto">Estado</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of list.data">
+                                            <td class="noAuto">{{ item.id }}</td>
+                                            <td>{{ item.nit }}</td>
+                                            <td>{{ item.name }}</td>
+                                            <td class="noAuto">{{ item.state ? 'Activa' : 'Inactiva' }}</td>
+                                            <td class="text-center">
+                                                <a routerLink="/app/company/{{item.id}}">
+                                                    <i class="fa fa-pencil fa-2x"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <ngb-pagination [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="6" [rotate]="true" [ellipses]="false"
+                                [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="box-loader" [class.active]="booActive"></div>
+            </div>
+        </div>
+    </article>
+</section>

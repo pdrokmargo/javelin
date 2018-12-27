@@ -1,0 +1,24 @@
+<ul class="nav" 
+  myAccordionNav 
+  myAppendSubmenuIcon 
+  mySlimScroll 
+  myHighlightActiveItems
+>
+  <li><a mat-button [routerLink]="['/app/dashboard']"><i class="nav-icon material-icons">home</i><span class="nav-text">Dashboard</span></a></li>
+  <!--nivel 1-->
+  <li *ngFor="let a of _views.master">
+    <!--si es item-->
+    <a *ngIf="!a.have_child && a.show_menu" mat-button [routerLink]="a.link"><i class="nav-icon material-icons">{{a.icon}}</i><span class="nav-text">{{a.title}}</span></a>
+    <!--si es modulo-->
+    <a *ngIf="a.have_child" mat-button><i class="nav-icon material-icons">{{a.icon}}</i><span class="nav-text">{{a.title}}</span></a>
+    <!--nivel 2-->
+    <ul *ngIf="a.have_child">
+      <li *ngFor="let b of a.children">
+        <!--si es item-->
+        <a *ngIf="!b.have_child  && b.show_menu" mat-button [routerLink]="b.link"><i class="nav-icon material-icons">{{b.icon}}</i><span class="nav-text">{{b.title}}</span></a>
+        <!--si es modulo-->
+        <a *ngIf="b.have_child" mat-button><i class="nav-icon material-icons">{{b.icon}}</i><span class="nav-text">{{b.title}}</span></a>
+      </li>
+    </ul>
+  </li>
+</ul>

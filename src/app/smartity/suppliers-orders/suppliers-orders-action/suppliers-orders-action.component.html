@@ -1,0 +1,156 @@
+<form #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+        <div class="col-sm-12 margin-bottom-40" [class.btn-action-container]="booActive">
+            <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-mat no-margin-left">
+                <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+            </button>
+        </div>
+        <!--comprador-->
+        <div class="col-sm-12 col-md-3 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required readonly matInput type="text" placeholder="Comprador" [(ngModel)]="employee.fullname"
+                    id="employees" name="employees" />
+                <mat-icon matSuffix class="wh-24 pointer" (click)="openAddEmployees()">search</mat-icon>
+            </mat-form-field>
+        </div>
+        <!-- creado el -->
+      <div class="col-md-3 margin-bottom">
+          <mat-form-field>
+              <input matInput [matDatepicker]="pickerCreatedAt" placeholder="Creado el" [(ngModel)]="model.created_at" name="created_at">
+              <mat-datepicker-toggle matSuffix [for]="pickerCreatedAt"></mat-datepicker-toggle>
+              <mat-datepicker #pickerCreatedAt></mat-datepicker>
+            </mat-form-field>
+      </div>
+    <!-- vence el -->
+    <div class="col-md-3 margin-bottom">
+          <mat-form-field>
+              <input matInput [matDatepicker]="pickerExpiredAt" placeholder="Vence el" [(ngModel)]="model.expire_at" name="expired_at">
+              <mat-datepicker-toggle matSuffix [for]="pickerExpiredAt"></mat-datepicker-toggle>
+              <mat-datepicker #pickerExpiredAt></mat-datepicker>
+            </mat-form-field>
+      </div>
+        <!-- estado -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <div class="flex">
+                <span class="flex-spacer"></span>
+                <mat-slide-toggle [labelPosition]="'before'" id="status" name="status" [(ngModel)]="model.status">Estado</mat-slide-toggle>
+            </div>
+        </div>
+        <!-- proveedor -->
+        <div class="col-sm-12 col-md-4 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required readonly matInput type="text" placeholder="Proveedor" [(ngModel)]="supplier.businessname"
+                    id="supplier" name="supplier" />
+                <mat-icon matSuffix class="wh-24 pointer" (click)="openAddSupplier()">search</mat-icon>
+            </mat-form-field>
+        </div>
+        <!-- contacto de compras -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input type="text" name="contact_name" [(ngModel)]="contact_name.name_sales_contact" matInput placeholder="Contacto">
+            </mat-form-field>
+        </div>
+        <!--condiciones de pago-->
+        <div class="col-sm-12 col-md-4 margin-bottom">
+            <mat-form-field>
+            <mat-select class="full-width" placeholder="Condición de pago" [(ngModel)]="model.payment_condition_id" name="payment_condition"
+                id="population_type_id">
+                <mat-option *ngFor="let item of arrPayment_condition" [value]="item.id">{{item.value}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+        <!-- operations/costs centres -->
+        <div class="col-sm-12 col-md-4 margin-bottom">
+            <mat-form-field>
+            <mat-select class="full-width" placeholder="Centro de operaciones" [(ngModel)]="model.operationcentre_id"
+                name="operationcentre_id" id="operationcentre_id">
+                <mat-option *ngFor="let item of operations_costs_centres" [value]="item.id">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+        <!-- bodega destino -->
+        <div class="col-sm-12 col-md-4 margin-bottom">
+            <mat-form-field class="full-width">
+                <input readonly matInput type="text" placeholder="Bodega destino" [(ngModel)]="warehouse.name" id="warehouse"
+                    name="warehouse" />
+                <mat-icon matSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</mat-icon>
+            </mat-form-field>
+        </div>
+        <!-- entrega estimada -->
+        <div class="col-md-3 margin-bottom">
+            <mat-form-field>
+                <input matInput [matDatepicker]="pickerEstimateDelivery" placeholder="Vence el" [(ngModel)]="model.estimate_delivery" name="estimate_delivery">
+                <mat-datepicker-toggle matSuffix [for]="pickerEstimateDelivery"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEstimateDelivery></mat-datepicker>
+              </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- productos -->
+        <div class="col-sm-12 margin-bottom">
+
+            <div class="flex margin-bottom">
+                <div class="box-header no-padding-h">Productos</div>
+                <span class="flex-spacer"></span>
+                <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalProducts()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped no-margin">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Nombre del producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Descuento (%)</th>
+                            <th>Sub total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of _pharmadrugs; let index = index">
+                            <td>{{item.sku}}</td>
+                            <td>
+                                {{item.name}}
+                            </td>
+                            <td>
+                                {{item.units}}
+                            </td>
+                            <td>
+                                {{item.cost}}
+                            </td>
+                            <td>
+                                Descuento(%)
+                            </td>
+                            <td>
+                                Subtotal(Int)
+                            </td>
+                            <td class="w-40">
+                                <button type="button" class="text-danger" mat-icon-button (click)="deletePharmadrug()">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--notas-->
+        <div class='col-sm-12 col-md-12 margin-bottom'>
+            <mat-form-field class="full-width">
+                <textarea type="text" id="notes" name="notes" [(ngModel)]="model.notes" matInput
+                    placeholder="Nota"></textarea>
+            </mat-form-field>
+        </div>
+
+
+    </div>
+    <div class="row">
+
+        <div class="col-sm-12" [class.btn-action-container]="booActive">
+            <button type="button" [disabled]="!modelForm.form.valid" mat-raised-button class="btn-w-mat no-margin-left btn-right"
+                (click)="save()">{{strAction}}</button>
+        </div>
+    </div>
+</form>

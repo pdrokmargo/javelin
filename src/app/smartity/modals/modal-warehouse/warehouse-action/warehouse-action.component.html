@@ -1,0 +1,79 @@
+<!-- FORM -->
+<form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+        <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
+            <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+                <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+            </button>
+        </div>
+
+        <!-- name -->
+        <div class='col-sm-12 col-md-4'>
+            <div class="box-body">
+                <mat-form-field class="full-width">
+                    <input required type="text" id="name" name="name" [(ngModel)]="model.name" matInput placeholder="Nombre de la bodega">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!--warehouse_type_id-->
+        <div class='col-sm-12 col-md-4'>
+            <div class="box-body">
+                <mat-select class="full-width" placeholder="Tipo de bodega" [(ngModel)]="model.warehouse_type_id" name="warehouse_type_id"
+                    id="warehouse_type_id">
+                    <mat-option *ngFor="let i of warehouses" [value]="i.id">{{i.value}}</mat-option>
+                </mat-select>
+            </div>
+        </div>
+
+        <!-- estado -->
+        <div class='col-sm-12 col-md-4'>
+            <div class="box-body">
+                <mat-slide-toggle [labelPosition]="after" id="state" name="state" [(ngModel)]="model.state">Estado</mat-slide-toggle>
+            </div>
+        </div>
+
+        <!-- description -->
+        <div class="col-sm-12 col-md-12">
+            <div class="box-body">
+                <mat-form-field class="full-width">
+                    <textarea id="description" name="description" [(ngModel)]="model.description" matInput placeholder="Descripción"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!--country -->
+        <div class='col-sm-12 col-md-4'>
+            <div class="box-body">
+                <mat-select class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id" (change)="getDepartments()"
+                    id="country_id">
+                    <mat-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</mat-option>
+                </mat-select>
+            </div>
+        </div>
+
+        <!-- department -->
+        <div class='col-sm-12 col-md-4'>
+            <div class="box-body">
+                <mat-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department_id" (change)="getCities()"
+                    id="department_id">
+                    <mat-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</mat-option>
+                </mat-select>
+            </div>
+        </div>
+
+        <!--city -->
+        <div class='col-sm-12 col-md-4'>
+            <div class="box-body">
+                <mat-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id" id="city_id">
+                    <mat-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</mat-option>
+                </mat-select>
+            </div>
+        </div>
+
+        <div class="col-sm-12" [class.btn-action-container]="booActive">
+            <button type="button" [disabled]="action_active ? false : !modelForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+                (click)="save()">{{str_action}}</button>
+        </div>
+    </div>
+</form>

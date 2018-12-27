@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+
+<mat-dialog-content>
+    <form #bankForm="ngForm" autocomplete="off">
+        
+        <!-- banks -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-select class="full-width" placeholder="Banco" [(ngModel)]="model.bank" name="bank" id="bank">
+                <mat-option *ngFor="let item of banks" [value]="item.id">{{item.value}}</mat-option>
+            </mat-select>
+        </div>
+
+        <!-- bank_account_type -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-select class="full-width" placeholder="Tipo de cuenta" [(ngModel)]="model.bank_account_type" name="bank_account_type"
+                id="bank_account">
+                <mat-option *ngFor="let item of bank_account_types" [value]="item.id">{{item.value}}</mat-option>
+            </mat-select>
+        </div>
+
+        <!-- account_number -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="account_number" name="account_number" [(ngModel)]="model.account_number" matInput placeholder="Número de cuenta">
+            </mat-form-field>
+        </div>
+
+        <!-- owner -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="owner" name="owner" [(ngModel)]="model.owner" matInput placeholder="Nombre del dueño de la cuenta">
+            </mat-form-field>
+        </div>
+
+        <!-- name_sales_representative -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="name_sales_representative" name="name_sales_representative" [(ngModel)]="model.name_sales_representative"
+                    matInput placeholder="Nombre del representante de ventas">
+            </mat-form-field>
+        </div>
+
+        <!-- phone_sales_representative -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="phone_sales_representative" name="phone_sales_representative" [(ngModel)]="model.phone_sales_representative"
+                    matInput placeholder="Teléfono del representante de ventas">
+            </mat-form-field>
+        </div>
+
+        <!-- email_sales_representative -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="email_sales_representative" name="email_sales_representative" [(ngModel)]="model.email_sales_representative"
+                    matInput placeholder="Correo del representante de ventas">
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="col-sm-12">
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <button color="primary" mat-raised-button type="submit" [disabled]="action_active ? false : !bankForm.form.valid" (click)="add()">{{ booShow ? 'Agregar' : 'Editar' }}</button>
+            <button class="btn-default" mat-button type="button" mat-dialog-close>Cerrar</button>
+        </div>
+    </div>
+
+</mat-dialog-actions>

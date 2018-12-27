@@ -1,0 +1,173 @@
+<form #modelForm="ngForm" autocomplete="off">
+    <div class="col-sm-12 margin-bottom-40">
+        <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+            <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+        </button>
+    </div>
+    <!-- document_type_id -->
+    <div class="col-sm-12 col-md-6 margin-bottom">
+        <mat-select required class="full-width" placeholder="Tipo de identificación" [(ngModel)]="model.document_type_id" name="document_type_id"
+            id="document_type_id">
+            <mat-option *ngFor="let item of arrDocument_type" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- document_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="document_number" name="document_number" [(ngModel)]="model.document_number" matInput placeholder="Identificación">
+        </mat-form-field>
+    </div>
+    <!-- estado -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <mat-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</mat-slide-toggle>
+        </div>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- firstname -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="firstname" name="firstname" [(ngModel)]="model.firstname" matInput placeholder="Nombres">
+        </mat-form-field>
+    </div>
+    <!-- middlename -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input type="text" id="middlename" name="middlename" [(ngModel)]="model.middlename" matInput>
+        </mat-form-field>
+    </div>
+    <!-- lastname1 -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="lastname1" name="lastname1" [(ngModel)]="model.lastname1" matInput placeholder="Apellidos">
+        </mat-form-field>
+    </div>
+    <!-- lastname2 -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input type="text" id="lastname2" name="lastname2" [(ngModel)]="model.lastname2" matInput>
+        </mat-form-field>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- birthday -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickerIssueDate5" id="birthday" name="birthday" placeholder="Fecha de nacimiento" [(ngModel)]="model.birthday">
+            <!-- <button mdSuffix [matDatepicker]="pickerIssueDate5"></button> -->
+        </mat-form-field>
+        <mat-datepicker #pickerIssueDate5></mat-datepicker>
+    </div>
+    <!-- gender_id -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <mat-select class="full-width" placeholder="Género" [(ngModel)]="model.gender_id" name="gender_id" id="gender_id">
+            <mat-option *ngFor="let item of arrGender" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- phone_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input NumberOnly required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" matInput placeholder="Teléfono">
+        </mat-form-field>
+    </div>
+    <!-- mobile_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input NumberOnly required type="text" id="mobile_number" name="mobile_number" [(ngModel)]="model.mobile_number" matInput placeholder="Celular">
+        </mat-form-field>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- address -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="address" name="address" [(ngModel)]="model.address" matInput placeholder="Dirección">
+        </mat-form-field>
+    </div>
+    <!-- conutry -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <mat-select [disabled]="arrDepartment.length == 0" class="full-width" placeholder="Departamento" [(ngModel)]="model.department"
+            name="department" id="department" (change)="loadCity()">
+            <mat-option *ngFor="let item of arrDepartment" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+
+    </div>
+    <!-- conutry -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <mat-select [disabled]="arrCity.length == 0" class="full-width" placeholder="Ciudad" [(ngModel)]="model.city" name="city"
+            id="city" (change)="booGeolocation=true">
+            <mat-option *ngFor="let item of arrCity" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- attendant_name -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="attendant_name" name="attendant_name" [(ngModel)]="model.attendant_name" matInput placeholder="Nombre acudiente">
+        </mat-form-field>
+    </div>
+    <!-- attendant_phone_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input NumberOnly required type="text" id="attendant_phone_number" name="attendant_phone_number" [(ngModel)]="model.attendant_phone_number"
+                matInput placeholder="Teléfono acudiente">
+        </mat-form-field>
+    </div>
+    <!-- attendant_mobile_number -->
+    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input NumberOnly required type="text" id="attendant_mobile_number" name="attendant_mobile_number" [(ngModel)]="model.attendant_mobile_number"
+                matInput placeholder="Celular acudiente">
+        </mat-form-field>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- delivery_contract_id -->
+    <div class="col-sm-12 col-md-6 margin-bottom">
+        <mat-select class="full-width" placeholder="Contrato" [(ngModel)]="model.delivery_contract_id" name="delivery_contract_id" id="delivery_contract_id">
+            <mat-option *ngFor="let item of arrDelivery_contract" [value]="item.id" (click)="loadIpsNetword(item)">{{item.name}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- contracts_payment_method_id -->
+    <!--div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <mat-select class="full-width" placeholder="Modalidad de contratación" [(ngModel)]="model.contracts_payment_method_id" name="contracts_payment_method_id"
+            id="contracts_payment_method_id">
+            <mat-option *ngFor="let item of arrContracts_payment_method" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+    </div-->
+    <!-- affiliate_condition_id -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <mat-select class="full-width" placeholder="Condición de afiliado" [(ngModel)]="model.affiliate_condition_id" name="affiliate_condition_id"
+            id="affiliate_condition_id">
+            <mat-option *ngFor="let item of arrAffiliate_condition" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- ips_network_id -->
+    <div class="col-sm-12 col-md-6 col-lg-4 margin-bottom">
+        <mat-select class="full-width" placeholder="Red adscrita" [(ngModel)]="model.ips_network_id" name="ips_network_id" id="ips_network_id">
+            <mat-option *ngFor="let item of arrIps_network" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- affiliate_level -->
+    <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="affiliate_level" name="affiliate_level" [(ngModel)]="model.affiliate_level" matInput placeholder="Nivel de afiliado">
+        </mat-form-field>
+    </div>
+    <!-- affiliate_type -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <mat-select class="full-width" placeholder="Tipo de afiliado" [(ngModel)]="model.affiliate_type" name="affiliate_type" id="affiliate_type">
+            <mat-option *ngFor="let item of arrAffiliate_type" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- public_health_condition_id -->
+    <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
+        <mat-select class="full-width" placeholder="Condición de salud pública" [(ngModel)]="model.public_health_condition_id" name="public_health_condition_id"
+            id="public_health_condition_id">
+            <mat-option *ngFor="let item of arrPublic_health_condition" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+    </div>
+    <div class="col-sm-12">
+        <button [disabled]="action_active ? false : !modelForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{strAction}}</button>
+    </div>
+</form>

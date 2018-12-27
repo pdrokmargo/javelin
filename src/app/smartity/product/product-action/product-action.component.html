@@ -1,0 +1,224 @@
+<form #productForm="ngForm" autocomplete="off">
+    <div class="row">
+
+        <div class="col-sm-12 margin-bottom">
+            <button type="button" mat-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+        </div>
+
+        <!-- state -->
+        <div class='col-sm-12 margin-bottom'>
+            <div class="flex">
+                <span class="flex-spacer"></span>
+                <mat-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</mat-slide-toggle>
+            </div>
+        </div>
+
+        <!--product type -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-select class="full-width" placeholder="Tipo de producto" [(ngModel)]="model.product_profile_id" name="product_profile_id"
+                id="product_profile_id">
+                <mat-option *ngFor="let item of product_type" [value]="item.id">{{item.value}}</mat-option>
+            </mat-select>
+        </div>
+
+        <!-- medicamentos -->
+        <div class="col-sm-12 margin-bottom" *ngIf="model.product_profile_id == 30">
+            <div class="flex margin-bottom">
+                <div class="box-header no-padding-h">Medicamentos</div>
+                <span class="flex-spacer"></span>
+                <button type="button" type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openAddBankAccount()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Vía Administración</th>
+                            <th>Forma Farmaceutica</th>
+                            <th class="w-40"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of model.pharmaceutical_drug">
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.routes_administration }}</td>
+                            <td>{{ item.dosage_form }}</td>
+                            <td class="w-40">
+                                <button type="button" type="button" mat-icon-button (click)="removePharmaceutical(item)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- description -->
+        <div class='col-sm-12 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="description" name="description" [(ngModel)]="model.description" matInput placeholder="Descripción">
+            </mat-form-field>
+        </div>
+
+        <!-- comercial -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-slide-toggle [labelPosition]="'after'" id="comercial" name="comercial" [(ngModel)]="model.comercial" (change)="model.comercial_name = model.comercial ? model.comercial_name : ''">Comercial</mat-slide-toggle>
+        </div>
+
+        <!-- comercial_name -->
+        <div class='col-sm-12 col-md-4 margin-bottom' *ngIf="model.comercial">
+            <mat-form-field class="full-width">
+                <input type="text" id="comercial_name" name="comercial_name" [(ngModel)]="model.comercial_name" matInput placeholder="Nombre comercial">
+            </mat-form-field>
+        </div>
+
+        <!-- content_unit_id -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-select class="full-width" placeholder="Unidad de contenido" [(ngModel)]="model.content_unit_id" name="content_unit_id"
+                id="content_unit_id">
+                <mat-option *ngFor="let i of content_unit" [value]="i.id">{{i.value}}</mat-option>
+            </mat-select>
+        </div>
+
+        <span class="col-sm-12"></span>
+
+        <!-- units -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input NumberOnly required type="text" id="units" name="units" [(ngModel)]="model.units" matInput placeholder="Unidades">
+            </mat-form-field>
+        </div>
+
+        <!-- delivery_fraction -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="delivery_fraction" name="delivery_fraction" [(ngModel)]="model.delivery_fraction" matInput
+                    placeholder="Fracción de entrega">
+            </mat-form-field>
+        </div>
+
+        <!-- cum_code -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="cum_code" name="cum_code" [(ngModel)]="model.cums" matInput placeholder="Código CUM">
+            </mat-form-field>
+        </div>
+
+        <!-- barcode -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="barcode" name="barcode" [(ngModel)]="model.barcode" matInput placeholder="Código de barras">
+            </mat-form-field>
+        </div>
+
+        <!--lifetime -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="pickerLifetime" id="lifetime" name="lifetime" placeholder="Vida util" [(ngModel)]="model.lifetime">
+                <!-- <button type="button" mdSuffix [matDatepicker]="pickerLifetime"></button> -->
+            </mat-form-field>
+            <mat-datepicker #pickerLifetime></mat-datepicker>
+        </div>
+
+        <span class="col-sm-12"></span>
+
+        <!-- institutional_use -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-slide-toggle [labelPosition]="after" id="institutional_use" name="institutional_use" [(ngModel)]="model.institutional_use">Uso institucional</mat-slide-toggle>
+        </div>
+
+        <!-- serials_control -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-slide-toggle [labelPosition]="after" id="batch_control" name="serials_control" [(ngModel)]="model.serials_control">Controla serial</mat-slide-toggle>
+        </div>
+
+        <!-- batch_control -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-slide-toggle [labelPosition]="after" id="batch_control" name="batch_control" [(ngModel)]="model.batch_control">Controla lotes</mat-slide-toggle>
+        </div>
+
+        <!-- titular registro sanitario -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required readonly matInput type="text" placeholder="Titular registro sanitario" [(ngModel)]="sanitary_registration_holder.businessname"
+                    id="sanitary_registration_holder" name="sanitary_registration_holder" />
+                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openAddSanitaryRegistration()">search</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <!-- sanitary_registration -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="sanitary_registration" name="sanitary_registration" [(ngModel)]="model.sanitary_registration"
+                    matInput placeholder="Registro sanitario">
+            </mat-form-field>
+        </div>
+
+        <!-- validity_sanitary_registration -->
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="picker" id="validity_sanitary_registration" name="validity_sanitary_registration" placeholder="Vigencia de registro sanitario"
+                    [(ngModel)]="model.validity_sanitary_registration">
+                <!-- <button type="button" mdSuffix [matDatepicker]="picker"></button> -->
+            </mat-form-field>
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+
+        <!-- proveedor -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required readonly matInput type="text" placeholder="Proveedor" [(ngModel)]="supplier.businessname" id="supplier" name="supplier"/>
+                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openAddSupplier()">search</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <!-- fabricante -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required readonly matInput type="text" placeholder="Fabricante" [(ngModel)]="manufacturer.businessname" id="manufacturer"
+                    name="manufacturer" />
+                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openAddMaker()">search</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <!-- importador -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required readonly matInput type="text" placeholder="Importador" [(ngModel)]="importer.businessname" id="importer" name="importer"
+                />
+                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openAddImporter()">search</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <!-- security_time -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input NumberOnly required type="text" id="security_time" name="security_time" [(ngModel)]="model.security_time" matInput
+                    placeholder="Tiempo de seguridad">
+            </mat-form-field>
+        </div>
+
+        <!-- covered_period -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input NumberOnly required type="text" id="covered_period" name="covered_period" [(ngModel)]="model.covered_period" matInput
+                    placeholder="Periodo de cubrimiento">
+            </mat-form-field>
+        </div>
+
+        <!-- replacment_time -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input NumberOnly required type="text" id="replacment_time" name="replacment_time" [(ngModel)]="model.replacment_time" matInput
+                    placeholder="Tiempo de reposición">
+            </mat-form-field>
+        </div>
+
+        <div class="col-sm-12">
+            <button type="button" [disabled]="!productForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+                (click)="save()">{{strAction}}</button>
+        </div>
+
+    </div>
+</form>

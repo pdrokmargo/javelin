@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<mat-dialog-content>
+
+    <div class='col-sm-12 col-md-12'>
+        <div class="box-body">
+            <p>
+                <mat-radio-group class="md-radio-group-spacing" [(ngModel)]="radio.option">
+                    <mat-radio-button value="1">Buscar</mat-radio-button>
+                    <mat-radio-button value="2">Crear</mat-radio-button>
+                </mat-radio-group>
+            </p>
+        </div>
+    </div>
+    <customers-action-cmp *ngIf="radio.option==='2'" [type]="'customers'"  (select)="select($event)"></customers-action-cmp>
+    <div class="col-sm-12">
+        <customers-list-cmp *ngIf="radio.option==='1'" [type]="'customers'" (select)="select($event)"></customers-list-cmp>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex full-width">
+        <span class="flex-spacer"></span>
+        <button class="ml-5" color="primary" mat-button type="button" [disabled]="!model" (click)="add()" *ngIf="radio.option === '1'">Seleccionar</button>
+        <button mat-dialog-close mat-button type="button">Cerrar</button>
+    </div>
+</mat-dialog-actions>

@@ -1,0 +1,81 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<mat-dialog-content>
+    <form #resolutionForm="ngForm" autocomplete="off">
+        
+        <!-- big_contributor -->
+        <div class='col-sm-12 margin-bottom'>
+            <div class="flex">
+                <span class="flex-spacer"></span>
+                <mat-slide-toggle [labelPosition]="before" id="state" name="state" [(ngModel)]="model.state">Estado</mat-slide-toggle>
+            </div>
+        </div>
+        <!-- resolution_number -->
+        <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="resolution_number" name="resolution_number" [(ngModel)]="model.resolution_number" matInput
+                    placeholder="Número de resolución">
+            </mat-form-field>
+        </div>
+        <!-- issue_date -->
+        <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="pickerIssueDate" id="issue_date" name="issue_date" placeholder="Fecha de expedición" [(ngModel)]="model.issue_date">
+                <!-- <button type="button" mdSuffix [matDatepicker]="pickerIssueDate"></button> -->
+            </mat-form-field>
+            <mat-datepicker #pickerIssueDate (selectedChanged)="onchange()"></mat-datepicker>
+        </div>
+        <!-- expiration_date -->
+        <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="pickerExpirationDate" id="expiration_date" name="expiration_date" placeholder="Fecha de vencimiento"
+                    [(ngModel)]="model.expiration_date" [min]="model.issue_date">
+                <!-- <button type="button" mdSuffix [matDatepicker]="pickerExpirationDate"></button> -->
+            </mat-form-field>
+            <mat-datepicker #pickerExpirationDate></mat-datepicker>
+        </div>
+        <!-- shipping_point -->
+        <div class='col-sm-12 col-md-6 col-lg-4 margin-bottom'>
+            <mat-select class="full-width" placeholder="Punto de envío" [(ngModel)]="model.shipping_point" name="shipping_point_id" id="shipping_point_">
+                <mat-option *ngFor="let item of data.shipping_points" [value]="item.name">{{item.name}}</mat-option>
+            </mat-select>
+        </div>
+        <!-- TABLE -->
+        <div class="col-sm-12 margin-bottom">
+            <div class="flex" style="margin-bottom: 15px;height: 51px;">
+                <div class="box-header no-padding-h">Productos asociados</div>
+                <span class="flex-spacer"></span>
+                <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="openPharmaceutical()">Añadir</button>
+            </div>
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                    <thead>
+                        <tr>
+                            <th>Nombre del producto</th>
+                            <th class="w-40"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of model.pharmaceutical_drugs">
+                            <td>{{ item.name }}</td>
+                            <td class="w-40">
+                                <button type="button" mat-icon-button class="text-danger" (click)="removePharmaceutical(item)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="col-sm-12">
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <button color="primary" mat-raised-button type="button" [disabled]="action_active ? false : !resolutionForm.form.valid" (click)="add()">{{ booShow ? 'Agregar' : 'Editar' }}</button>
+            <button mat-button type="button" mat-dialog-close>Cerrar</button>
+        </div>
+    </div>
+</mat-dialog-actions>

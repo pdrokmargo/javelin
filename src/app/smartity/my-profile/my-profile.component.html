@@ -1,0 +1,109 @@
+<section class="chapter">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Mi perfil</h1>
+        </div>
+        <p class="hero-tagline">
+            A través de esta opción, usted podrá administrar la información de usuario.
+        </p>
+    </section>
+    <article class="article padding-lg-v article-dark article-bordered">
+        <div class="container-fluid with-maxwidth">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box box-default">
+                        <div class="box-body">
+                            <div class="ibox-plain">
+
+                                <form [hidden]="formActive == 'formPass'" #modelForm="ngForm" autocomplete="off">
+                                    <div class="row">
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="box-body">    
+                                                <mat-form-field class="full-width">
+                                                    <input type="text" readonly id="firstname" name="firstname" [(ngModel)]="model.firstname" matInput placeholder="Nombres">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="box-body">    
+                                                <mat-form-field class="full-width">
+                                                    <input type="text" readonly id="lastname" name="lastname" [(ngModel)]="model.lastname" matInput placeholder="Apellidos">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="box-body">    
+                                                <mat-form-field class="full-width">
+                                                    <input type="text" readonly id="username" name="username" [(ngModel)]="model.username" matInput placeholder="Usuario">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="box-body">    
+                                                <mat-form-field class="full-width">
+                                                    <input type="email" readonly id="email" name="email" [(ngModel)]="model.email" matInput placeholder="Correo electronico">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class='col-sm-12 col-md-6'>
+                                            <div class="box-body">                                
+                                                <mat-select required class="full-width" placeholder="Empresa por defecto" [(ngModel)]="model.company_default_id" name="company_default_id"
+                                                id="company_default_id">
+                                                    <mat-option *ngFor="let item of model.usersprivileges" [value]="item.company.id">{{item.company.name}}</mat-option>
+                                                </mat-select>    
+                                            </div>                                                                    
+                                        </div>
+
+                                        <div class="col-sm-12" [class.btn-action-container]="booActive">
+                                                
+                                            <button [disabled]="action_active ? false : !modelForm.form.valid" mat-raised-button color="primary"
+                                            class="btn-w-md no-margin-left btn-right" (click)="updateProfile()">Guardar</button>
+                                          
+                                            <button mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="formActive = 'formPass'">Cambiar contraseña</button>
+
+                                        </div>
+                                     
+                                        <!--div class="col-sm-12 btn-right">
+                            <button mat-raised-button color="primary" class="btn-w-md" [disabled]="!myprofileForm.form.valid">Actualizar</button>
+                        </div-->
+                                    </div>
+                                </form>
+                                <form [hidden]="formActive == 'form'" #updatePassForm="ngForm" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h5>Actualiza contraseña</h5>
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <mat-form-field class="full-width">
+                                                <input required type="password" id="password1" name="password1" [(ngModel)]="pass.password1" matInput placeholder="Contraseña"
+                                                    validateEqual="password2" reverse="true">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="form-group col-sm-12 col-md-6">
+                                            <mat-form-field class="full-width">
+                                                <input required type="password" #password2="ngModel" id="password2" name="password2" [(ngModel)]="pass.password2" matInput
+                                                    placeholder="Confirmar" validateEqual="password1" reverse="false">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <small [hidden]="password2.valid || (password2.pristine && !updatePassForm.submitted)" class="text-danger">La contraseña no son iguales</small>
+                                        </div>
+                                        <div class="col-sm-12 btn-right">
+                                            <button mat-raised-button color="primary" class="btn-w-md" [disabled]="!updatePassForm.form.valid" (click)="updatePass()">Actualiza</button>
+                                            <button mat-raised-button color="secondary" class="btn-w-md" (click)="formActive = 'form'; pass = {}; updatePassForm.reset();">Regresar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>

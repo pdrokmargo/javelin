@@ -1,0 +1,92 @@
+<!-- FORM -->
+
+<form #modelForm="ngForm" autocomplete="off">
+
+    <div class="col-sm-12 margin-bottom-40">
+        <button mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+            <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+        </button>
+    </div>
+
+    <!-- name -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="name" name="name" [(ngModel)]="model.up_description" matInput placeholder="Nombre del Perfil de Usuario">
+        </mat-form-field>
+    </div>
+
+    <!-- estado -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <mat-slide-toggle [labelPosition]="after" id="up_state" name="up_state" [(ngModel)]="model.up_state">Estado</mat-slide-toggle>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12">
+        <div class="max-width-700">
+            <h3>Modulos</h3>
+            <p class="hero-tagline">
+                Seleccione los permisos de las vistas al cual tendrá acceso el perfil de usuario
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-12" *ngFor="let item of viewactions">
+        <div class="max-width-700" [ngStyle]="{ 
+            'margin-bottom' : (!item.expand ? '10px' : '0px'), 
+            'padding': (item.views.have_child ? '0px' : '0px 25px') 
+        }">
+            <button class="full-width" type="button" mat-raised-button color="{{ item.expand ? 'primary' : 'secundary' }}" (click)="item.expand = !item.expand">
+                <span class="flex flex-center">
+                    <div class="flex-spacer text-left">
+                        {{ item.views.title }}
+                    </div>
+                    <mat-icon> {{item.expand ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}} </mat-icon>
+                </span>
+            </button>
+            <div class="box-body" style="background: #f0f0f0; margin-bottom: 10px" [hidden]="!item.expand">
+                <div class="col-sm-12">
+                    <mat-checkbox class="margin-bottom" (change)="item.check=!item.check; checkAll(item)" [checked]="item.check">Seleccionar</mat-checkbox>
+                    <div class="flex space-between">
+                        <span *ngFor="let act of item.actions">
+                            <mat-checkbox (change)="act.status =! act.status;" [checked]="act.status">{{ act.action }}</mat-checkbox>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--
+        <div class="col-sm-12" *ngFor="let item of viewactions">
+        <div class="max-width-700" [ngStyle]="{ 'margin-bottom' : (!item.expand ? '10px' : '0px'), 'padding': (item.views.have_child ? '0px' : '0px 25px') }">
+            <button class="full-width" type="button" mat-raised-button color="{{ item.expand ? 'primary' : 'secundary' }}" (click)="item.expand = item.views.have_child ? false : !item.expand">
+                <span class="flex flex-center">
+                    <div class="flex-spacer text-left">
+                        {{ item.views.title }}
+                    </div>
+                    <mat-icon matSuffix *ngIf="!item.views.have_child"> {{item.expand ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}} </mat-icon>
+                </span>
+            </button>
+            <div *ngIf="!item.views.have_child" class="box-body" style="background: #f0f0f0; margin-bottom: 10px" [hidden]="!item.expand">
+                <div class="col-sm-12">
+                    <mat-checkbox class="margin-bottom" (change)="item.check=!item.check;checkAll(item)" [checked]="item.check">Seleccionar</mat-checkbox>
+                    <div class="flex space-between">
+                        <span *ngFor="let act of item.actions">
+                            <mat-checkbox (change)="act.status=!act.status;" [checked]="act.status">{{ act.action }}</mat-checkbox>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    -->
+    <div class="col-sm-12">
+
+        <button [disabled]="!modelForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
+
+    </div>
+
+</form>

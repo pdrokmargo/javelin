@@ -1,0 +1,20 @@
+<section class="chapter">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Empresas</h1>
+        </div>
+        <p class="hero-tagline">A través de esta opción, usted podrá crear las empresa de las cuales son necesarias para...</p>
+    </section>
+    <article class="article padding-lg-v article-dark article-bordered">
+        <div class="container-fluid with-maxwidth">
+            <div class="box box-default">
+                <div class="box-body">
+                   
+                    <company-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></company-action-cmp>
+                    <company-list-cmp *ngIf="isOpenList"></company-list-cmp>
+                   
+                </div>               
+            </div>
+        </div>
+    </article>
+</section>

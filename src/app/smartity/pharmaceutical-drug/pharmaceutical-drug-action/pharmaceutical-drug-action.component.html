@@ -1,0 +1,118 @@
+<!-- FORM -->
+
+<form #pharmeceuticalForm="ngForm" autocomplete="off">
+
+    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
+        <button type="button" mat-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
+    </div>
+
+    <!-- name -->
+    <div class='col-sm-12 col-md-6  margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="name" name="name" [(ngModel)]="model.name" matInput placeholder="Principio activo">
+        </mat-form-field>
+    </div>
+    <!-- estado -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <mat-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</mat-slide-toggle>
+        </div>
+    </div>
+    <!-- Principio activo -->
+    <div class="col-sm-12 margin-bottom">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="flex margin-bottom">
+                    <div class="box-header no-padding-h">Principio activo</div>
+                    <span class="flex-spacer"></span>
+                    <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalActiveIngredients()">Añadir</button>
+                </div>
+                <div class="col-sm-12 margin-bottom" *ngIf="arrActive_ingredients.length > 0">
+                    <mat-select [required]="arrActive_ingredients.length > 0" (change)="getMeasurement_unit()" placeholder="Unidad de medida"
+                        class="full-width" [(ngModel)]="measurement_unit_id" name="measurement_unit_id" id="measurement_unit_id">
+                        <mat-option *ngFor="let item of arrMeasurement_unit" [value]="item.id">{{item.value.trim()}}</mat-option>
+                    </mat-select>
+                </div>
+                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                    <table class="mdl-data-table table-bordered table-striped no-margin">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th style="width: 150px">Concentración</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of arrActive_ingredients; let index = index">
+                                <td>{{item.name}}</td>
+                                <td class="max-w-100 padding-bottom-0">
+                                    <mat-form-field class="full-width">
+                                        <input NumberOnly type="text" id="concentration{{index}}" name="concentration{{index}}" [(ngModel)]="item.concentration"
+                                            (keyup)="all()" matInput>
+                                        <span matSuffix>&nbsp; {{measurement_unit.code}}</span>
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr *ngIf="arrActive_ingredients.length > 0">
+                                <th></th>
+                                <th style="text-align: right">
+                                    {{ all_concentration }} {{ measurement_unit.code }}
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- dosage_form_id -->
+    <div class='col-sm-12 col-md-4 col-lg-3 margin-bottom'>
+        <mat-select class="full-width" placeholder="Forma Farmacéutica" [(ngModel)]="model.dosage_form_id" name="dosage_form_id" id="dosage_form_id">
+            <mat-option *ngFor="let i of pharmaceutical_form" [value]="i.id">{{i.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- routes_administration_id -->
+    <div class='col-sm-12 col-md-4 col-lg-3 margin-bottom'>
+        <mat-select class="full-width" placeholder="Vía de administración" [(ngModel)]="model.routes_administration_id" name="routes_administration_id"
+            id="routes_administration_id">
+            <mat-option *ngFor="let i of routes_administration" [value]="i.id">{{i.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- atc -->
+    <div class='col-sm-12 col-md-4 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="atc" name="atc" [(ngModel)]="model.atc" matInput placeholder="Código ATC">
+        </mat-form-field>
+    </div>
+    <!-- regulated_price -->
+    <div class='col-sm-12 col-md-4 col-lg-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <span mdPrefix>$ &nbsp;</span>
+            <input required type="text" id="regulated_price" appMycurrency name="regulated_price" [(ngModel)]="model.regulated_price"
+                matInput placeholder="Precio regulado">
+        </mat-form-field>
+    </div>
+    <!-- storage_condition_id -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-select class="full-width" placeholder="Almacenamiento" [(ngModel)]="model.storage_condition_id" name="storage_condition_id"
+            id="storage_condition_id">
+            <mat-option *ngFor="let i of storage_condition" [value]="i.id">{{i.value}}</mat-option>
+        </mat-select>
+    </div>
+    <!-- is_controlled -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-slide-toggle [labelPosition]="after" id="is_controlled" name="is_controlled" [(ngModel)]="model.is_controlled">Controlado</mat-slide-toggle>
+    </div>
+    <!-- is_monopoly -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-slide-toggle [labelPosition]="after" id="is_monopoly" name="is_monopoly" [(ngModel)]="model.is_monopoly">Monopolio</mat-slide-toggle>
+    </div>
+    <!-- is_pos -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-slide-toggle [labelPosition]="after" id="is_pos" name="is_pos" [(ngModel)]="model.is_pos">POS</mat-slide-toggle>
+    </div>
+    <div class="col-sm-12" [class.btn-action-container]="booActive">
+        <button type="button" [disabled]="!pharmeceuticalForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+            (click)="save()">{{strAction}}</button>
+    </div>
+</form>

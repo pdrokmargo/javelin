@@ -1,0 +1,117 @@
+<section class="chapter">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Configuración</h1>
+        </div>
+        <!--p class="hero-tagline">We provide amazing solutions that you can't miss</p-->
+    </section>
+    <article class="article padding-lg-v article-dark article-bordered">
+        <div class="container-fluid with-maxwidth">
+            <div class="row">
+                <div class="col-sm-12 margin-bootom">
+                    <button mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">Guardar configuraciones</button>
+                </div>
+                <div class="col-sm-12 col-md-4 col-lg-3">
+                    <div class="box box-default">
+                        <div class="box-body">
+                            <div class="ibox-plain">
+                                <mat-nav-list>
+                                    <mat-list-item *ngFor='let c of config'>
+                                        <span md-list-item class="btn-w-md" (click)="selectItem(c)">{{c.display}}</span>
+                                    </mat-list-item>
+                                </mat-nav-list>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-8 col-lg-9">
+                    <div class="box box-default">
+                        <div class="box-body">
+                            <div class="margin-bottom"></div>
+                            <!--business-->
+                            <div class="ibox-plain">
+                                <form #businessForm="ngForm" autocomplete="off">
+                                    <div class="row" [hidden]="itemSelected != 'business'">
+
+                                        <!--nombre de la empresa-->
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
+                                            <mat-form-field class="full-width">
+                                                <input required type="text" id="name" name="name" [(ngModel)]="model.business.name" matInput placeholder="Nombre de la empresa">
+                                            </mat-form-field>
+                                        </div>
+                                        <!--nit-->
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
+                                            <mat-form-field class="full-width">
+                                                <input required type="text" id="nit" name="nit" [(ngModel)]="model.business.nit" matInput placeholder="NIT">
+                                            </mat-form-field>
+                                        </div>
+                                        <!--address-->
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
+                                            <mat-form-field class="full-width">
+                                                <input required type="text" id="address" name="address" [(ngModel)]="model.business.address" matInput placeholder="Dirección">
+                                            </mat-form-field>
+                                        </div>
+                                        <!--phone_number-->
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
+                                            <mat-form-field class="full-width">
+                                                <input required type="number" id="phone_number" name="phone_number" [(ngModel)]="model.business.phone_number" matInput placeholder="Teléfono">
+                                            </mat-form-field>
+                                        </div>
+                                        <!--tax_regime_id-->
+                                        <div class="form-group col-sm-12 col-md-6 col-lg-4 margin-bottom">
+                                            <mat-select class="full-width" placeholder="Tipo de régimen" id="tax_regime_id" name="tax_regime_id" [(ngModel)]="model.business.tax_regime_id">
+                                                <mat-option *ngFor="let r of regimen" [value]="r.id">
+                                                    {{ r.value }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <div class="row">
+                                                        <!--economic_activity-->
+                                                        <div class="form-group col-sm-12">
+                                                            <mat-form-field class="full-width">
+                                                                <input required type="text" id="economic_activity" name="economic_activity" [(ngModel)]="model.business.economic_activity"
+                                                                    matInput placeholder="Actividad ecónomica">
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <!--website-->
+                                                        <div class="form-group col-sm-12">
+                                                            <mat-form-field class="full-width">
+                                                                <input required type="text" id="website" name="website" [(ngModel)]="model.business.website" matInput placeholder="Sitio web">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <div class="row">
+                                                        <!--big_contributor-->
+                                                        <div class="form-group col-sm-12 justify-content-end">
+                                                            <span class="text-toggle">Gran contribuyente</span>
+                                                            <mat-slide-toggle id="big_contributor" name="big_contributor" [(ngModel)]="model.business.big_contributor"></mat-slide-toggle>
+                                                        </div>
+                                                        <!--selfholder-->
+                                                        <div class="form-group col-sm-12 justify-content-end">
+                                                            <span class="text-toggle">Autorretenedor</span>
+                                                            <mat-slide-toggle id="selfholder" name="selfholder" [(ngModel)]="model.business.selfholder"></mat-slide-toggle>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>

@@ -1,0 +1,119 @@
+<form #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+        <div class="col-sm-12 margin-bottom">
+            <button mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+                <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 margin-bottom">
+            <div class="flex">
+                <span class="flex-spacer"></span>
+                <mat-slide-toggle checked="true" id="status" name="status" [(ngModel)]="_model.user.status"> Estado </mat-slide-toggle>
+            </div>
+        </div>
+        <!--user.firstname-->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required type="text" id="firstname" name="firstname" [(ngModel)]="_model.user.firstname" matInput placeholder="Nombres">
+            </mat-form-field>
+        </div>
+        <!--user.lastname-->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required type="text" id="lastname" name="lastname" [(ngModel)]="_model.user.lastname" matInput placeholder="Apellidos">
+            </mat-form-field>
+        </div>
+        <div class="col-sm-12 margin-bottom">
+            <mat-form-field class="full-width">
+                <input #email="ngModel" [userEmailValid]="ref" [pattern]="emailPattern" required type="email" id="email" name="email" [(ngModel)]="_model.user.email"
+                    matInput placeholder="Correo electrónico">
+                <mat-error *ngIf="email.errors?.userEmailValid">Correo electrónico ya se encuentra registrado en el sistema</mat-error>
+                <mat-error *ngIf="email.errors?.pattern">Formato errado</mat-error>
+            </mat-form-field>
+        </div>
+        <!--user.username-->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <mat-form-field class="full-width">
+                <input autocomplete="nope" autocorrect="off" autocapitalize="off" spellcheck="false" required type="text" id="username" name="username"
+                    [(ngModel)]="_model.user.username" matInput placeholder="Nombre de Usuario">
+            </mat-form-field>
+        </div>
+        <!-- user.password -->
+        <div class="col-sm-12 col-md-6 margin-bottom" *ngIf="strAction == 'Guardar'">
+            <mat-form-field class="full-width">
+                <input autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" required type="password" id="password"
+                    name="password" [(ngModel)]="_model.user.password" matInput placeholder="Contraseña" reverse="true">
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="add-company-panel">
+            <div class="col-sm-12 margin-bottom">
+                <h3>Añadir Empresa</h3>
+            </div>
+            <!-- company -->
+            <div class='col-sm-12 col-md-4 margin-bottom'>
+                <mat-select class="full-width" placeholder="Empresa" [(ngModel)]="company_userprofile.company" name="company_id" id="company_id">
+                    <mat-option *ngFor="let item of companies" [value]="item" [hidden]="item.hide">{{item.name}}</mat-option>
+                </mat-select>
+            </div>
+            <!-- user profile -->
+            <div class='col-sm-12 col-md-4 margin-bottom'>
+                <mat-select class="full-width" placeholder="Perfil de usuario" [(ngModel)]="company_userprofile.userprofile" name="user_profile_id"
+                    id="user_profile_id">
+                    <mat-option *ngFor="let item of userprofiles" [value]="item">{{item.up_description}}</mat-option>
+                </mat-select>
+            </div>
+            <div class="col-sm-12 col-md-4 margin-bottom">
+                <div class="flex">
+                    <span class="flex-spacer"></span>
+                    <button [disabled]="!(company_userprofile.company && company_userprofile.userprofile)" type="button" mat-raised-button color="primary"
+                        class="btn-w-md no-margin-left" (click)="addCompany()">Añadir</button>
+                </div>
+
+            </div>
+            <div class="col-sm-12">
+                <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+                    <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Perfil de Usuario</th>
+                                <th class="w-108"></th>
+                                <th class="w-40"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of _model.userprofiles">
+                                <td>{{ item.company_name }}</td>
+                                <td>{{ item.user_profile_description }}</td>
+                                <td class="w-108">
+                                    <button *ngIf="!item.default" type="button" mat-button (click)="isDefault(item)">
+                                        <span style="color: #bfbaba">Default</span>
+                                    </button>
+                                    <button *ngIf="item.default" type="button" mat-raised-button mat-button (click)="isDefault(item)" color="primary"> Default </button>
+                                </td>
+                                <td class="w-40" title="Remover empresa">
+                                    <button type="button" mat-icon-button class="text-danger" (click)="removeCompany(item)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="button" [disabled]="!modelForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+                (click)="save()">{{strAction}}</button>
+        </div>
+    </div>
+</form>

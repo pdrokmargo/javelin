@@ -1,0 +1,97 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+
+
+<mat-dialog-content>
+    <form #sucursalForm="ngForm" autocomplete="off">
+        
+        <div class='col-sm-12 col-md-12 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="name" name="name" [(ngModel)]="model.name" matInput placeholder="Nombre de sucursal">
+            </mat-form-field>
+        </div>
+
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-select class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country" (change)="getDepartments()"
+                id="country">
+                <mat-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</mat-option>
+            </mat-select>
+        </div>
+
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department" (change)="getCities()"
+                id="department">
+                <mat-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</mat-option>
+            </mat-select>
+        </div>
+
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city" id="customer.branch_offices.city">
+                <mat-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</mat-option>
+            </mat-select>
+        </div>
+
+        <!-- address -->
+        <div class='col-sm-12 col-md-12 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="address" name="address" [(ngModel)]="model.address" matInput placeholder="Dirección de la sucursal">
+            </mat-form-field>
+        </div>
+
+        <!-- phone number -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input NumberOnly required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" matInput placeholder="Teléfono de la sucursal">
+            </mat-form-field>
+        </div>
+
+        <!-- email -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="email" name="email" [(ngModel)]="model.email" matInput placeholder="Correo de la sucursal">
+            </mat-form-field>
+        </div>
+
+        <!-- contact_name -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="contact_person_name" name="contact_person_name" [(ngModel)]="model.contact_person_name" matInput
+                    placeholder="Nombre del contacto">
+            </mat-form-field>
+        </div>
+
+        <!-- contact_charge -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="contact_person_charge" name="contact_person_charge" [(ngModel)]="model.contact_person_charge"
+                    matInput placeholder="Cargo del contacto">
+            </mat-form-field>
+        </div>
+
+        <!-- contact_phone number -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input NumberOnly required type="text" id="contact_person_phone_number" name="contact_person_phone_number" [(ngModel)]="model.contact_personphone_number"
+                    matInput placeholder="Teléfono del contacto">
+            </mat-form-field>
+        </div>
+
+        <!-- contact_email -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="contact_person_email" name="contact_person_email" [(ngModel)]="model.contact_person_email"
+                    matInput placeholder="Correo eletrónico del contacto">
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="col-sm-12">
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <button color="primary" mat-raised-button type="button" [disabled]="action_active ? false : !sucursalForm.form.valid" (click)="add()">{{ booShow ? 'Agregar' : 'Editar' }}</button>
+            <button mat-button type="button" mat-dialog-close>Cerrar</button>
+        </div>
+    </div>
+</mat-dialog-actions>

@@ -1,0 +1,21 @@
+<section class="chapter">
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Afiliados</h1>
+        </div>
+        <p class="hero-tagline"></p>
+    </section>
+    <article class="article padding-lg-v article-dark article-bordered">
+        <div class="container-fluid with-maxwidth">
+            <div class="box box-default">
+                <div class="box-body">
+
+                    <affiliates-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]='strAction'></affiliates-action-cmp>
+
+                    <affiliates-list-cmp *ngIf="isOpenList"></affiliates-list-cmp>
+
+                </div>
+            </div>
+        </div>
+    </article>
+</section>

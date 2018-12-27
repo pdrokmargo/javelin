@@ -1,0 +1,59 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<mat-dialog-content>
+    <form #resolutionForm="ngForm" autocomplete="off">
+        
+        <!-- contract_number -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="contract_number" name="contract_number" [(ngModel)]="model.contract_number" matInput placeholder="Número de contrato">
+            </mat-form-field>
+        </div>
+
+        <!-- contracting_entity -->
+        <div class='col-sm-12 col-md-6 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input required type="text" id="contracting_entity" name="contracting_entity" [(ngModel)]="model.contracting_entity" matInput
+                    placeholder="Entidad contratante">
+            </mat-form-field>
+        </div>
+
+
+        <!-- issue_date -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="pickerIssueDate" id="issue_date" name="issue_date" placeholder="Fecha de expedición" [(ngModel)]="model.issue_date">
+                <!-- <button mdSuffix [matDatepicker]="pickerIssueDate"></button> -->
+            </mat-form-field>
+            <mat-datepicker #pickerIssueDate (selectedChanged)="onchange()"></mat-datepicker>
+        </div>
+
+        <!-- expiration_date -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="pickerExpirationDate" id="expiration_date" name="expiration_date" placeholder="Fecha de vencimiento"
+                    [(ngModel)]="model.expiration_date" [min]="model.issue_date">
+                <!-- <button mdSuffix [matDatepicker]="pickerExpirationDate"></button> -->
+            </mat-form-field>
+            <mat-datepicker #pickerExpirationDate></mat-datepicker>
+        </div>
+
+        <!--div class='col-sm-12 col-md-4'>
+            <div class="box-body">
+                <input-file (onFileSelect)="onFileSelect($event)" [accept]="'image/*'">
+                    <span class="nofiles">Adjuntar el documento</span>
+                    <span class="selected">Archivo adjunto</span>
+                </input-file>
+            </div>
+        </div-->
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="col-sm-12">
+        <div class="flex">
+            <span class="flex-spacer"></span>
+            <button color="primary" mat-raised-button type="submit" [disabled]="action_active ? false : !resolutionForm.form.valid" (click)="add()">{{ booShow ? 'Agregar' : 'Editar' }}</button>
+            <button mat-button type="button" mat-dialog-close>Cerrar</button>
+        </div>
+    </div>
+</mat-dialog-actions>

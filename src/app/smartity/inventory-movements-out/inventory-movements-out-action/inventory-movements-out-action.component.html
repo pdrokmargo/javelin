@@ -1,0 +1,125 @@
+<!-- FORM -->
+<form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+        <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
+            <button mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+                <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+            </button>
+        </div>
+
+        <!-- warehouse -->
+        <div *ngIf="model.warehouse" class="col-sm-12 col-md-4 margin-bottom">
+            <mat-form-field class="full-width">
+                <input  readonly matInput type="text" placeholder="Bodega Origen" [(ngModel)]="model.warehouse.name" id="warehouse_name" name="warehouse_name" />
+                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <!-- inventory_movements_type -->
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+                <mat-form-field class="full-width">
+            <mat-select class="full-width" placeholder="Tipo de salida" [(ngModel)]="model.inventory_movement_entry_out_type_id" name="inventory_movement_entry_out_type_id"
+                id="inventory_movement_entry_out_type_id">
+                <mat-option *ngFor="let item of inventory_movements_type" [value]="item.id">{{item.value}}</mat-option>
+            </mat-select>
+                </mat-form-field>
+        </div>
+
+        <!-- date -->
+        <div class="col-md-4">
+            <mat-form-field>
+                <input matInput [matDatepicker]="pickerInventoryMovementDate" placeholder="Fecha de salida" [(ngModel)]="model.date" name="inventory_movement_date">
+                <mat-datepicker-toggle matSuffix [for]="pickerInventoryMovementDate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInventoryMovementDate></mat-datepicker>
+              </mat-form-field>
+        </div>
+        
+        <div class="col-md-12" *ngIf="numId == undefined">
+            <button [disabled]="model.warehouse_id == -1 || model.inventory_movement_entry_out_type_id == -1" mat-raised-button (click)="openModalStocks()" color="primary" class="btn-w-md no-margin-left btn-right">
+                Añadir Producto
+            </button>
+        </div>
+        <div class="col-sm-12">
+
+            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+    
+                <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                    <thead>
+                        <tr>
+                            <!-- <th class="noAuto" (click)="sort('w.id')">ID
+                                <span class="glyphicon sort-icon" *ngIf="key =='w.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th> -->
+                            <th>PLU
+                                <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Producto
+                                <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Lote
+                                <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Ubicación
+                                <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Vencimiento
+                                <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Fraccionado
+                                    <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                </th>
+                            <th>Unidades
+                                <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Costo Unitario
+                                <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Subtotal
+                                <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th class="w-40" *ngIf="numId == undefined"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let detail of model.details;let index = index;">
+                            <td>{{detail.product.sku}}</td>
+                            <td>{{detail.product.display_name}}</td>
+                            <td>{{detail.batch}}</td>
+                            <!-- <td *ngIf="numId == undefined"><mat-form-field><input matInput type="text" [(ngModel)]="detail.batch" name="batch{{index}}" /></mat-form-field></td> -->
+                            <td>{{detail.location}}</td>
+                            <!-- <td *ngIf="numId == undefined" ><mat-form-field><input matInput type="text" [(ngModel)]="detail.location" name="location{{index}}" /></mat-form-field></td> -->
+                            <td>{{detail.expiration_date}}</td>
+                            <!-- <td *ngIf="numId == undefined">
+                                <mat-form-field>    
+                                    <input matInput [matDatepicker]="pickerExpirationDate" [(ngModel)]="detail.expiration_date" name="expiration_date{{index}}">
+                                    <mat-datepicker-toggle matSuffix [for]="pickerExpirationDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickerExpirationDate></mat-datepicker>
+                                </mat-form-field></td> -->
+                                <td *ngIf="numId != undefined">{{ detail.fraction ? 'Sí' : 'No' }}</td><td *ngIf="numId == undefined" ><mat-slide-toggle [labelPosition]="after" name="fraction{{index}}" [(ngModel)]="detail.fraction" (change)="fractionChange()"></mat-slide-toggle></td>
+                                <!-- <td *ngIf="numId == undefined" ><mat-slide-toggle [labelPosition]="after" name="fraction{{index}}" [(ngModel)]="detail.fraction"></mat-slide-toggle></td> -->
+                            <td *ngIf="numId != undefined">{{ detail.units }}</td><td *ngIf="numId == undefined" ><mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.units" name="units{{index}}" /></mat-form-field>({{ swFraction ? detail.fraction_stock : detail.set_stock }})</td>
+                            <!-- <td *ngIf="numId == undefined" ><mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.units" name="units{{index}}" /></mat-form-field></td> -->
+                            <td>${{ detail.fraction ? detail.product.averageunitcost/detail.product.units : detail.product.averageunitcost }}</td>
+                            <td>${{ detail.fraction ? (detail.product.averageunitcost/detail.product.units) * detail.units : detail.product.averageunitcost * detail.units}}</td>
+                            <td class="w-40" *ngIf="numId == undefined">
+                                <button type="button" mat-icon-button class="text-danger" (click)="removeProduct(index)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+            </div>
+          </div>
+           <!-- date -->
+        <div class="col-md-5">
+            <mat-form-field>$<input readonly matInput placeholder="Costo Total" [(ngModel)]="model.total" name="total cost"></mat-form-field>
+        </div>
+        <div class="col-md-7" *ngIf="numId == undefined">
+                <button mat-raised-button (click)="guardar()" color="primary" class="btn-w-md no-margin-left btn-right">
+                    Guardar
+                </button>
+            </div>
+
+    </div>
+</form>

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<mat-dialog-content>
+    {{ data.message }}
+</mat-dialog-content>
+<mat-dialog-actions>
+    <!-- <button mat-button type="submit" [disabled]="action_active ? false : !sucursalForm.form.valid" (click)="add()">Agregar</button>     
+    <button mat-button type="button" mat-dialog-close>Cerrar</button> -->
+    <button mat-button mat-dialog-close>{{ data.button_close }}</button>    
+    <button mat-button (click)="acept()">{{ data.button_confirm }}</button>
+</mat-dialog-actions>
