@@ -7,7 +7,7 @@
             <p>
                 <mat-radio-group class="mat-radio-group-spacing" [(ngModel)]="radio.option">
                     <mat-radio-button value="1">Buscar</mat-radio-button>
-                    <mat-radio-button value="2">Crear</mat-radio-button>
+                    <!-- <mat-radio-button value="2">Crear</mat-radio-button> -->
                 </mat-radio-group>
             </p>
         </div>
@@ -15,9 +15,9 @@
     <!-- FORM -->
     <app-products-action *ngIf="radio.option==='2'" (select)="select($event)"></app-products-action>
     <!-- LIST -->
-    <div class="col-sm-12">
+    <!-- <div class="col-sm-12">
         <app-products-list *ngIf="radio.option==='1'" (select)="select($event)"></app-products-list>
-    </div>
+    </div> -->
 </mat-dialog-content>
 
 <mat-dialog-actions>
