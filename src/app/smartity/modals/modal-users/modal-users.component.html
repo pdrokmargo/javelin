@@ -7,13 +7,13 @@
             <p>
                 <mat-radio-group class="md-radio-group-spacing" [(ngModel)]="radio.option">
                     <mat-radio-button value="1">Buscar</mat-radio-button>
-                    <mat-radio-button value="2">Crear</mat-radio-button>
+                    <!-- <mat-radio-button value="2">Crear</mat-radio-button> -->
                 </mat-radio-group>
             </p>
         </div>
     </div>
     <!-- FORM -->
-    <user-action-cmp *ngIf="radio.option==='2'" (select)="select($event)"></user-action-cmp>
+    <!-- <user-action-cmp *ngIf="radio.option==='2'" (select)="select($event)"></user-action-cmp> -->
     <!-- LIST -->
     <div class="col-sm-12">
         <user-list-cmp *ngIf="radio.option==='1'" (select)="select($event)" [type]="data.type"></user-list-cmp>

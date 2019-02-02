@@ -1,5 +1,6 @@
-<form #modelForm="ngForm" autocomplete="off">
-    <div class="row">
+<div class="container">
+    <form #modelForm="ngForm" autocomplete="off">
+        <div class="row">
         <div class="col-sm-12 margin-bottom-40" [class.btn-action-container]="booActive">
             <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
                 <mat-icon>keyboard_arrow_left</mat-icon> Regresar
@@ -27,10 +28,12 @@
         </div>
         <!-- tipo de poblacion -->
         <div class="col-sm-12 col-md-6 margin-bottom">
-            <mat-select class="full-width" placeholder="Tipo de población" [(ngModel)]="model.population_type_id" name="population_type_id"
-                id="population_type_id">
-                <mat-option *ngFor="let item of arrPopulation_type" [value]="item.id">{{item.value}}</mat-option>
-            </mat-select>
+            <mat-form-field>
+                <mat-select class="full-width" placeholder="Tipo de población" [(ngModel)]="model.population_type_id"
+                    name="population_type_id" id="population_type_id">
+                    <mat-option *ngFor="let item of arrPopulation_type" [value]="item.id">{{item.value}}</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
         <!--description-->
         <div class='col-sm-12 col-md-6 margin-bottom'>
@@ -68,362 +71,367 @@
             </div>
         </div>
     </div>
-    <!--EVENTO-->
-    <div class="row">
-        <div class="col-sm-12 margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-            <mat-slide-toggle [labelPosition]="'before'" id="event" name="event" [(ngModel)]="booEvento">Evento</mat-slide-toggle>
-        </div>
+<!--EVENTO-->
+<div class="row">
+    <div class="col-sm-12 margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
+        <mat-slide-toggle [labelPosition]="'before'" id="event" name="event" [(ngModel)]="booEvento">Evento</mat-slide-toggle>
     </div>
-    <div class="row" *ngIf="booEvento">
-        <!-- Numero de contrato -->
-        <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input required type="text" id="evento_contract_number" name="evento_contract_number" [(ngModel)]="contract_number" matInput
-                    placeholder="Numero de contrato">
-            </mat-form-field>
-        </div>
-        <!-- inicio del contrato -->
-        <div class='col-sm-12 col-md-3 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input matInput [matDatepicker]="pickerIssueDate2" id="evento_contract_start_date" name="evento_contract_start_date" placeholder="Inicio de contrato"
-                    [(ngModel)]="contract_start_date">
-                <!-- <button mdSuffix [matDatepicker]="pickerIssueDate2"></button> -->
-            </mat-form-field>
-            <mat-datepicker #pickerIssueDate2></mat-datepicker>
-        </div>
-        <!-- Vencimiento del contrato -->
-        <div class='col-sm-12 col-md-3 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input matInput [matDatepicker]="pickerIssueDate1" id="evento_contract_expiration_date" name="evento_contract_expiration_date"
-                    placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
-                <!-- <button mdSuffix [matDatepicker]="pickerIssueDate1"></button> -->
-            </mat-form-field>
-            <mat-datepicker #pickerIssueDate1></mat-datepicker>
-        </div>
-        <!-- presupuesto -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input required type="text" id="budget" name="budget" [(ngModel)]="objEvent.budget" matInput placeholder="Presupuesto">
-            </mat-form-field>
-        </div>
-        <!-- Alerta -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <span mdPrefix>% &nbsp;</span>
-                <input required type="text" id="percent_alert" name="percent_alert" [(ngModel)]="objEvent.percent_alert" matInput placeholder="Alerta">
-            </mat-form-field>
-        </div>
-        <!-- Inactivacion -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <span mdPrefix>% &nbsp;</span>
-                <input required type="text" id="percent_unable" name="percent_unable" [(ngModel)]="objEvent.percent_unable" matInput placeholder="Inactivación">
-            </mat-form-field>
-        </div>
-        <!-- autorizacion -->
-        <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
-            <mat-slide-toggle (change)="activeperauth_length()" [labelPosition]="'before'" id="perauth" name="perauth" [(ngModel)]="objEvent.perauth">Autorización</mat-slide-toggle>
-        </div>
-        <!-- longitud -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input [disabled]="!objEvent.perauth" [required]="objEvent.perauth" type="text" id="perauth_length" name="perauth_length"
-                    [(ngModel)]="objEvent.perauth_length" matInput placeholder="Longitud">
-            </mat-form-field>
-        </div>
-        <!-- tipo de caracteres -->
-        <div class="col-sm-12 col-md-4 col-lg-2 margin-bottom">
+</div>
+<div class="row" *ngIf="booEvento">
+    <!-- Numero de contrato -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="evento_contract_number" name="evento_contract_number" [(ngModel)]="contract_number" matInput
+                placeholder="Numero de contrato">
+        </mat-form-field>
+    </div>
+    <!-- inicio del contrato -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickerIssueDate2" id="evento_contract_start_date" name="evento_contract_start_date" placeholder="Inicio de contrato"
+                [(ngModel)]="contract_start_date">
+            <!-- <button mdSuffix [matDatepicker]="pickerIssueDate2"></button> -->
+        </mat-form-field>
+        <mat-datepicker #pickerIssueDate2></mat-datepicker>
+    </div>
+    <!-- Vencimiento del contrato -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickerIssueDate1" id="evento_contract_expiration_date" name="evento_contract_expiration_date"
+                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
+            <!-- <button mdSuffix [matDatepicker]="pickerIssueDate1"></button> -->
+        </mat-form-field>
+        <mat-datepicker #pickerIssueDate1></mat-datepicker>
+    </div>
+    <!-- presupuesto -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="budget" name="budget" [(ngModel)]="objEvent.budget" matInput placeholder="Presupuesto">
+        </mat-form-field>
+    </div>
+    <!-- Alerta -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <span mdPrefix>% &nbsp;</span>
+            <input required type="text" id="percent_alert" name="percent_alert" [(ngModel)]="objEvent.percent_alert" matInput placeholder="Alerta">
+        </mat-form-field>
+    </div>
+    <!-- Inactivacion -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <span mdPrefix>% &nbsp;</span>
+            <input required type="text" id="percent_unable" name="percent_unable" [(ngModel)]="objEvent.percent_unable" matInput placeholder="Inactivación">
+        </mat-form-field>
+    </div>
+    <!-- autorizacion -->
+    <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
+        <mat-slide-toggle (change)="activeperauth_length()" [labelPosition]="'before'" id="perauth" name="perauth" [(ngModel)]="objEvent.perauth">Autorización</mat-slide-toggle>
+    </div>
+    <!-- longitud -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input [disabled]="!objEvent.perauth" [required]="objEvent.perauth" type="text" id="perauth_length" name="perauth_length"
+                [(ngModel)]="objEvent.perauth_length" matInput placeholder="Longitud">
+        </mat-form-field>
+    </div>
+    <!-- tipo de caracteres -->
+    <div class="col-sm-12 col-md-4 col-lg-2 margin-bottom">
+        <mat-form-field>
             <mat-select [disabled]="!objEvent.perauth" class="full-width" placeholder="Tipo caracteres" [(ngModel)]="objEvent.perauth_char_type"
                 name="perauth_char_type" id="perauth_char_type">
                 <mat-option *ngFor="let item of arrPerauth_char_type" [value]="item.id">{{item.value}}</mat-option>
             </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<!--CÁPITA-->
+<div class="row">
+    <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
+        <mat-slide-toggle [labelPosition]="'before'" id="capita" name="capita" [(ngModel)]="booCapita">Cápita</mat-slide-toggle>
+    </div>
+</div>
+<div class="row" *ngIf="booCapita">
+    <!-- Numero de contrato -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="capita_contract_number" name="capita_contract_number" [(ngModel)]="contract_number" matInput
+                placeholder="Numero de contrato">
+        </mat-form-field>
+    </div>
+    <!-- inicio del contrato -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickerIssueDate" id="capita_contract_start_date" name="capita_contract_start_date" placeholder="Inicio de contrato"
+                [(ngModel)]="contract_start_date">
+            <!-- <button mdSuffix [matDatepicker]="pickerIssueDate"></button> -->
+        </mat-form-field>
+        <mat-datepicker #pickerIssueDate></mat-datepicker>
+    </div>
+    <!-- Vencimiento del contrato -->
+    <div class='col-sm-12 col-md-3  margin-bottom'>
+        <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickerIssueDate3" id="capita_contract_expiration_date" name="capita_contract_expiration_date"
+                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
+            <!-- <button mdSuffix [matDatepicker]="pickerIssueDate3"></button> -->
+        </mat-form-field>
+        <mat-datepicker #pickerIssueDate3></mat-datepicker>
+    </div>
+    <!-- Alerta -->
+    <div class='col-sm-12 col-md-3 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <span mdPrefix>% &nbsp;</span>
+            <input required type="text" id="capita_percent_alert" name="capita_percent_alert" [(ngModel)]="objCapita.percent_alert" matInput
+                placeholder="Alerta">
+        </mat-form-field>
+    </div>
+    <!-- Inactivacion -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <span mdPrefix>% &nbsp;</span>
+            <input required type="text" id="capita_percent_unable" name="capita_percent_unable" [(ngModel)]="objCapita.percent_unable"
+                matInput placeholder="Inactivación">
+        </mat-form-field>
+    </div>
+    <!-- afiliados -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="capita_affiliates_total_qty" name="capita_affiliates_total_qty" [(ngModel)]="objCapita.affiliates_total_qty"
+                matInput placeholder="Afiliados">
+        </mat-form-field>
+    </div>
+    <div class="col-sm-12"></div>
+    <!-- Historico de afiliados -->
+    <div class="col-sm-12 col-md-6 margin-bottom">
+        <div class="box-header no-padding-h" style="height: 67px;">Histórico de afiliados</div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+            <table class="mdl-data-table table-bordered table-striped no-margin">
+                <thead>
+                    <tr>
+                        <th>Ubicación</th>
+                        <th>Fecha</th>
+                        <th>Afiliados</th>
+                        <th>Valor capita</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of objCapita.affiliates_qty_history_record">
+                        <td>{{item.department.value}}, {{item.city.value}}</td>
+                        <td>{{item.affiliates_number}}</td>
+                        <td>{{item.affiliates_number}}</td>
+                        <td>{{item.date | date:'dd-MM-yyyy'}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <!--CÁPITA-->
-    <div class="row">
-        <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-            <mat-slide-toggle [labelPosition]="'before'" id="capita" name="capita" [(ngModel)]="booCapita">Cápita</mat-slide-toggle>
+    <!-- Capita detallada -->
+    <div class="col-sm-12 col-md-6 margin-bottom">
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Cápita detallada</div>
+            <span class="flex-spacer"></span>
+            <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalGeolocation()">Añadir</button>
         </div>
-    </div>
-    <div class="row" *ngIf="booCapita">
-        <!-- Numero de contrato -->
-        <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input required type="text" id="capita_contract_number" name="capita_contract_number" [(ngModel)]="contract_number" matInput
-                    placeholder="Numero de contrato">
-            </mat-form-field>
-        </div>
-        <!-- inicio del contrato -->
-        <div class='col-sm-12 col-md-3 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input matInput [matDatepicker]="pickerIssueDate" id="capita_contract_start_date" name="capita_contract_start_date" placeholder="Inicio de contrato"
-                    [(ngModel)]="contract_start_date">
-                <!-- <button mdSuffix [matDatepicker]="pickerIssueDate"></button> -->
-            </mat-form-field>
-            <mat-datepicker #pickerIssueDate></mat-datepicker>
-        </div>
-        <!-- Vencimiento del contrato -->
-        <div class='col-sm-12 col-md-3  margin-bottom'>
-            <mat-form-field class="full-width">
-                <input matInput [matDatepicker]="pickerIssueDate3" id="capita_contract_expiration_date" name="capita_contract_expiration_date"
-                    placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
-                <!-- <button mdSuffix [matDatepicker]="pickerIssueDate3"></button> -->
-            </mat-form-field>
-            <mat-datepicker #pickerIssueDate3></mat-datepicker>
-        </div>
-        <!-- Alerta -->
-        <div class='col-sm-12 col-md-3 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <span mdPrefix>% &nbsp;</span>
-                <input required type="text" id="capita_percent_alert" name="capita_percent_alert" [(ngModel)]="objCapita.percent_alert" matInput
-                    placeholder="Alerta">
-            </mat-form-field>
-        </div>
-        <!-- Inactivacion -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <span mdPrefix>% &nbsp;</span>
-                <input required type="text" id="capita_percent_unable" name="capita_percent_unable" [(ngModel)]="objCapita.percent_unable"
-                    matInput placeholder="Inactivación">
-            </mat-form-field>
-        </div>
-        <!-- afiliados -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input required type="text" id="capita_affiliates_total_qty" name="capita_affiliates_total_qty" [(ngModel)]="objCapita.affiliates_total_qty"
-                    matInput placeholder="Afiliados">
-            </mat-form-field>
-        </div>
-        <div class="col-sm-12"></div>
-        <!-- Historico de afiliados -->
-        <div class="col-sm-12 col-md-6 margin-bottom">
-            <div class="box-header no-padding-h" style="height: 67px;">Histórico de afiliados</div>
-            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                <table class="mdl-data-table table-bordered table-striped no-margin">
-                    <thead>
-                        <tr>
-                            <th>Ubicación</th>
-                            <th>Fecha</th>
-                            <th>Afiliados</th>
-                            <th>Valor capita</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of objCapita.affiliates_qty_history_record">
-                            <td>{{item.department.value}}, {{item.city.value}}</td>
-                            <td>{{item.affiliates_number}}</td>
-                            <td>{{item.affiliates_number}}</td>
-                            <td>{{item.date | date:'dd-MM-yyyy'}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- Capita detallada -->
-        <div class="col-sm-12 col-md-6 margin-bottom">
-            <div class="flex margin-bottom">
-                <div class="box-header no-padding-h">Cápita detallada</div>
-                <span class="flex-spacer"></span>
-                <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalGeolocation()">Añadir</button>
-            </div>
-            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                <table class="mdl-data-table table-bordered table-striped no-margin">
-                    <thead>
-                        <tr>
-                            <th>Ubicación</th>
-                            <th>Afiliados</th>
-                            <th>Valor cápita</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let item of objCapita.detailed_capita; let index = index">
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+            <table class="mdl-data-table table-bordered table-striped no-margin">
+                <thead>
+                    <tr>
+                        <th>Ubicación</th>
+                        <th>Afiliados</th>
+                        <th>Valor cápita</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let item of objCapita.detailed_capita; let index = index">
 
-                        <tr *ngIf="item.state">
-                            <td>{{item.department.value}}, {{item.city.value}}</td>
-                            <td>
-                                <mat-form-field class="full-width">
-                                    <input required type="text" id="affiliates_number{{index}}" name="affiliates_number{{index}}" [(ngModel)]="item.affiliates_number"
-                                        matInput>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field class="full-width">
-                                    <input required type="text" id="capita_fare{{index}}" name="capita_fare{{index}}" [(ngModel)]="item.capita_fare" matInput>
-                                </mat-form-field>
-                            </td>
-                            <td class="w-40">
-                                <button type="button" class="text-danger" mat-icon-button (click)="deleteDetailedCapita(item)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <tr *ngIf="item.state">
+                        <td>{{item.department.value}}, {{item.city.value}}</td>
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input required type="text" id="affiliates_number{{index}}" name="affiliates_number{{index}}" [(ngModel)]="item.affiliates_number"
+                                    matInput>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input required type="text" id="capita_fare{{index}}" name="capita_fare{{index}}" [(ngModel)]="item.capita_fare" matInput>
+                            </mat-form-field>
+                        </td>
+                        <td class="w-40">
+                            <button type="button" class="text-danger" mat-icon-button (click)="deleteDetailedCapita(item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!--PGP-->
+<div class="row">
+    <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
+        <mat-slide-toggle [labelPosition]="'before'" id="php" name="pgp" [(ngModel)]="booPgp">PGP </mat-slide-toggle>
+    </div>
+</div>
+<div class="row" *ngIf="booPgp">
+    <!-- Numero de contrato -->
+    <div class='col-sm-12 col-md-6 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="pgp_contract_number" name="pgp_contract_number" [(ngModel)]="contract_number" matInput placeholder="Numero de contrato">
+        </mat-form-field>
+    </div>
+    <!-- inicio del contrato -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickerIssueDate4" id="pgp_contract_start_date" name="pgp_contract_start_date" placeholder="Inicio de contrato"
+                [(ngModel)]="contract_start_date">
+            <!-- <button mdSuffix [matDatepicker]="pickerIssueDate4"></button> -->
+        </mat-form-field>
+        <mat-datepicker #pickerIssueDate4></mat-datepicker>
+    </div>
+    <!-- Vencimiento del contrato -->
+    <div class='col-sm-12 col-md-3 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickerIssueDate5" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date"
+                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
+            <!-- <button mdSuffix [matDatepicker]="pickerIssueDate5"></button> -->
+        </mat-form-field>
+        <mat-datepicker #pickerIssueDate5></mat-datepicker>
+    </div>
+    <!-- presupuesto -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="pgp_budget" name="pgp_budget" [(ngModel)]="objPgp.budget" matInput placeholder="Presupuesto Mensual">
+        </mat-form-field>
+    </div>
+    <!-- Alerta -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <span mdPrefix>% &nbsp;</span>
+            <input required type="text" id="pgp_percent_alert" name="pgp_percent_alert" [(ngModel)]="objPgp.percent_alert" matInput placeholder="Alerta">
+        </mat-form-field>
+    </div>
+    <!-- inactivacion -->
+    <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
+        <mat-form-field class="full-width">
+            <input required type="text" id="pgp_percent_unable" name="pgp_percent_unable" [(ngModel)]="objPgp.percent_unable" matInput
+                placeholder="Inactivación">
+        </mat-form-field>
+    </div>
+</div>
+<div class="row">
+    <!-- medicamentos -->
+    <div class="col-sm-12 margin-bottom">
+
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Medicamentos</div>
+            <span class="flex-spacer"></span>
+            <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalPharmaceutical()">Añadir</button>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+            <table class="mdl-data-table table-bordered table-striped no-margin">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Evento</th>
+                        <th>Tarifa</th>
+                        <th>Cápita</th>
+                        <th>PGP</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _pharmadrugs; let index = index">
+                        <td>{{item.name}}</td>
+                        <td>
+                            <mat-slide-toggle [disabled]="!booEvento" id="p_event{{index}}" name="p_event{{index}}" [(ngModel)]="item.event"></mat-slide-toggle>
+                        </td>
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input [disabled]="!item.event" matInput type="text" [(ngModel)]="item.fare" id="p_fare{{index}}" name="p_fare{{index}}"
+                                />
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-slide-toggle [disabled]="!booCapita" id="p_capita{{index}}" name="p_capita{{index}}" [(ngModel)]="item.capita"></mat-slide-toggle>
+                        </td>
+                        <td>
+                            <mat-slide-toggle [disabled]="!booPgp" id="p_pgp{{index}}" name="p_pgp{{index}}" [(ngModel)]="item.pgp"></mat-slide-toggle>
+                        </td>
+                        <td class="w-40">
+                            <button type="button" class="text-danger" mat-icon-button (click)="deletePharmadrug()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </div>
-    <!--PGP-->
-    <div class="row">
-        <div class="col-sm-12  margin-bottom-40" style="padding-bottom: 10px; border-bottom: 1px solid #bebebe">
-            <mat-slide-toggle [labelPosition]="'before'" id="php" name="pgp" [(ngModel)]="booPgp">PGP </mat-slide-toggle>
+    <!-- puntos de dispensacion -->
+    <div class="col-sm-12 margin-bottom">
+
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Puntos de dispensación</div>
+            <span class="flex-spacer"></span>
+            <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalDeliveryPoints()">Añadir</button>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+            <table class="mdl-data-table table-bordered table-striped no-margin">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Evento</th>
+                        <th>Cápita</th>
+                        <th>PGP</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of model.delivery_points; let index = index">
+                        <td>{{item.name}}</td>
+                        <td>
+                            <mat-slide-toggle id="d_event{{index}}" name="_devent{{index}}" [(ngModel)]="item.event"></mat-slide-toggle>
+                        </td>
+                        <td>
+                            <mat-slide-toggle id="d_capita{{index}}" name="d_capita{{index}}" [(ngModel)]="item.capita"></mat-slide-toggle>
+                        </td>
+                        <td>
+                            <mat-slide-toggle id="d_pgp{{index}}" name="d_pgp{{index}}" [(ngModel)]="item.pgp"></mat-slide-toggle>
+                        </td>
+                        <td class="w-40">
+                            <button type="button" class="text-danger" mat-icon-button (click)="deleteDeliveryPoints(item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <!-- medicamentos -->
+    <div class="col-sm-12 margin-bottom">
+        <div class="box-header no-padding-h">Histórico alerta de contratos</div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+            <table class="mdl-data-table table-bordered table-striped no-margin">
+                <tbody>
+                    <tr *ngFor="let item of model.conditional_alers">
+                        <td>{{item.description}}</td>
+                        <td>{{item.issue_date}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="row" *ngIf="booPgp">
-        <!-- Numero de contrato -->
-        <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input required type="text" id="pgp_contract_number" name="pgp_contract_number" [(ngModel)]="contract_number" matInput placeholder="Numero de contrato">
-            </mat-form-field>
-        </div>
-        <!-- inicio del contrato -->
-        <div class='col-sm-12 col-md-3 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input matInput [matDatepicker]="pickerIssueDate4" id="pgp_contract_start_date" name="pgp_contract_start_date" placeholder="Inicio de contrato"
-                    [(ngModel)]="contract_start_date">
-                <!-- <button mdSuffix [matDatepicker]="pickerIssueDate4"></button> -->
-            </mat-form-field>
-            <mat-datepicker #pickerIssueDate4></mat-datepicker>
-        </div>
-        <!-- Vencimiento del contrato -->
-        <div class='col-sm-12 col-md-3 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input matInput [matDatepicker]="pickerIssueDate5" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date" placeholder="Vencimiento del contrato"
-                    [(ngModel)]="contract_expiration_date">
-                <!-- <button mdSuffix [matDatepicker]="pickerIssueDate5"></button> -->
-            </mat-form-field>
-            <mat-datepicker #pickerIssueDate5></mat-datepicker>
-        </div>
-        <!-- presupuesto -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input required type="text" id="pgp_budget" name="pgp_budget" [(ngModel)]="objPgp.budget" matInput placeholder="Presupuesto Mensual">
-            </mat-form-field>
-        </div>
-        <!-- Alerta -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <span mdPrefix>% &nbsp;</span>
-                <input required type="text" id="pgp_percent_alert" name="pgp_percent_alert" [(ngModel)]="objPgp.percent_alert" matInput placeholder="Alerta">
-            </mat-form-field>
-        </div>
-        <!-- inactivacion -->
-        <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
-            <mat-form-field class="full-width">
-                <input required type="text" id="pgp_percent_unable" name="pgp_percent_unable" [(ngModel)]="objPgp.percent_unable" matInput
-                    placeholder="Inactivación">
-            </mat-form-field>
-        </div>
+    <div class="col-sm-12" [class.btn-action-container]="booActive">
+        <button type="button" [disabled]="!modelForm.form.valid" mat-raised-button class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
     </div>
-    <div class="row">
-        <!-- medicamentos -->
-        <div class="col-sm-12 margin-bottom">
-
-            <div class="flex margin-bottom">
-                <div class="box-header no-padding-h">Medicamentos</div>
-                <span class="flex-spacer"></span>
-                <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalPharmaceutical()">Añadir</button>
-            </div>
-            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                <table class="mdl-data-table table-bordered table-striped no-margin">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Evento</th>
-                            <th>Tarifa</th>
-                            <th>Cápita</th>
-                            <th>PGP</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of _pharmadrugs; let index = index">
-                            <td>{{item.name}}</td>
-                            <td>
-                                <mat-slide-toggle [disabled]="!booEvento" id="p_event{{index}}" name="p_event{{index}}" [(ngModel)]="item.event"></mat-slide-toggle>
-                            </td>
-                            <td>
-                                <mat-form-field class="full-width">
-                                    <input [disabled]="!item.event" matInput type="text" [(ngModel)]="item.fare" id="p_fare{{index}}" name="p_fare{{index}}" />
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-slide-toggle [disabled]="!booCapita" id="p_capita{{index}}" name="p_capita{{index}}" [(ngModel)]="item.capita"></mat-slide-toggle>
-                            </td>
-                            <td>
-                                <mat-slide-toggle [disabled]="!booPgp" id="p_pgp{{index}}" name="p_pgp{{index}}" [(ngModel)]="item.pgp"></mat-slide-toggle>
-                            </td>
-                            <td class="w-40">
-                                <button type="button" class="text-danger" mat-icon-button (click)="deletePharmadrug()">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-        <!-- puntos de dispensacion -->
-        <div class="col-sm-12 margin-bottom">
-
-            <div class="flex margin-bottom">
-                <div class="box-header no-padding-h">Puntos de dispensación</div>
-                <span class="flex-spacer"></span>
-                <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalDeliveryPoints()">Añadir</button>
-            </div>
-            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                <table class="mdl-data-table table-bordered table-striped no-margin">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Evento</th>
-                            <th>Cápita</th>
-                            <th>PGP</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of model.delivery_points; let index = index">
-                            <td>{{item.name}}</td>
-                            <td>
-                                <mat-slide-toggle id="d_event{{index}}" name="_devent{{index}}" [(ngModel)]="item.event"></mat-slide-toggle>
-                            </td>
-                            <td>
-                                <mat-slide-toggle id="d_capita{{index}}" name="d_capita{{index}}" [(ngModel)]="item.capita"></mat-slide-toggle>
-                            </td>
-                            <td>
-                                <mat-slide-toggle id="d_pgp{{index}}" name="d_pgp{{index}}" [(ngModel)]="item.pgp"></mat-slide-toggle>
-                            </td>
-                            <td class="w-40">
-                                <button type="button" class="text-danger" mat-icon-button (click)="deleteDeliveryPoints(item)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
     </div>
-    <div class="row">
-        <!-- medicamentos -->
-        <div class="col-sm-12 margin-bottom">
-            <div class="box-header no-padding-h">Histórico alerta de contratos</div>
-            <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-                <table class="mdl-data-table table-bordered table-striped no-margin">
-                    <tbody>
-                        <tr *ngFor="let item of model.conditional_alers">
-                            <td>{{item.description}}</td>
-                            <td>{{item.issue_date}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-12" [class.btn-action-container]="booActive">
-            <button type="button" [disabled]="!modelForm.form.valid" mat-raised-button class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
-        </div>
-    </div>
-</form>
+
+    </form>
+</div>

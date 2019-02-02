@@ -16,7 +16,7 @@
         </div>
 
         <!-- inventory_movements_type -->
-        <div class='col-sm-12 col-md-4 margin-bottom'>
+        <div class="col-sm-12 col-md-4 margin-bottom">
                 <mat-form-field class="full-width">
             <mat-select class="full-width" placeholder="Tipo de entrada" [(ngModel)]="model.inventory_movement_entry_out_type_id" name="inventory_movement_entry_out_type_id">
                 <mat-option *ngFor="let item of inventory_movements_type" [value]="item.id">{{item.value}}</mat-option>
@@ -107,7 +107,9 @@
           </div>
            <!-- date -->
         <div class="col-md-5">
-            <mat-form-field>$<input readonly matInput placeholder="Costo Total" [(ngModel)]="model.total" name="total cost"></mat-form-field>
+            <mat-form-field>
+                $<input readonly matInput placeholder="Costo Total" [(ngModel)]="model.total" name="total cost">
+            </mat-form-field>
         </div>
         <div class="col-md-7" *ngIf="numId == undefined">
                 <button mat-raised-button (click)="guardar()" color="primary" class="btn-w-md no-margin-left btn-right">

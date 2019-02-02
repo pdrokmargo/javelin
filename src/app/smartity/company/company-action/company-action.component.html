@@ -1,167 +1,189 @@
-<!-- FORM -->
-
 <form #companyForm="ngForm" autocomplete="off">
-
-    <div class="col-sm-12 margin-bottom">
-        <button mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
-            <mat-icon>keyboard_arrow_left</mat-icon> Regresar
-        </button>
-    </div>
-
-    <!-- name -->
-    <div class='col-sm-12 col-md-6  margin-bottom'>
-        <mat-form-field class="full-width">
-            <input required type="text" id="name" name="name" [(ngModel)]="model.name" matInput placeholder="Nombre">
-        </mat-form-field>
-    </div>
-
-    <!-- nit -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <mat-form-field class="full-width">
-            <input required type="text" id="nit" name="nit" [(ngModel)]="model.nit" matInput placeholder="Nit">
-        </mat-form-field>
-    </div>
-
-    <!-- description -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <mat-form-field class="full-width">
-            <input required type="text" id="description" name="description" [(ngModel)]="model.description" matInput placeholder="Descripción">
-        </mat-form-field>
-    </div>
-
-    <!-- email -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <mat-form-field class="full-width">
-            <input required type="text" id="email" name="email" [(ngModel)]="model.email" matInput placeholder="Correo Eletrónico">
-        </mat-form-field>
-    </div>
-
-    <!--country -->
-    <div class='col-sm-12 col-md-4 margin-bottom'>
-        <mat-select class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id" (change)="getDepartments()"
-            id="country_id">
-            <mat-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
-    </div>
-
-    <!-- department -->
-    <div class='col-sm-12 col-md-4 margin-bottom'>
-        <mat-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department_id" (change)="getCities()"
-            id="department_id">
-            <mat-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
-    </div>
-
-    <!--city -->
-    <div class='col-sm-12 col-md-4 margin-bottom'>
-        <mat-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id" id="city_id">
-            <mat-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
-    </div>
-
-    <!-- address -->
-    <div class='col-sm-12 col-md-12 margin-bottom'>
-        <mat-form-field class="full-width">
-            <input required type="text" id="address" name="address" [(ngModel)]="model.address" matInput placeholder="Dirección">
-        </mat-form-field>
-    </div>
-
-    <!-- website -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <mat-form-field class="full-width">
-            <input required type="text" id="website" name="website" [(ngModel)]="model.website" matInput placeholder="Sitio web">
-        </mat-form-field>
-    </div>
-
-    <!-- phone number -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <mat-form-field class="full-width">
-            <input NumberOnly required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" matInput placeholder="Teléfono">
-        </mat-form-field>
-    </div>
-    <span class="col-sm-12"></span>
-    <!-- economic activity -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-        <mat-form-field class="full-width">
-            <input required type="text" id="economic_activity" name="economic_activity" [(ngModel)]="model.economic_activity" matInput
-                placeholder="Actividad económica">
-        </mat-form-field>
-    </div>
-    <!-- tax regimen -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-select class="full-width" placeholder="Tipo de régimen" [(ngModel)]="model.tax_regime_id" name="tax_regime_id" id="tax_regime_id">
-                <mat-option *ngFor="let item of tax_regime" [value]="item.id">{{item.value}}</mat-option>
-            </mat-select>
-    </div>
-
-    <!-- withholding_income_sales_id -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-select class="full-width" placeholder="Reterenta en Ventas" [(ngModel)]="model.withholding_income_sales_id" name="withholding_income_sales_id"
-                id="withholding_income_sales_id">
-                <mat-option *ngFor="let i of withholding" [value]="i.id">{{i.value}}</mat-option>
-            </mat-select>
-    </div>
-
-    <!-- withholding_income_purchases_id -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-select class="full-width" placeholder="Reterenta en compras" [(ngModel)]="model.withholding_income_purchases_id" name="withholding_income_purchases_id"
-                id="withholding_income_purchases_id">
-                <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
-            </mat-select>
-    </div>
-
-    <!-- withholding_vat_sales_id -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-select class="full-width" placeholder="Reteiva en Ventas" [(ngModel)]="model.withholding_vat_sales_id" name="withholding_vat_sales_id"
-                id="withholding_vat_sales_id">
-                <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
-            </mat-select>
-    </div>
-
-    <!-- withholding_vat_purchases_id -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-select class="full-width" placeholder="Reteiva en compras" [(ngModel)]="model.withholding_vat_purchases_id" name="withholding_vat_purchases_id"
-                id="withholding_vat_purchases_id">
-                <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
-            </mat-select>
-    </div>
-
-    <!-- withholding_vat_sales_id -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-select class="full-width" placeholder="Reteica en Ventas" [(ngModel)]="model.withholding_ica_sales_id" name="withholding_ica_sales_id"
-                id="withholding_ica_sales_id">
-                <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
-            </mat-select>
-    </div>
-
-    <!-- withholding_vat_purchases_id -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-select class="full-width" placeholder="Reteica en compras" [(ngModel)]="model.withholding_ica_purchases_id" name="withholding_ica_purchases_id"
-                id="withholding_ica_purchases_id">
-                <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
-            </mat-select>
-    </div>
-
-    <!-- big_contributor -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-slide-toggle [labelPosition]="after" id="big_contributor" name="big_contributor" [(ngModel)]="model.big_contributor">Gran contribuyente</mat-slide-toggle>
-    </div>
-
-    <!-- selfholder -->
-    <div class='col-sm-12 col-md-6 margin-bottom'>
-            <mat-slide-toggle [labelPosition]="after" id="selfholder" name="selfholder" [(ngModel)]="model.selfholder">Autoretenedor</mat-slide-toggle>
-    </div>
-
-    <!-- big_contributor_resolution -->
-    <div class='col-sm-12 col-md-6 margin-bottom' *ngIf="model.big_contributor">
-            <mat-form-field class="full-width">
-                <input required type="text" id="big_contributor_resolution" name="big_contributor_resolution" [(ngModel)]="model.big_contributor_resolution"
-                    matInput placeholder="Resolución No.">
-            </mat-form-field>
-    </div>
-
-    <div class="col-sm-12">
-        <button [disabled]="!companyForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
-    </div>
-
+        <div class="row">
+        <div class="col-sm-12 margin-bottom">
+                <button mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+                    <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+                </button>
+            </div>
+        
+            <!-- name -->
+            <div class="col-sm-12 col-md-8 margin-bottom">
+                <mat-form-field class="full-width">
+                    <input required name="name" [(ngModel)]="model.name" matInput placeholder="Nombre">
+                </mat-form-field>
+            </div>
+        
+            <!-- nit -->
+            <div class="col-sm-12 col-md-4 margin-bottom">
+                <mat-form-field class="full-width">
+                    <input required name="nit" [(ngModel)]="model.nit" matInput placeholder="Nit">
+                </mat-form-field>
+            </div>
+        
+            <!-- description -->
+            <div class="col-sm-12 col-md-8 margin-bottom">
+                <mat-form-field class="full-width">
+                    <input required type="text" name="description" [(ngModel)]="model.description" matInput placeholder="Descripción">
+                </mat-form-field>
+            </div>
+        
+            <!-- email -->
+            <div class="col-sm-12 col-md-4 margin-bottom">
+                <mat-form-field class="full-width">
+                    <input required type="text" name="email" [(ngModel)]="model.email" matInput placeholder="Correo Eletrónico">
+                </mat-form-field>
+            </div>
+        
+            <!--country -->
+            <div class="col-sm-12 col-md-4 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="País" [(ngModel)]="model.country_id"
+                        name="country_id" (change)="getDepartments()" id="country_id">
+                        <mat-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- department -->
+            <div class="col-sm-12 col-md-4 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id"
+                        name="department_id" (change)="getCities()" id="department_id">
+                        <mat-option *ngFor="let item of departments" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!--city -->
+            <div class="col-sm-12 col-md-4 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id"
+                        name="city_id" id="city_id">
+                        <mat-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- address -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <input required type="text" id="address" name="address" [(ngModel)]="model.address" matInput placeholder="Dirección">
+                </mat-form-field>
+            </div>
+        
+            <!-- website -->
+            <div class="col-sm-12 col-md-3 margin-bottom">
+                <mat-form-field class="full-width">
+                    <input required type="text" id="website" name="website" [(ngModel)]="model.website" matInput placeholder="Sitio web">
+                </mat-form-field>
+            </div>
+        
+            <!-- phone number -->
+            <div class="col-sm-12 col-md-3 margin-bottom">
+                <mat-form-field class="full-width">
+                    <input NumberOnly required type="text" id="phone_number" name="phone_number" [(ngModel)]="model.phone_number" matInput placeholder="Teléfono">
+                </mat-form-field>
+            </div>
+            <span class="col-sm-12"></span>
+            <!-- economic activity -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <input required type="text" id="economic_activity" name="economic_activity" [(ngModel)]="model.economic_activity" matInput
+                        placeholder="Actividad económica">
+                </mat-form-field>
+            </div>
+            <!-- tax regimen -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Tipo de régimen" [(ngModel)]="model.tax_regime_id"
+                        name="tax_regime_id" id="tax_regime_id">
+                        <mat-option *ngFor="let item of tax_regime" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- withholding_income_sales_id -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Reterenta en Ventas" [(ngModel)]="model.withholding_income_sales_id"
+                        name="withholding_income_sales_id" id="withholding_income_sales_id">
+                        <mat-option *ngFor="let i of withholding" [value]="i.id">{{i.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- withholding_income_purchases_id -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Reterenta en compras" [(ngModel)]="model.withholding_income_purchases_id"
+                        name="withholding_income_purchases_id" id="withholding_income_purchases_id">
+                        <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- withholding_vat_sales_id -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Reteiva en Ventas" [(ngModel)]="model.withholding_vat_sales_id"
+                        name="withholding_vat_sales_id" id="withholding_vat_sales_id">
+                        <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- withholding_vat_purchases_id -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Reteiva en compras" [(ngModel)]="model.withholding_vat_purchases_id"
+                        name="withholding_vat_purchases_id" id="withholding_vat_purchases_id">
+                        <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- withholding_vat_sales_id -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Reteica en Ventas" [(ngModel)]="model.withholding_ica_sales_id"
+                        name="withholding_ica_sales_id" id="withholding_ica_sales_id">
+                        <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- withholding_vat_purchases_id -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-form-field class="full-width">
+                    <mat-select class="full-width" placeholder="Reteica en compras" [(ngModel)]="model.withholding_ica_purchases_id"
+                        name="withholding_ica_purchases_id" id="withholding_ica_purchases_id">
+                        <mat-option *ngFor="let item of withholding" [value]="item.id">{{item.value}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+            <!-- big_contributor -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-slide-toggle [labelPosition]="after" id="big_contributor" name="big_contributor" [(ngModel)]="model.big_contributor">Gran
+                    contribuyente</mat-slide-toggle>
+            </div>
+        
+            <!-- selfholder -->
+            <div class="col-sm-12 col-md-6 margin-bottom">
+                <mat-slide-toggle [labelPosition]="after" id="selfholder" name="selfholder" [(ngModel)]="model.selfholder">Autoretenedor</mat-slide-toggle>
+            </div>
+        
+            <!-- big_contributor_resolution -->
+            <div class="col-sm-12 col-md-6 margin-bottom" *ngIf="model.big_contributor">
+                <mat-form-field class="full-width">
+                    <input required type="text" id="big_contributor_resolution" name="big_contributor_resolution" [(ngModel)]="model.big_contributor_resolution"
+                        matInput placeholder="Resolución No.">
+                </mat-form-field>
+            </div>
+        
+            <div class="col-sm-12">
+                <button [disabled]="!companyForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+                    (click)="save()">{{strAction}}</button>
+            </div>
+        </div>
 </form>

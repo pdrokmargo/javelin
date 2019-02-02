@@ -1,7 +1,8 @@
+
 <!-- FORM -->
-
+<div class="container">
 <form #pharmeceuticalForm="ngForm" autocomplete="off">
-
+<div class="row">
     <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive" *ngIf="!noaction">
         <button type="button" mat-raised-button color="secundary" (click)="goList()" class="btn-w-md no-margin-left">Regresar</button>
     </div>
@@ -29,10 +30,10 @@
                     <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalActiveIngredients()">Añadir</button>
                 </div>
                 <div class="col-sm-12 margin-bottom" *ngIf="arrActive_ingredients.length > 0">
-                    <mat-select [required]="arrActive_ingredients.length > 0" (change)="getMeasurement_unit()" placeholder="Unidad de medida"
+                    <mat-form-field><mat-select [required]="arrActive_ingredients.length > 0" (change)="getMeasurement_unit()" placeholder="Unidad de medida"
                         class="full-width" [(ngModel)]="measurement_unit_id" name="measurement_unit_id" id="measurement_unit_id">
                         <mat-option *ngFor="let item of arrMeasurement_unit" [value]="item.id">{{item.value.trim()}}</mat-option>
-                    </mat-select>
+                    </mat-select></mat-form-field>
                 </div>
                 <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                     <table class="mdl-data-table table-bordered table-striped no-margin">
@@ -67,16 +68,16 @@
     </div>
     <!-- dosage_form_id -->
     <div class='col-sm-12 col-md-4 col-lg-3 margin-bottom'>
-        <mat-select class="full-width" placeholder="Forma Farmacéutica" [(ngModel)]="model.dosage_form_id" name="dosage_form_id" id="dosage_form_id">
+        <mat-form-field><mat-select class="full-width" placeholder="Forma Farmacéutica" [(ngModel)]="model.dosage_form_id" name="dosage_form_id" id="dosage_form_id">
             <mat-option *ngFor="let i of pharmaceutical_form" [value]="i.id">{{i.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <!-- routes_administration_id -->
     <div class='col-sm-12 col-md-4 col-lg-3 margin-bottom'>
-        <mat-select class="full-width" placeholder="Vía de administración" [(ngModel)]="model.routes_administration_id" name="routes_administration_id"
+        <mat-form-field><mat-select class="full-width" placeholder="Vía de administración" [(ngModel)]="model.routes_administration_id" name="routes_administration_id"
             id="routes_administration_id">
             <mat-option *ngFor="let i of routes_administration" [value]="i.id">{{i.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <!-- atc -->
     <div class='col-sm-12 col-md-4 col-lg-3 margin-bottom'>
@@ -94,10 +95,10 @@
     </div>
     <!-- storage_condition_id -->
     <div class='col-sm-12 col-md-3 margin-bottom'>
-        <mat-select class="full-width" placeholder="Almacenamiento" [(ngModel)]="model.storage_condition_id" name="storage_condition_id"
+        <mat-form-field><mat-select class="full-width" placeholder="Almacenamiento" [(ngModel)]="model.storage_condition_id" name="storage_condition_id"
             id="storage_condition_id">
             <mat-option *ngFor="let i of storage_condition" [value]="i.id">{{i.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <!-- is_controlled -->
     <div class='col-sm-12 col-md-3 margin-bottom'>
@@ -115,4 +116,6 @@
         <button type="button" [disabled]="!pharmeceuticalForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
             (click)="save()">{{strAction}}</button>
     </div>
+</div>
 </form>
+</div>

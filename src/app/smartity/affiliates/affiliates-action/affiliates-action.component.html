@@ -1,4 +1,5 @@
 <form #modelForm="ngForm" autocomplete="off">
+    <div class="row">
     <div class="col-sm-12 margin-bottom-40">
         <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
             <mat-icon>keyboard_arrow_left</mat-icon> Regresar
@@ -6,10 +7,10 @@
     </div>
     <!-- document_type_id -->
     <div class="col-sm-12 col-md-6 margin-bottom">
-        <mat-select required class="full-width" placeholder="Tipo de identificación" [(ngModel)]="model.document_type_id" name="document_type_id"
+        <mat-form-field class="full-width"><mat-select required class="full-width" placeholder="Tipo de identificación" [(ngModel)]="model.document_type_id" name="document_type_id"
             id="document_type_id">
             <mat-option *ngFor="let item of arrDocument_type" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <!-- document_number -->
     <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
@@ -60,9 +61,9 @@
     </div>
     <!-- gender_id -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <mat-select class="full-width" placeholder="Género" [(ngModel)]="model.gender_id" name="gender_id" id="gender_id">
+        <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Género" [(ngModel)]="model.gender_id" name="gender_id" id="gender_id">
             <mat-option *ngFor="let item of arrGender" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <!-- phone_number -->
     <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
@@ -85,18 +86,18 @@
     </div>
     <!-- conutry -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <mat-select [disabled]="arrDepartment.length == 0" class="full-width" placeholder="Departamento" [(ngModel)]="model.department"
+        <mat-form-field class="full-width"><mat-select [disabled]="arrDepartment.length == 0" class="full-width" placeholder="Departamento" [(ngModel)]="model.department"
             name="department" id="department" (change)="loadCity()">
             <mat-option *ngFor="let item of arrDepartment" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
 
     </div>
     <!-- conutry -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <mat-select [disabled]="arrCity.length == 0" class="full-width" placeholder="Ciudad" [(ngModel)]="model.city" name="city"
+        <mat-form-field class="full-width"><mat-select [disabled]="arrCity.length == 0" class="full-width" placeholder="Ciudad" [(ngModel)]="model.city" name="city"
             id="city" (change)="booGeolocation=true">
             <mat-option *ngFor="let item of arrCity" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <div class="col-sm-12"></div>
     <!-- attendant_name -->
@@ -122,30 +123,30 @@
     <div class="col-sm-12"></div>
     <!-- delivery_contract_id -->
     <div class="col-sm-12 col-md-6 margin-bottom">
-        <mat-select class="full-width" placeholder="Contrato" [(ngModel)]="model.delivery_contract_id" name="delivery_contract_id" id="delivery_contract_id">
+        <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Contrato" [(ngModel)]="model.delivery_contract_id" name="delivery_contract_id" id="delivery_contract_id">
             <mat-option *ngFor="let item of arrDelivery_contract" [value]="item.id" (click)="loadIpsNetword(item)">{{item.name}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <!-- contracts_payment_method_id -->
     <!--div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <mat-select class="full-width" placeholder="Modalidad de contratación" [(ngModel)]="model.contracts_payment_method_id" name="contracts_payment_method_id"
+        <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Modalidad de contratación" [(ngModel)]="model.contracts_payment_method_id" name="contracts_payment_method_id"
             id="contracts_payment_method_id">
             <mat-option *ngFor="let item of arrContracts_payment_method" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div-->
     <!-- affiliate_condition_id -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <mat-select class="full-width" placeholder="Condición de afiliado" [(ngModel)]="model.affiliate_condition_id" name="affiliate_condition_id"
+        <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Condición de afiliado" [(ngModel)]="model.affiliate_condition_id" name="affiliate_condition_id"
             id="affiliate_condition_id">
             <mat-option *ngFor="let item of arrAffiliate_condition" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <div class="col-sm-12"></div>
     <!-- ips_network_id -->
     <div class="col-sm-12 col-md-6 col-lg-4 margin-bottom">
-        <mat-select class="full-width" placeholder="Red adscrita" [(ngModel)]="model.ips_network_id" name="ips_network_id" id="ips_network_id">
+        <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Red adscrita" [(ngModel)]="model.ips_network_id" name="ips_network_id" id="ips_network_id">
             <mat-option *ngFor="let item of arrIps_network" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <!-- affiliate_level -->
     <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
@@ -155,19 +156,20 @@
     </div>
     <!-- affiliate_type -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <mat-select class="full-width" placeholder="Tipo de afiliado" [(ngModel)]="model.affiliate_type" name="affiliate_type" id="affiliate_type">
+        <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Tipo de afiliado" [(ngModel)]="model.affiliate_type" name="affiliate_type" id="affiliate_type">
             <mat-option *ngFor="let item of arrAffiliate_type" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <!-- public_health_condition_id -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">
-        <mat-select class="full-width" placeholder="Condición de salud pública" [(ngModel)]="model.public_health_condition_id" name="public_health_condition_id"
+        <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Condición de salud pública" [(ngModel)]="model.public_health_condition_id" name="public_health_condition_id"
             id="public_health_condition_id">
             <mat-option *ngFor="let item of arrPublic_health_condition" [value]="item.id">{{item.value}}</mat-option>
-        </mat-select>
+        </mat-select></mat-form-field>
     </div>
     <div class="col-sm-12">
         <button [disabled]="action_active ? false : !modelForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
             (click)="save()">{{strAction}}</button>
     </div>
+</div>
 </form>

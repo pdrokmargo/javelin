@@ -5,9 +5,8 @@
                 <mat-icon>keyboard_arrow_left</mat-icon> Regresar
             </button>
         </div>
-    </div>
 
-    <div class="row">
+
         <div class="col-sm-12 margin-bottom">
             <div class="flex">
                 <span class="flex-spacer"></span>
@@ -57,16 +56,16 @@
             </div>
             <!-- company -->
             <div class='col-sm-12 col-md-4 margin-bottom'>
-                <mat-select class="full-width" placeholder="Empresa" [(ngModel)]="company_userprofile.company" name="company_id" id="company_id">
+                    <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Empresa" [(ngModel)]="company_userprofile.company" name="company_id" id="company_id">
                     <mat-option *ngFor="let item of companies" [value]="item" [hidden]="item.hide">{{item.name}}</mat-option>
-                </mat-select>
+                </mat-select></mat-form-field>
             </div>
             <!-- user profile -->
             <div class='col-sm-12 col-md-4 margin-bottom'>
-                <mat-select class="full-width" placeholder="Perfil de usuario" [(ngModel)]="company_userprofile.userprofile" name="user_profile_id"
+                    <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Perfil de usuario" [(ngModel)]="company_userprofile.userprofile" name="user_profile_id"
                     id="user_profile_id">
                     <mat-option *ngFor="let item of userprofiles" [value]="item">{{item.up_description}}</mat-option>
-                </mat-select>
+                </mat-select></mat-form-field>
             </div>
             <div class="col-sm-12 col-md-4 margin-bottom">
                 <div class="flex">

@@ -8,7 +8,7 @@
         </div>
 
         <!-- estado -->
-        <div class='col-sm-12 margin-bottom'>
+        <div class="col-sm-12 margin-bottom">
             <div class="flex">
                 <span class="flex-spacer"></span>
                 <mat-slide-toggle [labelPosition]="after" id="state" name="state" [(ngModel)]="model.state">Estado</mat-slide-toggle>
@@ -16,15 +16,15 @@
         </div>
 
         <!-- name -->
-        <div class='col-sm-12 col-md-8 margin-bottom'>
+        <div class="col-md-8">
             <mat-form-field class="full-width">
-                <input  required type="text" id="name" name="name" [(ngModel)]="model.name" matInput placeholder="Nombre de la bodega">
+                <input matInput name="name" [(ngModel)]="model.name"  placeholder="Nombre de la bodega">
             </mat-form-field>
         </div>
 
 
         <!--warehouse_type_id-->
-        <div class='col-sm-12 col-md-4 margin-bottom'>
+        <div class="col-sm-12 col-md-4 margin-bottom">
                 <mat-form-field class="full-width">
             <mat-select class="full-width" placeholder="Tipo de bodega" [(ngModel)]="model.warehouse_type_id" name="warehouse_type_id"
                 id="warehouse_type_id">
@@ -42,9 +42,9 @@
     
 
         <!--country -->
-        <div class='col-sm-12 col-md-4 margin-bottom'>
+        <div class="col-sm-12 col-md-4 margin-bottom">
                 <mat-form-field class="full-width">
-            <mat-select class="full-width" placeholder="Pais" [(ngModel)]="model.country_id" name="country_id" (change)="getDepartments()"
+            <mat-select class="full-width" placeholder="País" [(ngModel)]="model.country_id" name="country_id" (change)="getDepartments()"
                 id="country_id">
                 <mat-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</mat-option>
             </mat-select>
@@ -53,7 +53,7 @@
 
         <!-- department -->
     
-        <div class='col-sm-12 col-md-4 margin-bottom'>
+        <div class="col-sm-12 col-md-4 margin-bottom">
                 <mat-form-field class="full-width">
             <mat-select class="full-width" placeholder="Departamento" [(ngModel)]="model.department_id" name="department_id" (change)="getCities()"
                 id="department_id">
@@ -65,7 +65,7 @@
 
         <!--city -->
     
-        <div class='col-sm-12 col-md-4 margin-bottom'>
+        <div class="col-sm-12 col-md-4 margin-bottom">
                 <mat-form-field class="full-width">
             <mat-select class="full-width" placeholder="Ciudad" [(ngModel)]="model.city_id" name="city_id" id="city_id">
                 <mat-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</mat-option>

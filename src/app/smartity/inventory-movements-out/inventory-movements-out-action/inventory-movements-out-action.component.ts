@@ -89,13 +89,14 @@ private openModalStocks() {
             "product_id": data.product.id,
             "product": {"sku": data.product.sku, "display_name": data.product.display_name, "averageunitcost": data.product.averageunitcost, "units":data.product.units},
             "batch": data.batch,
-            "fraction": data.fraction,
+            "fraction": false,
             "location": data.location,
             "expiration_date": data.expiration_date,
             "set_stock":  data.set_stock,
             "fraction_stock":  data.fraction_stock,
             "units":""
         });
+        console.log(data.fraction);
          this.model.details.push(movement);
     });
 }

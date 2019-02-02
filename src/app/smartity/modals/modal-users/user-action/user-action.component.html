@@ -1,6 +1,8 @@
 <div class="box-body">
     <!--FORM-->
+    
     <form #modelForm="ngForm" autocomplete="off">
+            <div class="row">
         <div class="col-sm-12 margin-botton">
             <div class="flex">
                 <span class="flex-spacer"></span>
@@ -41,7 +43,7 @@
             </mat-form-field>
         </div>
 
-
+    </div>
 
     </form>
 
@@ -58,19 +60,19 @@
                 <!-- company -->
                 <div class='col-sm-12 col-md-4'>
                     <div class="box-body">
-                        <mat-select required class="full-width" placeholder="Empresa" [(ngModel)]="model_user_company.company" name="company_id" id="company_id">
+                        <mat-form-field><mat-select required class="full-width" placeholder="Empresa" [(ngModel)]="model_user_company.company" name="company_id" id="company_id">
                             <mat-option *ngFor="let item of companies" [value]="item" [hidden]="item.hide">{{item.name}}</mat-option>
-                        </mat-select>
+                        </mat-select></mat-form-field>
                     </div>
                 </div>
 
                 <!-- user profile -->
                 <div class='col-sm-12 col-md-4'>
                     <div class="box-body">
-                        <mat-select required class="full-width" placeholder="Perfil de usuario" [(ngModel)]="model_user_company.userprofile" name="user_profile_id"
+                        <mat-form-field><mat-select required class="full-width" placeholder="Perfil de usuario" [(ngModel)]="model_user_company.userprofile" name="user_profile_id"
                             id="user_profile_id">
                             <mat-option *ngFor="let item of user_profiles" [value]="item">{{item.up_description}}</mat-option>
-                        </mat-select>
+                        </mat-select></mat-form-field>
                     </div>
                 </div>
 
