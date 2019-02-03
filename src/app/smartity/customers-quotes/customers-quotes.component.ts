@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Base } from '../bases/base';
 
 @Component({
   selector: 'app-customers-quotes',
   templateUrl: './customers-quotes.component.html',
-  styleUrls: ['./customers-quotes.component.scss']
+  styleUrls: []
 })
-export class CustomersQuotesComponent implements OnInit {
+export class CustomersQuotesComponent extends Base implements OnInit {
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
   }

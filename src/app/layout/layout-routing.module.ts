@@ -2,7 +2,7 @@ import { AuthGuard } from './../auth/guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutComponent } from './layout.component';
-import { PrivilegeGuard } from "../auth/guards/privilege-guard";
+import { PrivilegeGuard } from '../auth/guards/privilege-guard';
 
 const routes: Routes = [
   {
@@ -33,6 +33,10 @@ const routes: Routes = [
       { path: 'inventory-audit', loadChildren: 'app/smartity/inventory-audit/inventory-audit.module#InventoryAuditModule', canActivate: [PrivilegeGuard] },
       { path: 'suppliers-orders', loadChildren: 'app/smartity/suppliers-orders/suppliers-orders.module#SuppliersOrdersModule', canActivate: [PrivilegeGuard] },
       { path: 'suppliers-quotes', loadChildren: 'app/smartity/suppliers-quotes/suppliers-quotes.module#SuppliersQuotesModule', canActivate: [PrivilegeGuard] },
+      { path: 'customers-quotes', loadChildren: 'app/smartity/customers-quotes/customers-quotes.module#CustomersQuotesModule', canActivate: [PrivilegeGuard] },
+      { path: 'remission-goods', loadChildren: 'app/smartity/remission-goods/remission-goods.module#RemissionGoodsModule', canActivate: [PrivilegeGuard] },
+      { path: 'customers-billing', loadChildren: 'app/smartity/customers-billing/customers-billing.module#CustomersBillingModule', canActivate: [PrivilegeGuard] }
+
     ]
   }
 ];

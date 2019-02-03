@@ -3,7 +3,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { 
+import {
   MatIconModule,
   MatRadioModule,
   MatRippleModule,
@@ -96,8 +96,6 @@ import { ModalProductsListComponent } from './smartity/modals/modal-products/mod
 import { ModalStocksComponent } from './smartity/modals/modal-stocks/modal-stocks.component';
 import { ModalStocksListComponent } from './smartity/modals/modal-stocks/modal-stocks-list/modal-stocks-list.component';
 import { ModalSuppliersOrdersComponent } from './smartity/modals/modal-suppliers-orders/modal-suppliers-orders.component';
-import { CustomersQuotesComponent } from './smartity/customers-quotes/customers-quotes.component';
-
 
 @NgModule({
   imports: [
@@ -112,20 +110,20 @@ import { CustomersQuotesComponent } from './smartity/customers-quotes/customers-
     NgxMaskModule,
     MatRadioModule,
     MatDialogModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatNativeDateModule,
-  MatMenuModule,
-  MatCheckboxModule,
-  MatDatepickerModule,
-  MatSlideToggleModule,
-  MatButtonModule,
-  MatInputModule,
-  MatSnackBarModule,
-  MatFormFieldModule,
-  MatIconModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatNativeDateModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatSlideToggleModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatIconModule,
     NgbModule.forRoot(),
   ],
   declarations: [
@@ -149,7 +147,7 @@ import { CustomersQuotesComponent } from './smartity/customers-quotes/customers-
     AppSearchOverlayComponent,
     SearchOverlayDirective,
     OpenSearchOverlaylDirective,
-    //Modals
+    // Modals
     ModalSucursalComponent,
     ModalConfirmationComponent,
     ModalResolutionComponent,
@@ -187,8 +185,7 @@ import { CustomersQuotesComponent } from './smartity/customers-quotes/customers-
     ModalProductsListComponent,
     ModalStocksComponent,
     ModalStocksListComponent,
-    ModalSuppliersOrdersComponent,
-    CustomersQuotesComponent
+    ModalSuppliersOrdersComponent
   ],
   providers: [
     MycurrencyPipe,
@@ -202,9 +199,7 @@ import { CustomersQuotesComponent } from './smartity/customers-quotes/customers-
     CustomersActionComponent,
     StakeholdersActionComponent,
     StakeholdersListComponent,
-    HelperService,
-
-
+    HelperService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -242,9 +237,8 @@ import { CustomersQuotesComponent } from './smartity/customers-quotes/customers-
 export class AppModule {
 
   constructor(public appRef: ApplicationRef) { }
-  
+
   /*hmrOnInit(store) { }
-  
   hmrOnDestroy(store) {
     const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
     // recreate elements
@@ -252,7 +246,6 @@ export class AppModule {
     // remove styles
     removeNgStyles();
   }
-  
   hmrAfterDestroy(store) {
     // display new elements
     store.disposeOldHosts();
