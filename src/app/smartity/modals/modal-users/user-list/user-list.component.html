@@ -19,9 +19,9 @@
                 <table class="mdl-data-table table-bordered table-striped cf no-margin">
                 <thead>
                     <tr>
-                        <th (click)="sort('u.id')">ID
+                        <!-- <th (click)="sort('u.id')">ID
                             <span class="glyphicon sort-icon" *ngIf="key =='u.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                        </th>
+                        </th> -->
                         <th (click)="sort('username')">Nombre de Usuario
                             <span class="glyphicon sort-icon" *ngIf="key =='username'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
-                        <td>{{ item.id }}</td>                                                                       
+                        <!-- <td>{{ item.id }}</td>                                                                        -->
                         <td>{{ item.username }}</td>
                         <td>{{ item.firstname + ' ' + item.lastname }}</td>  
                         <td>{{ item.user_profile }}</td>    

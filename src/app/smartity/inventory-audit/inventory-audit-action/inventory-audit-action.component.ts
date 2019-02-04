@@ -182,6 +182,9 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
         a.stock.physical_fraction_stock = a.physical_fraction_stock;
         return a.stock;
       });
+      
+      console.log(this.__product);
+      
       this.__warehouse = warehouse;
       this.__user = user;
       const { firstname, lastname } = this.__user;
