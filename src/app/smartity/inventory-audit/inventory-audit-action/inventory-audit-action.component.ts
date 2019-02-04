@@ -239,7 +239,7 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
   }
 
   private finalizar(audit_state_id) {
-    this.helperService.PUT(`/api/inventory-audit/finalize/${this.numId}/${audit_state_id}`, {}).subscribe(rs => {
+    this.helperService.PUT(`/api/inventory-audit/finalize/${this.numId}/${audit_state_id}`, this.model).subscribe(rs => {
       const res = rs.json();
       if (res.finalize) {
         this.snackBar.open(res.message, 'Auditoria Finalizada', { duration: 4000 });
