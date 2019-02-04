@@ -133,12 +133,13 @@ export class SuppliersQuotesActionComponent extends BaseModel implements OnInit 
             const res = rs.json();
             this.model = res.data;
             this.supplier = res['data']['stakeholder_info'] || {};
-            this.contact_name = res['data']['supplier_info']['sales_contact']['name_sales_contact'];
-            this._pharmadrugs = JSON.parse(this.model.products);
+            this.contact_name = res['data']['supplier_info']['sales_contact'];
+            this.model.details = JSON.parse(this.model.products);
             console.log(res);
             if (this.supplier.businessname == '') {
                 this.supplier.businessname = this.supplier.fullname;
             }
+            this.totalCost();
             this.loaderService.display(false);
         }, err => {
             console.log(err);

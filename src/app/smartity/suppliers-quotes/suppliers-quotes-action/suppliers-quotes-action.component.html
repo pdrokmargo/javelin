@@ -90,9 +90,9 @@
                         <tr *ngFor="let detail of model.details;let index = index;">
                                 <td>{{detail.product.sku}}</td>
                                 <td>{{detail.product.display_name}}</td>
-                                <td class="w-60" *ngIf="numId != undefined">{{ detail.units }}</td><td *ngIf="numId == undefined" ><mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.units" name="units{{index}}" /></mat-form-field></td>
-                                <td *ngIf="numId != undefined">$ {{detail.product.averagecostunit}}</td><td *ngIf="numId == undefined" ><mat-form-field>$ <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.product.averageunitcost" name="average{{index}}" /></mat-form-field></td>
-                                <td class="w-60" *ngIf="numId != undefined">% {{detail.discount}}</td><td *ngIf="numId == undefined" ><mat-form-field>% <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.discount" name="discount{{index}}" /></mat-form-field></td>
+                                <td><mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.units" name="units{{index}}" /></mat-form-field></td>
+                                <td><mat-form-field>$ <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.product.averageunitcost" name="average{{index}}" /></mat-form-field></td>
+                                <td><mat-form-field>% <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.discount" name="discount{{index}}" /></mat-form-field></td>
 
                                 <td>${{ detail.product.averageunitcost * detail.units * (1-(detail.discount/100))}}</td>
                             <td class="w-40">
