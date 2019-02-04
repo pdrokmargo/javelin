@@ -10,6 +10,15 @@ import { InventoryAuditComponent } from '../inventory-audit.component';
 })
 export class InventoryAuditListComponent extends BaseList implements OnInit {
 
+  private AUDIT: any = {
+    NO_INICIADA: 189,
+    EN_CURSO: 190,
+    CANCELADA: 191,
+    FINALIZADA: 192,
+    FINALIZADA_AJUSTE: 193,
+    AUDITADA: 194,
+  };
+
 
   constructor(public loaderService: LoaderService,
     public helperService: HelperService,
