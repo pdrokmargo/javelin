@@ -132,6 +132,8 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
           this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
           if (audit_state_id == this.AUDIT.NO_INICIADA) {
             this.comp.openList();
+          } else {
+            this.numId = res.id;
           }
         }
         this.loaderService.display(false);
