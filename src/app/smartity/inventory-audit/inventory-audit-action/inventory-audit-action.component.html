@@ -59,8 +59,8 @@
               <th>Lote</th>
               <th>Ubicación</th>
               <th>Vencimiento</th>
-              <th *ngIf="model.audit_state_id === AUDIT.EN_CURSO">Unidades</th>
-              <th *ngIf="model.audit_state_id === AUDIT.EN_CURSO">Fracciones</th>
+              <th *ngIf="model.audit_state_id === AUDIT.EN_CURSO || model.audit_state_id == AUDIT.AUDITADA">Unidades</th>
+              <th *ngIf="model.audit_state_id === AUDIT.EN_CURSO || model.audit_state_id == AUDIT.AUDITADA">Fracciones</th>
               <th *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA">Unidades Sistema</th>
               <th *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA">Fracciones Sistema</th>
               <th *ngIf="model.audit_state_id == AUDIT.NO_INICIADA" class="w-40"></th>
@@ -75,13 +75,13 @@
               <td>{{item.batch}}</td>
               <td>{{item.location}}</td>
               <td>{{item.expiration_date | date:"dd/MM/yyyy"}}</td>
-              <td *ngIf="(model.audit_state_id === AUDIT.EN_CURSO) || model.audit_state_id == AUDIT.AUDITADA">
+              <td *ngIf="model.audit_state_id === AUDIT.EN_CURSO || model.audit_state_id === AUDIT.AUDITADA">
                 <mat-form-field class="full-width">
                   <input disabled="{{model.audit_state_id == AUDIT.AUDITADA}}" type="text" id="{{i}}physical_set_stock" name="{{i}}physical_set_stock"
                     matInput [(ngModel)]="item.physical_set_stock">
                 </mat-form-field>
               </td>
-              <td *ngIf="(model.audit_state_id === AUDIT.EN_CURSO) || model.audit_state_id == AUDIT.AUDITADA">
+              <td *ngIf="model.audit_state_id === AUDIT.EN_CURSO || model.audit_state_id === AUDIT.AUDITADA">
                 <mat-form-field class="full-width">
                   <input disabled="{{model.audit_state_id == AUDIT.AUDITADA}}" type="text" id="{{i}}physical_fraction_stock" name="{{i}}physical_fraction_stock"
                     matInput [(ngModel)]="item.physical_fraction_stock">
@@ -89,23 +89,14 @@
               </td>
               <td *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA">{{item.set_stock}}</td>
               <td *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA">{{item.fraction_stock}}</td>
-              <td *ngIf="model.audit_state_id == AUDIT.NO_INICIADA">
-                <button type="button" mat-icon-button class="text-danger w-40" (click)="removeProduct(item)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </td>
               <td *ngIf="model.audit_state_id == AUDIT.AUDITADA">
-                {{item.physical_set_stock == item.set_stock &&
-                item.physical_fraction_stock == item.fraction_stock ? 'OK' : ''}}
-                {{item.physical_set_stock < item.set_stock ? 'Sobran ' +(item.set_stock-item.physical_set_stock)+'
-                  unidad(es).' : '' }}
-                  {{ item.physical_set_stock > item.set_stock ? 'Faltan '+(item.physical_set_stock - item.set_stock)+'
-                  unidad(es)' : '' }}
-                  {{item.physical_fraction_stock < item.fraction_stock ? 'Sobran ' +(item.fraction_stock -
-                    item.physical_fraction_stock)+' fraccion(es).' : '' }}
-                  {{item.physical_fraction_stock > item.fraction_stock ? 'Faltan '+(item.physical_fraction_stock -
-                    item.fraction_stock)+' fraccion(es).' : ''}}
-                  </td> <td *ngIf="model.audit_state_id == AUDIT.AUDITADA">
+                {{item.physical_set_stock == item.set_stock && item.physical_fraction_stock == item.fraction_stock ? 'OK' : ''}} {{item.physical_set_stock < item.set_stock ? 'Sobran ' +(item.set_stock-item.physical_set_stock)+' unidad(es).' : '' }} {{ item.physical_set_stock > item.set_stock ? 'Faltan '+(item.physical_set_stock - item.set_stock)+' unidad(es)' : '' }} {{item.physical_fraction_stock < item.fraction_stock ? 'Sobran ' +(item.fraction_stock - item.physical_fraction_stock)+' fraccion(es).' : '' }} {{item.physical_fraction_stock > item.fraction_stock ? 'Faltan '+(item.physical_fraction_stock - item.fraction_stock)+' fraccion(es).' : ''}}
+              </td> 
+              <td *ngIf="model.audit_state_id == AUDIT.AUDITADA"></td>
+              <td *ngIf="model.audit_state_id == AUDIT.NO_INICIADA">
+                  <button type="button" mat-icon-button class="text-danger w-40" (click)="removeProduct(item)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
               </td>
             </tr>
           </tbody>
