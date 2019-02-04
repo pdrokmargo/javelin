@@ -11,7 +11,8 @@
         <!-- inventory_adjustment_type_id -->
         <div class='col-sm-12 col-md-4 margin-bottom'>
             <mat-form-field class="full-width">
-                <mat-select (change)="setCurrentValue()" class="full-width" placeholder="Tipo de ajuste" [(ngModel)]="model.inventory_adjustment_type_id" name="inventory_adjustment_type_id">
+                <mat-select (change)="setCurrentValue()" class="full-width" placeholder="Tipo de ajuste" [(ngModel)]="model.inventory_adjustment_type_id"
+                    name="inventory_adjustment_type_id">
                     <mat-option *ngFor="let item of inventory_adjustments_type" [value]="item.id">{{item.value}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -20,9 +21,9 @@
         <!-- warehouse -->
         <div *ngIf="model.stock.warehouse" class="col-sm-12 col-md-4 margin-bottom">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="Bodega de entrada" [(ngModel)]="model.stock.warehouse.name" id="warehouse_name"
-                    name="warehouse_name" />
-                    <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</mat-icon>
+                <input readonly matInput type="text" placeholder="Bodega de entrada" [(ngModel)]="model.stock.warehouse.name"
+                    id="warehouse_name" name="warehouse_name" />
+                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</mat-icon>
             </mat-form-field>
         </div>
 
@@ -37,7 +38,8 @@
         </div>
 
         <div class="col-md-12" *ngIf="numId == undefined">
-            <button [disabled]="model.warehouse_id == -1" mat-raised-button (click)="openModalStocks()" color="primary" class="btn-w-md no-margin-left btn-right">
+            <button [disabled]="model.warehouse_id == -1" mat-raised-button (click)="openModalStocks()" color="primary"
+                class="btn-w-md no-margin-left btn-right">
                 Seleccionar Producto
             </button>
         </div>
@@ -46,66 +48,66 @@
         <br>
         <div class="col-md-2">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="PLU" [(ngModel)]="model.stock.product.sku" id="product_sku" name="product_sku"
-                />
+                <input readonly matInput type="text" placeholder="PLU" [(ngModel)]="model.stock.product.sku" id="product_sku"
+                    name="product_sku" />
             </mat-form-field>
         </div>
 
         <div class="col-md-4">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="Nombre de Producto" [(ngModel)]="model.stock.product.display_name" id="display_name" name="display_name"
-                />
+                <input readonly matInput type="text" placeholder="Nombre de Producto" [(ngModel)]="model.stock.product.display_name"
+                    id="display_name" name="display_name" />
             </mat-form-field>
         </div>
 
         <div class="col-md-2">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="Stock" [(ngModel)]="model.stock.set_stock" id="set_stock" name="set_stock"
-                />
+                <input readonly matInput type="text" placeholder="Stock" [(ngModel)]="model.stock.set_stock" id="set_stock"
+                    name="set_stock" />
             </mat-form-field>
         </div>
         <div class="col-md-2">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="Stock Fracciones" [(ngModel)]="model.stock.fraction_stock" id="fraction_stock" name="fraction_stock"
-                />
+                <input readonly matInput type="text" placeholder="Stock Fracciones" [(ngModel)]="model.stock.fraction_stock"
+                    id="fraction_stock" name="fraction_stock" />
             </mat-form-field>
         </div>
         <div class="col-md-2">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="Costo (promedio)" [(ngModel)]="model.stock.product.averageunitcost" id="averageunitcost" name="averageunitcost"
-                />
+                <input readonly matInput type="text" placeholder="Costo (promedio)" [(ngModel)]="model.stock.product.averageunitcost"
+                    id="averageunitcost" name="averageunitcost" />
             </mat-form-field>
         </div>
 
         <div class="col-md-2" *ngIf="model.inventory_adjustment_type_id == 187">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="Lote anterior" [(ngModel)]="model.current_adjustment_value" id="current_adjustment_value" name="current_adjustment_value"
-                />
+                <input readonly matInput type="text" placeholder="Lote anterior" [(ngModel)]="model.current_adjustment_value"
+                    id="current_adjustment_value" name="current_adjustment_value" />
             </mat-form-field>
         </div>
         <div class="col-md-2" *ngIf="model.inventory_adjustment_type_id == 187">
             <mat-form-field class="full-width">
-                <input readonly="numId != undefined" matInput type="text" placeholder="Lote nuevo" [(ngModel)]="model.new_adjustment_value" id="new_adjustment_value" name="new_adjustment_value"
-                />
+                <input readonly="numId != undefined" matInput type="text" placeholder="Lote nuevo" [(ngModel)]="model.new_adjustment_value"
+                    id="new_adjustment_value" name="new_adjustment_value" />
             </mat-form-field>
         </div>
 
         <div class="col-md-2" *ngIf="model.inventory_adjustment_type_id == 188">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="Ubicación anterior" [(ngModel)]="model.current_adjustment_value" id="current_adjustment_value2" name="current_adjustment_value2"
-                />
+                <input readonly matInput type="text" placeholder="Ubicación anterior" [(ngModel)]="model.current_adjustment_value"
+                    id="current_adjustment_value2" name="current_adjustment_value2" />
             </mat-form-field>
         </div>
         <div class="col-md-2" *ngIf="model.inventory_adjustment_type_id == 188">
             <mat-form-field class="full-width">
-                <input readonly="numId != undefined" matInput type="text" placeholder="Ubicación nueva" [(ngModel)]="model.new_adjustment_value" id="new_adjustment_value2" name="new_adjustment_value2"
-                />
+                <input readonly="numId != undefined" matInput type="text" placeholder="Ubicación nueva" [(ngModel)]="model.new_adjustment_value"
+                    id="new_adjustment_value2" name="new_adjustment_value2" />
             </mat-form-field>
         </div>
 
         <div class="col-md-12" *ngIf="numId == undefined">
             <button mat-raised-button (click)="guardar()" color="primary" class="btn-w-md no-margin-left btn-right">
-                Guardar
+                {{strAction}}
             </button>
         </div>
 
