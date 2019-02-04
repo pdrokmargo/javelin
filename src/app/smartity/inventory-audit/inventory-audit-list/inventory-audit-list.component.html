@@ -44,7 +44,7 @@
             <td>{{ item.status.value }}</td>
             <td *ngIf="actions[2].status" class="w-40">
               <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar',item)">
-                <mat-icon>{{ item.audit_state_id > 190 ? 'visibility' : 'mode_edit' }}</mat-icon>
+                <mat-icon>{{ item.audit_state_id > AUDIT.NO_INICIADA ? 'visibility' : 'mode_edit' }}</mat-icon>
               </button>
             </td>
           </tr>
