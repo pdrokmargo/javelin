@@ -92,7 +92,9 @@
               <td *ngIf="model.audit_state_id == AUDIT.AUDITADA">
                 {{item.physical_set_stock == item.set_stock && item.physical_fraction_stock == item.fraction_stock ? 'OK' : ''}} {{item.physical_set_stock < item.set_stock ? 'Sobran ' +(item.set_stock-item.physical_set_stock)+' unidad(es).' : '' }} {{ item.physical_set_stock > item.set_stock ? 'Faltan '+(item.physical_set_stock - item.set_stock)+' unidad(es)' : '' }} {{item.physical_fraction_stock < item.fraction_stock ? 'Sobran ' +(item.fraction_stock - item.physical_fraction_stock)+' fraccion(es).' : '' }} {{item.physical_fraction_stock > item.fraction_stock ? 'Faltan '+(item.physical_fraction_stock - item.fraction_stock)+' fraccion(es).' : ''}}
               </td> 
-              <td *ngIf="model.audit_state_id == AUDIT.AUDITADA"></td>
+              <td *ngIf="model.audit_state_id == AUDIT.AUDITADA">
+                ${{item.physical_set_stock - item.set_stock}}
+              </td>
               <td *ngIf="model.audit_state_id == AUDIT.NO_INICIADA">
                   <button type="button" mat-icon-button class="text-danger w-40" (click)="removeProduct(item)">
                     <mat-icon>delete</mat-icon>
