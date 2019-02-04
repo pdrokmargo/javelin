@@ -18,8 +18,9 @@ export class AuthenticationService {
 
   constructor(private http: Http) {
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    this.urlBase = 'http://localhost/javelinservice/public/';
-    // this.urlBase = 'https://javelinservice.herokuapp.com';
+    this.urlBase = 'https://javelinservice.herokuapp.com';
+    //this.urlBase = 'http://localhost:8000';
+
     if (localStorage.getItem('currentUser') != null) {
       this.headers = new Headers({
         "Accept": "application/json",
