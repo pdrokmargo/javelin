@@ -15,7 +15,7 @@ import { ModalStocksComponent } from '../../modals/modal-stocks/modal-stocks.com
 })
 export class InventoryAuditActionComponent extends BaseModel implements OnInit {
 
-  private __auditar:boolean = false;
+  private __auditar: boolean = false;
   private __product: any = [];
   private __warehouse: any = {};
   private __user: any = {};
@@ -213,5 +213,21 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
     } else {
       this.__auditar = true;
     }
+  }
+
+  private finalizar(audit_state_id) {
+    this.helperService.PUT(`/api/inventory-audit/finalize/${this.numId}/${audit_state_id}`, {}).subscribe(rs => {
+      const res = rs.json();
+      if (res.finalize) {
+        this.snackBar.open(res.message, 'Auditoria Finalizada', { duration: 4000 });
+        this.comp.openList();
+      }
+      this.loaderService.display(false);
+
+    }, err => {
+      this.snackBar.open('Error', err.message, { duration: 4000 });
+      console.log(err.message);
+      this.loaderService.display(false);
+    });
   }
 }
