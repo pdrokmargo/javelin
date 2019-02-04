@@ -227,7 +227,6 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
             this.supplier = stakeHolder;
             this.contact_name = JSON.parse(stakeHolder.sales_contact);
             this.model.payment_condition_id = this.supplier.payment_condition_id;
-            console.log(this.contact_name['name_sales_contact']);
             this.model.supplier_id = stakeHolder.id;
         });
     }
@@ -258,7 +257,7 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
         this.modalProducts.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
             let movement = new Object( {
                 "product_id": data.id,
-                "product": {"sku": data.sku, "display_name": data.name},
+                "product": {"sku": data.sku, "display_name": data.name, "averageunitcost": data.averageunitcost, "units":data.units},
                 "batch": "",
                 "fraction": false,
                 "location": "",
@@ -280,6 +279,14 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
                 }
             });
         });
+    }
+
+    totalCost(){
+        this.model.total = 0;
+        this._pharmadrugs.forEach(element => {
+            this.model.total = this.model.total + (element.units * element.product.averageunitcost);
+          });
+          console.log(this.model.total);
     }
 
     private openModalDeliveryPoints() {

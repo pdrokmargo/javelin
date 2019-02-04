@@ -57,6 +57,8 @@ export class SuppliersQuotesActionComponent extends BaseModel implements OnInit 
         this.getCollection();
         if (this.numId !== undefined) {
             this.getDataById();
+        }else{
+            this.model.created_at = new Date();
         }
     }
 
@@ -69,8 +71,20 @@ export class SuppliersQuotesActionComponent extends BaseModel implements OnInit 
         }, err => { });
     }
 
+    totalCost(){
+        this.model.total = 0;
+        this.model.details.forEach(element => {
+            this.model.total = this.model.total + (element.units * element.product.averageunitcost * (1-(element.discount/100)));
+          });
+    }
+
+    removeProduct(index){
+        this.model.details.splice(index, 1);
+        this.totalCost();
+    }
+
     private save() {
-        this.model.products = JSON.stringify(this._pharmadrugs || []);
+        this.model.products = JSON.stringify(this.model.details || []);
         console.log(this.model.products);
         this.loaderService.display(true);
         switch (this.strAction) {
@@ -133,7 +147,7 @@ export class SuppliersQuotesActionComponent extends BaseModel implements OnInit 
     }
 
     private clean() {
-        this.model = {};
+        this.model = {"details":[], "supplier_id": -1};
         this.model.status = true;
         this._pharmadrugs = [];
         this._conditional_alerts = [];
@@ -151,36 +165,32 @@ export class SuppliersQuotesActionComponent extends BaseModel implements OnInit 
             }
         });
         this.modalProducts.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
-            data.pharmadrug_id = data.id;
-            if (!this._pharmadrugs) {
-                this._pharmadrugs = [];
-            }
-            if (this._pharmadrugs.length === 0) {
-                this._pharmadrugs.push({
-                    "sku": data.sku,
-                    "name": data.name,
-                    "units": data.units,
-                    "cost": data.cost
-                });
-            }
-
-            var exist = false;
-            this._pharmadrugs.forEach((element, index) => {
-                if (element.name == data.name) {
-                    exist = true;
-                }
-                if (this._pharmadrugs.length == index + 1) {
-                    if (!exist) {
-                        this._pharmadrugs.push(data);
-                    }
-                }
+            let movement = new Object( {
+                "product_id": data.id,
+                "product": {"sku": data.sku, "display_name": data.name, "averageunitcost": data.averageunitcost, "units":data.units},
+                "batch": "",
+                "fraction": false,
+                "location": "",
+                "expiration_date": "",
+                "units":"",
+                "discount": this.supplier.global_discount,
+                "unit_cost":"" 
             });
+
+            this.model.details.push(movement);
+            console.log(movement);
+            // var exist = false;
+            // this.model.details.forEach((element, index) => {
+            //     if (element.product_id == data.id) {
+            //         exist = true;
+            //     }
+            //     if (!exist) {
+            //             this.model.details.push(movement);
+            //     }
+            // });
         });
     }
 
-    private deletePharmadrug(item) {
-        this._pharmadrugs.splice(this._pharmadrugs.indexOf(item), 1);
-    }
 
     private openAddSupplier() {
         this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent, {
@@ -194,6 +204,8 @@ export class SuppliersQuotesActionComponent extends BaseModel implements OnInit 
         this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
             if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
             this.supplier = stakeHolder;
+            this.contact_name = JSON.parse(stakeHolder.sales_contact);
+            this.model.payment_condition_id = this.supplier.payment_condition_id;
             this.model.supplier_id = stakeHolder.id;
         });
     }

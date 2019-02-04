@@ -114,18 +114,15 @@
                             <td>
                                 {{item.name}}
                             </td>
+
+                            <td *ngIf="numId != undefined">{{ item.units }}</td><td *ngIf="numId == undefined" ><mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="item.units" name="units{{index}}" /></mat-form-field></td>
                             <td>
-                                {{item.units}}
+                                {{item.product.averagecostunit}}
                             </td>
                             <td>
-                                {{item.cost}}
+                                {{supplier.global_discount}}
                             </td>
-                            <td>
-                                Descuento(%)
-                            </td>
-                            <td>
-                                Subtotal(Int)
-                            </td>
+                            <td>${{ item.product.averageunitcost * detail.units}}</td>
                             <td class="w-40">
                                 <button type="button" class="text-danger" mat-icon-button (click)="deletePharmadrug()">
                                     <mat-icon>delete</mat-icon>
