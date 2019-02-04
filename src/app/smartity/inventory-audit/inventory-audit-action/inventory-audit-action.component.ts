@@ -15,7 +15,15 @@ import { ModalStocksComponent } from '../../modals/modal-stocks/modal-stocks.com
 })
 export class InventoryAuditActionComponent extends BaseModel implements OnInit {
 
-  private __auditar: boolean = false;
+  private AUDIT: any = {
+    NO_INICIADA: 189,
+    EN_CURSO: 190,
+    CANCELADA: 191,
+    FINALIZADA: 192,
+    FINALIZADA_AJUSTE: 193,
+    AUDITADA: 194,
+  };
+
   private __product: any = [];
   private __warehouse: any = {};
   private __user: any = {};
@@ -41,7 +49,7 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
     } else {
       this.model.date = new Date();
       this.model.blinded_qty = false;
-      this.model.audit_state_id = 189;
+      this.model.audit_state_id = this.AUDIT.NO_INICIADA;
     }
   }
 
@@ -122,7 +130,7 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
         const res = rs.json();
         if (res.store) {
           this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
-          if (audit_state_id == 189) {
+          if (audit_state_id == this.AUDIT.NO_INICIADA) {
             this.comp.openList();
           }
         }
@@ -146,7 +154,7 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
         const res = rs.json();
         if (res.update) {
           this.snackBar.open(res.message, 'Actualizado', { duration: 4000 });
-          if (audit_state_id == 189) {
+          if (audit_state_id == this.AUDIT.NO_INICIADA) {
             this.comp.openList();
           }
         }
@@ -166,6 +174,8 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
     this.loaderService.display(true);
     this.helperService.GET(`/api/inventory-audit/${this.numId}`).subscribe(rs => {
       const res = rs.json();
+      console.log(res.data);
+
       const { warehouse, user, details, ...data } = res.data;
       this.__product = details.map(a => {
         a.stock.physical_set_stock = a.physical_set_stock;
@@ -211,7 +221,17 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
     if (product.length > 0) {
       this.snackBar.open('Es necesario llenar todas las unidades y fracciones', 'Auditar', { duration: 4000 });
     } else {
-      this.__auditar = true;
+      this.helperService.PUT(`/api/inventory-audit/auditar/${this.numId}`, {}).subscribe(rs => {
+        const res = rs.json();
+        if (res.auditada) {
+          this.snackBar.open(res.message, 'Auditada', { duration: 4000 });
+        }
+        this.loaderService.display(false);
+      }, err => {
+        this.snackBar.open('Error', err.message, { duration: 4000 });
+        console.log(err.message);
+        this.loaderService.display(false);
+      });
     }
   }
 
