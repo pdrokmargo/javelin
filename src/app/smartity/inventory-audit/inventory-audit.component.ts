@@ -5,11 +5,11 @@ import { Base } from '../bases/base';
   selector: 'app-inventory-audit',
   templateUrl: './inventory-audit.component.html'
 })
-export class InventoryAuditComponent extends Base implements OnInit {
+export class InventoryAuditComponent extends  Base implements OnInit {
 
   constructor() {
     super();
-   }
+  }
 
   ngOnInit() {
   }

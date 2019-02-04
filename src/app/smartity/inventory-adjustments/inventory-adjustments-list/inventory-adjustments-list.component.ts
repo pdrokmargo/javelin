@@ -13,26 +13,28 @@ export class InventoryAdjustmentsListComponent extends BaseList implements OnIni
   constructor(public loaderService: LoaderService,
     public helperService: HelperService,
     public router: Router,
-    private comp: InventoryAdjustmentsComponent) {
+    private comp: InventoryAdjustmentsComponent
+  ) {
+
     super(loaderService, helperService);
     this.urlApi = '/api/inventory-adjustments';
-}
-
-ngOnInit() {
-  this.getAll();
-}
-
-private CUD(action:string, row?:any){
-  this.comp.strAction = action;
-  switch (action) {
-      case 'Guardar':
-          this.comp.id = undefined;
-          break;
-      default:
-          this.comp.id = row.id;
-          break;
   }
-  this.comp.openActions();
-}
+
+  ngOnInit() {
+    this.getAll();
+  }
+
+  private CUD(action: string, row?: any) {
+    this.comp.strAction = action;
+    switch (action) {
+      case 'Guardar':
+        this.comp.id = undefined;
+        break;
+      default:
+        this.comp.id = row.id;
+        break;
+    }
+    this.comp.openActions();
+  }
 
 }

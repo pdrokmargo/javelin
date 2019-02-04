@@ -21,21 +21,26 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
     private inventory_adjustments: any[] = [];
     private inventory_adjustments_type: any[] = [];
 
+
     constructor(public snackBar: MatSnackBar,
         private route: ActivatedRoute,
         private router: Router,
         private loaderService: LoaderService,
         private helperService: HelperService,
         private comp: InventoryAdjustmentsComponent,
-        private dialog: MatDialog) { super(); }
+        private dialog: MatDialog) {
+            super();
+    }
 
     ngOnInit() {
         this.clean();
         this.getCollection();
         if (this.numId != undefined) {
             this.getDataById();
+            this.strAction = 'Actualiza';
         } else {
             this.model.adjustment_date = new Date();
+            this.strAction = 'Guardar';
         }
 
     }
@@ -53,7 +58,7 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
     private clean() {
         this.inventory_adjustments = [];
         this.inventory_adjustments_type = [];
-        this.model = { "warehouse_id": -1, "stock": {"product": { "sku": "", "display_name": "", "averageunitcost": ""}, "warehouse":{} } };
+        this.model = { "warehouse_id": -1, "stock": { "product": { "sku": "", "display_name": "", "averageunitcost": "" }, "warehouse": {} } };
     }
     private getDataById(): void {
         this.loaderService.display(true);
@@ -124,7 +129,7 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
             });
     }
 
-    setCurrentValue(){
+    setCurrentValue() {
         if (this.model.inventory_adjustment_type_id == 187) {
             this.model.current_adjustment_value = this.model.batch;
         } else if (this.model.inventory_adjustment_type_id == 188) {
@@ -132,7 +137,7 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
         }
     }
 
-    guardar(){
+    guardar() {
         this.loaderService.display(true);
         this.helperService.POST(`/api/inventory-adjustments`, this.model).subscribe(rs => {
             const res = rs.json();
@@ -146,7 +151,7 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
             console.log(err.message);
             this.loaderService.display(false);
         });
-    
+
     }
 
 }

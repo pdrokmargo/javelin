@@ -1,3 +1,142 @@
-<p>
-  inventory-audit-action works!
-</p>
+<!-- FORM -->
+<form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
+  <div class="row">
+    <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
+      <button mat-raised-button color="primary" (click)="comp.openList()" class="btn-w-md no-margin-left">
+        <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+      </button>
+    </div>
+    <!-- user -->
+    <div class="col-sm-12 col-md-4 col-lg-3 margin-bottom">
+      <mat-form-field class="full-width">
+        <input readonly matInput type="text" placeholder="Auditor" [(ngModel)]="__user.fullname" id="user_search" name="user_search" />
+        <mat-icon *ngIf="model.audit_state_id == 189" matSuffix mdSuffix class="wh-24 pointer" (click)="openModalUser()">search</mat-icon>
+      </mat-form-field>
+    </div>
+    <!-- warehouse -->
+    <div class="col-sm-12 col-md-4 col-lg-3 margin-bottom">
+      <mat-form-field class="full-width">
+        <input readonly matInput type="text" placeholder="Bodega" [(ngModel)]="__warehouse.name" id="warehouse_search"
+          name="warehouse_search" />
+        <mat-icon *ngIf="model.audit_state_id == 189" matSuffix mdSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</mat-icon>
+      </mat-form-field>
+    </div>
+    <!--blinded_qty-->
+    <div class="col-sm-12 col-md-4 col-lg-3 margin-bottom">
+      <div class="flex">
+        <mat-slide-toggle disabled="{{model.audit_state_id > 189}}" id="blinded_qty" name="blinded_qty" [(ngModel)]="model.blinded_qty">
+          Cantidades</mat-slide-toggle>
+        <span class="flex-spacer"></span>
+      </div>
+    </div>
+    <!--date-->
+    <div class='col-sm-12 col-md-4 col-lg-3 margin-bottom'>
+      <div class="flex">
+        <span class="flex-spacer"></span>
+        <mat-form-field>
+          <input readonly matInput [matDatepicker]="pickerDate" placeholder="Fecha de auditoria" [(ngModel)]="model.date"
+            name="date">
+          <mat-datepicker #pickerDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-sm-12 margin-bottom" *ngIf="model.warehouse_id && model.audit_state_id == 189">
+      <div class="flex">
+        <span class="flex-spacer"></span>
+        <button mat-raised-button (click)="openModalStocks()" class="btn-w-md no-margin-left">
+          Agregar producto
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-12 mb-5 " *ngIf="__product.length > 0">
+      <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+        <table class="full-width mdl-data-table table-bordered table-striped cf no-margin">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Producto</th>
+              <th>Lote</th>
+              <th>Ubicación</th>
+              <th>Vencimiento</th>
+              <th *ngIf="model.audit_state_id === 190">Unidades</th>
+              <th *ngIf="model.audit_state_id === 190">Fracciones</th>
+              <th *ngIf="(model.audit_state_id === 190 && model.blinded_qty) || __auditar">Unidades Sistema</th>
+              <th *ngIf="(model.audit_state_id === 190 && model.blinded_qty) || __auditar">Fracciones Sistema</th>
+              <th *ngIf="model.audit_state_id == 189" class="w-40"></th>
+              <th *ngIf="__auditar">Resultado</th>
+              <th *ngIf="__auditar">Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of __product; let i = index">
+              <td>{{item.product.sku}}</td>
+              <td>{{item.product.name}}</td>
+              <td>{{item.batch}}</td>
+              <td>{{item.location}}</td>
+              <td>{{item.expiration_date | date:"dd/MM/yyyy"}}</td>
+              <td *ngIf="(model.audit_state_id === 190) || __auditar">
+                <mat-form-field class="full-width">
+                  <input disabled="{{__auditar}}" type="text" id="{{i}}physical_set_stock" name="{{i}}physical_set_stock"
+                    matInput [(ngModel)]="item.physical_set_stock">
+                </mat-form-field>
+              </td>
+              <td *ngIf="(model.audit_state_id === 190) || __auditar">
+                <mat-form-field class="full-width">
+                  <input disabled="{{__auditar}}" type="text" id="{{i}}physical_fraction_stock" name="{{i}}physical_fraction_stock"
+                    matInput [(ngModel)]="item.physical_fraction_stock">
+                </mat-form-field>
+              </td>
+              <td *ngIf="(model.audit_state_id === 190 && model.blinded_qty) || __auditar">{{item.set_stock}}</td>
+              <td *ngIf="(model.audit_state_id === 190 && model.blinded_qty) || __auditar">{{item.fraction_stock}}</td>
+              <td *ngIf="model.audit_state_id == 189">
+                <button type="button" mat-icon-button class="text-danger w-40" (click)="removeProduct(item)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+              <td *ngIf="__auditar">
+                {{item.physical_set_stock == item.set_stock &&
+                item.physical_fraction_stock == item.fraction_stock ? 'OK' : ''}}
+                {{item.physical_set_stock < item.set_stock ? 'Sobran '
+                  +(item.set_stock-item.physical_set_stock)+' unidad(es).' : '' }}
+                  {{ item.physical_set_stock > item.set_stock ? 'Faltan '+(item.physical_set_stock - item.set_stock)+'
+                  unidad(es)' : '' }}
+                  {{item.physical_fraction_stock < item.fraction_stock ? 'Sobran ' +(item.fraction_stock -
+                    item.physical_fraction_stock)+' fraccion(es).' : '' }}
+                  {{item.physical_fraction_stock > item.fraction_stock ? 'Faltan '+(item.physical_fraction_stock -
+                    item.fraction_stock)+' fraccion(es).' : ''}}
+                  </td> <td *ngIf="__auditar">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12" *ngIf="__auditar">
+      <mat-form-field class="full-width">
+        <textarea type="text" id="description" name="description" [(ngModel)]="model.description" matInput placeholder="Notas"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-12" *ngIf="__product.length > 0 && model.audit_state_id == 189">
+      <div class="flex">
+        <span class="flex-spacer"></span>
+        <button mat-raised-button class="btn-w-md" (click)="strAction == 'Guardar' ? saveAudit(189) : updateAudit(189)">{{strAction}}</button>
+        <button mat-raised-button color="primary" class="btn-w-md ml-3" (click)="strAction == 'Guardar' ? saveAudit(190) : updateAudit(190)">Iniciar
+          auditoría</button>
+      </div>
+    </div>
+    <div class="col-sm-12" *ngIf="(__product.length > 0 && model.audit_state_id == 190) &&  !__auditar">
+      <div class="flex">
+        <span class="flex-spacer"></span>
+        <button mat-raised-button color="primary" class="btn-w-md ml-3" (click)="auditar()">Auditar</button>
+        <button mat-raised-button class="btn-w-md ml-3" (click)="cancelAudit()">Cancelar</button>
+      </div>
+    </div>
+    <div class="col-sm-12" *ngIf="__auditar">
+      <div class="flex">
+        <span class="flex-spacer"></span>
+        <button mat-raised-button color="primary" class="btn-w-md ml-3">Ajustar todo y Finalizar</button>
+        <button mat-raised-button color="primary" class="btn-w-md ml-3">Finalizar</button>
+      </div>
+    </div>
+  </div>
+</form>
