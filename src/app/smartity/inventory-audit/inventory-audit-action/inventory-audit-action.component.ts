@@ -255,6 +255,7 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
   }
 
   private movimiento() {
+    
     const { warehouse_id, } = this.model;
     const InventoryMovement = {
       'warehouse_id': warehouse_id,
