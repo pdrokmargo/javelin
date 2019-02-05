@@ -97,7 +97,9 @@
                 {{item.physical_fraction_stock > item.fraction_stock ? 'Faltan '+(item.physical_fraction_stock - item.fraction_stock)+' fraccion(es).' : ''}}
               </td> 
               <td *ngIf="model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">
-                {{((item.physical_set_stock - item.set_stock) * item.product.averageunitcost ? (item.physical_set_stock - item.set_stock) * item.product.averageunitcost : '0') | currency:'USD':true }}
+                {{
+                  ((item.physical_set_stock - item.set_stock) * item.product.averageunitcost) + ((item.physical_fraction_stock - item.fraction_stock) * (item.product.averageunitcost/item.product.units)) | currency:'USD':true 
+                }}
               </td>
               <td *ngIf="model.audit_state_id == AUDIT.NO_INICIADA">
                   <button type="button" mat-icon-button class="text-danger w-40" (click)="removeProduct(item)">

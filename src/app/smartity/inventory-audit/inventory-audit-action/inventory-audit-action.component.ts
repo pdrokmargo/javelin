@@ -182,9 +182,6 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
         a.stock.physical_fraction_stock = a.physical_fraction_stock;
         return a.stock;
       });
-      
-      console.log(this.__product);
-      
       this.__warehouse = warehouse;
       this.__user = user;
       const { firstname, lastname } = this.__user;
@@ -246,7 +243,7 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
       const res = rs.json();
       if (res.finalize) {
         this.snackBar.open(res.message, 'Auditoria Finalizada', { duration: 4000 });
-        this.comp.openList();
+        this.movimiento();
       }
       this.loaderService.display(false);
 
@@ -256,4 +253,41 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
       this.loaderService.display(false);
     });
   }
+
+  private movimiento() {
+    const { warehouse_id, } = this.model;
+    const InventoryMovement = {
+      'warehouse_id': warehouse_id,
+      "date": new Date(),
+      "inventory_movement_entry_out_type_id": 175,
+      "counterpart_transfer_id": null,
+      "details": this.__product.map(a => {
+        return {
+          product_id: a.id,
+          units: a.product.units,
+          fraction: true,//a.fraction_cost,
+          batch: a.batch,
+          location: a.location,
+          expiration_date: a.expiration_date,
+          purchase_price: 0
+        };
+      })
+    };
+
+    this.loaderService.display(true);
+    this.helperService.POST(`/api/inventory-movements`, InventoryMovement).subscribe(rs => {
+      const res = rs.json();
+      if (res.store) {
+        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+        this.comp.openList();
+      }
+      this.loaderService.display(false);
+    }, err => {
+      this.snackBar.open('Error', err.message, { duration: 4000 });
+      console.log(err.message);
+      this.loaderService.display(false);
+    });
+
+  }
+
 }
