@@ -255,24 +255,76 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
   }
 
   private movimiento() {
+
+    /*
     
-    const { warehouse_id, } = this.model;
+    ((item.physical_set_stock - item.set_stock) * item.product.averageunitcost) + 
+    ((item.physical_fraction_stock - item.fraction_stock) * (item.product.averageunitcost/item.product.units)) 
+    
+    */
+    const { warehouse_id } = this.model;
+    let myProduct = [];
+    this.__product.forEach(a => {
+
+      let fraction = a.physical_fraction_stock - a.fraction_stock !== 0 ? true : false;
+      let units = a.physical_set_stock - a.set_stock !== 0 ? true : false;
+      if (fraction) {
+        myProduct.push({
+          product_id: a.id,
+          units: a.product.units,
+          fraction: fraction,
+          batch: a.batch,
+          location: a.location,
+          expiration_date: a.expiration_date,
+          purchase_price: 0,
+          a
+        });
+      }
+      if (fraction) {
+        myProduct.push({
+          product_id: a.id,
+          units: a.product.units,
+          fraction: false,
+          batch: a.batch,
+          location: a.location,
+          expiration_date: a.expiration_date,
+          purchase_price: 0,
+          a
+        });
+      }
+    });
+
+    /*
+    
+    'consecutive_id',
+    'consecutive',
+    'warehouse_id',
+    'company_id',
+    'date',
+    'inventory_movement_entry_out_type_id',
+    'counterpart_transfer_id',
+    'observations'
+
+    DETAILS
+    -------------------------
+    'inventory_movements_id',
+    'product_id',
+    'units',
+    'fraction',
+    'batch',
+    'location',
+    'expiration_date',
+    'purchase_price',
+    */
+
+
+
     const InventoryMovement = {
       'warehouse_id': warehouse_id,
       "date": new Date(),
       "inventory_movement_entry_out_type_id": 175,
       "counterpart_transfer_id": null,
-      "details": this.__product.map(a => {
-        return {
-          product_id: a.id,
-          units: a.product.units,
-          fraction: true,//a.fraction_cost,
-          batch: a.batch,
-          location: a.location,
-          expiration_date: a.expiration_date,
-          purchase_price: 0
-        };
-      })
+      "details": myProduct
     };
 
     this.loaderService.display(true);

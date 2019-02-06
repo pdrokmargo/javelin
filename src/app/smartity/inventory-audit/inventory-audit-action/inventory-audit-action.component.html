@@ -67,7 +67,7 @@
               <th *ngIf="model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Resultado</th>
               <th *ngIf="model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Balance</th>
             </tr>
-          </thead>
+          </thead>    
           <tbody>
             <tr *ngFor="let item of __product; let i = index">
               <td>{{item.product.sku}}</td>
