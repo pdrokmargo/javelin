@@ -95,7 +95,9 @@ import { ModalProductsActionComponent } from './smartity/modals/modal-products/m
 import { ModalProductsListComponent } from './smartity/modals/modal-products/modal-products-list/modal-products-list.component';
 import { ModalStocksComponent } from './smartity/modals/modal-stocks/modal-stocks.component';
 import { ModalStocksListComponent } from './smartity/modals/modal-stocks/modal-stocks-list/modal-stocks-list.component';
-import { ModalSuppliersOrdersComponent } from './smartity/modals/modal-suppliers-orders/modal-suppliers-orders.component';
+import { ModalSupplierQuotesComponent } from './smartity/modals/modal-supplier-quotes/modal-supplier-quotes.component';
+import { ModalSupplierQuotesListComponent } from './smartity/modals/modal-supplier-quotes/modal-supplier-quotes-list/modal-supplier-quotes-list.component';
+import { ModalSupplierOrdersListComponent } from './smartity/modals/modal-supplier-orders/modal-supplier-orders-list/modal-supplier-orders-list.component';
 
 
 @NgModule({
@@ -186,7 +188,9 @@ import { ModalSuppliersOrdersComponent } from './smartity/modals/modal-suppliers
     ModalProductsListComponent,
     ModalStocksComponent,
     ModalStocksListComponent,
-    ModalSuppliersOrdersComponent
+    ModalSupplierQuotesComponent,
+    ModalSupplierQuotesListComponent,
+    ModalSupplierOrdersListComponent
   ],
   providers: [
     MycurrencyPipe,
