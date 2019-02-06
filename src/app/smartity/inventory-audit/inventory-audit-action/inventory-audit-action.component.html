@@ -61,8 +61,10 @@
               <th>Vencimiento</th>
               <th *ngIf="model.audit_state_id === AUDIT.EN_CURSO || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Unidades</th>
               <th *ngIf="model.audit_state_id === AUDIT.EN_CURSO || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Fracciones</th>
-              <th *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Unidades Sistema</th>
-              <th *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Fracciones Sistema</th>
+              <th *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Unidades
+                Sistema</th>
+              <th *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Fracciones
+                Sistema</th>
               <th *ngIf="model.audit_state_id == AUDIT.NO_INICIADA" class="w-40"></th>
               <th *ngIf="model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Resultado</th>
               <th *ngIf="model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">Balance</th>
@@ -77,30 +79,37 @@
               <td>{{item.expiration_date | date:"dd/MM/yyyy"}}</td>
               <td *ngIf="model.audit_state_id === AUDIT.EN_CURSO || model.audit_state_id > AUDIT.CANCELADA">
                 <mat-form-field class="full-width">
-                  <input disabled="{{model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA}}" type="text" id="{{i}}physical_set_stock" name="{{i}}physical_set_stock"
-                    matInput [(ngModel)]="item.physical_set_stock">
+                  <input disabled="{{model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA}}"
+                    type="text" id="{{i}}physical_set_stock" name="{{i}}physical_set_stock" matInput [(ngModel)]="item.physical_set_stock">
                 </mat-form-field>
               </td>
               <td *ngIf="model.audit_state_id === AUDIT.EN_CURSO || model.audit_state_id > AUDIT.CANCELADA">
                 <mat-form-field class="full-width">
-                  <input disabled="{{model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA}}" type="text" id="{{i}}physical_fraction_stock" name="{{i}}physical_fraction_stock"
-                    matInput [(ngModel)]="item.physical_fraction_stock">
+                  <input disabled="{{model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA}}"
+                    type="text" id="{{i}}physical_fraction_stock" name="{{i}}physical_fraction_stock" matInput
+                    [(ngModel)]="item.physical_fraction_stock">
                 </mat-form-field>
               </td>
-              <td *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">{{item.set_stock}}</td>
-              <td *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">{{item.fraction_stock}}</td>
+              <td *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">{{ item.set_stock}}</td>
+              <td *ngIf="(model.audit_state_id === AUDIT.EN_CURSO && model.blinded_qty) || model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">{{ item.fraction_stock }}</td>
               <td *ngIf="model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">
-                {{item.physical_set_stock == item.set_stock && item.physical_fraction_stock == item.fraction_stock ? 'OK' : ''}} {{item.physical_set_stock < item.set_stock ? 'Sobran ' +(item.set_stock-item.physical_set_stock)+' unidad(es).' : '' }} {{ item.physical_set_stock > item.set_stock ? 'Faltan '+(item.physical_set_stock - item.set_stock)+' unidad(es)' : '' }} {{item.physical_fraction_stock < item.fraction_stock ? 'Sobran ' +(item.fraction_stock - item.physical_fraction_stock)+' fraccion(es).' : '' }} {{item.physical_fraction_stock > item.fraction_stock ? 'Faltan '+(item.physical_fraction_stock - item.fraction_stock)+' fraccion(es).' : ''}}
+                {{item.physical_set_stock == item.set_stock && item.physical_fraction_stock == item.fraction_stock ? 'OK' : ''}}
+                {{item.physical_set_stock < item.set_stock ? 'Sobran ' +(item.set_stock-item.physical_set_stock)+' unidad(es).' : '' }}
+                {{item.physical_set_stock > item.set_stock ? 'Faltan '+(item.physical_set_stock - item.set_stock)+' unidad(es)' : '' }}
+                {{item.physical_fraction_stock < item.fraction_stock ? 'Sobran ' +(item.fraction_stock - item.physical_fraction_stock)+' fraccion(es).' : '' }}
+                {{item.physical_fraction_stock > item.fraction_stock ? 'Faltan '+(item.physical_fraction_stock - item.fraction_stock)+' fraccion(es).' : ''}}
               </td> 
               <td *ngIf="model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">
-                ${{
-                  (item.physical_set_stock - item.set_stock) * item.averageunitcost ? (item.physical_set_stock - item.set_stock) * item.averageunitcost : '0'
-                }}
+                  {{
+                  ((item.set_stock - item.physical_set_stock) * item.product.averageunitcost) +
+                  ((item.fraction_stock - item.physical_fraction_stock) * (item.product.averageunitcost/item.product.units)) | currency:'USD':true
+                  }}
               </td>
               <td *ngIf="model.audit_state_id == AUDIT.NO_INICIADA">
-                  <button type="button" mat-icon-button class="text-danger w-40" (click)="removeProduct(item)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
+                <button type="button" mat-icon-button class="text-danger w-40" (click)="removeProduct(item)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+
               </td>
             </tr>
           </tbody>
@@ -109,7 +118,8 @@
     </div>
     <div class="col-sm-12 col-md-12" *ngIf="model.audit_state_id == AUDIT.AUDITADA || model.audit_state_id > AUDIT.CANCELADA">
       <mat-form-field class="full-width">
-        <textarea disabled="{{model.audit_state_id == AUDIT.FINALIZADA || model.audit_state_id == AUDIT.FINALIZADA_AJUSTE}}" type="text" id="description" name="description" [(ngModel)]="model.description" matInput placeholder="Notas"></textarea>
+        <textarea disabled="{{model.audit_state_id == AUDIT.FINALIZADA || model.audit_state_id == AUDIT.FINALIZADA_AJUSTE}}"
+          type="text" id="description" name="description" [(ngModel)]="model.description" matInput placeholder="Notas"></textarea>
       </mat-form-field>
     </div>
     <div class="col-sm-12" *ngIf="__product.length > 0 && model.audit_state_id == AUDIT.NO_INICIADA">
@@ -130,7 +140,8 @@
     <div class="col-sm-12" *ngIf="model.audit_state_id == AUDIT.AUDITADA">
       <div class="flex">
         <span class="flex-spacer"></span>
-        <button mat-raised-button color="primary" class="btn-w-md ml-3" (click)="finalizar(AUDIT.FINALIZADA_AJUSTE)">Ajustar todo y
+        <button mat-raised-button color="primary" class="btn-w-md ml-3" (click)="finalizar(AUDIT.FINALIZADA_AJUSTE)">Ajustar
+          todo y
           Finalizar</button>
         <button mat-raised-button color="primary" class="btn-w-md ml-3" (click)="finalizar(AUDIT.FINALIZADA)">Finalizar</button>
       </div>

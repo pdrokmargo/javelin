@@ -180,6 +180,8 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
       this.__product = details.map(a => {
         a.stock.physical_set_stock = a.physical_set_stock;
         a.stock.physical_fraction_stock = a.physical_fraction_stock;
+        a.stock.set_stock = a.system_set_stock;
+        a.stock.fraction_stock = a.system_fraction_stock;
         return a.stock;
       });
       this.__warehouse = warehouse;
@@ -243,7 +245,9 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
       const res = rs.json();
       if (res.finalize) {
         this.snackBar.open(res.message, 'Auditoria Finalizada', { duration: 4000 });
-        this.comp.openList();
+        if (audit_state_id == this.AUDIT.FINALIZADA_AJUSTE) {
+          this.movimiento();
+        }
       }
       this.loaderService.display(false);
 
@@ -253,4 +257,125 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
       this.loaderService.display(false);
     });
   }
+
+  private movimiento() {
+    const { warehouse_id } = this.model;
+    const date = new Date();
+
+    let details_entrada = [];
+    let details_salida = [];
+
+    let cabecera_entrada = {
+      warehouse_id,
+      date,
+      inventory_movement_entry_out_type_id: 175,
+      details: details_entrada,
+      observations: `Ajuste realizando mediante la auditoría # realizada por el auditor: ${this.__user.fullname}`
+    }
+    let cabecera_salida = {
+      warehouse_id,
+      date,
+      inventory_movement_entry_out_type_id: 181,
+      details: details_salida,
+      observations: `Ajuste realizando mediante la auditoría # realizada por el auditor: ${this.__user.fullname}`
+    }
+
+    /*
+    
+    ((item.physical_set_stock - item.set_stock) * item.product.averageunitcost) + 
+    ((item.physical_fraction_stock - item.fraction_stock) * (item.product.averageunitcost/item.product.units)) 
+    
+    */
+
+
+
+    //si es negativo, remove  -> salida   -> 181
+    //si es positivo, add     -> entrada  -> 175
+
+    this.__product.forEach(a => {
+      const { id, sku, name, averageunitcost, units } = a.product;
+      if (a.physical_fraction_stock - a.fraction_stock < 0) {
+        details_salida.push({
+          units: Math.abs(a.physical_fraction_stock - a.fraction_stock),
+          batch: a.batch,
+          fraction: true,
+          product_id: id,
+          product: { sku, averageunitcost, units, display_name: name },
+          location: a.location,
+          expiration_date: a.expiration_date,
+          purchase_price: 0
+        });
+      } else if (a.physical_fraction_stock - a.fraction_stock > 0) {
+        details_entrada.push({
+          units: Math.abs(a.physical_fraction_stock - a.fraction_stock),
+          batch: a.batch,
+          fraction: true,
+          product_id: id,
+          product: { sku, averageunitcost, units, display_name: name },
+          location: a.location,
+          expiration_date: a.expiration_date,
+          purchase_price: 0
+        });
+      }
+
+
+      if (a.physical_set_stock - a.set_stock < 0) {
+        details_salida.push({
+          units: Math.abs(a.physical_set_stock - a.set_stock),
+          batch: a.batch,
+          fraction: false,
+          product_id: id,
+          product: { sku, averageunitcost, units, display_name: name },
+          location: a.location,
+          expiration_date: a.expiration_date,
+          purchase_price: 0
+        });
+      } else if (a.physical_set_stock - a.set_stock > 0) {
+        details_entrada.push({
+          units: Math.abs(a.physical_set_stock - a.set_stock),
+          batch: a.batch,
+          fraction: false,
+          product_id: id,
+          product: { sku, averageunitcost, units, display_name: name },
+          location: a.location,
+          expiration_date: a.expiration_date,
+          purchase_price: 0
+        });
+      }
+    });
+
+    if (details_entrada.length > 0) {
+      this.loaderService.display(true);
+      this.helperService.POST(`/api/inventory-movements`, cabecera_entrada).subscribe(rs => {
+        const res = rs.json();
+        if (res.store) {
+          this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+          this.comp.openList();
+        }
+        this.loaderService.display(false);
+      }, err => {
+        this.snackBar.open('Error', err.message, { duration: 4000 });
+        console.log(err.message);
+        this.loaderService.display(false);
+      });
+    }
+
+    if (details_salida.length > 0) {
+      this.loaderService.display(true);
+      this.helperService.POST(`/api/inventory-movements`, cabecera_salida).subscribe(rs => {
+        const res = rs.json();
+        if (res.store) {
+          this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+          this.comp.openList();
+        }
+        this.loaderService.display(false);
+      }, err => {
+        this.snackBar.open('Error', err.message, { duration: 4000 });
+        console.log(err.message);
+        this.loaderService.display(false);
+      });
+    }
+
+  }
+
 }
