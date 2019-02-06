@@ -180,6 +180,8 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
       this.__product = details.map(a => {
         a.stock.physical_set_stock = a.physical_set_stock;
         a.stock.physical_fraction_stock = a.physical_fraction_stock;
+        a.stock.set_stock = a.system_set_stock;
+        a.stock.fraction_stock = a.system_fraction_stock;
         return a.stock;
       });
       this.__warehouse = warehouse;
@@ -267,13 +269,15 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
       warehouse_id,
       date,
       inventory_movement_entry_out_type_id: 175,
-      details: details_entrada
+      details: details_entrada,
+      observations: `Ajuste realizando mediante la auditoría # realizada por el auditor: ${this.__user.fullname}`
     }
     let cabecera_salida = {
       warehouse_id,
       date,
       inventory_movement_entry_out_type_id: 181,
-      details: details_salida
+      details: details_salida,
+      observations: `Ajuste realizando mediante la auditoría # realizada por el auditor: ${this.__user.fullname}`
     }
 
     /*
@@ -290,9 +294,9 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
 
     this.__product.forEach(a => {
       const { id, sku, name, averageunitcost, units } = a.product;
-      if (a.physical_fraction_stock - a.fraction_stock > 0) {
+      if (a.physical_fraction_stock - a.fraction_stock < 0) {
         details_salida.push({
-          units,
+          units: Math.abs(a.physical_fraction_stock - a.fraction_stock),
           batch: a.batch,
           fraction: true,
           product_id: id,
@@ -301,9 +305,9 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
           expiration_date: a.expiration_date,
           purchase_price: 0
         });
-      } else if (a.physical_fraction_stock - a.fraction_stock < 0) {
+      } else if (a.physical_fraction_stock - a.fraction_stock > 0) {
         details_entrada.push({
-          units,
+          units: Math.abs(a.physical_fraction_stock - a.fraction_stock),
           batch: a.batch,
           fraction: true,
           product_id: id,
@@ -313,9 +317,11 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
           purchase_price: 0
         });
       }
-      if (a.physical_set_stock - a.set_stock > 0) {
+
+
+      if (a.physical_set_stock - a.set_stock < 0) {
         details_salida.push({
-          units,
+          units: Math.abs(a.physical_set_stock - a.set_stock),
           batch: a.batch,
           fraction: false,
           product_id: id,
@@ -324,9 +330,9 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
           expiration_date: a.expiration_date,
           purchase_price: 0
         });
-      } else if (a.physical_set_stock - a.set_stock < 0) {
+      } else if (a.physical_set_stock - a.set_stock > 0) {
         details_entrada.push({
-          units,
+          units: Math.abs(a.physical_set_stock - a.set_stock),
           batch: a.batch,
           fraction: false,
           product_id: id,

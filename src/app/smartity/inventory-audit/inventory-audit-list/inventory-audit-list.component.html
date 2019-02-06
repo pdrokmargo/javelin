@@ -24,7 +24,6 @@
         <thead>
           <tr>
             <th># Auditoria Inv<span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-            <th>Descripción<span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             <th>Bodega<span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             <th>Fecha<span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             <th>Auditor<span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -36,7 +35,6 @@
         <tbody>
           <tr *ngFor="let item of list.data; let index = index">
             <td>{{ index+1 }}</td>
-            <td>{{ item.description }}</td>
             <td>{{ item.warehouse.name }}</td>
             <td>{{ item.date }}</td>
             <td>{{ item.user.firstname }} {{ item.user.lastname }}</td>
