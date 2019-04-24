@@ -1,0 +1,17 @@
+<section class="chapter">
+  <section class="hero">
+      <div class="hero-content">
+          <h1 class="hero-title">Dispensación de fórmulas</h1>
+      </div>
+  </section>
+  <article class="article padding-lg-v article-dark article-bordered">
+      <div class="container-fluid with-maxwidth">
+          <div class="box box-default">
+              <div class="box-body">
+                  <dispensation-formulas-action-cmp *ngIf="isOpenActions"  [numId]="id" [strAction]="strAction"></dispensation-formulas-action-cmp>
+                  <dispensation-formulas-list-cmp *ngIf="isOpenList"></dispensation-formulas-list-cmp>
+              </div>
+          </div>
+      </div>
+  </article>
+</section>
