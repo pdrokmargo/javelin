@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<mat-dialog-content>
+  <app-modal-customers-quotes-list [customer]="data.customer" (select)="select($event)"></app-modal-customers-quotes-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="flex full-width">
+        <span class="flex-spacer"></span>
+        <button class="ml-5" color="primary" mat-button type="button" [disabled]="!model" (click)="add()">Seleccionar</button>
+        <button mat-dialog-close mat-button type="button">Cerrar</button>
+    </div>
+</mat-dialog-actions>

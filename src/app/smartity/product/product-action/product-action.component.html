@@ -14,17 +14,25 @@
         </div>
 
         <!--product type -->
-        <div class='col-sm-12 col-md-6 margin-bottom'>
+        <div class='col-sm-12 col-md-4 margin-bottom'>
+                <mat-form-field class="full-width">
             <mat-select class="full-width" placeholder="Tipo de producto" [(ngModel)]="model.product_profile_id" name="product_profile_id"
                 id="product_profile_id">
                 <mat-option *ngFor="let item of product_type" [value]="item.id">{{item.value}}</mat-option>
             </mat-select>
+                </mat-form-field>
         </div>
+
+        <div class='col-sm-12 col-md-3 margin-bottom'>
+                <mat-form-field class="full-width">
+                    <input type="text" id="sku" name="sku" [(ngModel)]="model.sku" matInput placeholder="PLU">
+                </mat-form-field>
+            </div>
 
         <!-- medicamentos -->
         <div class="col-sm-12 margin-bottom" *ngIf="model.product_profile_id == 30">
             <div class="flex margin-bottom">
-                <div class="box-header no-padding-h">Medicamentos</div>
+                <div class="box-header no-padding-h">Medicamento asociado</div>
                 <span class="flex-spacer"></span>
                 <button type="button" type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openAddBankAccount()">Añadir</button>
             </div>

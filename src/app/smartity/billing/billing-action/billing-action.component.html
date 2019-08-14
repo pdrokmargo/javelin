@@ -1,0 +1,203 @@
+<form #modelForm="ngForm" autocomplete="off">
+  <div class="row form-inline">
+    <div class="margin-bottom-40" style="padding-left: 15px;padding-right: 15px;">
+      <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-mat no-margin-right">
+        <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+      </button>
+    </div>
+    <!-- <div class="margin-bottom-40">
+        <button type="button" mat-raised-button color="primary" (click)="openCustomerQuotesLoad()" class="btn-w-mat no-margin-left">
+            <mat-icon>search</mat-icon> Cotización
+        </button>
+  </div> -->
+  </div>
+  <div class="row">
+    <!-- Resolución de factura -->
+    <div class="col-sm-12 col-md-3 margin-bottom">
+      <mat-form-field class="full-width">
+        <mat-select class="full-width" placeholder="Resolución de factura" [(ngModel)]="model.document_id"
+          name="document_id">
+          <mat-option *ngFor="let item of billingResolutions" [value]="item.id">{{item.prefix}} - X</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!--vendedor-->
+    <div class="col-sm-12 col-md-4 margin-bottom">
+      <mat-form-field class="full-width">
+        <input required readonly matInput type="text" placeholder="Vendedor" [(ngModel)]="seller.fullname"
+          id="employees" name="employees" />
+        <mat-icon matSuffix class="wh-24 pointer" (click)="openAddEmployees()">search</mat-icon>
+      </mat-form-field>
+    </div>
+    <!-- creado el -->
+    <div class="col-md-3 col-md-offset-1 margin-bottom">
+      <mat-form-field>
+        <input matInput readonly placeholder="Creado el" name="created_at"
+          value="{{model.created_at | date:'dd/MM/yyyy'}}">
+      </mat-form-field>
+    </div>
+
+    <!-- estado -->
+    <div class='col-sm-12 col-md-1 margin-bottom'>
+      <div class="flex">
+        <span class="flex-spacer"></span>
+        <mat-slide-toggle [labelPosition]="'before'" id="status" name="status" [(ngModel)]="model.status">Estado
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <!--vendedor-->
+    <!-- <div class="col-sm-12 col-md-3 margin-bottom">
+              <mat-form-field class="full-width">
+                  <input required readonly matInput type="text" placeholder="Vendedor" [(ngModel)]="seller.fullname"
+                      id="employees" name="employees" />
+                  <mat-icon matSuffix class="wh-24 pointer" (click)="openAddEmployees()">search</mat-icon>
+              </mat-form-field>
+          </div> -->
+  </div>
+
+  <div class="row">
+    <!-- cliente -->
+    <div class="col-sm-12 col-md-3">
+      <mat-form-field class="full-width">
+        <input required readonly matInput type="text" placeholder="Cliente" [(ngModel)]="customer.fullname"
+          id="customer" name="customer" />
+        <mat-icon matSuffix class="wh-24 pointer" (click)="openAddCustomer()">search</mat-icon>
+      </mat-form-field>
+    </div>
+    <!-- Forma de pago -->
+    <div class="col-sm-12 col-md-2">
+      <mat-form-field class="full-width">
+        <mat-select class="full-width" placeholder="Forma de Pago" [(ngModel)]="model.payment_method_id"
+          name="payment_method_id">
+          <mat-option *ngFor="let item of arrPayment_method" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Condición de pago -->
+    <div class="col-sm-12 col-md-2">
+      <mat-form-field class="full-width">
+        <mat-select class="full-width" placeholder="Condición de pago" [(ngModel)]="model.payment_condition_id"
+          name="payment_condition_id">
+          <mat-option *ngFor="let item of arrPayment_condition" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-5" *ngIf="numId == undefined">
+      <button (click)="openModalProducts()" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right">
+        Añadir Producto
+      </button>
+    </div>
+    <!-- productos -->
+    <div class="col-sm-12">
+
+      <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
+        <table class="mdl-data-table table-bordered table-striped cf no-margin">
+          <thead>
+            <tr>
+              <!-- <th class="noAuto" (click)="sort('w.id')">ID
+                          <span class="glyphicon sort-icon" *ngIf="key =='w.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th> -->
+              <th>PLU
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Producto
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Fraccionado
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Unidades
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Precio de Venta
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Descuento
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>IVA
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Subtotal
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th class="w-40" *ngIf="numId == undefined"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let detail of model.details;let index = index;">
+              <td>{{detail.product.sku}}</td>
+              <td>{{detail.product.display_name}}</td>
+              <td *ngIf="numId != undefined">{{ detail.fraction ? 'Sí' : 'No' }}</td>
+              <td *ngIf="numId == undefined">
+                <mat-slide-toggle [labelPosition]="after" name="fraction{{index}}" [(ngModel)]="detail.fraction">
+                </mat-slide-toggle>
+              </td>
+              <td *ngIf="numId != undefined">{{detail.units}}</td>
+              <td *ngIf="numId == undefined">
+                <mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.units"
+                    name="units{{index}}" /></mat-form-field>
+              </td>
+              <td *ngIf="detail.fraction == false">${{detail.product.averageunitcost * 1.2}}</td>
+              <td *ngIf="detail.fraction == true">
+                ${{(detail.product.averageunitcost/detail.product.units)  * 1.2}}</td>
+
+                <td *ngIf="numId != undefined">{{detail.discount}}</td>
+              <td *ngIf="numId == undefined">
+                    <mat-form-field>
+                    <span (click)="changeDiscountSymbol()">{{discountSymbol}} </span> <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.discount"
+                    name="units{{index}}" /></mat-form-field>
+                    <div *ngIf="discountSymbol == '%'"><span *ngIf="detail.fraction == false">(${{(detail.product.averageunitcost * 1.2)*(detail.discount/100)}})</span>
+                    <span *ngIf="detail.fraction == true">(${{((detail.product.averageunitcost/detail.product.units)  * 1.2)*(detail.discount/100)}})</span></div>
+                    <div *ngIf="discountSymbol != '%'"><span *ngIf="detail.fraction == false">(%{{100*(detail.discount/(detail.product.averageunitcost * 1.2))}})</span>
+                      <span *ngIf="detail.fraction == true">(%{{100*(detail.discount/((detail.product.averageunitcost/detail.product.units)  * 1.2))}})</span></div>
+              </td>
+                
+
+              <td *ngIf="numId == undefined && model.inventory_movement_entry_out_type_id == 174">
+                <mat-form-field>$<input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.purchase_price"
+                    name="purchase_price{{index}}" /></mat-form-field>
+              </td>
+              <td *ngIf="detail.fraction == false">${{detail.product.averageunitcost * detail.units}}</td>
+              <td *ngIf="detail.fraction == true">
+                ${{(detail.product.averageunitcost/detail.product.units) * detail.units}}</td>
+              <td class="w-40" *ngIf="numId == undefined">
+                <button type="button" mat-icon-button class="text-danger" (click)="removeProduct(index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <!--notas-->
+    <div class='col-sm-12 col-md-12 margin-bottom'>
+      <mat-form-field class="full-width">
+        <textarea type="text" id="notes" name="notes" [(ngModel)]="model.notes" matInput placeholder="Nota"></textarea>
+      </mat-form-field>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <mat-form-field><input readonly matInput placeholder="Total ($)" [(ngModel)]="model.total" name="total cost">
+      </mat-form-field>
+    </div>
+    <div class="col-md-7" [class.btn-action-container]="booActive" *ngIf="strAction != 'Actualizar'">
+      <button type="button" [disabled]="!modelForm.form.valid" mat-raised-button
+        class="btn-w-mat no-margin-left btn-right" (click)="save()">{{strAction}}</button>
+    </div>
+  </div>
+</form>

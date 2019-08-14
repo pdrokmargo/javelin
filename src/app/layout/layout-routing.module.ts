@@ -33,6 +33,11 @@ const routes: Routes = [
       { path: 'inventory-audit', loadChildren: 'app/smartity/inventory-audit/inventory-audit.module#InventoryAuditModule', canActivate: [PrivilegeGuard] },
       { path: 'suppliers-orders', loadChildren: 'app/smartity/suppliers-orders/suppliers-orders.module#SuppliersOrdersModule', canActivate: [PrivilegeGuard] },
       { path: 'suppliers-quotes', loadChildren: 'app/smartity/suppliers-quotes/suppliers-quotes.module#SuppliersQuotesModule', canActivate: [PrivilegeGuard] },
+      { path: 'customers-quotes', loadChildren: 'app/smartity/customers-quotes/customers-quotes.module#CustomersQuotesModule', canActivate: [PrivilegeGuard] },
+      { path: 'remission-goods', loadChildren: 'app/smartity/remission-goods/remission-goods.module#RemissionGoodsModule', canActivate: [PrivilegeGuard] },
+      { path: 'billing', loadChildren: 'app/smartity/billing/billing.module#BillingModule', canActivate: [PrivilegeGuard] },
+      // { path: 'delivery', loadChildren: 'app/smartity/delivery/delivery.module#DeliveryModule', canActivate: [PrivilegeGuard] },
+      // { path: 'scheduled-deliveries', loadChildren: 'app/smartity/scheduled-deliveries/scheduled-deliveries.module#ScheduledDeliveriesModule', canActivate: [PrivilegeGuard] },
     ]
   }
 ];

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalStakeholderComponent, ModalPharmaceuticalComponent, ModalDeliveryPointsComponent, ModalIpsNetworkComponent, ModalGeolocationComponent, ModalWarehouseComponent } from '../../modals';
+import { ModalStakeholderComponent, ModalSupplierQuotesComponent, ModalDeliveryPointsComponent, ModalIpsNetworkComponent, ModalGeolocationComponent, ModalWarehouseComponent } from '../../modals';
 import { ModalProductsComponent } from '../../modals/modal-products/modal-products.component';
 import { MatDialogRef, MatSnackBar, MatDialog } from '@angular/material';
 import "rxjs/add/operator/startWith";
@@ -24,6 +24,7 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
     private modalGeolocation: MatDialogRef<ModalGeolocationComponent>;
     private modalStakeHolderDialogRef: MatDialogRef<ModalStakeholderComponent>;
     private modalWarehouse: MatDialogRef<ModalWarehouseComponent>;
+    private modalSupplierQuotes: MatDialogRef<ModalSupplierQuotesComponent>;
 
     private contract_number: string = '';
     private created_at: string = '';
@@ -45,7 +46,7 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
     private _pharmadrugs: any = [];
     private _ips: any = [];
     private supplier: any = {};
-    private employee: any = {};
+    private buyer: any = {};
     private objEvent: any;
     private objCapita: any;
     private objPgp: any;
@@ -76,6 +77,8 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
         this.getCostCentres();
         if (this.numId !== undefined) {
             this.getDataById();
+        }else{
+            this.model.created_at = new Date();
         }
     }
 
@@ -100,8 +103,29 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
         });
     }
 
+    private openSupplierQuotesLoad(){
+        this.modalSupplierQuotes = this.dialog.open(ModalSupplierQuotesComponent, {
+            hasBackdrop: false,
+            data: {
+                title: 'Cotizaciones de proveedores',
+                supplier: this.model.supplier_id,
+                option: '2'
+            }
+        });
+
+        this.modalSupplierQuotes.afterClosed().pipe(filter((supplierQuotes) => supplierQuotes)).subscribe((supplierQuotes) => {
+            this.model.details = JSON.parse(supplierQuotes.products || []);  
+            this.model.supplier_id = supplierQuotes.supplier_id;
+            this.supplier = supplierQuotes.stakeholder_info;
+            this.contact_name["name_sales_contact"] = supplierQuotes.supplier_info.sales_contact.name;
+            this.model.payment_condition_id = supplierQuotes.payment_condition_id;
+            this.model.notes = 'Orden realizada a partir de la cotización ' + supplierQuotes.document.prefix + '-' + supplierQuotes.consecutive;
+            this.totalCost();
+        });
+    }
+
     private save() {
-        this.model.products = JSON.stringify(this._pharmadrugs || []);  
+        this.model.products = JSON.stringify(this.model.details || []);  
         console.log(this.model.products);
         this.loaderService.display(true);
         switch (this.strAction) {
@@ -151,8 +175,9 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
             this.model = res.data;
             this.supplier = res['data']['stakeholder_info'] || {};
             this.warehouse = res['data']['warehouse'] || {};
-            this.employee = res['data']['buyer'] || {};
-            this._pharmadrugs = JSON.parse(this.model.products);
+            this.buyer = res['data']['buyer'] || {};
+            this.contact_name = res['data']['supplier_info']['sales_contact'];
+            this.model.details = JSON.parse(this.model.products);
             console.log(res);
             if (this.supplier.businessname == '') {
                 this.supplier.businessname = this.supplier.fullname;
@@ -160,6 +185,7 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
             // if (this.employee.businessname == '') {
             //     this.employee.businessname = this.employee.fullname;
             // }
+            this.totalCost();
             this.loaderService.display(false);
         }, err => {
             console.log(err);
@@ -168,7 +194,7 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
     }
 
     private clean() {
-        this.model = {};
+        this.model = {"details":[], "supplier_id": -1};
         this.model.status = true;
         this._pharmadrugs = [];
         this._conditional_alerts = [];
@@ -179,6 +205,13 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
 
     private goList() {
         this.comp.openList();
+    }
+
+  
+
+    removeProduct(index){
+        this.model.details.splice(index, 1);
+        this.totalCost();
     }
 
     private openModalCostumers() {
@@ -228,10 +261,14 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
             this.contact_name = JSON.parse(stakeHolder.sales_contact);
             this.model.payment_condition_id = this.supplier.payment_condition_id;
             this.model.supplier_id = stakeHolder.id;
+            // this.model.supplier_id = supplierQuotes.supplier_id;
+            // this.supplier = supplierQuotes.stakeholder_info;
+            // this.contact_name["name_sales_contact"] = supplierQuotes.supplier_info.sales_contact.name;
+            // this.model.payment_condition_id = supplierQuotes.payment_condition_id;
         });
     }
 
-    openAddEmployee() {
+    openAddEmployees() {
         this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent, {
             hasBackdrop: false,
             data: {
@@ -241,9 +278,11 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
         });
 
         this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
+            console.log(stakeHolder);
             if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
-            this.employee = stakeHolder;
+            this.buyer["fullname"] = stakeHolder.name;
             this.model.buyer_employee_id = stakeHolder.id;
+            console.log(this.buyer);
         });
     }
 
@@ -263,30 +302,30 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
                 "location": "",
                 "expiration_date": "",
                 "units":"",
+                "discount": this.supplier.global_discount,
                 "unit_cost":"" 
             });
              this.model.details.push(movement);
 
-            var exist = false;
-            this._pharmadrugs.forEach((element, index) => {
-                if (element.name == data.name) {
-                    exist = true;
-                }
-                if (this._pharmadrugs.length == index + 1) {
-                    if (!exist) {
-                        this._pharmadrugs.push(data);
-                    }
-                }
-            });
+            // var exist = false;
+            // this._pharmadrugs.forEach((element, index) => {
+            //     if (element.name == data.name) {
+            //         exist = true;
+            //     }
+            //     if (this._pharmadrugs.length == index + 1) {
+            //         if (!exist) {
+            //             this._pharmadrugs.push(data);
+            //         }
+            //     }
+            // });
         });
     }
 
     totalCost(){
         this.model.total = 0;
-        this._pharmadrugs.forEach(element => {
-            this.model.total = this.model.total + (element.units * element.product.averageunitcost);
+        this.model.details.forEach(element => {
+            this.model.total = this.model.total + (element.units * element.product.averageunitcost * (1-(element.discount/100)));
           });
-          console.log(this.model.total);
     }
 
     private openModalDeliveryPoints() {
@@ -361,90 +400,5 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
 
         });
     }
-
-    private deleteIps(item) {
-        this._ips.splice(this._ips.indexOf(item), 1);
-    }
-
-    private openModalGeolocation() {
-        this.modalGeolocation = this.dialog.open(ModalGeolocationComponent, {
-            hasBackdrop: false,
-            width: '400px',
-            data: { title: 'Ubicación', }
-        });
-
-        this.modalGeolocation.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
-            if (data) {
-                if (this.objCapita.detailed_capita == undefined || this.objCapita.detailed_capita == null) {
-                    this.objCapita.detailed_capita = [];
-                    this.objCapita.detailed_capita.push(data);
-                }
-                var exist = false;
-                var isDelete = false;
-                var _data;
-
-                this.objCapita.detailed_capita.forEach((element, index) => {
-                    if (element.city.id == data.city.id) {
-                        exist = true;
-                        if (!element.state) {
-                            isDelete = true;
-                            _data = element;
-                        }
-                    }
-                    if (this.objCapita.detailed_capita.length - 1 == index) {
-                        if (!exist) {
-
-                            this.objCapita.detailed_capita.push(data);
-                        }
-                        if (isDelete) {
-                            _data.state = true;
-                        }
-                    }
-                });
-            }
-        });
-
-
-    }
-
-    private deleteDetailedCapita(item) {
-        item.status = false;
-    }
-
-    private activeperauth_length() {
-        if (!this.objEvent.perauth) {
-            this.objEvent.perauth_length = '';
-            this.objEvent.perauth_char_type = '';
-        }
-    }
-
-    private clearEvent() {
-        if (this.booEvento) {
-            this.objEvent = {};
-            this._pharmadrugs.forEach(element => {
-                element.fare = '';
-                element.event = false;
-            });
-        }
-    }
-
-    private clearCapita() {
-        if (this.booCapita) {
-            this.objCapita = {};
-            this._pharmadrugs.forEach(element => {
-                element.capita = false;
-            });
-        }
-    }
-
-    private clearPgp() {
-        if (this.booPgp) {
-            this.objPgp = {};
-            this._pharmadrugs.forEach(element => {
-                element.pgp = false;
-            });
-        }
-    }
-
 
 }

@@ -8,15 +8,13 @@
         <!-- creado el -->
         <div class="col-md-3 margin-bottom">
             <mat-form-field>
-                <input matInput [matDatepicker]="pickerCreatedAt" placeholder="Creado el" [(ngModel)]="model.created_at" name="created_at">
-                <mat-datepicker-toggle matSuffix [for]="pickerCreatedAt"></mat-datepicker-toggle>
-                <mat-datepicker #pickerCreatedAt></mat-datepicker>
+                <input matInput readonly placeholder="Creado el" name="created_at" value="{{model.created_at | date:'dd/MM/yyyy'}}">
             </mat-form-field>
         </div>
         <!-- vence el -->
         <div class="col-md-3 margin-bottom">
             <mat-form-field>
-                <input matInput [matDatepicker]="pickerExpiredAt" placeholder="Vence el" [(ngModel)]="model.expire_at" name="expired_at">
+                <input matInput [matDatepicker]="pickerExpiredAt" placeholder="Vence el" [min]="model.created_at" [(ngModel)]="model.expire_at" name="expired_at">
                 <mat-datepicker-toggle matSuffix [for]="pickerExpiredAt"></mat-datepicker-toggle>
                 <mat-datepicker #pickerExpiredAt></mat-datepicker>
             </mat-form-field>

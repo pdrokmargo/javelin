@@ -179,7 +179,6 @@ export class SuppliersQuotesActionComponent extends BaseModel implements OnInit 
             });
 
             this.model.details.push(movement);
-            console.log(movement);
             // var exist = false;
             // this.model.details.forEach((element, index) => {
             //     if (element.product_id == data.id) {

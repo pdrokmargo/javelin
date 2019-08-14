@@ -31,3 +31,9 @@ export * from './modal-stakeholder/stakeholders-action/stakeholders-action.compo
 
 export * from './modal-products/modal-products-action/modal-products-action.component';
 export * from './modal-products/modal-products-list/modal-products-list.component';
+
+export * from './modal-supplier-quotes/modal-supplier-quotes.component';
+export * from './modal-supplier-orders/modal-supplier-orders.component';
+
+export * from './modal-customers-quotes/modal-customers-quotes.component';
+export * from './modal-remission-goods/modal-remission-goods.component';

@@ -117,7 +117,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         this.helperService.GET(`/api/product/${this.numId}`).subscribe(rs => {
             const res = rs.json();
             this.model = res['data'];
-            this.model.pharmaceutical_drug = this.model.pharmaceutical_drug != null ? JSON.parse(this.model.pharmaceutical_drug) : [];
+            // this.model.pharmaceutical_drug = this.model.pharmaceutical_drug != null ? JSON.parse(this.model.pharmaceutical_drug) : [];
             this.importer = res['data']['importer'] || {};
             this.sanitary_registration_holder = res['data']['sanitary_registration_holder'] || {};
             this.supplier = res['data']['supplier'] || {};

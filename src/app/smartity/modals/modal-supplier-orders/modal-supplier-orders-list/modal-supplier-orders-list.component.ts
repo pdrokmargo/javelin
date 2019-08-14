@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { BaseList } from '../../../bases/base-list';
+import { LoaderService, HelperService } from '../../../../shared';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-supplier-orders-list',
-  templateUrl: './modal-supplier-orders-list.component.html',
-  styleUrls: ['./modal-supplier-orders-list.component.scss']
+  templateUrl: './modal-supplier-orders-list.component.html'
 })
-export class ModalSupplierOrdersListComponent implements OnInit {
+export class ModalSupplierOrdersListComponent extends BaseList implements OnInit {
 
-  constructor() { }
+  
+  @Output() select = new EventEmitter();
 
-  ngOnInit() {
-  }
+    constructor(public loaderService: LoaderService,
+        public helperService: HelperService,
+        public router: Router) {
+        super(loaderService, helperService);
+        this.urlApi = '/api/suppliers-quotes';
+    }
+    ngOnInit() {
+      this.getAll();
+    }
+    private view(row: any) {
+        this.select.emit(row);
+    }
+
 
 }

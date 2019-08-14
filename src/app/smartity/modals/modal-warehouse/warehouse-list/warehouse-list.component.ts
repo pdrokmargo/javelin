@@ -1,10 +1,6 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { DataTableResource } from 'angular-4-data-table';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit,  Output, EventEmitter } from '@angular/core';
 import 'rxjs/add/operator/startWith';
-import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Response } from '@angular/http';
+import {  Router } from '@angular/router';
 import { BaseList } from '../../../bases/base-list';
 import { LoaderService, HelperService } from '../../../../shared';
 

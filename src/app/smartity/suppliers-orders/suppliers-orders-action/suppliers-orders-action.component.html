@@ -1,14 +1,21 @@
 <form #modelForm="ngForm" autocomplete="off">
-    <div class="row">
-        <div class="col-sm-12 margin-bottom-40" [class.btn-action-container]="booActive">
-            <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-mat no-margin-left">
+    <div class="row form-inline">
+        <div class="margin-bottom-40" style="padding-left: 15px;padding-right: 15px;">
+            <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-mat no-margin-right">
                 <mat-icon>keyboard_arrow_left</mat-icon> Regresar
             </button>
         </div>
+        <div class="margin-bottom-40">
+                <button type="button" mat-raised-button color="primary" (click)="openSupplierQuotesLoad()" class="btn-w-mat no-margin-left">
+                    <mat-icon>search</mat-icon> Cotización
+                </button>
+        </div>
+    </div>
+    <div class="row">
         <!--comprador-->
         <div class="col-sm-12 col-md-3 margin-bottom">
             <mat-form-field class="full-width">
-                <input required readonly matInput type="text" placeholder="Comprador" [(ngModel)]="employee.fullname"
+                <input required readonly matInput type="text" placeholder="Comprador" [(ngModel)]="buyer.fullname"
                     id="employees" name="employees" />
                 <mat-icon matSuffix class="wh-24 pointer" (click)="openAddEmployees()">search</mat-icon>
             </mat-form-field>
@@ -16,42 +23,42 @@
         <!-- creado el -->
       <div class="col-md-3 margin-bottom">
           <mat-form-field>
-              <input matInput [matDatepicker]="pickerCreatedAt" placeholder="Creado el" [(ngModel)]="model.created_at" name="created_at">
-              <mat-datepicker-toggle matSuffix [for]="pickerCreatedAt"></mat-datepicker-toggle>
-              <mat-datepicker #pickerCreatedAt></mat-datepicker>
+              <input matInput readonly placeholder="Creado el" name="created_at" value="{{model.created_at | date:'dd/MM/yyyy'}}">
             </mat-form-field>
       </div>
     <!-- vence el -->
     <div class="col-md-3 margin-bottom">
           <mat-form-field>
-              <input matInput [matDatepicker]="pickerExpiredAt" placeholder="Vence el" [(ngModel)]="model.expire_at" name="expired_at">
+              <input matInput [matDatepicker]="pickerExpiredAt" placeholder="Vence el" [min]="model.created_at" [(ngModel)]="model.expire_at" name="expired_at">
               <mat-datepicker-toggle matSuffix [for]="pickerExpiredAt"></mat-datepicker-toggle>
               <mat-datepicker #pickerExpiredAt></mat-datepicker>
             </mat-form-field>
       </div>
         <!-- estado -->
-        <div class='col-sm-12 col-md-3 margin-bottom'>
+        <div class='col-sm-12 col-md-1 margin-bottom'>
             <div class="flex">
                 <span class="flex-spacer"></span>
                 <mat-slide-toggle [labelPosition]="'before'" id="status" name="status" [(ngModel)]="model.status">Estado</mat-slide-toggle>
             </div>
         </div>
+    </div>
+    <div class="row">
         <!-- proveedor -->
-        <div class="col-sm-12 col-md-4 margin-bottom">
+        <div class="col-sm-12 col-md-3 margin-bottom">
             <mat-form-field class="full-width">
-                <input required readonly matInput type="text" placeholder="Proveedor" [(ngModel)]="supplier.businessname"
+                <input required readonly matInput type="text" placeholder="Proveedor" [(ngModel)]="supplier.fullname"
                     id="supplier" name="supplier" />
                 <mat-icon matSuffix class="wh-24 pointer" (click)="openAddSupplier()">search</mat-icon>
             </mat-form-field>
         </div>
         <!-- contacto de compras -->
-        <div class='col-sm-12 col-md-4 margin-bottom'>
+        <div class='col-sm-12 col-md-3 margin-bottom'>
             <mat-form-field class="full-width">
                 <input type="text" name="contact_name" [(ngModel)]="contact_name.name_sales_contact" matInput placeholder="Contacto">
             </mat-form-field>
         </div>
         <!--condiciones de pago-->
-        <div class="col-sm-12 col-md-4 margin-bottom">
+        <div class="col-sm-12 col-md-3 margin-bottom">
             <mat-form-field>
             <mat-select class="full-width" placeholder="Condición de pago" [(ngModel)]="model.payment_condition_id" name="payment_condition"
                 id="population_type_id">
@@ -60,7 +67,7 @@
         </mat-form-field>
         </div>
         <!-- operations/costs centres -->
-        <div class="col-sm-12 col-md-4 margin-bottom">
+        <div class="col-sm-12 col-md-3 margin-bottom">
             <mat-form-field>
             <mat-select class="full-width" placeholder="Centro de operaciones" [(ngModel)]="model.operationcentre_id"
                 name="operationcentre_id" id="operationcentre_id">
@@ -68,6 +75,8 @@
             </mat-select>
         </mat-form-field>
         </div>
+    </div>
+    <div class="row">
         <!-- bodega destino -->
         <div class="col-sm-12 col-md-4 margin-bottom">
             <mat-form-field class="full-width">
@@ -79,7 +88,7 @@
         <!-- entrega estimada -->
         <div class="col-md-3 margin-bottom">
             <mat-form-field>
-                <input matInput [matDatepicker]="pickerEstimateDelivery" placeholder="Vence el" [(ngModel)]="model.estimate_delivery" name="estimate_delivery">
+                <input matInput [matDatepicker]="pickerEstimateDelivery" [min]="model.created_at" placeholder="Entrega estimada" [(ngModel)]="model.estimate_delivery" name="estimate_delivery">
                 <mat-datepicker-toggle matSuffix [for]="pickerEstimateDelivery"></mat-datepicker-toggle>
                 <mat-datepicker #pickerEstimateDelivery></mat-datepicker>
               </mat-form-field>
@@ -93,38 +102,43 @@
             <div class="flex margin-bottom">
                 <div class="box-header no-padding-h">Productos</div>
                 <span class="flex-spacer"></span>
-                <button type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalProducts()">Añadir</button>
+                <button [disabled]="model.supplier_id == -1" type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openModalProducts()">Añadir</button>
             </div>
             <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                 <table class="mdl-data-table table-bordered table-striped no-margin">
                     <thead>
                         <tr>
-                            <th>SKU</th>
-                            <th>Nombre del producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio</th>
-                            <th>Descuento (%)</th>
-                            <th>Sub total</th>
-                            <th></th>
+                            <th>PLU
+                                <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Producto
+                                    <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Unidades
+                                    <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Precio Unitario
+                                    <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Descuento (%)
+                                    <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th>Subtotal
+                                    <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of _pharmadrugs; let index = index">
-                            <td>{{item.sku}}</td>
-                            <td>
-                                {{item.name}}
-                            </td>
+                        <tr *ngFor="let detail of model.details;let index = index;">
+                                <td>{{detail.product.sku}}</td>
+                                <td>{{detail.product.display_name}}</td>
+                                <td><mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.units" name="units{{index}}" /></mat-form-field></td>
+                                <td><mat-form-field>$ <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.product.averageunitcost" name="average{{index}}" /></mat-form-field></td>
+                                <td><mat-form-field>% <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.discount" name="discount{{index}}" /></mat-form-field></td>
 
-                            <td *ngIf="numId != undefined">{{ item.units }}</td><td *ngIf="numId == undefined" ><mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="item.units" name="units{{index}}" /></mat-form-field></td>
-                            <td>
-                                {{item.product.averagecostunit}}
-                            </td>
-                            <td>
-                                {{supplier.global_discount}}
-                            </td>
-                            <td>${{ item.product.averageunitcost * detail.units}}</td>
+                                <td>${{ detail.product.averageunitcost * detail.units * (1-(detail.discount/100))}}</td>
                             <td class="w-40">
-                                <button type="button" class="text-danger" mat-icon-button (click)="deletePharmadrug()">
+                                <button type="button" class="text-danger" mat-icon-button (click)="removeProduct(index)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </td>
@@ -144,8 +158,10 @@
 
     </div>
     <div class="row">
-
-        <div class="col-sm-12" [class.btn-action-container]="booActive">
+            <div class="col-md-5">
+                    <mat-form-field><input readonly matInput placeholder="Total ($)" [(ngModel)]="model.total" name="total cost"></mat-form-field>
+                </div>
+        <div class="col-md-7" [class.btn-action-container]="booActive">
             <button type="button" [disabled]="!modelForm.form.valid" mat-raised-button class="btn-w-mat no-margin-left btn-right"
                 (click)="save()">{{strAction}}</button>
         </div>

@@ -76,6 +76,11 @@ import {
   ModalGeolocationComponent,
   StakeholdersActionComponent,
   StakeholdersListComponent,
+  ModalSupplierOrdersComponent,
+  ModalSupplierQuotesComponent,
+  
+
+  
 } from './smartity/modals';
 import { NgxMaskModule } from 'ngx-mask';
 import { InputFileComponent } from './smartity/component/index';
@@ -95,9 +100,18 @@ import { ModalProductsActionComponent } from './smartity/modals/modal-products/m
 import { ModalProductsListComponent } from './smartity/modals/modal-products/modal-products-list/modal-products-list.component';
 import { ModalStocksComponent } from './smartity/modals/modal-stocks/modal-stocks.component';
 import { ModalStocksListComponent } from './smartity/modals/modal-stocks/modal-stocks-list/modal-stocks-list.component';
-import { ModalSupplierQuotesComponent } from './smartity/modals/modal-supplier-quotes/modal-supplier-quotes.component';
 import { ModalSupplierQuotesListComponent } from './smartity/modals/modal-supplier-quotes/modal-supplier-quotes-list/modal-supplier-quotes-list.component';
 import { ModalSupplierOrdersListComponent } from './smartity/modals/modal-supplier-orders/modal-supplier-orders-list/modal-supplier-orders-list.component';
+import { ModalCustomersQuotesComponent } from './smartity/modals/modal-customers-quotes/modal-customers-quotes.component';
+import { ModalCustomersQuotesListComponent } from './smartity/modals/modal-customers-quotes/modal-customers-quotes-list/modal-customers-quotes-list.component';
+import { ModalRemissionGoodsComponent } from './smartity/modals/modal-remission-goods/modal-remission-goods.component';
+import { ModalRemissionGoodsListComponent } from './smartity/modals/modal-remission-goods/modal-remission-goods-list/modal-remission-goods-list.component';
+import { DeliveryComponent } from './smartity/delivery/delivery.component';
+import { DeliveryListComponent } from './smartity/delivery/delivery-list/delivery-list.component';
+import { DeliveryActionComponent } from './smartity/delivery/delivery-action/delivery-action.component';
+import { ScheduledDeliveriesComponent } from './smartity/scheduled-deliveries/scheduled-deliveries.component';
+import { ScheduledDeliveriesListComponent } from './smartity/scheduled-deliveries/scheduled-deliveries-list/scheduled-deliveries-list.component';
+
 
 
 @NgModule({
@@ -189,8 +203,19 @@ import { ModalSupplierOrdersListComponent } from './smartity/modals/modal-suppli
     ModalStocksComponent,
     ModalStocksListComponent,
     ModalSupplierQuotesComponent,
+    ModalSupplierOrdersComponent,
     ModalSupplierQuotesListComponent,
-    ModalSupplierOrdersListComponent
+    ModalSupplierOrdersListComponent,
+    ModalCustomersQuotesComponent,
+    ModalCustomersQuotesListComponent,
+    ModalRemissionGoodsComponent,
+    ModalRemissionGoodsListComponent,
+    DeliveryComponent,
+    DeliveryListComponent,
+    DeliveryActionComponent,
+    ScheduledDeliveriesComponent,
+    ScheduledDeliveriesListComponent,
+
   ],
   providers: [
     MycurrencyPipe,
@@ -238,6 +263,9 @@ import { ModalSupplierOrdersListComponent } from './smartity/modals/modal-suppli
     ActiveIngredientsActionComponent,
     ModalProductsComponent,
     ModalStocksComponent,
+    ModalSupplierOrdersComponent,
+    ModalSupplierQuotesComponent,
+    ModalCustomersQuotesComponent
   ]
 })
 

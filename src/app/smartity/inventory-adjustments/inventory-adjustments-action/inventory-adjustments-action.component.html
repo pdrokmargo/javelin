@@ -21,7 +21,7 @@
         <!-- warehouse -->
         <div *ngIf="model.stock.warehouse" class="col-sm-12 col-md-4 margin-bottom">
             <mat-form-field class="full-width">
-                <input readonly matInput type="text" placeholder="Bodega de entrada" [(ngModel)]="model.stock.warehouse.name"
+                <input readonly matInput type="text" placeholder="Bodega de entrada" [(ngModel)]="model.warehouse.name"
                     id="warehouse_name" name="warehouse_name" />
                 <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</mat-icon>
             </mat-form-field>

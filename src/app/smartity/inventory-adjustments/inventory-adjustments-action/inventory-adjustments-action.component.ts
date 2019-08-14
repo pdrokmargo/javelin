@@ -33,7 +33,6 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
     }
 
     ngOnInit() {
-        this.clean();
         this.getCollection();
         if (this.numId != undefined) {
             this.getDataById();
@@ -42,7 +41,8 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
             this.model.adjustment_date = new Date();
             this.strAction = 'Guardar';
         }
-
+        this.clean();
+        console.log(this.model.warehouse.name);
     }
     private getCollection() {
         this.loaderService.display(true);
@@ -58,7 +58,7 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
     private clean() {
         this.inventory_adjustments = [];
         this.inventory_adjustments_type = [];
-        this.model = { "warehouse_id": -1, "stock": { "product": { "sku": "", "display_name": "", "averageunitcost": "" }, "warehouse": {} } };
+        this.model = { "warehouse_id": -1, "stock": { "product": { "sku": "", "display_name": "", "averageunitcost": "" }, "warehouse": {"name":""} } };
     }
     private getDataById(): void {
         this.loaderService.display(true);
@@ -86,11 +86,11 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
         this.modalStocks.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
             this.model.stock_product_id = data.id;
             this.model.new_adjustment_value = "";
-            this.model.product.sku = data.product.sku;
-            this.model.product.averageunitcost = data.product.averageunitcost;
-            this.model.product.display_name = data.product.display_name;
-            this.model.set_stock = data.set_stock;
-            this.model.fraction_stock = data.fraction_stock;
+            this.model.stock.product.sku = data.product.sku;
+            this.model.stock.product.averageunitcost = data.product.averageunitcost;
+            this.model.stock.product.display_name = data.product.display_name;
+            this.model.stock.set_stock = data.set_stock;
+            this.model.stock.fraction_stock = data.fraction_stock;
             this.model.batch = data.batch;
             this.model.location = data.location;
             if (this.model.inventory_adjustment_type_id == 187) {
@@ -118,9 +118,9 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
 
                 this.model.new_adjustment_value = "";
                 this.model.current_adjustment_value = "";
-                this.model.product.sku = "";
-                this.model.product.averageunitcost = "";
-                this.model.product.display_name = "";
+                this.model.stock.product.sku = "";
+                this.model.stock.product.averageunitcost = "";
+                this.model.stock.product.display_name = "";
                 this.model.set_stock = "";
                 this.model.fraction_stock = "";
                 this.model.batch = "";

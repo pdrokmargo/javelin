@@ -1,12 +1,18 @@
 <!-- FORM -->
 <form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
-    <div class="row">
-        <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
-            <button mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+    <div class="row form-inline">
+        <div class="margin-bottom-40" style="padding-left: 15px;padding-right: 15px;">
+            <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-mat no-margin-right">
                 <mat-icon>keyboard_arrow_left</mat-icon> Regresar
             </button>
         </div>
-
+        <div class="margin-bottom-40" *ngIf="model.inventory_movement_entry_out_type_id == 174">
+          <button type="button" mat-raised-button color="primary" (click)="openSupplierOrderLoad()" class="btn-w-mat no-margin-left">
+              <mat-icon>search</mat-icon> Orden de Compra
+          </button>
+    </div>
+</div>
+          <div class="row">
         <!-- warehouse -->
         <div *ngIf="model.warehouse" class="col-sm-12 col-md-4 margin-bottom">
             <mat-form-field class="full-width">

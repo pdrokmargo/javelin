@@ -1,0 +1,73 @@
+<!-- LIST -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar" [(ngModel)]="search"
+                (keydown)="enter($event)">
+            <div style="width: 34px" class="input-group-addon">
+                <a style="cursor:pointer" (click)="getAll()">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button *ngIf="actions[0].status" mat-raised-button (click)="CUD('Guardar')" color="primary" class="btn-w-md no-margin-left btn-right">
+            <mat-icon>add_circle_outline</mat-icon> Nuevo
+        </button>
+    </div>
+  
+    <div class="col-sm-12">
+  
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+  
+            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <thead>
+                    <tr>
+                        <th class="noAuto" (click)="sort('id')"># Cotización
+                            <span class="glyphicon sort-icon" *ngIf="key =='id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('supplier_id')">Cliente
+                            <span class="glyphicon sort-icon" *ngIf="key =='supplier_id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('created_at')">Fecha de elaboración
+                            <span class="glyphicon sort-icon" *ngIf="key =='created_at'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('created_at')">Fecha de vencimiento
+                            <span class="glyphicon sort-icon" *ngIf="key =='created_at'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('status')">Estado
+                            <span class="glyphicon sort-icon" *ngIf="key =='status'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th *ngIf="actions[2].status" class="w-40"></th>
+                        <th *ngIf="actions[3].status" class="w-40"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of list.data">
+                        <td>{{ item.document.prefix }}-{{item.consecutive}}</td>
+                        <td>{{ item.stakeholder_info.fullname }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>{{ item.expire_at }}</td>
+                        <td>{{ item.status ? 'Activo' : 'Inactiva' }}</td>
+                        <td *ngIf="actions[2].status" class="w-40">
+                            <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar', item)">
+                                <mat-icon>mode_edit</mat-icon>
+                            </button>
+                        </td>
+                        <td *ngIf="actions[3].status" class="w-40">
+                            <button type="button" mat-icon-button class="text-danger" (click)="CUD('Eliminar', item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+  
+        </div>
+  
+        <ngb-pagination [pageSize]="pageSize" [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="maxSize"
+            [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>
+  
+    </div>
+  </div>
