@@ -37,3 +37,5 @@ export * from './modal-supplier-orders/modal-supplier-orders.component';
 
 export * from './modal-customers-quotes/modal-customers-quotes.component';
 export * from './modal-remission-goods/modal-remission-goods.component';
+export * from './modal-affiliates/modal-affiliates.component';
+export * from './modal-products/modal-products.component';

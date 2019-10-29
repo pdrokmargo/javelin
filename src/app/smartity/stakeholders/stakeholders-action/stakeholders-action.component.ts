@@ -45,6 +45,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     private country_id: any;
     private departments: any[] = [];
     private department_id: any;
+    private city_id: any;
     private cities: any[] = [];
     /**
      * Array para los combos
@@ -107,8 +108,8 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this.suppliers_class = res.SUPPLIERS_CLASS;
             this.customers_class = res.CUSTOMERS_CLASS;
             this.payment_method = res.PAYMENT_METHOD;
-            document_type.filter(item => { if (item.value !== 'NIT') { this.document_type_n.push(item); } });
-            document_type.filter(item => { if (item.value == 'NIT') { this.document_type_j.push(item); } });
+            document_type.filter(item => { if (item.code !== 'NIT') { this.document_type_n.push(item); } });
+            document_type.filter(item => { if (item.code == 'NIT' || item.code == 'VAT') { this.document_type_j.push(item); } });
             this.loaderService.display(false);
         }, err => {
             console.log(err);
@@ -150,6 +151,9 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
     }
     private save() {
         this.loaderService.display(true);
+        this._model.country_id = this.country_id;
+        this._model.department_id = this.department_id;
+        this._model.city_id = this.city_id;
         const formData: FormData = new FormData();
         formData.append('data', JSON.stringify(this._model));
         switch (this.strAction) {
@@ -225,6 +229,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             this.country_id = res.country_id;
             this.getDepartments();
             this.department_id = res.department_id;
+            this.city_id = res.city_id;
             this.getCities();
             this.getRutDigit();
 

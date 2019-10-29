@@ -87,7 +87,7 @@ private openModalStocks() {
     this.modalStocks.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
         let movement = new Object( {
             "product_id": data.product.id,
-            "product": {"sku": data.product.sku, "display_name": data.product.display_name, "averageunitcost": data.product.averageunitcost, "units":data.product.units},
+            "product": data.product,
             "batch": data.batch,
             "fraction": false,
             "location": data.location,

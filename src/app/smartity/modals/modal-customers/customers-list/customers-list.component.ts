@@ -30,12 +30,12 @@ export class CustomersListComponent extends BaseList implements OnInit {
         if (this.type != '') {
             switch (this.type) {
                 case 'customers':
-                    this.urlApi = '/api/Costumers-customers';
+                    this.urlApi = '/api/stakeholders-custumers';
                     break;
             }
             this.getAll();
         } else {
-            this.urlApi = '/api/Costumers';
+            this.urlApi = '/api/stakeholders-custumers';
             this.getAll();
         }
 

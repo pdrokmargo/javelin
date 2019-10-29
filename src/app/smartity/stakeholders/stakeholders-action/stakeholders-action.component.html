@@ -86,7 +86,7 @@
     <!-- legalname -->
     <div class="col-md-3" [ngClass]="{ 
         'col-md-6 ' : _model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14), 
-        'col-md-12 ' : !_model.stakeholders_info.rut && _model.stakeholders_info.person_type_id != 39 }" *ngIf="_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14">
+        'col-md-12 ' : !_model.stakeholders_info.rut && _model.stakeholders_info.person_type_id != 39 }" *ngIf="_model.stakeholders_info.person_type_id == 39">
             <mat-form-field class="full-width">
                 <input type="text" id="legalname" name="legalname" [(ngModel)]="_model.stakeholders_info.legalname" matInput placeholder="Razón Social">
             </mat-form-field>
@@ -95,7 +95,7 @@
         <div class="col-md-3" [ngClass]="{ 
         'col-md-6 ' : _model.stakeholders_info.person_type_id === 39 , 
         'col-md-12 ' :  _model.stakeholders_info.person_type_id !== 39 
-    }" *ngIf="_model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39 && _model.stakeholders_info.document_type_id == 14)">
+    }" *ngIf="_model.stakeholders_info.rut || (_model.stakeholders_info.person_type_id == 39)">
         <mat-form-field class="full-width">
             <input type="text" id="businessname" name="businessname" [(ngModel)]="_model.stakeholders_info.businessname" matInput placeholder="Nombre del Establecimiento">
         </mat-form-field>
@@ -116,7 +116,7 @@
     </div>
     <!--city -->
     <div class="col-md-4">
-        <mat-form-field class="full-width">     <mat-select required class="full-width" placeholder="Ciudad" [(ngModel)]="_model.stakeholders_info.geolocation_id" name="city_id"
+        <mat-form-field class="full-width">     <mat-select required class="full-width" placeholder="Ciudad" [(ngModel)]="city_id" name="city_id"
             id="city_id">
             <mat-option *ngFor="let item of cities" [value]="item.id">{{item.value}}</mat-option>
         </mat-select>     </mat-form-field>
@@ -163,12 +163,15 @@
             <mat-checkbox id="is_employee" name="is_employee" [(ngModel)]="_model.profile.is_employee">Empleado</mat-checkbox>
         </div>
         <div class="col-sm-3">
+                <mat-checkbox id="is_laboratory" name="is_laboratory" [(ngModel)]="_model.profile.is_laboratory">Laboratorio</mat-checkbox>
+            </div>
+        <div class="col-sm-3">
             <mat-checkbox id="is_maker" name="is_maker" [(ngModel)]="_model.profile.is_maker">Fabricante</mat-checkbox>
         </div>
         <div class="col-sm-3">
             <mat-checkbox id="is_importer" name="is_importer" [(ngModel)]="_model.profile.is_importer">Importador</mat-checkbox>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <mat-checkbox id="is_holder_sanitary" name="is_holder_sanitary" [(ngModel)]="_model.profile.is_holder_sanitary">Titular
                 de registro sanitario</mat-checkbox>
         </div>

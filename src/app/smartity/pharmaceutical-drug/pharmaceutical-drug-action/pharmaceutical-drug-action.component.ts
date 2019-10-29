@@ -143,12 +143,14 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
     }
 
     private clean() {
-        this.model = {};
+        this.model = {"pharmaceuticaldrug":{"is_pos": false, "is_controlled": false, "dosage_form_id": -1, "routes_administration_id": -1, "is_monopoly": false, "state": true}};
         this.arrActive_ingredients = [];
-        this.model.is_pos = false;
-        this.model.is_controlled = false;
-        this.model.is_monopoly = false;
-        this.model.state = true;
+        // this.model.pharmaceuticaldrug.is_pos = false;
+        // this.model.pharmaceuticaldrug.is_controlled = false;
+        // this.model.pharmaceuticaldrug.dosage_form_id = -1;
+        // this.model.pharmaceuticaldrug.routes_administration_id = -1;
+        // this.model.pharmaceuticaldrug.is_monopoly = false;
+        // this.model.pharmaceuticaldrug.state = true;
     }
 
     private goList() {
@@ -166,7 +168,11 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
         this.modalActiveIngredients.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
 
             if (this.arrActive_ingredients.length == 0) {
+                data.measurement_unit_id = this.measurement_unit_id;
+                // data.measurement_unit.code = this.measurement_unit["code"];
                 this.arrActive_ingredients.push(data);
+                console.log(this.measurement_unit);              
+                console.log(this.arrActive_ingredients);
             } else {
                 var exist = false;
                 this.arrActive_ingredients.forEach((element, index) => {
@@ -175,7 +181,10 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                     }
                     if (this.arrActive_ingredients.length - 1 == index) {
                         if (!exist) {
+                            data.measurement_unit_id = this.measurement_unit_id;
+                data.measurement_unit.code = this.measurement_unit["code"];
                             this.arrActive_ingredients.push(data);
+                            console.log(this.arrActive_ingredients);
                         }
                     }
                 });

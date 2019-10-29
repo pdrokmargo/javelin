@@ -1,3 +1,304 @@
-<p>
-  delivery-action works!
-</p>
+<form #modelForm="ngForm" autocomplete="off">
+  <div class="row">
+    <div class="col-sm-12 margin-bottom-40">
+      <button type="button" mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+        <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+      </button>
+    </div>
+    <!-- Afiliado -->
+    <div class="col-sm-12 col-md-9 margin-bottom">
+      <mat-form-field class="full-width">
+        <input readonly matInput type="text" placeholder="Afiliado" [(ngModel)]="affiliate.display_name" id="affiliate"
+          name="affiliate" />
+        <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalAffiliates()">search</mat-icon>
+      </mat-form-field>
+    </div>
+    <!-- estado -->
+    <!-- <div class='col-sm-12 col-md-3 col-lg-3 margin-bottom left'>
+      <div class="flex">
+        <span class="flex-spacer"></span>
+        <mat-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado
+        </mat-slide-toggle>
+      </div>
+    </div> -->
+    <!-- pendientes -->
+    <div class="col-sm-12 col-md-12 margin-bottom"  *ngIf="numId == undefined">
+
+        <div class="flex margin-bottom">
+          <div class="box-header no-padding-h">Entregas Programadas: Pendientes y Entregas Futuras</div>
+          <span class="flex-spacer"></span>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+          <table class="mdl-data-table table-bordered table-striped no-margin">
+            <thead>
+              <tr>
+                <th>PLU
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Producto
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <!-- <th>Laboratorio/Fabricante
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th> -->
+                <th>Unidades a Entregar
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <!-- <th>Fecha a Entregar
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th> -->
+                <th>Tipo de Entrega Programada
+                    <span class="glyphicon sort-icon"
+                      [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+                <!-- <th>Estado
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of arrScheduledDeliveries;let index = index;">
+                  <!-- <td style="width:80px;">{{detail.delivery.consecutive}}</td> -->
+                  <td>{{detail.product.sku}}</td>
+                  <td>{{detail.product.name}}<span style="font-weight:bold;" *ngIf="detail.product.comercial">({{detail.product.comercial_name}})</span></td>
+                  <td style="width:80px;"><span style="width:80px;">{{detail.units}}</span></td>
+                  <td style="width:80px;"><span style="width:80px;">{{detail.scheduled_delivery_type.value}}</span></td>
+  
+                <td>
+                  <button type="button" mat-raised-button color="primary"
+            class="btn-w-md no-margin-left" (click)="openModalProducts()">Entregar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- historial de entregas -->
+      <div class="col-sm-12 col-md-12 margin-bottom" *ngIf="numId == undefined">
+  
+        <div class="flex margin-bottom">
+          <div class="box-header no-padding-h">Historial de Entregas</div>
+          <span class="flex-spacer"></span>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+          <table class="mdl-data-table table-bordered table-striped no-margin" style="white-space: normal;">
+            <thead>
+              <tr>
+                  <th># Entrega
+                      <span class="glyphicon sort-icon"
+                        [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                <th>PLU
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Producto
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Unidades Solicitadas
+                    <span class="glyphicon sort-icon"
+                      [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                  </th>
+                <th>Unidades Entregadas
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Fecha de Entrega
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Fecha de Creación
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of arrAffiliateDeliveries;let index = index;">
+                <td style="width:80px;">{{detail.delivery.consecutive}}</td>
+                <td>{{detail.product.sku}}</td>
+                <td>{{detail.product.name}}<span style="font-weight:bold;" *ngIf="detail.product.comercial">({{detail.product.comercial_name}})</span></td>
+                <td style="width:80px;"><span style="width:80px;">{{detail.requested_units}}</span></td>
+                <td style="width:80px;"><span style="width:80px;">{{detail.delivered_units}}</span></td>
+                <td style="width:80px;"><span style="width:80px;">{{detail.delivery.delivery_date | date:'dd/MM/yyyy'}}</span></td>
+                <td style="width:80px;"><span style="width:80px;">{{detail.delivery.date | date:'dd/MM/yyyy'}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+    <!-- Afiliado -->
+    <div class="col-sm-12 col-md-12 margin-bottom"  *ngIf="numId == undefined">
+        <mat-form-field class="full-width">
+          <input readonly matInput type="text" placeholder="Afiliado" [(ngModel)]="affiliate.display_name" id="affiliate2"
+            name="affiliate2" />
+        </mat-form-field>
+      </div>  
+    <!-- Diagnóstico -->
+    <div class="col-sm-12 col-md-3 margin-bottom">
+      <mat-form-field class="full-width">
+        <mat-select class="full-width" placeholder="Diagnóstico" [(ngModel)]="model.medical_diagnostic_id"
+          name="medical_diagnostic_id" id="medical_diagnostic_id">
+          <mat-option *ngFor="let item of arrMedicalDiagnostics" [value]="item.id">{{item.code}}: {{item.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Formulado el -->
+    <div class="col-md-3 margin-bottom">
+      <mat-form-field>
+        <input matInput [matDatepicker]="pickerFormulaDate" placeholder="Formulado el" [max]="model.created_at"
+          [(ngModel)]="model.formula_date" name="formula_date">
+        <mat-datepicker-toggle matSuffix [for]="pickerFormulaDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFormulaDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- Entregado el -->
+    <div class="col-md-3 margin-bottom">
+      <mat-form-field>
+        <input matInput [matDatepicker]="pickerDeliveryDate" placeholder="Entregado el" [max]="model.created_at"
+          [(ngModel)]="model.delivery_date" name="delivery_date">
+        <mat-datepicker-toggle matSuffix [for]="pickerDeliveryDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDeliveryDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- Creado el -->
+    <div class="col-md-3 margin-bottom">
+      <mat-form-field>
+        <input matInput readonly placeholder="Creado el" name="created_at"
+          value="{{model.date | date:'dd/MM/yyyy'}}">
+      </mat-form-field>
+    </div>
+    <!-- Modalidad -->
+    <div class="col-sm-12 col-md-3 margin-bottom">
+      <mat-form-field class="full-width">
+        <mat-select class="full-width" placeholder="Modalidad" [(ngModel)]="model.modality_id" name="modality_id"
+          id="modality_id">
+          <mat-option *ngFor="let item of arrModality" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Red Adscrita -->
+    <div class="col-sm-12 col-md-3 margin-bottom">
+      <mat-form-field class="full-width">
+        <mat-select class="full-width" placeholder="Red Adscrita" [(ngModel)]="model.ips_id" name="ips_id" id="ips_id">
+          <mat-option *ngFor="let item of arrIPS" [value]="item.id">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- # Autorización -->
+    <div class="col-md-3 margin-bottom" *ngIf="model.modality_id == 1399">
+      <mat-form-field>
+        <input matInput placeholder="Número de Autorización" name="authorization" [(ngModel)]="model.authorization">
+      </mat-form-field>
+    </div>
+
+    
+
+    <!-- productos -->
+    <div class="col-sm-12 col-md-12 margin-bottom">
+
+      <div class="flex margin-bottom">
+        <div class="box-header no-padding-h">Productos</div>
+        <span class="flex-spacer"></span>
+        <button type="button" mat-raised-button color="primary"
+          class="btn-w-md no-margin-left" (click)="openModalProducts()">Añadir</button>
+      </div>
+      <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+        <table class="mdl-data-table table-bordered table-striped no-margin" style="white-space: normal;">
+          <thead>
+            <tr>
+              <th>PLU
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Producto
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Unidades Solicitadas
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Unidades Entregadas
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <!-- <th># Entrega / Total
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th> -->
+              <th>Lote
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th>Fecha de Vencimiento
+                <span class="glyphicon sort-icon"
+                  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+              <th *ngIf="numId == undefined"><span *ngIf="numId == undefined">Stock</span><span *ngIf="numId != undefined">Unidades x Lote</span>
+                  <span class="glyphicon sort-icon"
+                    [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let detail of model.details;let index = index;">
+              <td>{{detail.product.sku}}</td>
+              <td>{{detail.product.name}}<span style="font-weight:bold;" *ngIf="detail.product.comercial">({{detail.product.comercial_name}})</span> <!-- <span *ngIf="detail.deliveryCovered"> Entrega 1 / {{detail.requested_units/detail.delivered_units}}</span>--></td>
+              <td style="width:80px;" *ngIf="numId != undefined">{{detail.requested_units}}</td><td style="width:80px;" *ngIf="numId == undefined"><mat-form-field style="width:50px;"><input matInput (input)="validateRequested(detail.requested_units, index, -1)" [disabled]="detail.stockSelected == undefined"  type="number" [(ngModel)]="detail.requested_units" name="requested_units{{index}}" /></mat-form-field></td>
+              <td style="width:80px;" *ngIf="numId != undefined">{{detail.delivered_units}}</td><td style="width:80px;" *ngIf="numId == undefined"><mat-form-field style="width:50px;"><input (input)="validateDelivered(detail.requested_units, detail.delivered_units, index)" [disabled]="detail.stockSelected == undefined" matInput type="number" [(ngModel)]="detail.delivered_units" name="delivered_units{{index}}" /></mat-form-field></td>
+              <!-- <td style="width:200px;" *ngIf="numId != undefined">{{detail.delivery_number}} / {{detail.total_deliveries}}</td><td style="width:100px;" *ngIf="numId == undefined"><mat-form-field style="width:30px;"><input [readonly]="true" matInput type="number" [(ngModel)]="detail.delivery_number" name="delivery_number{{index}}" /></mat-form-field> / <mat-form-field style="width:30px;"><input [readonly]="detail.delivered_units == detail.requested_units" [disabled]="detail.stockSelected == undefined" matInput type="number" [(ngModel)]="detail.total_deliveries" name="total_deliveries{{index}}" /></mat-form-field></td> -->
+              
+              <td colspan="3" *ngIf="numId == undefined">
+                <span *ngIf="detail.stockSelected == undefined">Sin Existencias</span>
+                  <div class="col-sm-12 col-md-12 margin-bottom" *ngFor="let itemX of detail.stocks; index as i">
+                      <mat-form-field class="full-width">
+                        <mat-select [(ngModel)]="detail.stockSelected[i]" (change)="validateRequested(detail.requested_units, index, i)" class="full-width" placeholder="Seleccionar" name="lote_expire{{i}}">
+                          <mat-option *ngFor="let item of itemX" [value]="item">{{item.batch}} - {{item.expiration_date}} <span *ngIf="numId == undefined">- {{item.fraction_stock}}</span></mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+              </td>
+              <td colspan="3" *ngIf="numId != undefined">
+                <span *ngFor="let item of detail.stocks">
+                    {{item.batch}} - {{item.expiration_date | date:'dd/MM/yyyy'}} <br>
+                </span>
+                
+              </td>
+              <!-- <td>{{detail.stockSelected}}</td> -->
+              <td class="w-40">
+                <button type="button" class="text-danger" mat-icon-button (click)="removeProduct(index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+    <!--notas-->
+    <div class='col-sm-12 col-md-12 margin-bottom'>
+      <mat-form-field class="full-width">
+        <textarea type="text" id="notes" name="notes" [(ngModel)]="model.notes" matInput placeholder="Nota"></textarea>
+      </mat-form-field>
+    </div>
+
+
+    <div class="col-sm-12">
+      <button [disabled]="action_active ? false : !modelForm.form.valid" mat-raised-button color="primary"
+        class="btn-w-md no-margin-left btn-right" (click)="openModalConfirmYesNo()">{{strAction}}</button>
+    </div>
+  </div>
+</form>

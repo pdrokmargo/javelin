@@ -57,7 +57,7 @@ export class InventoryMovementsEntryActionComponent extends BaseModel implements
     this.modalProducts.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
         let movement = new Object( {
             "product_id": data.id,
-            "product": {"sku": data.sku, "display_name": data.name, "averageunitcost": data.averageunitcost, "units":data.units},
+            "product": data,
             "batch": "",
             "fraction": false,
             "location": "",

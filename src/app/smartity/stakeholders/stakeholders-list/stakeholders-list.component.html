@@ -23,9 +23,9 @@
             <table class="mdl-data-table table-bordered table-striped cf no-margin">
                 <thead>
                     <tr>
-                        <th class="noAuto" (click)="sort('i.id')">ID
+                        <!-- <th class="noAuto" (click)="sort('i.id')">ID
                             <span class="glyphicon sort-icon" *ngIf="key =='i.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                        </th>
+                        </th> -->
                         <th (click)="sort('firstname')">Nombre
                             <span class="glyphicon sort-icon" *ngIf="key =='firstname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
@@ -46,11 +46,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of list.data">
-                        <td class="noAuto">{{ item.id }}</td>
                         <td *ngIf="item.person_type_id === 38">{{ item.name }}</td>
                         <td *ngIf="item.person_type_id === 39">{{ item.legalname }}</td>
                         <td>{{ item.document_number }}</td>
-                        <td>{{ item.geolocation }}</td>
+                        <td>{{ item.country }}<span *ngIf="item.department">, {{ item.department }}</span><span *ngIf="item.department">, {{ item.city }}</span></td>
                         <td>{{ item.status ? 'Activo' : 'Inactivo' }}</td>
                         <td *ngIf="actions[2].status" class="w-40">
                             <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar',item)">

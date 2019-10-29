@@ -18,36 +18,31 @@
           <table class="mdl-data-table table-bordered table-striped cf no-margin">
               <thead>
                   <tr>
-                      <th (click)="sort('sku')">SKU
-                          <span class="glyphicon sort-icon" *ngIf="key =='sku'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                      </th>
-
-                      <th (click)="sort('ra.value')">Nombre de Producto
-                          <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                      </th>
-
-                      <th (click)="sort('pd.units')">Cantidad
-                          <span class="glyphicon sort-icon" *ngIf="key =='units'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                      </th>
-
-                      <th (click)="sort('pd.cost')">Precio
-                          <span class="glyphicon sort-icon" *ngIf="key =='cost'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                      </th>
-
-                      <th (click)="sort('pd.state')">Estado
-                          <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                      </th>
+                        <th>PLU
+                                <span class="glyphicon sort-icon"></span>
+                        </th>
+                        <!-- <th>Cums
+                                <span class="glyphicon sort-icon"></span>
+                        </th> -->
+                        <th (click)="sort('comercial_name')">Nombre
+                            <span class="glyphicon sort-icon" *ngIf="key =='comercial_name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('state')">Tipo de Producto
+                            <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('state')">Estado
+                            <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
 
                   </tr>
               </thead>
               <tbody>
                   <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index"
                       [ngClass]="{'active': numItemSelected == index }">
-                      <td>{{ item.sku }}</td>
-                      <td>{{ item.comercial_name }}</td>
-                      <td>{{ item.units }}</td>
-                      <td>{{ item.cost }}</td>
-                      <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
+                      <td>{{item.sku}}</td>
+                        <td >{{ item.name }} <span style="font-weight:bold;" *ngIf="item.comercial">({{item.comercial_name}})</span></td>
+                        <td>{{item.product_type.value}}</td>
+                        <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
                   </tr>
               </tbody>
           </table>

@@ -63,11 +63,11 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     private save() {
         this.model.name = '';
 
-        if (this.model.pharmaceutical_drug === undefined) {
-            this.model.pharmaceutical_drug = [];
+        if (this.model.product_detail.pharmaceuticaldrug === undefined) {
+            this.model.product_detail.pharmaceuticaldrug = {};
         }
 
-        if (this.model.pharmaceutical_drug.length == 0 && this.model.product_profile_id == 30) {
+        if (this.model.product_detail.pharmaceuticaldrug == null && this.model.product_profile_id == 30) {
             this.snackBar.open('Seleccione por lo menos un medicamento', 'Error', { duration: 4000 });
         } else {
             this.loaderService.display(true);
@@ -117,9 +117,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         this.helperService.GET(`/api/product/${this.numId}`).subscribe(rs => {
             const res = rs.json();
             this.model = res['data'];
-            // this.model.pharmaceutical_drug = this.model.pharmaceutical_drug != null ? JSON.parse(this.model.pharmaceutical_drug) : [];
+            // this.model.product_detail.pharmaceuticaldrug = this.model.product_detail.pharmaceuticaldrug != null ? JSON.parse(this.model.product_detail.pharmaceuticaldrug) : [];
             this.importer = res['data']['importer'] || {};
-            this.sanitary_registration_holder = res['data']['sanitary_registration_holder'] || {};
+            this.sanitary_registration_holder = res['data']['product_detail']['sanitary_registration_holder'] || {};
             this.supplier = res['data']['supplier'] || {};
             if (this.supplier.businessname == '') {
                 this.supplier.businessname = this.supplier.fullname;
@@ -133,7 +133,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     private clean() {
-        this.model = {};
+        this.model = {"product_detail": {}};
 
         this.model.batch_control = false;
         this.model.serials_control = false;
@@ -142,7 +142,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         this.model.is_regulated = false;
         this.model.state = true;
         this.model.comercial_name = '';
-        this.model.pharmaceutical_drug = [];
+        this.model.product_detail.pharmaceuticaldrug = null;
     }
 
     private goList() {
@@ -156,20 +156,15 @@ export class ProductActionComponent extends BaseModel implements OnInit {
                 title: 'Medicamentos'
             }
         });
-
         this.pharmaceuticalDialogRef
             .afterClosed()
             .pipe(filter((pharmaceuticalDrug) => pharmaceuticalDrug))
             .subscribe((pharmaceuticalDrug) => {
-                console.log(pharmaceuticalDrug);
-
-                this.model.pharmaceutical_drug.push(pharmaceuticalDrug);
+                this.model.product_detail.pharmaceuticaldrug = pharmaceuticalDrug.pharmaceuticaldrug;
             });
-    }
-
-    removePharmaceutical(obj) {
-        const index = this.model.pharmaceutical_drug.indexOf(obj);
-        this.model.pharmaceutical_drug.splice(index, 1);
+        }
+    removePharmaceutical() {
+        this.model.product_detail.pharmaceuticaldrug = null;
     }
 
     openAddSanitaryRegistration() {

@@ -106,11 +106,9 @@ import { ModalCustomersQuotesComponent } from './smartity/modals/modal-customers
 import { ModalCustomersQuotesListComponent } from './smartity/modals/modal-customers-quotes/modal-customers-quotes-list/modal-customers-quotes-list.component';
 import { ModalRemissionGoodsComponent } from './smartity/modals/modal-remission-goods/modal-remission-goods.component';
 import { ModalRemissionGoodsListComponent } from './smartity/modals/modal-remission-goods/modal-remission-goods-list/modal-remission-goods-list.component';
-import { DeliveryComponent } from './smartity/delivery/delivery.component';
-import { DeliveryListComponent } from './smartity/delivery/delivery-list/delivery-list.component';
-import { DeliveryActionComponent } from './smartity/delivery/delivery-action/delivery-action.component';
-import { ScheduledDeliveriesComponent } from './smartity/scheduled-deliveries/scheduled-deliveries.component';
-import { ScheduledDeliveriesListComponent } from './smartity/scheduled-deliveries/scheduled-deliveries-list/scheduled-deliveries-list.component';
+import { ModalAffiliatesComponent } from './smartity/modals/modal-affiliates/modal-affiliates.component';
+import { ModalAffiliatesListComponent } from './smartity/modals/modal-affiliates/modal-affiliates-list/modal-affiliates-list.component';
+
 
 
 
@@ -210,11 +208,8 @@ import { ScheduledDeliveriesListComponent } from './smartity/scheduled-deliverie
     ModalCustomersQuotesListComponent,
     ModalRemissionGoodsComponent,
     ModalRemissionGoodsListComponent,
-    DeliveryComponent,
-    DeliveryListComponent,
-    DeliveryActionComponent,
-    ScheduledDeliveriesComponent,
-    ScheduledDeliveriesListComponent,
+    ModalAffiliatesComponent,
+    ModalAffiliatesListComponent
 
   ],
   providers: [
@@ -265,7 +260,9 @@ import { ScheduledDeliveriesListComponent } from './smartity/scheduled-deliverie
     ModalStocksComponent,
     ModalSupplierOrdersComponent,
     ModalSupplierQuotesComponent,
-    ModalCustomersQuotesComponent
+    ModalCustomersQuotesComponent,
+    ModalAffiliatesComponent,
+    ModalAffiliatesListComponent
   ]
 })
 

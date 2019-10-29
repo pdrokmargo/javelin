@@ -32,20 +32,14 @@
                         <th>PLU
                                 <span class="glyphicon sort-icon"></span>
                         </th>
-                        <th>Cums
+                        <!-- <th>Cums
                                 <span class="glyphicon sort-icon"></span>
-                        </th>
+                        </th> -->
                         <th (click)="sort('comercial_name')">Nombre
                             <span class="glyphicon sort-icon" *ngIf="key =='comercial_name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th>Forma Farmacéutica
-                                <span class="glyphicon sort-icon"></span>
-                        </th>
-                        <th>Medida
-                                <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                        </th>
-                        <th (click)="sort('units')">Presentación
-                            <span class="glyphicon sort-icon" *ngIf="key =='units'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <th (click)="sort('state')">Tipo de Producto
+                            <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th (click)="sort('state')">Estado
                             <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -55,14 +49,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of list.data">
-                        <!-- <td class="noAuto">{{ item.id }}</td> -->
+                    <tr *ngFor="let item of list.data">                        
                         <td>{{item.sku}}</td>
-                        <td>{{item.cums}}</td>
-                        <td >{{ item.display_name }}</td>
-                        <td>{{ item.pharmaceutical_drug[0].dosage_form }}</td>
-                        <td>{{ item.pharmaceutical_drug[0].concentration }}</td>
-                        <td>Caja x {{ item.units }}</td>
+                        <td >{{ item.name }} <span style="font-weight:bold;" *ngIf="item.comercial">({{item.comercial_name}})</span></td>
+                        <td>{{item.product_type.value}}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
                         <td *ngIf="actions[2].status" class="w-40">
                             <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar',item)">

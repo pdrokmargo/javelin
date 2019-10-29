@@ -27,7 +27,7 @@
 
         <div class="box box-default table-box table-responsive mdl-shadow--2dp">
 
-            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+            <table class="mdl-data-table table-bordered table-striped no-margin" style="white-space: normal;">
                 <thead>
                     <tr>
                         <!-- <th class="noAuto" (click)="sort('w.id')">ID
@@ -70,7 +70,7 @@
                         <!-- <td class="noAuto">{{ item.id }}</td> -->
                         <td>{{item.warehouse.name}}</td>
                         <td>{{item.product.sku}}</td>
-                        <td>{{item.product.display_name}}</td>
+                        <td>{{item.product.name}}<span style="font-weight:bold;" *ngIf="item.product.comercial">({{item.product.comercial_name}})</span></td>
                         <td>{{item.set_stock}}</td>
                         <td>{{item.fraction_stock}}</td>
                         <td>{{item.batch}}</td>

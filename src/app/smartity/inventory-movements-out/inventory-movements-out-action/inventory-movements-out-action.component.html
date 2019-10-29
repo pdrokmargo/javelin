@@ -43,7 +43,7 @@
 
             <div class="box box-default table-box table-responsive mdl-shadow--2dp">
     
-                <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <table class="mdl-data-table table-bordered table-striped cf no-margin" style="white-space: normal;">
                     <thead>
                         <tr>
                             <!-- <th class="noAuto" (click)="sort('w.id')">ID
@@ -82,7 +82,7 @@
                     <tbody>
                         <tr *ngFor="let detail of model.details;let index = index;">
                             <td>{{detail.product.sku}}</td>
-                            <td>{{detail.product.display_name}}</td>
+                            <td>{{detail.product.name}}<span style="font-weight:bold;" *ngIf="detail.product.comercial">({{detail.product.comercial_name}})</span></td>
                             <td>{{detail.batch}}</td>
                             <!-- <td *ngIf="numId == undefined"><mat-form-field><input matInput type="text" [(ngModel)]="detail.batch" name="batch{{index}}" /></mat-form-field></td> -->
                             <td>{{detail.location}}</td>

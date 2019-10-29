@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Base } from '../bases/base';
 
 @Component({
   selector: 'app-delivery',
-  templateUrl: './delivery.component.html',
-  styleUrls: ['./delivery.component.scss']
+  templateUrl: './delivery.component.html'
 })
-export class DeliveryComponent implements OnInit {
+export class DeliveryComponent extends Base implements OnInit {
 
-  constructor() { }
+  constructor(){
+      super();
+  }
 
   ngOnInit() {
   }
