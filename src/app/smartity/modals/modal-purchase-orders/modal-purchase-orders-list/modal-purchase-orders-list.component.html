@@ -11,11 +11,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <button *ngIf="actions[0].status" mat-raised-button (click)="CUD('Guardar')" color="primary" class="btn-w-mat no-margin-left btn-right">
-            <mat-icon>add_circle_outline</mat-icon> Nuevo
-        </button>
-    </div>
 
     <div class="col-sm-12">
 
@@ -41,32 +36,21 @@
                         <th (click)="sort('created_at')">Bodega Destino
                                 <span class="glyphicon sort-icon" *ngIf="key =='created_at'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                             </th>
-                      <th (click)="sort('status')">Cumplida
+                      <th (click)="sort('status')">Estado
                           <span class="glyphicon sort-icon" *ngIf="key =='status'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                       </th>
-                      <th *ngIf="actions[2].status" class="w-40"></th>
-                      <th *ngIf="actions[3].status" class="w-40"></th>
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor="let item of list.data">
+                  <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index"
+                        [ngClass]="{'active': numItemSelected == index }">
                     <td>{{ item.document.prefix }}-{{item.consecutive}}</td>
                       <td>{{ item.stakeholder_info.fullname }}</td>
-                      <td>{{ item.created_at | date:'dd/MM/yyyy'}}</td>
-                      <td>{{ item.expire_at | date:'dd/MM/yyyy'}}</td>
-                      <td>{{ item.estimate_delivery | date:'dd/MM/yyyy'}}</td>
+                      <td>{{ item.created_at | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ item.expire_at | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ item.expire_at | date:'dd/MM/yyyy' }}</td>
                       <td>{{ item.warehouse.name }}</td>
                       <td>{{ item.fullfilled ? 'Cumplida' : 'No Cumplida' }}</td>
-                      <td *ngIf="actions[2].status" class="w-40">
-                          <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar', item)">
-                              <mat-icon>mode_edit</mat-icon>
-                          </button>
-                      </td>
-                      <td *ngIf="actions[3].status" class="w-40">
-                          <button type="button" mat-icon-button class="text-danger" (click)="CUD('Eliminar', item)">
-                              <mat-icon>delete</mat-icon>
-                          </button>
-                      </td>
                   </tr>
               </tbody>
           </table>

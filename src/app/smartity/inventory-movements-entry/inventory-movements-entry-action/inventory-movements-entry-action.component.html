@@ -11,6 +11,11 @@
               <mat-icon>search</mat-icon> Orden de Compra
           </button>
     </div>
+    <div class="margin-bottom-40" *ngIf="model.inventory_movement_entry_out_type_id == 176">
+            <button type="button" mat-raised-button color="primary" (click)="openInventoryMovementTransfer()" class="btn-w-mat no-margin-left">
+                <mat-icon>search</mat-icon> Transferencia
+            </button>
+      </div>
 </div>
           <div class="row">
         <!-- warehouse -->
@@ -38,8 +43,7 @@
                 <mat-datepicker #pickerInventoryMovementDate></mat-datepicker>
               </mat-form-field>
         </div>
-        
-        <div class="col-md-12" *ngIf="numId == undefined">
+        <div class="col-md-12" *ngIf="numId == undefined && document_fullfilled_id != undefined">
             <button mat-raised-button (click)="openModalProducts()" color="primary" class="btn-w-md no-margin-left btn-right">
                 Añadir Producto
             </button>
@@ -86,19 +90,19 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let detail of model.details;let index = index;">
-                            <td>{{detail.product.sku}}</td>
-                            <td>{{detail.product.name}}<span style="font-weight:bold;" *ngIf="detail.product.comercial">({{detail.product.comercial_name}})</span></td>
-                            <td *ngIf="numId != undefined">{{detail.batch}}</td><td *ngIf="numId == undefined"><mat-form-field><input matInput type="text" [(ngModel)]="detail.batch" name="batch{{index}}" /></mat-form-field></td>
-                            <td *ngIf="numId != undefined">{{detail.location}}</td><td *ngIf="numId == undefined" ><mat-form-field><input matInput type="text" [(ngModel)]="detail.location" name="location{{index}}" /></mat-form-field></td>
-                            <td *ngIf="numId != undefined">{{detail.expiration_date}}</td><td *ngIf="numId == undefined">
-                                <mat-form-field>    
+                            <td style="width:80px;">{{detail.product.sku}}</td>
+                            <td>{{detail.product.display_name}}<span style="font-weight:bold;" *ngIf="detail.product.comercial">({{detail.product.comercial_name}})</span></td>
+                            <td style="width:80px;" *ngIf="numId != undefined">{{detail.batch}}</td><td style="width:80px;" *ngIf="numId == undefined"><mat-form-field style="display:unset;"><input matInput type="text" [(ngModel)]="detail.batch" name="batch{{index}}" /></mat-form-field></td>
+                            <td style="width:80px;" *ngIf="numId != undefined">{{detail.location}}</td><td style="width:80px;" *ngIf="numId == undefined" ><mat-form-field style="display:unset;"><input matInput type="text" [(ngModel)]="detail.location" name="location{{index}}" /></mat-form-field></td>
+                            <td style="width:110px;" *ngIf="numId != undefined">{{detail.expiration_date | date:'dd/MM/yyyy'}}</td><td style="width:110px;" *ngIf="numId == undefined">
+                                <mat-form-field style="display:unset;">    
                                     <input matInput [matDatepicker]="pickerExpirationDate" [(ngModel)]="detail.expiration_date" name="expiration_date{{index}}">
                                     <mat-datepicker-toggle matSuffix [for]="pickerExpirationDate"></mat-datepicker-toggle>
                                     <mat-datepicker #pickerExpirationDate></mat-datepicker>
                                 </mat-form-field></td>
-                                <td *ngIf="numId != undefined">{{ detail.fraction ? 'Sí' : 'No' }}</td><td *ngIf="numId == undefined" ><mat-slide-toggle [labelPosition]="after" name="fraction{{index}}" [(ngModel)]="detail.fraction"></mat-slide-toggle></td>
-                            <td *ngIf="numId != undefined">{{detail.units}}</td><td *ngIf="numId == undefined" ><mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.units" name="units{{index}}" /></mat-form-field></td>
-                            <td *ngIf="detail.fraction == false && numId != undefined">${{detail.product.averageunitcost}}</td><td *ngIf="detail.fraction == true && model.inventory_movement_entry_out_type_id != 174">${{detail.product.averageunitcost/detail.product.units}}</td><td *ngIf="numId == undefined && model.inventory_movement_entry_out_type_id == 174"><mat-form-field>$<input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.purchase_price" name="purchase_price{{index}}" /></mat-form-field></td>
+                                <td style="width:80px;" *ngIf="numId != undefined">{{ detail.fraction ? 'Sí' : 'No' }}</td><td style="width:80px;" *ngIf="numId == undefined" ><mat-slide-toggle [labelPosition]="after" name="fraction{{index}}" [(ngModel)]="detail.fraction"></mat-slide-toggle></td>
+                            <td style="width:80px;" *ngIf="numId != undefined">{{detail.units}}</td><td style="width:80px;" *ngIf="numId == undefined" ><mat-form-field style="display: unset;"><input (change)="totalCost(detail.units, index)" (keyup)="totalCost(detail.units, index)" matInput type="number" (input)="checkUnits(detail.units, index)" [(ngModel)]="detail.units" name="units{{index}}" /></mat-form-field></td>
+                            <td *ngIf="detail.fraction == false && numId != undefined">${{detail.product.averageunitcost}}</td><td *ngIf="detail.fraction == true && model.inventory_movement_entry_out_type_id != 174">${{detail.product.averageunitcost/detail.product.units}}</td><td *ngIf="numId == undefined && model.inventory_movement_entry_out_type_id == 174"><mat-form-field style="display:unset;">$<input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.purchase_price" name="purchase_price{{index}}" /></mat-form-field></td>
                             <td *ngIf="detail.fraction == false">${{detail.product.averageunitcost * detail.units}}</td><td *ngIf="detail.fraction == true">${{(detail.product.averageunitcost/detail.product.units) * detail.units}}</td>
                             <td class="w-40" *ngIf="numId == undefined">
                                     <button type="button" mat-icon-button class="text-danger" (click)="removeProduct(index)">
@@ -117,6 +121,13 @@
                 $<input readonly matInput placeholder="Costo Total" [(ngModel)]="model.total" name="total cost">
             </mat-form-field>
         </div>
+         <!--notas-->
+    <div class='col-sm-12 col-md-12 margin-bottom'>
+        <mat-form-field class="full-width">
+          <textarea type="text" id="notes" name="notes" [(ngModel)]="model.observations" matInput placeholder="Nota"></textarea>
+        </mat-form-field>
+      </div>
+  
         <div class="col-md-7" *ngIf="numId == undefined">
                 <button mat-raised-button (click)="guardar()" color="primary" class="btn-w-md no-margin-left btn-right">
                     Guardar

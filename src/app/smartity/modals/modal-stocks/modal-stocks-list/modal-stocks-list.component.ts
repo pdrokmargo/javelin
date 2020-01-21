@@ -13,17 +13,32 @@ export class ModalStocksListComponent extends BaseList implements OnInit {
   @Input() warehouse:String;
   @Output() select = new EventEmitter();
   numItemSelect = -1;
-
+  warehouse_id: any;
+  private warehouses: any[] = [];
   constructor(public router: Router,
     public loaderService: LoaderService,
     public helperSerive: HelperService) {
     super(loaderService, helperSerive);
     this.urlApi = '/api/stocks-products';
   }
-
-  ngOnInit() {
-    this.getAll('&warehouse='+this.warehouse+'&expired='+this.expired);
+  filtrar(event): void{
+    this.getAll('&warehouse='+this.warehouse_id);
   }
+  ngOnInit() {
+    this.getCollection();
+    this.getAll();
+  }
+  private getCollection() {
+    this.loaderService.display(true);
+    this.helperService.GET(`/api/warehouse`).subscribe(rs => {
+        const res = rs.json();
+        this.warehouses = res.data;
+        this.loaderService.display(false);
+    }, err => {
+        console.log(err);
+        this.loaderService.display(false);
+    });
+}
 
   private view(row: any) {
     this.select.emit(row);

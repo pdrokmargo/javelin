@@ -16,4 +16,25 @@ body {
   height: 100% !important;
 }
 
+@media print {
+  /* invert the display (show/hide) properties of the main */
+  /* aplication component and the printing component       */
+
+  my-app-sidenav {
+    display: none;
+  }
+  my-app-search-overlay {
+    display: none;
+  }
+  my-app-header {
+    display: none;
+  }
+  my-app-footer {
+    display: none;
+  }
+  .hero {
+    display: none;
+  }
+}
+
 

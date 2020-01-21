@@ -3,6 +3,8 @@ import { BaseModel } from '../../bases/base-model';
 import { MatSnackBar, MatDialogRef, MatDialog } from "@angular/material";
 import { ModalWarehouseComponent } from '../../modals/modal-warehouse/modal-warehouse.component';
 import { ModalProductsComponent } from '../../modals/modal-products/modal-products.component';
+import { ModalInventoryMovementTransfersComponent } from '../../modals/modal-inventory-movement-transfers/modal-inventory-movement-transfers.component';
+import { ModalPurchaseOrdersComponent } from '../../modals/modal-purchase-orders/modal-purchase-orders.component';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService, HelperService } from '../../../shared';
@@ -18,12 +20,15 @@ export class InventoryMovementsEntryActionComponent extends BaseModel implements
 
   private modalWarehouse: MatDialogRef<ModalWarehouseComponent>;
   private modalProducts: MatDialogRef<ModalProductsComponent>;
+  private modalPurchaseOrders: MatDialogRef<ModalPurchaseOrdersComponent>;
+  private modalInventoryMovementTransfer: MatDialogRef<ModalInventoryMovementTransfersComponent>;
   
   private inventory_movements: any[] = [];
   private inventory_movements_type: any[] = [];
   private warehouse: any = {};
   private warehouses: any[] = [];
   private stocks: any[] = [];
+  private remaining: any[] = [];
   private _pharmadrugs: any = [];
   constructor(
     public snackBar: MatSnackBar,
@@ -47,6 +52,59 @@ export class InventoryMovementsEntryActionComponent extends BaseModel implements
         }
         
   }
+  private openInventoryMovementTransfer() {
+    this.modalInventoryMovementTransfer = this.dialog.open(ModalInventoryMovementTransfersComponent, {
+        hasBackdrop: false,
+        data: {
+            title: 'Transferencias',
+            document_fullfilled: this.model.document_fullfilled_id
+        }
+    });
+    this.modalInventoryMovementTransfer.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
+        this.model.document_fullfilled_id = data.id; 
+        this.model.details = data.remaining;
+         this.remaining = JSON.parse(JSON.stringify(data.remaining));
+         if(this.remaining.length == 0){
+            this.snackBar.open('Todos los items de la transferencia ' + data.document.prefix + '-' + data.consecutive + ' han sido ingresados.', 'Salida por transferencia cumplida', { duration: 7000 });
+         }
+    });
+}
+  private openSupplierOrderLoad() {
+    this.modalPurchaseOrders = this.dialog.open(ModalPurchaseOrdersComponent, {
+        hasBackdrop: false,
+        data: {
+            title: 'Órdenes de compra'
+        }
+    });
+    this.modalPurchaseOrders.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
+        this.model.document_fullfilled_id = data.id; 
+        this.model.details = data.remaining;
+         this.remaining = JSON.parse(JSON.stringify(data.remaining));
+         if(this.remaining.length == 0){
+            this.snackBar.open('Todos los items de la orden de compra ' + data.document.prefix + '-' + data.consecutive + ' han sido ingresados.', 'Orden de compra cumplida', { duration: 7000 });
+         }
+         
+    });
+}
+private checkUnits(units, index){
+    this.remaining.forEach(element => {
+        if(element.product_id == this.model.details[index]['product_id'] && (this.model.details[index]['units'] > element.units || units <= 0)){
+            let uni = element.units;
+            this.snackBar.open('No es posible ingresar más unidades que las registradas en la orden de compra, inferiores ó iguales a 0 (cero).', 'Ingreso erróneo', { duration: 7000 });
+            units = uni+1;
+            units = units-1;
+            this.model.details[index]['units'] = units;
+            this.model.details = JSON.parse(JSON.stringify(this.model.details));
+        }
+        if(this.model.details[index]['fraction'] == true){
+            this.model.details[index]['fraction'] = false;
+            this.snackBar.open('No es posible realizar ingresos fraccionados de órdenes de compra', 'Ingreso erróneo', { duration: 7000 });
+
+        }
+        console.log(this.model.details[index]['units']);
+        console.log(element.units);
+    });
+}
   private openModalProducts() {
     this.modalProducts = this.dialog.open(ModalProductsComponent, {
         hasBackdrop: false,
@@ -95,11 +153,12 @@ guardar(){
         this.loaderService.display(false);
     });
 }
-totalCost(){
+totalCost(units, index){
     this.model.total = 0;
     this.model.details.forEach(element => {
-        this.model.total = this.model.total + (element.units * element.averageunitcost);
+        this.model.total = this.model.total + (element.units * element.product.averageunitcost);
       });
+      this.checkUnits(units, index);
       console.log(this.model.total);
 }
   private clean() {
@@ -114,7 +173,7 @@ private goList() {
 }
 removeProduct(index){
     this.model.details.splice(index, 1);
-    this.totalCost();
+    this.totalCost(this.model.details[index]['units'], index);
 }
   private getCollection() {
     this.loaderService.display(true);

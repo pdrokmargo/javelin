@@ -18,7 +18,7 @@ import { filter } from 'rxjs/operators';
 export class BillingActionComponent extends BaseModel implements OnInit{
 
   private modalCostumer: MatDialogRef<ModalStakeholderComponent>;
-  private modalProducts: MatDialogRef<ModalProductsComponent>;
+  private modalStocksProducts: MatDialogRef<ModalStocksComponent>;
   private modalWarehouses: MatDialogRef<ModalWarehouseComponent>;
   private modalDeliveryPoints: MatDialogRef<ModalDeliveryPointsComponent>;
   private modalStakeHolderDialogRef: MatDialogRef<ModalStakeholderComponent>;
@@ -298,13 +298,13 @@ openAddEmployees() {
 }
 
 private openModalProducts() {
-    this.modalProducts = this.dialog.open(ModalProductsComponent, {
+    this.modalStocksProducts = this.dialog.open(ModalStocksComponent, {
         hasBackdrop: false,
         data: {
             title: 'Productos'
         }
     });
-    this.modalProducts.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
+    this.modalStocksProducts.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
         let movement = new Object( {
             "product_id": data.id,
             "product": {"sku": data.sku, "display_name": data.display_name, "averageunitcost": data.averageunitcost, "units":data.units},

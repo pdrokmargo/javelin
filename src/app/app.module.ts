@@ -108,6 +108,10 @@ import { ModalRemissionGoodsComponent } from './smartity/modals/modal-remission-
 import { ModalRemissionGoodsListComponent } from './smartity/modals/modal-remission-goods/modal-remission-goods-list/modal-remission-goods-list.component';
 import { ModalAffiliatesComponent } from './smartity/modals/modal-affiliates/modal-affiliates.component';
 import { ModalAffiliatesListComponent } from './smartity/modals/modal-affiliates/modal-affiliates-list/modal-affiliates-list.component';
+import { ModalInventoryMovementTransfersComponent } from './smartity/modals/modal-inventory-movement-transfers/modal-inventory-movement-transfers.component';
+import { ModalInventoryMovementTransfersListComponent } from './smartity/modals/modal-inventory-movement-transfers/modal-inventory-movement-transfers-list/modal-inventory-movement-transfers-list.component';
+import { ModalPurchaseOrdersComponent } from './smartity/modals/modal-purchase-orders/modal-purchase-orders.component';
+import { ModalPurchaseOrdersListComponent } from './smartity/modals/modal-purchase-orders/modal-purchase-orders-list/modal-purchase-orders-list.component';
 
 
 
@@ -209,7 +213,11 @@ import { ModalAffiliatesListComponent } from './smartity/modals/modal-affiliates
     ModalRemissionGoodsComponent,
     ModalRemissionGoodsListComponent,
     ModalAffiliatesComponent,
-    ModalAffiliatesListComponent
+    ModalAffiliatesListComponent,
+    ModalInventoryMovementTransfersComponent,
+    ModalInventoryMovementTransfersListComponent,
+    ModalPurchaseOrdersComponent,
+    ModalPurchaseOrdersListComponent
 
   ],
   providers: [
@@ -262,7 +270,11 @@ import { ModalAffiliatesListComponent } from './smartity/modals/modal-affiliates
     ModalSupplierQuotesComponent,
     ModalCustomersQuotesComponent,
     ModalAffiliatesComponent,
-    ModalAffiliatesListComponent
+    ModalAffiliatesListComponent,
+    ModalPurchaseOrdersComponent,
+    ModalPurchaseOrdersListComponent,
+    ModalInventoryMovementTransfersComponent,
+    ModalInventoryMovementTransfersListComponent
   ]
 })
 

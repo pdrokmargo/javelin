@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<mat-dialog-content>
+  <app-modal-inventory-movement-transfers-list [document_fullfilled]="data.document_fullfilled"  (select)="select($event)"></app-modal-inventory-movement-transfers-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="flex full-width">
+        <span class="flex-spacer"></span>
+        <button class="ml-5" color="primary" mat-button type="button" [disabled]="!model" (click)="add()">Seleccionar</button>
+        <button mat-dialog-close mat-button type="button">Cerrar</button>
+    </div>
+</mat-dialog-actions>

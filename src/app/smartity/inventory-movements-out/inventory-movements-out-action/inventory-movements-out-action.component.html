@@ -11,7 +11,7 @@
         <div *ngIf="model.warehouse" class="col-sm-12 col-md-4 margin-bottom">
             <mat-form-field class="full-width">
                 <input  readonly matInput type="text" placeholder="Bodega Origen" [(ngModel)]="model.warehouse.name" id="warehouse_name" name="warehouse_name" />
-                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalWarehouse()">search</mat-icon>
+                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalWarehouse(1)">search</mat-icon>
             </mat-form-field>
         </div>
 
@@ -33,7 +33,12 @@
                 <mat-datepicker #pickerInventoryMovementDate></mat-datepicker>
               </mat-form-field>
         </div>
-        
+        <div class="col-md-4" *ngIf="model.inventory_movement_entry_out_type_id == 182">
+                <mat-form-field class="full-width">
+                    <input  readonly matInput type="text" placeholder="Bodega de Salida" [(ngModel)]="model.destination_warehouse.name" id="destination_warehouse_name" name="destination_warehouse_name" />
+                    <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalWarehouse(2)">search</mat-icon>
+                </mat-form-field>
+            </div>        
         <div class="col-md-12" *ngIf="numId == undefined">
             <button [disabled]="model.warehouse_id == -1 || model.inventory_movement_entry_out_type_id == -1" mat-raised-button (click)="openModalStocks()" color="primary" class="btn-w-md no-margin-left btn-right">
                 Añadir Producto
@@ -87,7 +92,7 @@
                             <!-- <td *ngIf="numId == undefined"><mat-form-field><input matInput type="text" [(ngModel)]="detail.batch" name="batch{{index}}" /></mat-form-field></td> -->
                             <td>{{detail.location}}</td>
                             <!-- <td *ngIf="numId == undefined" ><mat-form-field><input matInput type="text" [(ngModel)]="detail.location" name="location{{index}}" /></mat-form-field></td> -->
-                            <td>{{detail.expiration_date}}</td>
+                            <td>{{detail.expiration_date | date:'dd/MM/yyyy'}}</td>
                             <!-- <td *ngIf="numId == undefined">
                                 <mat-form-field>    
                                     <input matInput [matDatepicker]="pickerExpirationDate" [(ngModel)]="detail.expiration_date" name="expiration_date{{index}}">
@@ -115,6 +120,13 @@
         <div class="col-md-5">
             <mat-form-field>$<input readonly matInput placeholder="Costo Total" [(ngModel)]="model.total" name="total cost"></mat-form-field>
         </div>
+         <!--notas-->
+    <div class='col-sm-12 col-md-12 margin-bottom'>
+        <mat-form-field class="full-width">
+          <textarea type="text" id="notes" name="notes" [(ngModel)]="model.observations" matInput placeholder="Nota"></textarea>
+        </mat-form-field>
+      </div>
+  
         <div class="col-md-7" *ngIf="numId == undefined">
                 <button mat-raised-button (click)="guardar()" color="primary" class="btn-w-md no-margin-left btn-right">
                     Guardar

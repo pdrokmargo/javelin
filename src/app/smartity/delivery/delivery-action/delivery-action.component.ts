@@ -48,6 +48,17 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
     }
   }
 
+  private print(){
+    window.onafterprint = (event) => {
+      this.goList();
+    };
+    window.print();
+  }
+
+//   var beforePrint = function() {
+//     console.log('Functionality to run before printing.');
+// };
+
   private getCollection() {
     this.helperService.POST(`/api/collections`, ["DELIVERY_CONTRACT_MODALITY"]).subscribe(rs => {
       let res = rs.json();
@@ -162,6 +173,7 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
     });
 
   }
+
 
   private openModalAffiliates() {
     this.modalAffiliates = this.dialog.open(ModalAffiliatesComponent, {

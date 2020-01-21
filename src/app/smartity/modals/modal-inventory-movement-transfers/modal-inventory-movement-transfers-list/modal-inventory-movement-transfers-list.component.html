@@ -10,11 +10,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <button mat-raised-button  (click)="CUD('Guardar')" color="primary" class="btn-w-md no-margin-left btn-right">
-          <mat-icon>add_circle_outline</mat-icon> Nuevo
-        </button>
-    </div>
     <div class="col-sm-12">
 
         <div class="box box-default table-box table-responsive mdl-shadow--2dp">
@@ -46,23 +41,17 @@
                         <!-- <th class="noAuto" (click)="sort('w.state')">Estado
                             <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th> -->
-                        <th *ngIf="actions[2].status" class="w-40"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of list.data">
+                    <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index"
+                        [ngClass]="{'active': numItemSelected == index }">
                         <!-- <td class="noAuto">{{ item.id }}</td> -->
                         <td>{{ item.document.prefix }}-{{item.consecutive}}</td>
                         <td>{{ item.warehouse.name }}</td>
-                        <td>{{ item.date | date:'dd/MM/yyyy'}}</td>
+                        <td>{{ item.date }}</td>
                         <td>{{ item.inventory_movement_type.value}}</td>
                         <td>${{ item.total}}</td>
-                        <!-- <td>${{ item.total_cost }}</td> -->
-                        <td *ngIf="actions[2].status" class="w-40">
-                            <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar',item)">
-                                <mat-icon>mode_edit</mat-icon>
-                            </button>
-                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -5,6 +5,7 @@ import { ModalWarehouseComponent } from '../../modals/modal-warehouse/modal-ware
 import { ModalProductsComponent } from '../../modals/modal-products/modal-products.component';
 import { ModalStocksComponent } from '../../modals/modal-stocks/modal-stocks.component';
 
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
@@ -21,6 +22,7 @@ export class InventoryMovementsOutActionComponent extends BaseModel implements O
   private modalWarehouse: MatDialogRef<ModalWarehouseComponent>;
   private modalProducts: MatDialogRef<ModalProductsComponent>;
   private modalStocks: MatDialogRef<ModalStocksComponent>;
+  
   
   private swFraction = false;
   private inventory_movements: any[] = [];
@@ -96,7 +98,6 @@ private openModalStocks() {
             "fraction_stock":  data.fraction_stock,
             "units":""
         });
-        console.log(data.fraction);
          this.model.details.push(movement);
     });
 }
@@ -124,6 +125,7 @@ guardar(){
     this.helperService.GET(`/api/inventory-movements/${this.numId}`).subscribe(rs => {
         const res = rs.json();
         this.model = res.data;
+        this.model.destination_warehouse = this.model.counterpart_transfer;
         this.loaderService.display(false);
     }, err => {
         console.log(err);
@@ -142,7 +144,7 @@ totalCost(){
     this.warehouses = [];
     this.stocks = [];
     this.inventory_movements_type = [];
-    this.model = {"warehouse":{"name":""}, "details":[], "warehouse_id":-1, "inventory_movement_entry_out_type_id":-1, "date":""};
+    this.model = {"warehouse":{"name":""}, "destination_warehouse":{"name":""}, "details":[], "warehouse_id":-1, "counterpart_transfer_id":-1, "inventory_movement_entry_out_type_id":-1, "date":""};
 }
 private goList() {
   this.comp.openList();
@@ -163,7 +165,7 @@ removeProduct(index){
     });
 }
 
-  private openModalWarehouse() {
+  private openModalWarehouse(opt) {
     this.modalWarehouse = this.dialog.open(ModalWarehouseComponent, {
         hasBackdrop: false,
         data: {
@@ -175,8 +177,26 @@ removeProduct(index){
         .afterClosed()
         .pipe(filter((data) => data))
         .subscribe((data) => {
-            this.model.warehouse_id = data.id;
+            if(opt == 1){
+                this.model.warehouse_id = data.id;
             this.model.warehouse = data;
+            }
+            if(opt == 2){
+                this.model.counterpart_transfer_id = data.id;
+                this.model.destination_warehouse = data;
+            }
+            if(this.model.warehouse_id == this.model.counterpart_transfer_id){
+                if(opt == 1){
+                    this.model.warehouse_id = -1;
+                    this.model.warehouse.name = "";
+                }
+                if(opt == 2){
+                    this.model.counterpart_transfer_id = -1;
+                    this.model.destination_warehouse.name = "";
+                }
+                this.snackBar.open('Bodega de origen y destino no pueden ser iguales', 'Error', { duration: 4000 });
+            }
+            
         });
 }
 

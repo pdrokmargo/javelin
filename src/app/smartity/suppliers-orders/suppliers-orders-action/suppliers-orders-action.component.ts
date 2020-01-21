@@ -123,7 +123,10 @@ export class SuppliersOrdersActionComponent extends BaseModel implements OnInit 
             this.totalCost();
         });
     }
-
+    private fullfill(){
+        this.model.fullfilled = true;
+        this.save();
+    }
     private save() {
         this.model.products = JSON.stringify(this.model.details || []);  
         console.log(this.model.products);
