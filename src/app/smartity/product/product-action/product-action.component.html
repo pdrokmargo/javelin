@@ -199,6 +199,15 @@
             </mat-form-field>
         </div>
 
+        <!-- Laboratorio -->
+        <div class="col-sm-12 col-md-6 margin-bottom">
+            <mat-form-field class="full-width">
+                <input required readonly matInput type="text" placeholder="Laboratorio" [(ngModel)]="laboratory.businessname" id="laboratory"
+                    name="laboratory" />
+                <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="addLaboratory()">search</mat-icon>
+            </mat-form-field>
+        </div>
+
         <!-- importador -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <mat-form-field class="full-width">

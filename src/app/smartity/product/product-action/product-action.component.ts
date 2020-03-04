@@ -24,6 +24,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     private sanitary_registration_holder: any = {};
     private supplier: any = {};
     private manufacturer: any = {};
+    private laboratory: any = {};
     private importer: any = {};
     private pharmaceuticalDialogRef: MatDialogRef<ModalPharmaceuticalComponent>;
     private modalStakeHolderDialogRef: MatDialogRef<ModalStakeholderComponent>;
@@ -125,6 +126,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
                 this.supplier.businessname = this.supplier.fullname;
             }
             this.manufacturer = res['data']['manufacturer'] || {};
+            this.laboratory = res['data']['laboratory'] || {};
             this.loaderService.display(false);
         }, err => {
             console.log(err);
@@ -163,6 +165,22 @@ export class ProductActionComponent extends BaseModel implements OnInit {
                 this.model.product_detail.pharmaceuticaldrug = pharmaceuticalDrug.pharmaceuticaldrug;
             });
         }
+
+        addLaboratory() {
+            this.modalStakeHolderDialogRef = this.dialog.open(ModalStakeholderComponent, {
+                hasBackdrop: false,
+                data: {
+                    title: 'Laboratorio',
+                    option: '7'
+                }
+            });
+    
+            this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
+                if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
+                this.laboratory = stakeHolder;
+                this.model.laboratory_id = stakeHolder.id;
+            });
+            }
     removePharmaceutical() {
         this.model.product_detail.pharmaceuticaldrug = null;
     }

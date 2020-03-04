@@ -41,7 +41,7 @@
         'col-sm-4 col-md-6' : _model.stakeholders_info.document_type_id != 14 && !_model.stakeholders_info.rut 
     }">
             <mat-form-field class="full-width">
-                <input required NumberOnly (keyup)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="_model.stakeholders_info.document_number"
+                <input required NumberOnly  (keyup)="getRutDigit()" type="text" id="document_number" name="document_number" [(ngModel)]="_model.stakeholders_info.document_number"
                     matInput placeholder="Número de documento">
             </mat-form-field>
         </div>
@@ -102,7 +102,7 @@
     </div>
     <!--country -->
     <div class="col-md-4">
-        <mat-form-field class="full-width">     <mat-select required class="full-width" placeholder="Pais" [(ngModel)]="country_id" name="country_id" (change)="getDepartments()"
+        <mat-form-field class="full-width">     <mat-select required class="full-width" placeholder="País" [(ngModel)]="country_id" name="country_id" (change)="getDepartments()"
             id="country_id">
             <mat-option *ngFor="let item of countries" [value]="item.id">{{item.value}}</mat-option>
         </mat-select>     </mat-form-field>
@@ -248,9 +248,10 @@
         <div class="col-sm-12">
             <h2 class="article-title text-center margin-10">Información del Cliente</h2>
         </div>
-        <!-- customer_class_id -->
+        <div class="row">
+            <!-- customer_class_id -->
         <div class="col-md-6">
-            <mat-form-field class="full-width">     <mat-select class="full-width" placeholder="Clases de cliente" [(ngModel)]="_model.customer.customer_class_id" name="customer_class_id"
+            <mat-form-field class="full-width"><mat-select class="full-width" placeholder="Clases de cliente" [(ngModel)]="_model.customer.customer_class_id" name="customer_class_id"
                 id="customer_class_id">
                 <mat-option *ngFor="let item of customers_class" [value]="item.id">{{item.value}}</mat-option>
             </mat-select>     </mat-form-field>
@@ -265,7 +266,7 @@
         <!-- credit_limit -->
         <div class="col-md-6">
             <mat-form-field class="full-width" class="full-width">
-                    <span mdPrefix><b>$</b> &nbsp;</span>
+                    
                 <input appMycurrency required type="text" id="customer_credit_limit" name="customer_credit_limit" [(ngModel)]="_model.customer.credit_limit"
                     matInput placeholder="Cupo del crédito">
             </mat-form-field>
@@ -280,7 +281,7 @@
         <!-- global_discount -->
         <div class="col-sm-3">
             <mat-form-field class="full-width" class="full-width">
-                    <span mdPrefix><b>$</b> &nbsp;</span>
+                    
                 <input appMycurrency type="text" id="global_discount" name="global_discount" max="12" [(ngModel)]="_model.customer.global_discount"
                     matInput placeholder="Descuento Global">
             </mat-form-field>
@@ -300,9 +301,9 @@
         <!-- days_early_payment -->
         <div class="col-sm-3">
             <mat-form-field class="full-width" class="full-width">
-                    <span mdPrefix><b>$</b> &nbsp;</span>
-                <input appMycurrency type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="_model.customer.days_early_payment"
-                    matInput placeholder="Descuento de pronto pago">
+                    <input appMycurrency type="text" id="days_early_payment" name="days_early_payment" [(ngModel)]="_model.customer.days_early_payment"
+                        matInput placeholder="Descuento de pronto pago">
+                
             </mat-form-field>
         </div>
         <!-- days_grace -->
@@ -316,6 +317,9 @@
         <div class="col-md-6">
             <mat-slide-toggle [labelPosition]="before" id="late_payment_blocking" name="late_payment_blocking" [(ngModel)]="_model.customer.late_payment_blocking">Bloqueo por mora</mat-slide-toggle>
         </div>
+        </div>
+        
+        
         <div class="col-sm-12">
             <div class="box-header no-padding-h text-center">
                 <h5 class="text-left">Contacto de Compras</h5>
@@ -569,7 +573,7 @@
         <!-- credit_limit -->
         <div class="col-md-6">
             <mat-form-field class="full-width" class="full-width">
-                <span mdPrefix><b>$</b> &nbsp;</span>
+                
                 <input appMycurrency required type="text" id="supplier_credit_limit" name="supplier_credit_limit" [(ngModel)]="_model.supplier.credit_limit"
                     matInput placeholder="Cupo de crédito">
             </mat-form-field>
@@ -577,7 +581,7 @@
         <!-- supplier_global_discount -->
         <div class="col-sm-3">
             <mat-form-field class="full-width" class="full-width">
-                    <span mdPrefix><b>$</b> &nbsp;</span>
+                    
                 <input appMycurrency type="text" id="supplier_global_discount" name="supplier_global_discount" max="12" [(ngModel)]="_model.supplier.global_discount"
                     matInput placeholder="Descuento Global">
             </mat-form-field>

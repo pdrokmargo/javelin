@@ -12,8 +12,14 @@
                     <input required type="text" id="name" name="name" [(ngModel)]="model.name" matInput placeholder="Nombre">
                 </mat-form-field>
             </div>
+            <!-- token -->
+            <div *ngIf="numId != undefined" class='col-sm-12 col-md-2 margin-bottom'>
+                <mat-form-field class="full-width">
+                    <input required type="text" id="token" name="token" [(ngModel)]="model.token" matInput placeholder="Token">
+                </mat-form-field>
+            </div>
             <!-- instalado -->
-            <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+            <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
                 <div class="flex">
                     <span class="flex-spacer"></span>
                     <mat-slide-toggle [labelPosition]="'before'" id="installed" name="installed" [(ngModel)]="model.installed">Instalado</mat-slide-toggle>
@@ -21,7 +27,7 @@
 
             </div>
             <!-- estado -->
-            <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
+            <div class='col-sm-12 col-md-6 col-lg-2 margin-bottom'>
                 <div class="flex">
                     <span class="flex-spacer"></span>
                     <mat-slide-toggle [labelPosition]="'before'" id="state" name="state" [(ngModel)]="model.state">Estado</mat-slide-toggle>

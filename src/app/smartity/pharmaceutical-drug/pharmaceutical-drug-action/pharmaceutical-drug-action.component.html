@@ -50,7 +50,7 @@
                                     <mat-form-field class="full-width">
                                         <input NumberOnly type="text" id="concentration{{index}}" name="concentration{{index}}" [(ngModel)]="item.concentration"
                                             (keyup)="all()" matInput>
-                                        <span matSuffix>&nbsp; {{item.measurement_unit.code}}</span>
+                                        <span matSuffix>&nbsp; {{measurement_unit.code}}</span>
                                     </mat-form-field>
                                 </td>
                             </tr>
