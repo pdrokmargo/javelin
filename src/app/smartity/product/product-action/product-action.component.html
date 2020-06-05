@@ -35,7 +35,7 @@
             <div class="flex margin-bottom">
                 <div class="box-header no-padding-h">Medicamento asociado</div>
                 <span class="flex-spacer"></span>
-                <button *ngIf="model.product_detail.pharmaceuticaldrug == null" type="button" type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openAddBankAccount()">Añadir</button>
+                <button *ngIf="model.product_detail.pharmaceuticaldrug == null" type="button" type="button" mat-raised-button color="primary" class="btn-w-md no-margin-left" (click)="openAddPharmadrug()">Añadir</button>
             </div>
             <div class="box box-default table-box table-responsive mdl-shadow--2dp">
                 <table class="mdl-data-table table-bordered table-striped cf no-margin">
@@ -158,7 +158,7 @@
         <!-- titular registro sanitario -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <mat-form-field class="full-width">
-                <input required readonly matInput type="text" placeholder="Titular registro sanitario" [(ngModel)]="sanitary_registration_holder.businessname"
+                <input readonly matInput type="text" placeholder="Titular registro sanitario" [(ngModel)]="sanitary_registration_holder.businessname"
                     id="sanitary_registration_holder" name="sanitary_registration_holder" />
                 <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openAddSanitaryRegistration()">search</mat-icon>
             </mat-form-field>
@@ -173,13 +173,22 @@
         </div>
 
         <!-- validity_sanitary_registration -->
-        <div class='col-sm-12 col-md-3 margin-bottom'>
+        <!-- <div class='col-sm-12 col-md-3 margin-bottom'>
             <mat-form-field class="full-width">
                 <input matInput [matDatepicker]="picker" id="validity_sanitary_registration" name="validity_sanitary_registration" placeholder="Vigencia de registro sanitario"
-                    [(ngModel)]="model.product_detail.validity_sanitary_registration">
+                    [(ngModel)]="model.product_detail.validity_sanitary_registration"> -->
                 <!-- <button type="button" mdSuffix [matDatepicker]="picker"></button> -->
-            </mat-form-field>
+            <!-- </mat-form-field>
             <mat-datepicker #picker></mat-datepicker>
+        </div> -->
+
+        <div class="col-md-3 margin-bottom">
+            <mat-form-field>
+                <input matInput [matDatepicker]="pickerValiditySanitaryRegistration" placeholder="Vigencia de registro sanitario"
+                    [(ngModel)]="model.product_detail.validity_sanitary_registration" name="validity_sanitary_registration">
+                <mat-datepicker-toggle matSuffix [for]="pickerValiditySanitaryRegistration"></mat-datepicker-toggle>
+                <mat-datepicker #pickerValiditySanitaryRegistration></mat-datepicker>
+            </mat-form-field>
         </div>
 
         <!-- proveedor
@@ -193,7 +202,7 @@
         <!-- fabricante -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <mat-form-field class="full-width">
-                <input required readonly matInput type="text" placeholder="Fabricante" [(ngModel)]="manufacturer.businessname" id="manufacturer"
+                <input readonly matInput type="text" placeholder="Fabricante" [(ngModel)]="manufacturer.businessname" id="manufacturer"
                     name="manufacturer" />
                 <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openAddMaker()">search</mat-icon>
             </mat-form-field>
@@ -202,7 +211,7 @@
         <!-- Laboratorio -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <mat-form-field class="full-width">
-                <input required readonly matInput type="text" placeholder="Laboratorio" [(ngModel)]="laboratory.businessname" id="laboratory"
+                <input required readonly matInput type="text" placeholder="Laboratorio" [(ngModel)]="laboratory" id="laboratory"
                     name="laboratory" />
                 <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="addLaboratory()">search</mat-icon>
             </mat-form-field>
@@ -211,7 +220,7 @@
         <!-- importador -->
         <div class="col-sm-12 col-md-6 margin-bottom">
             <mat-form-field class="full-width">
-                <input required readonly matInput type="text" placeholder="Importador" [(ngModel)]="importer.businessname" id="importer" name="importer"
+                <input readonly matInput type="text" placeholder="Importador" [(ngModel)]="importer.businessname" id="importer" name="importer"
                 />
                 <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openAddImporter()">search</mat-icon>
             </mat-form-field>

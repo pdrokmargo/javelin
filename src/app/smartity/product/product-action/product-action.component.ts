@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { DataTableResource } from 'angular-4-data-table';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/startWith';
-import { MatSnackBar, MatDialogRef, MatDialog } from '@angular/material';
+import { MatSnackBar, MatDialogRef, MatDialog, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService, HelperService } from '../../../shared';
 import { Response } from '@angular/http';
@@ -24,7 +24,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     private sanitary_registration_holder: any = {};
     private supplier: any = {};
     private manufacturer: any = {};
-    private laboratory: any = {};
+    private laboratory: any = '';
     private importer: any = {};
     private pharmaceuticalDialogRef: MatDialogRef<ModalPharmaceuticalComponent>;
     private modalStakeHolderDialogRef: MatDialogRef<ModalStakeholderComponent>;
@@ -62,7 +62,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
     private save() {
-        this.model.name = '';
+        var product_name = this.model.product_detail.pharmaceuticaldrug.name + ' - ' + this.laboratory;
+        this.model.name = product_name;
+        this.model.product_detail.name = product_name;
 
         if (this.model.product_detail.pharmaceuticaldrug === undefined) {
             this.model.product_detail.pharmaceuticaldrug = {};
@@ -72,6 +74,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             this.snackBar.open('Seleccione por lo menos un medicamento', 'Error', { duration: 4000 });
         } else {
             this.loaderService.display(true);
+            this.model.product_detail.pharmaceutical_drug_id = this.model.product_detail.pharmaceuticaldrug.id;
             switch (this.strAction) {
                 case 'Guardar':
                     this.helperService.POST(`/api/product`, this.model).subscribe(rs => {
@@ -87,6 +90,8 @@ export class ProductActionComponent extends BaseModel implements OnInit {
                     break;
                 case 'Actualizar':
                     this.helperService.PUT(`/api/product/${this.numId}`, this.model).subscribe(rs => {
+                        // const res = rs.text();
+                        // console.log(res);
                         const res = rs.json();
                         if (res.update) {
                             this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
@@ -126,7 +131,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
                 this.supplier.businessname = this.supplier.fullname;
             }
             this.manufacturer = res['data']['manufacturer'] || {};
-            this.laboratory = res['data']['laboratory'] || {};
+            this.laboratory = res['data']['laboratory_name'] || {};
             this.loaderService.display(false);
         }, err => {
             console.log(err);
@@ -151,7 +156,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
         this.comp.openList();
     }
 
-    openAddBankAccount() {
+    openAddPharmadrug() {
         this.pharmaceuticalDialogRef = this.dialog.open(ModalPharmaceuticalComponent, {
             hasBackdrop: false,
             data: {
@@ -162,7 +167,7 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             .afterClosed()
             .pipe(filter((pharmaceuticalDrug) => pharmaceuticalDrug))
             .subscribe((pharmaceuticalDrug) => {
-                this.model.product_detail.pharmaceuticaldrug = pharmaceuticalDrug.pharmaceuticaldrug;
+                this.model.product_detail.pharmaceuticaldrug = pharmaceuticalDrug;
             });
         }
 
@@ -176,9 +181,9 @@ export class ProductActionComponent extends BaseModel implements OnInit {
             });
     
             this.modalStakeHolderDialogRef.afterClosed().pipe(filter((stakeHolder) => stakeHolder)).subscribe((stakeHolder) => {
-                if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
-                this.laboratory = stakeHolder;
-                this.model.laboratory_id = stakeHolder.id;
+                // if (stakeHolder.businessname == '') { stakeHolder.businessname = stakeHolder.name; }
+                this.laboratory = stakeHolder['fullname'];
+                this.model.product_detail.laboratory_id = stakeHolder.stk_id;
             });
             }
     removePharmaceutical() {
@@ -253,3 +258,15 @@ export class ProductActionComponent extends BaseModel implements OnInit {
     }
 
 }
+export const APP_DATE_FORMATS =
+{
+    parse: {
+        dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
+    },
+    display: {
+        dateInput: 'input',
+        monthYearLabel: { year: 'numeric', month: 'numeric' },
+        dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+        monthYearA11yLabel: { year: 'numeric', month: 'long' },
+    }
+};

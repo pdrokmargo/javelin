@@ -31,6 +31,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
 
     private contract_number: string = '';
     private contract_start_date: string = '';
+    private today_date: Date;
     private contract_expiration_date: string = '';
 
     private arrPopulation_type: Array<any> = [];
@@ -72,6 +73,8 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         this.getCollection();
         if (this.numId !== undefined) {
             this.getDataById();
+        }else{
+            this.today_date = new Date();
         }
     }
 

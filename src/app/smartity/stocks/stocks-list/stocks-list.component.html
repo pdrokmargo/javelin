@@ -75,7 +75,7 @@
                         <td>{{item.fraction_stock}}</td>
                         <td>{{item.batch}}</td>
                         <td>{{item.location}}</td>
-                        <td>{{item.expiration_date}}</td>
+                        <td>{{item.expiration_date | date:'dd/MM/yyyy'}}</td>
                         <td>${{item.product.averageunitcost}}</td>
                         <td>${{(item.product.averageunitcost * item.set_stock) + ((item.product.averageunitcost/item.product.units) * item.fraction_stock)}}</td>
                     </tr>

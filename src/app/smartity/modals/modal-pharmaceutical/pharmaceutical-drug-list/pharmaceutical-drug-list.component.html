@@ -42,8 +42,8 @@
                 <tbody>
                     <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
                         <td>{{ item.name }}</td>
-                        <td>{{ item.routes_administration }}</td>
-                        <td>{{ item.dosage_form }}</td>
+                        <td>{{ item.routes_administration.value }}</td>
+                        <td>{{ item.dosage_form.value}}</td>
                         <td>{{ item.is_pos ? 'Si' : 'No' }}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
                     </tr>

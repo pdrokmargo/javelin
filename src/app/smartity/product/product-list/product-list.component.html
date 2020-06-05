@@ -29,16 +29,16 @@
                         <!-- <th (click)="sort('barcode')">Código de barras
                             <span class="glyphicon sort-icon" *ngIf="key =='barcode'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th> -->
-                        <th>PLU
+                        <th (click)="sort('sku')">PLU
                                 <span class="glyphicon sort-icon"></span>
                         </th>
                         <!-- <th>Cums
                                 <span class="glyphicon sort-icon"></span>
                         </th> -->
-                        <th (click)="sort('comercial_name')">Nombre
+                        <th (click)="sort('name')">Nombre
                             <span class="glyphicon sort-icon" *ngIf="key =='comercial_name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
-                        <th (click)="sort('state')">Tipo de Producto
+                        <th (click)="sort('product_type_id')">Tipo de Producto
                             <span class="glyphicon sort-icon" *ngIf="key =='state'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th (click)="sort('state')">Estado
@@ -51,7 +51,7 @@
                 <tbody>
                     <tr *ngFor="let item of list.data">                        
                         <td>{{item.sku}}</td>
-                        <td >{{ item.name }} <span style="font-weight:bold;" *ngIf="item.comercial">({{item.comercial_name}})</span></td>
+                        <td >{{ item.display_name }} <span style="font-weight:bold;" *ngIf="item.comercial">({{item.comercial_name}})</span></td>
                         <td>{{item.product_type.value}}</td>
                         <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
                         <td *ngIf="actions[2].status" class="w-40">

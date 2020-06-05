@@ -86,22 +86,38 @@
         </mat-form-field>
     </div>
     <!-- inicio del contrato -->
-    <div class='col-sm-12 col-md-3 margin-bottom'>
+    <!-- <div class='col-sm-12 col-md-3 margin-bottom'>
         <mat-form-field class="full-width">
             <input matInput [matDatepicker]="pickerIssueDate2" id="evento_contract_start_date" name="evento_contract_start_date" placeholder="Inicio de contrato"
-                [(ngModel)]="contract_start_date">
+                [(ngModel)]="contract_start_date"> -->
             <!-- <button mdSuffix [matDatepicker]="pickerIssueDate2"></button> -->
-        </mat-form-field>
+        <!-- </mat-form-field>
         <mat-datepicker #pickerIssueDate2></mat-datepicker>
+    </div> -->
+    <div class="col-md-3 margin-bottom">
+        <mat-form-field>
+            <input matInput [matDatepicker]="pickerStartDate" placeholder="Inicio de contrato" [min]="today_date"
+                [(ngModel)]="contract_start_date" name="contract_start_date">
+            <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStartDate></mat-datepicker>
+        </mat-form-field>
     </div>
     <!-- Vencimiento del contrato -->
-    <div class='col-sm-12 col-md-3 margin-bottom'>
+    <!-- <div class='col-sm-12 col-md-3 margin-bottom'>
         <mat-form-field class="full-width">
             <input matInput [matDatepicker]="pickerIssueDate1" id="evento_contract_expiration_date" name="evento_contract_expiration_date"
-                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
+                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date"> -->
             <!-- <button mdSuffix [matDatepicker]="pickerIssueDate1"></button> -->
-        </mat-form-field>
+        <!-- </mat-form-field>
         <mat-datepicker #pickerIssueDate1></mat-datepicker>
+    </div> -->
+    <div class="col-md-3 margin-bottom">
+        <mat-form-field>
+            <input matInput [matDatepicker]="pickerEndDate" placeholder="Vencimiento del contrato"
+                [(ngModel)]="contract_expiration_date" [min]="today_date" name="contract_expiration_date">
+            <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStartDate></mat-datepicker>
+        </mat-form-field>
     </div>
     <!-- presupuesto -->
     <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>
@@ -159,22 +175,38 @@
         </mat-form-field>
     </div>
     <!-- inicio del contrato -->
-    <div class='col-sm-12 col-md-3 margin-bottom'>
+    <!-- <div class='col-sm-12 col-md-3 margin-bottom'>
         <mat-form-field class="full-width">
             <input matInput [matDatepicker]="pickerIssueDate" id="capita_contract_start_date" name="capita_contract_start_date" placeholder="Inicio de contrato"
-                [(ngModel)]="contract_start_date">
+                [(ngModel)]="contract_start_date"> -->
             <!-- <button mdSuffix [matDatepicker]="pickerIssueDate"></button> -->
-        </mat-form-field>
+        <!-- </mat-form-field>
         <mat-datepicker #pickerIssueDate></mat-datepicker>
+    </div> -->
+    <div class="col-md-3 margin-bottom">
+        <mat-form-field>
+            <input matInput [matDatepicker]="pickerCapitaStartDate" placeholder="Inicio de contrato" [min]="today_date"
+                [(ngModel)]="contract_start_date" [min] name="capita_contract_start_date">
+            <mat-datepicker-toggle matSuffix [for]="pickerCapitaStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerCapitaStartDate></mat-datepicker>
+        </mat-form-field>
     </div>
     <!-- Vencimiento del contrato -->
-    <div class='col-sm-12 col-md-3  margin-bottom'>
+    <!-- <div class='col-sm-12 col-md-3  margin-bottom'>
         <mat-form-field class="full-width">
             <input matInput [matDatepicker]="pickerIssueDate3" id="capita_contract_expiration_date" name="capita_contract_expiration_date"
-                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
+                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date"> -->
             <!-- <button mdSuffix [matDatepicker]="pickerIssueDate3"></button> -->
-        </mat-form-field>
+        <!-- </mat-form-field>
         <mat-datepicker #pickerIssueDate3></mat-datepicker>
+    </div> -->
+    <div class="col-md-3 margin-bottom">
+        <mat-form-field>
+            <input matInput [matDatepicker]="pickerCapitaEndDate" placeholder="Vencimiento del contrato"
+                [(ngModel)]="contract_expiration_date" [min]="today_date" name="capita_contract_expiration_date">
+            <mat-datepicker-toggle matSuffix [for]="pickerCapitaEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerCapitaEndDate></mat-datepicker>
+        </mat-form-field>
     </div>
     <!-- Alerta -->
     <div class='col-sm-12 col-md-3 col-lg-2 margin-bottom'>
@@ -282,22 +314,38 @@
         </mat-form-field>
     </div>
     <!-- inicio del contrato -->
-    <div class='col-sm-12 col-md-3 margin-bottom'>
+    <!-- <div class='col-sm-12 col-md-3 margin-bottom'>
         <mat-form-field class="full-width">
             <input matInput [matDatepicker]="pickerIssueDate4" id="pgp_contract_start_date" name="pgp_contract_start_date" placeholder="Inicio de contrato"
-                [(ngModel)]="contract_start_date">
+                [(ngModel)]="contract_start_date"> -->
             <!-- <button mdSuffix [matDatepicker]="pickerIssueDate4"></button> -->
-        </mat-form-field>
+        <!-- </mat-form-field>
         <mat-datepicker #pickerIssueDate4></mat-datepicker>
+    </div> -->
+    <div class="col-md-3 margin-bottom">
+        <mat-form-field>
+            <input matInput [matDatepicker]="pickerPGPStartDate" placeholder="Inicio de contrato" [min]="today_date"
+                [(ngModel)]="contract_start_date" [min] name="pgp_contract_start_date">
+            <mat-datepicker-toggle matSuffix [for]="pickerPGPStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerPGPStartDate></mat-datepicker>
+        </mat-form-field>
     </div>
     <!-- Vencimiento del contrato -->
-    <div class='col-sm-12 col-md-3 margin-bottom'>
+    <!-- <div class='col-sm-12 col-md-3 margin-bottom'>
         <mat-form-field class="full-width">
             <input matInput [matDatepicker]="pickerIssueDate5" id="pgp_contract_expiration_date" name="pgp_contract_expiration_date"
-                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date">
+                placeholder="Vencimiento del contrato" [(ngModel)]="contract_expiration_date"> -->
             <!-- <button mdSuffix [matDatepicker]="pickerIssueDate5"></button> -->
-        </mat-form-field>
+        <!-- </mat-form-field>
         <mat-datepicker #pickerIssueDate5></mat-datepicker>
+    </div> -->
+    <div class="col-md-3 margin-bottom">
+        <mat-form-field>
+            <input matInput [matDatepicker]="pickerPGPEndDate" placeholder="Vencimiento del contrato"
+                [(ngModel)]="contract_expiration_date" [min]="today_date" name="pgp_contract_expiration_date">
+            <mat-datepicker-toggle matSuffix [for]="pickerPGPEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #pickerPGPEndDate></mat-datepicker>
+        </mat-form-field>
     </div>
     <!-- presupuesto -->
     <div class='col-sm-12 col-md-4 col-lg-2 margin-bottom'>

@@ -38,6 +38,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             bank_accounts: [],
             sales_contact: {}
         },
+        laboratory: {},
         profile: {}
     }
     private document_number_digit = undefined;
@@ -250,6 +251,9 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
             if (!this._model.employee) {
                 this._model.employee = {}
             }
+            if (!this._model.laboratory) {
+                this._model.laboratory = {}
+            }
             if (!this._model.supplier) {
                 this._model.supplier = {
                     bank_accounts: [],
@@ -275,6 +279,7 @@ export class StakeholdersActionComponent extends BaseModel implements OnInit {
                 monopoly_resolution: []
             },
             employee: {},
+            laboratory: {},
             supplier: {
                 bank_accounts: [],
                 sales_contact: {}

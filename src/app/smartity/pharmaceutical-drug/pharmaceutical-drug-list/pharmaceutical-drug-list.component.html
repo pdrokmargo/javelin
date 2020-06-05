@@ -29,7 +29,13 @@
                         <th (click)="sort('pd.name')">Nombre
                             <span class="glyphicon sort-icon" *ngIf="key =='pd.name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
+                        <th (click)="sort('ra.value')">Vía Administración
+                            <span class="glyphicon sort-icon" *ngIf="key =='ra.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
 
+                        <th (click)="sort('ra.value')">Forma Farmaceutica
+                            <span class="glyphicon sort-icon" *ngIf="key =='ra.value'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
                         <th (click)="sort('is_pos')">POS
                             <span class="glyphicon sort-icon" *ngIf="key =='is_pos'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
@@ -43,10 +49,12 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of list.data">
-                        <td class="noAuto">{{ item.pharmaceuticaldrug.atc }}</td>
-                        <td>{{ item.pharmaceuticaldrug.name }}</td>
-                        <td>{{ item.pharmaceuticaldrug.is_pos ? 'Si' : 'No' }}</td>
-                        <td>{{ item.pharmaceuticaldrug.state ? 'Activo' : 'Inactivo' }}</td>
+                        <td class="noAuto">{{ item.atc }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.routes_administration.value }}</td>
+                        <td>{{ item.dosage_form.value}}</td>
+                        <td>{{ item.is_pos ? 'Si' : 'No' }}</td>
+                        <td>{{ item.state ? 'Activo' : 'Inactivo' }}</td>
                         <td *ngIf="actions[2].status" class="w-40">
                             <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar',item)">
                                 <mat-icon>mode_edit</mat-icon>
