@@ -45,18 +45,18 @@
                                         <div class="col-sm-12 col-md-6 col-lg-6">
                                             <div class="box-body">    
                                                 <mat-form-field class="full-width">
-                                                    <input type="email" readonly id="email" name="email" [(ngModel)]="model.email" matInput placeholder="Correo electronico">
+                                                    <input type="email" readonly id="email" name="email" [(ngModel)]="model.email" matInput placeholder="Correo electrónico">
                                                 </mat-form-field>
                                             </div>
                                         </div>
 
                                         <div class='col-sm-12 col-md-6'>
-                                            <div class="box-body">                                
+                                            <mat-form-field class="full-width">                            
                                                 <mat-select required class="full-width" placeholder="Empresa por defecto" [(ngModel)]="model.company_default_id" name="company_default_id"
                                                 id="company_default_id">
                                                     <mat-option *ngFor="let item of model.usersprivileges" [value]="item.company.id">{{item.company.name}}</mat-option>
                                                 </mat-select>    
-                                            </div>                                                                    
+                                            </mat-form-field>                                                               
                                         </div>
 
                                         <div class="col-sm-12" [class.btn-action-container]="booActive">

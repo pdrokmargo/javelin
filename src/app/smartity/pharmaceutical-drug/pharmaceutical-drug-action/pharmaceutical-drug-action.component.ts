@@ -136,6 +136,9 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                 element.id = element.active_ingredient.id;
             });
             this.getMeasurement_unit();
+            if(this.model.regulated_price == undefined || this.model.regulated_price == null){
+                this.model.regulated_price = 0;
+            }
             this.loaderService.display(false);
         }, err => {
             this.loaderService.display(false);
@@ -143,7 +146,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
     }
 
     private clean() {
-        this.model = {"pharmaceuticaldrug":{"is_pos": false, "is_controlled": false, "dosage_form_id": -1, "routes_administration_id": -1, "is_monopoly": false, "state": true}};
+        this.model = {"is_pos": false, "is_controlled": false, "dosage_form_id": -1, "routes_administration_id": -1, "is_monopoly": false, "state": true};
         this.arrActive_ingredients = [];
         // this.model.pharmaceuticaldrug.is_pos = false;
         // this.model.pharmaceuticaldrug.is_controlled = false;
@@ -182,7 +185,7 @@ export class PharmaceuticalDrugActionComponent extends BaseModel implements OnIn
                     if (this.arrActive_ingredients.length - 1 == index) {
                         if (!exist) {
                             data.measurement_unit_id = this.measurement_unit_id;
-                data.measurement_unit.code = this.measurement_unit["code"];
+                // data.measurement_unit.code = this.measurement_unit["code"];
                             this.arrActive_ingredients.push(data);
                             console.log(this.arrActive_ingredients);
                         }

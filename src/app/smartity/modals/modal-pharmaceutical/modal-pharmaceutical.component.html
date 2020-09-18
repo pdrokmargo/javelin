@@ -2,7 +2,7 @@
 
 <mat-dialog-content>
 
-    <div class='col-sm-12 col-md-12'>
+    <!-- <div class='col-sm-12 col-md-12'>
         <div class="box-body">
             <p>
                 <mat-radio-group class="md-radio-group-spacing" [(ngModel)]="radio.option">
@@ -11,9 +11,9 @@
                 </mat-radio-group>
             </p>
         </div>
-    </div>
+    </div> -->
     <!-- FORM -->
-    <pharmaceutical-drug-action-cmp *ngIf="radio.option==='2'" (select)="select($event)"></pharmaceutical-drug-action-cmp>
+    <!-- <pharmaceutical-drug-action-cmp *ngIf="radio.option==='2'" (select)="select($event)"></pharmaceutical-drug-action-cmp> -->
     <!-- LIST -->
     <div class="col-sm-12">
         <pharmaceutical-drug-list-cmp *ngIf="radio.option==='1'" (select)="select($event)"></pharmaceutical-drug-list-cmp>

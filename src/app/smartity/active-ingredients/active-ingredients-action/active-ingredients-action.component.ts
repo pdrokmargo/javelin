@@ -40,6 +40,7 @@ export class ActiveIngredientsActionComponent extends BaseModel implements OnIni
         this.clean();
         if (this.comp.id == '' || this.comp.id == undefined) {
             this.str_action = 'Guardar';
+            this.model.name = '';
         } else {
             this.str_action = 'Actualizar';
             this.getDataById();

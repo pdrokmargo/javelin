@@ -45,33 +45,47 @@
       </ul>
     </div>
 
-    <div class="top-nav-right">
-      <ul class="list-unstyled float-right">
-        <li>
+    <div class="top-nav-right d-none d-lg-inline-block d-xl-inline-block">
+      <ul class="list-unstyled list-inline">
+        <li class="list-inline-item">
           <button mat-button class="mat-button header-btn" [matMenuTriggerFor]="appLogout">
             <!--img src="assets/images/g1.jpg" alt="" class="rounded img30_30"-->
             <mat-icon>account_circle</mat-icon>
-            <!-- <span style="font-size: 11px;">{{user.firstname}}, </span>   
-            <span style="font-size: 9px;">{{user.usercompany.userprofile.up_description}}</span>                   -->
+            <span style="font-size: 11px;">{{user.firstname}}, </span>   
+            <span style="font-size: 9px;">{{user.usercompany.userprofile.up_description}}</span>                  
           </button>
           <mat-menu #appLogout="matMenu" x-position="after" y-position="below" [overlapTrigger]="false">
-            <mat-nav-list dense>
-              <a md-list-item>
-                <mat-icon matSuffix md-list-icon>perm_identity</mat-icon>
-                <h4 md-line>
-                  <b>{{user.firstname}}</b> - ({{user.usercompany.userprofile.up_description}})</h4>
-              </a>
-              <hr>
-              <a md-list-item [routerLink]="'/app/my-profile'">
-                <mat-icon matSuffix md-list-icon>build</mat-icon>
-                <h4 md-line>Mi perfil</h4>
-              </a>
+            <button mat-menu-item [routerLink]="'/app/my-profile'"> 
+              <mat-icon matSuffix class="material-icons">perm_identity</mat-icon>
+              <span><b>{{user.firstname}}</b> - ({{user.usercompany.userprofile.up_description}})</span>
+            </button>
+            <hr>
+            <!-- <button mat-menu-item [routerLink]="'/app/my-profile'">
+              <mat-icon matSuffix class="material-icons">build</mat-icon>
+              <span>Mi perfil</span>
+            </button> -->
+            <button mat-menu-item (click)="logout()">
+              <mat-icon matSuffix md-list-icon>power_settings_new</mat-icon>
+              <span>Salir</span>
+            </button>
 
-              <a md-list-item (click)="logout()">
-                <mat-icon matSuffix md-list-icon>power_settings_new</mat-icon>
-                <h4 md-line>Salir</h4>
-              </a>
-            </mat-nav-list>
+<!--             
+            <mat-nav-list dense>
+              <mat-list-item>
+                <mat-icon matSuffix class="material-icons">perm_identity</mat-icon>
+                <h4 mat-line>
+                  <b>{{user.firstname}}</b> - ({{user.usercompany.userprofile.up_description}})</h4>
+              </mat-list-item>
+              <hr>
+              <a><mat-list-item >
+                <mat-icon matSuffix class="material-icons">build</mat-icon>
+                <h4 mat-line>Mi perfil</h4>
+              </mat-list-item>
+            </a>
+              <mat-list-item >
+                
+              </mat-list-item>
+            </mat-nav-list> -->
           </mat-menu>
         </li>
         <!-- <li><button mat-button class="mat-button header-btn hidden-lg-up" myOpenSearchOverlay><i class="material-icons">search</i></button></li> -->
