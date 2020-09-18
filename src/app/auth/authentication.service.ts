@@ -18,8 +18,8 @@ export class AuthenticationService {
 
   constructor(private http: Http) {
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    // this.urlBase = 'https://javelinservice.herokuapp.com';
-    this.urlBase = 'http://localhost/javelinservice/public';
+    this.urlBase = 'https://javelinservice.herokuapp.com';
+    // this.urlBase = 'http://localhost/javelinservice/public';
 
     if (localStorage.getItem('currentUser') != null) {
       this.headers = new Headers({
@@ -40,34 +40,34 @@ export class AuthenticationService {
     body.set("scope", AUTH_CONFIG.SCOPE);
 
     return this.http.post(`${this.urlBase}/oauth/token`, body)
-    .map((response: Response) => {
-      let token = response.json() && response.json().access_token;
-      if (token) {
-        this.token = token;
-        let refresh_token = response.json().refresh_token;
-        let expire_in = response.json().expire_in;
-        localStorage.setItem("currentUser", JSON.stringify({
-          username: username,
-          access_token: token,
-          refresh_token: refresh_token,
-          expire_in: expire_in
-        }));       
-      } 
-    });
+      .map((response: Response) => {
+        let token = response.json() && response.json().access_token;
+        if (token) {
+          this.token = token;
+          let refresh_token = response.json().refresh_token;
+          let expire_in = response.json().expire_in;
+          localStorage.setItem("currentUser", JSON.stringify({
+            username: username,
+            access_token: token,
+            refresh_token: refresh_token,
+            expire_in: expire_in
+          }));
+        }
+      });
   }
 
   logout(): void {
     this.token = null;
     localStorage.removeItem("currentUser");
     localStorage.removeItem("view");
-    localStorage.removeItem("view_actual");  
-    localStorage.removeItem("objUser");  
+    localStorage.removeItem("view_actual");
+    localStorage.removeItem("objUser");
   }
 
-  change_company(obj: any){
+  change_company(obj: any) {
     var user = JSON.parse(localStorage.getItem('objUser'));
-    this.PUT(`users/chenge_company/${user.id}`, {'company_id':obj.id}).subscribe(res => {
-      if (res.status == 'success') {   
+    this.PUT(`users/chenge_company/${user.id}`, { 'company_id': obj.id }).subscribe(res => {
+      if (res.status == 'success') {
         var views = res.data['usercompany']["userprofile"]["privileges"];
         localStorage.setItem('view', JSON.stringify(views));
         localStorage.setItem('objUser', JSON.stringify(res.data));
@@ -84,9 +84,9 @@ export class AuthenticationService {
       "Authorization": "Bearer " + JSON.parse(localStorage.getItem('currentUser'))["access_token"]
     });
     console.log("Bearer " + JSON.parse(localStorage.getItem('currentUser'))["access_token"]);
-    
+
     console.log(JSON.stringify(data));
-    
+
     return this.http.post(`${this.urlBase}/api/${url}`, { data: JSON.stringify(data) }, { headers: this.headers })
       .map(res => { return res.json() })
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
