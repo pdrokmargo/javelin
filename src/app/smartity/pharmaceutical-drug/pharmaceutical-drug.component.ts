@@ -16,6 +16,31 @@ export class PharmaceuticalDrugComponent extends Base implements OnInit {
     prescripcion: string = '20200722124021108455';
     fecha: string = null;
 
+
+    json: any = [
+        {
+            factura: 'SIM-520712',
+            cantidad: 30,
+            unitario: 250000,
+            total: 893000,
+            fecha: '20 de junio de 2020'
+        },
+        {
+            factura: 'SIM-234232',
+            cantidad: 60,
+            unitario: 250000,
+            total: 893000,
+            fecha: '08 de junio de 2020'
+        },
+        {
+            factura: 'SIM-78678',
+            cantidad: 90,
+            unitario: 289000,
+            total: 913000,
+            fecha: '14 de junio de 2020'
+        }
+    ]
+
     constructor() {
         super();
     }
@@ -25,6 +50,11 @@ export class PharmaceuticalDrugComponent extends Base implements OnInit {
 
     buscar() {
         console.log("Buscando" + this.fecha);
+    }
+
+
+    randon() {
+        return Math.random();
     }
 
 }

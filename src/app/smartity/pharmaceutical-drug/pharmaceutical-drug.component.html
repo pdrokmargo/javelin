@@ -1,6 +1,3 @@
-<!-- Trabajar aqui -->
-
-
 <section class="chapter">
     <section class="hero">
         <div class="hero-content">
@@ -12,34 +9,55 @@
         <div class="container-fluid with-maxwidth">
             <div class="box box-default">
                 <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Nit</label>
-                                <input type="text" class="form-control" [(ngModel)]="nit">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Token</label>
-                                <input type="text" class="form-control" [(ngModel)]="token">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Prescripción</label>
-                                <input type="text" class="form-control" [(ngModel)]="prescripcion">
-                            </div>
-                        </div>
-                         <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Fecha</label>
-                                <input type="date" class="form-control" [(ngModel)]="fecha">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <button class="btn btn-primary float-right" (click)="buscar()">Buscar</button>
-                        </div>
+
+                    <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
+                        <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                            <thead>
+                                <tr>
+                                    <th>IDFacturacion</th>
+                                    <th>Estado Entrega</th>
+                                    <th>No Prescripcion</th>
+                                    <th>Tipo Tec</th>
+                                    <th>Con Tec</th>
+                                    <th>Tipo ID Paciente</th>
+                                    <th>No ID Paciente</th>
+                                    <th>No Entrega</th>
+                                    <th>No ID EPS</th>
+                                    <th>Cod EPS</th>
+                                    <th>Cod Ser Tec A Entregado</th>
+                                    <th>Cant Un Min Dis</th>
+                                    <th>Valor Unit Facturado</th>
+                                    <th>Valor Tot Facturado</th>
+                                    <th>Cuota Moder</th>
+                                    <th>Copago</th>
+                                    <th>Fec Anula</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of json">
+                                    <td>{{ randon() }}</td>
+                                    <td>ActivoD</td>
+                                    <td>{{ randon() }}</td>
+                                    <td>M</td>
+                                    <td>1</td>
+                                    <td>CC</td>
+                                    <td>{{ randon() }}</td>
+                                    <td>{{ item.factura }}</td>
+                                    <td>{{ randon() }}</td>
+                                    <td>4</td>
+                                    <td>234234</td>
+                                    <td>{{ item.cantidad }}</td>
+                                    <td>{{ item.unitario }}</td>
+                                    <td>{{ item.total }}</td>
+                                    <td>0.000</td>
+                                    <td>0.000</td>
+                                    <td>{{ item.fecha }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
                     </div>
                 </div>
             </div>
