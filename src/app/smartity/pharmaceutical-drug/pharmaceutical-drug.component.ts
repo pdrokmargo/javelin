@@ -11,10 +11,20 @@ import { Base } from '../bases/base';
 
 export class PharmaceuticalDrugComponent extends Base implements OnInit {
 
+    nit: string = '802024817';
+    token: string = '_0hZFuEPhyPIbwAowjiePUTIloS1mZxpHuGdPm3BJBc=';
+    prescripcion: string = '20200722124021108455';
+    fecha: string = null;
+
     constructor() {
         super();
     }
 
-    ngOnInit() {  }
+    ngOnInit() { }
+
+
+    buscar() {
+        console.log("Buscando" + this.fecha);
+    }
 
 }
