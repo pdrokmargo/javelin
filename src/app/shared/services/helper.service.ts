@@ -9,6 +9,7 @@ import { AuthenticationService } from "../../auth/authentication.service";
 export class HelperService {
 
     public baseUrl: string;
+    public secondToken: String;
     constructor(
         public http: Http,
         private authService: AuthenticationService
@@ -17,7 +18,6 @@ export class HelperService {
         this.baseUrl = authService.urlBase;
 
     }
-
     GET(url: string) {
         return this.http.get(this.baseUrl + url, this.headers());
     }
@@ -49,7 +49,6 @@ export class HelperService {
         });
         return new RequestOptions({ headers: header });
     }
-
     headerFormData(): RequestOptions {
         let header = new Headers({
             //"Content-Type": "multipart/form-data",

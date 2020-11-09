@@ -110,7 +110,7 @@
     </div>
     <!-- is_pos -->
     <div class='col-sm-12 col-md-3 margin-bottom'>
-        <mat-slide-toggle [labelPosition]="after" id="is_pos" name="is_pos" [(ngModel)]="model.is_pos">POS</mat-slide-toggle>
+        <mat-slide-toggle [labelPosition]="after" id="is_pos" name="is_pos" [(ngModel)]="model.is_pos">{{model.is_pos ? 'PBS' : 'NO PBS'}}</mat-slide-toggle>
     </div>
     <div class="col-sm-12" [class.btn-action-container]="booActive">
         <button type="button" [disabled]="!pharmeceuticalForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"

@@ -1,0 +1,51 @@
+<!-- FORM -->
+<form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
+  <div class="row">
+      <div class="col-sm-12 margin-bottom" [class.btn-action-container]="booActive">
+          <button mat-raised-button color="primary" (click)="goList()" class="btn-w-md no-margin-left">
+              <mat-icon>keyboard_arrow_left</mat-icon> Regresar
+          </button>
+      </div>
+
+      <!-- estado -->
+      <div class="col-sm-12 margin-bottom">
+          <div class="flex">
+              <span class="flex-spacer"></span>
+              <mat-slide-toggle [labelPosition]="after" id="state" name="state">Estado</mat-slide-toggle>
+          </div>
+      </div>
+
+      <!-- name -->
+      <div class="col-md-8">
+          <mat-form-field class="full-width">
+              <input matInput name="name"  placeholder="Nombre de la bodega">
+          </mat-form-field>
+      </div>
+
+
+      <!--warehouse_type_id-->
+      <!-- <div class="col-sm-12 col-md-4 margin-bottom">
+              <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Tipo de bodega"  name="warehouse_type_id"
+              id="warehouse_type_id">
+              <mat-option *ngFor="let i of warehouses" [value]="i.id">{{i.value}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+      </div> -->
+      
+      <!-- description -->
+      <div class="col-sm-12 col-md-12 margin-bottom">
+          <mat-form-field class="full-width">
+              <textarea id="description" name="description" matInput placeholder="Descripción"></textarea>
+          </mat-form-field>
+      </div>
+  
+
+     
+  
+
+      <div class="col-sm-12" [class.btn-action-container]="booActive">
+          <button [disabled]="!modelForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
+      </div>
+  </div>
+</form>
