@@ -10,7 +10,7 @@
           <div class="box box-default">
               <div class="box-body">
                   <!-- <inventory-movements-entry-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></inventory-movements-entry-action-cmp> -->
-                  <mipres-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></mipres-action-cmp>
+                  <mipres-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction" [role]="mipresRole"></mipres-action-cmp>
                   <mipres-list-cmp [role]="mipresRole" *ngIf="isOpenList"></mipres-list-cmp>
               </div>                 
           </div>

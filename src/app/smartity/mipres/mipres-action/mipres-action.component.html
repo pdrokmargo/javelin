@@ -7,45 +7,333 @@
           </button>
       </div>
 
-      <!-- estado -->
-      <div class="col-sm-12 margin-bottom">
-          <div class="flex">
-              <span class="flex-spacer"></span>
-              <mat-slide-toggle [labelPosition]="after" id="state" name="state">Estado</mat-slide-toggle>
-          </div>
-      </div>
-
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+            <input matInput name="prescriptionNumber" [(ngModel)]="prescriptionHeader.NoPrescripcion"  placeholder="# Prescripción">
+        </mat-form-field>
+    </div>
       <!-- name -->
-      <div class="col-md-8">
+      <div class="col-md-4">
           <mat-form-field class="full-width">
-              <input matInput name="name"  placeholder="Nombre de la bodega">
+              <input matInput name="eps" [(ngModel)]="prescriptionHeader.epsInfo" placeholder="EPS">
           </mat-form-field>
       </div>
-
-
-      <!--warehouse_type_id-->
-      <!-- <div class="col-sm-12 col-md-4 margin-bottom">
-              <mat-form-field class="full-width">
-          <mat-select class="full-width" placeholder="Tipo de bodega"  name="warehouse_type_id"
-              id="warehouse_type_id">
-              <mat-option *ngFor="let i of warehouses" [value]="i.id">{{i.value}}</mat-option>
-          </mat-select>
-          </mat-form-field>
-      </div> -->
-      
-      <!-- description -->
-      <div class="col-sm-12 col-md-12 margin-bottom">
-          <mat-form-field class="full-width">
-              <textarea id="description" name="description" matInput placeholder="Descripción"></textarea>
-          </mat-form-field>
-      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+            <input matInput name="paciente" [(ngModel)]="prescriptionHeader.patientInfo" placeholder="Paciente">
+        </mat-form-field>
+    </div>
+    <div class="col-md-3">
+        <mat-form-field class="full-width">
+            <input matInput name="direccion" [(ngModel)]="prescriptionHeader.DirPaciente" placeholder="Dirección Paciente">
+        </mat-form-field>
+    </div>
+    <div class="col-md-1">
+        <mat-form-field class="full-width">
+            <input matInput name="municipio" [(ngModel)]="prescriptionHeader.CodMunEnt" placeholder="Municipio">
+        </mat-form-field>
+    </div>
+    <div class="col-sm-12" *ngIf="role == 'delivery'">
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Direccionamientos</div>
+            <span class="flex-spacer"></span>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
   
-
-     
+            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <thead>
+                    <tr>
+                        <th>ID
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Fecha Direccionamiento
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Servicio / Tecnología
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Cantidad a Entregar
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th># Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Fecha Máxima de Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Estado
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th class="w-40"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of addressingList">
+                        <td>{{item.ID}}</td>
+                        <td>{{item.FecDireccionamiento | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.CodSerTecAEntregar}}</td>
+                        <td>{{item.CantTotAEntregar}}</td>
+                        <td>{{item.NoEntrega}}</td>
+                        <td>{{item.FecMaxEnt | date:'dd/MM/yyyy'}}</td>
+                        <td><span style="font-size:12px;" [ngClass]="{'badge-success':item.EstDireccionamiento === 1, 'badge-primary':item.EstDireccionamiento === 2, 'badge-danger':item.EstDireccionamiento === 0}" class="badge badge-pill badge-primary">{{item.EstDireccionamiento === 1 ? 'Activo' : item.EstDireccionamiento === 2 ? 'Procesado' : 'Anulado' + '(' + item.FecAnulacion + ')'}}</span></td>
+                        <td class="w-40">
+                            <button [disabled]="item.EstDireccionamiento != 1" [ngClass]="{'text-primary': item.EstDireccionamiento == 1, 'text-default': item.EstDireccionamiento != 1}" type="button" mat-icon-button (click)="openModalProgramming(item)">
+                                <mat-icon>event_note</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
   
-
-      <div class="col-sm-12" [class.btn-action-container]="booActive">
-          <button [disabled]="!modelForm.form.valid" mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right" (click)="save()">{{strAction}}</button>
-      </div>
+        </div>
+  
+        
+    </div>
+    <div class="col-sm-12" *ngIf="role == 'delivery'">
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Programados</div>
+            <span class="flex-spacer"></span>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+  
+            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <thead>
+                    <tr>
+                        <th>ID
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Sede
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Fecha Programación
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Servicio / Tecnología
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Cantidad a Entregar
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th># Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Fecha Máxima de Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Estado
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th class="w-40"></th>
+                        <th class="w-40"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of programmingList">
+                        <td>{{item.ID}}</td>
+                        <td>{{getSede(item.CodSedeProv)}}</td>
+                        <td>{{item.FecProgramacion | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.CodSerTecAEntregar}}</td>
+                        <td>{{item.CantTotAEntregar}}</td>
+                        <td>{{item.NoEntrega}}</td>
+                        <td>{{item.FecMaxEnt | date:'dd/MM/yyyy'}}</td>
+                        <td><span style="font-size:12px;" [ngClass]="{'badge-success':item.EstProgramacion === 1, 'badge-primary':item.EstProgramacion === 2, 'badge-danger':item.EstProgramacion === 0}" class="badge badge-pill">{{item.EstProgramacion === 1 ? 'Activo' : item.EstProgramacion === 2 ? 'Procesado' : 'Anulado' + '(' + item.FecAnulacion + ')'}}</span></td>
+                        <td class="w-40">
+                            <button type="button" [disabled]="item.EstProgramacion != 1" [ngClass]="{'text-primary': item.EstProgramacion == 1, 'text-default': item.EstProgramacion != 1}" mat-icon-button (click)="openModalDelivery(item)">
+                                <mat-icon>receipt_long</mat-icon>
+                            </button>
+                        </td>
+                        <td class="w-40">
+                            <button type="button" [disabled]="item.EstProgramacion != 1" [ngClass]="{'text-danger': item.EstProgramacion == 1, 'text-default': item.EstProgramacion != 1}" mat-icon-button (click)="openModalCancelProgramming(item)">
+                                <mat-icon>highlight_off</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Entregados</div>
+            <span class="flex-spacer"></span>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+  
+            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <thead>
+                    <tr>
+                        <th>ID
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Fecha Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Recibió
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Servicio / Tecnología
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Cantidad Entregada
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th># Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Estado
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th *ngIf="role == 'supplier'" class="w-40"></th>
+                        <th *ngIf="role == 'delivery'" class="w-40"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of deliveryList">
+                        <td>{{item.ID}}</td>
+                        <td>{{item.FecEntrega | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.TipoIDRecibe}} {{item.NoIDRecibe}}</td>
+                        <td>{{item.CodSerTecEntregado}}</td>
+                        <td>{{item.CantTotEntregada}} {{item.EntTotal === 1 ? '(Total)' : (Parcial)}}</td>
+                        <td>{{item.NoEntrega}}</td>
+                        <td><span style="font-size:12px;" [ngClass]="{'badge-success':item.EstEntrega === 1, 'badge-primary':item.EstEntrega === 2, 'badge-danger':item.EstEntrega === 0}" class="badge badge-pill">{{item.EstEntrega === 1 ? 'Activo' : item.EstEntrega === 2 ? 'Procesado' : 'Anulado' + '(' + item.FecAnulacion + ')'}}</span></td>
+                        <td *ngIf="role == 'supplier'" class="w-40">
+                            <button type="button" [disabled]="item.EstEntrega != 1" [ngClass]="{'text-primary': item.EstEntrega == 1, 'text-default': item.EstEntrega != 1}" mat-icon-button (click)="openModalDeliveryReport(item)">
+                                <mat-icon>receipt_long</mat-icon>
+                            </button>
+                        </td>
+                        <td *ngIf="role == 'delivery'" class="w-40">
+                            <button type="button" [disabled]="item.EstEntrega != 1" [ngClass]="{'text-danger': item.EstEntrega == 1, 'text-default': item.EstEntrega != 1}" mat-icon-button (click)="openModalCancelDelivery(item)">
+                                <mat-icon>highlight_off</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-12" *ngIf="role == 'supplier'">
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Reporte de Entregas</div>
+            <span class="flex-spacer"></span>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+  
+            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <thead>
+                    <tr>
+                        <th>ID
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Fecha Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Fecha Reporte Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Servicio / Tecnología
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Cantidad Entregada
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th># Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Valor Entregado
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Estado
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th  class="w-40"></th> 
+                        <th  class="w-40"></th>                                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of deliveryReportList">
+                        <td>{{item.ID}}</td>
+                        <td>{{item.FecEntrega}}</td>
+                        <td>{{item.FecRepEntrega | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.CodTecEntregado}}</td>
+                        <td>{{item.CantTotEntregada}}</td>
+                        <td>{{item.NoEntrega}}</td>
+                        <td>${{item.ValorEntregado}}</td>
+                        <td><span style="font-size:12px;" [ngClass]="{'badge-success':item.EstRepEntrega === 1, 'badge-primary':item.EstRepEntrega === 2, 'badge-danger':item.EstRepEntrega === 0}" class="badge badge-pill">{{item.EstRepEntrega === 1 ? 'Activo' : item.EstRepEntrega === 2 ? 'Procesado' : 'Anulado' + '(' + item.FecAnulacion + ')'}}</span></td>
+                        <td class="w-40">
+                            <button type="button" [disabled]="item.EstRepEntrega != 1" [ngClass]="{'text-primary': item.EstRepEntrega == 1, 'text-default': item.EstRepEntrega != 1}" mat-icon-button (click)="openModalBilling(item)">
+                                <mat-icon>receipt_long</mat-icon>
+                            </button>
+                        </td>
+                        <td class="w-40">
+                            <button type="button" [disabled]="item.EstRepEntrega != 1" [ngClass]="{'text-danger': item.EstRepEntrega == 1, 'text-default': item.EstRepEntrega != 1}" mat-icon-button (click)="openModalCancelDeliveryReport(item)">
+                                <mat-icon>highlight_off</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-12" *ngIf="role == 'supplier'">
+        <div class="flex margin-bottom">
+            <div class="box-header no-padding-h">Facturados</div>
+            <span class="flex-spacer"></span>
+        </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+  
+            <table class="mdl-data-table table-bordered table-striped cf no-margin">
+                <thead>
+                    <tr>
+                        <th>ID
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th># Factura
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Fecha Facturación
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Servicio / Tecnología
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Cantidad
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th># Entrega
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Valor Unitario
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Valor Total
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>Estado
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th  class="w-40"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of billingList">
+                        <td>{{item.ID}}</td>
+                        <td>{{item.NoFactura}}</td>
+                        <td>{{item.FecFacturacion | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.CodSerTecAEntregado}}</td>
+                        <td>{{item.CantUnMinDis}}</td>
+                        <td>{{item.NoEntrega}}</td>
+                        <td>${{item.ValorUnitFacturado}}</td>
+                        <td>${{item.ValorTotFacturado}}</td>
+                        <td><span style="font-size:12px;" [ngClass]="{'badge-success':item.EstFacturacion === 1, 'badge-primary':item.EstFacturacion === 2, 'badge-danger':item.EstFacturacion === 0}" class="badge badge-pill">{{item.EstFacturacion === 1 ? 'Activo' : item.EstFacturacion === 2 ? 'Procesado' : 'Anulado' + '(' + item.FecAnulacion + ')'}}</span></td>
+                        <td class="w-40">
+                            <button type="button" [disabled]="item.EstFacturacion != 1" [ngClass]="{'text-danger': item.EstFacturacion == 1, 'text-default': item.EstFacturacion != 1}" mat-icon-button (click)="openModalCancelBilling(item)">
+                                <mat-icon>highlight_off</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
   </div>
 </form>

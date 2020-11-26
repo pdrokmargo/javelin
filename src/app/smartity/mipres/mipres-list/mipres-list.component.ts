@@ -75,6 +75,7 @@ export class MipresListComponent extends BaseList  implements OnInit {
   }
   private getPrescriptions(){
     this.loaderService.display(true);
+    this.list = [];
     var prescriptionNumber = {"prescriptionNumber": this.search};
       this.helperService.POST(`${this.urlApi}/prescriptions/${this.helperService.secondToken}`, prescriptionNumber
       ).subscribe(rs => {

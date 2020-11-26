@@ -4,7 +4,7 @@
       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
           <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar" [(ngModel)]="search" (keydown)="enterRaw($event)">
           <div style="width: 34px" class="input-group-addon">
-              <a style="cursor:pointer" (click)="getAll()">
+              <a style="cursor:pointer" (click)="getPrescriptions()">
                   <i class="fa fa-search"></i>
               </a>
           </div>
@@ -55,7 +55,7 @@
                       <!-- <td>{{item.addressingDate}}</td> -->
                       <td *ngIf="actions[2].status" class="w-40">
                           <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar',item)">
-                              <mat-icon>mode_edit</mat-icon>
+                              <mat-icon>search</mat-icon>
                           </button>
                       </td>
                   </tr>

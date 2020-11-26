@@ -42,3 +42,5 @@ export * from './modal-products/modal-products.component';
 
 export * from './modal-purchase-orders/modal-purchase-orders.component';
 export * from './modal-inventory-movement-transfers/modal-inventory-movement-transfers.component';
+
+export * from './modal-mipres/modal-mipres.component';

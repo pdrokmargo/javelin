@@ -78,7 +78,6 @@ import {
   StakeholdersListComponent,
   ModalSupplierOrdersComponent,
   ModalSupplierQuotesComponent,
-  
 
   
 } from './smartity/modals';
@@ -112,6 +111,7 @@ import { ModalInventoryMovementTransfersComponent } from './smartity/modals/moda
 import { ModalInventoryMovementTransfersListComponent } from './smartity/modals/modal-inventory-movement-transfers/modal-inventory-movement-transfers-list/modal-inventory-movement-transfers-list.component';
 import { ModalPurchaseOrdersComponent } from './smartity/modals/modal-purchase-orders/modal-purchase-orders.component';
 import { ModalPurchaseOrdersListComponent } from './smartity/modals/modal-purchase-orders/modal-purchase-orders-list/modal-purchase-orders-list.component';
+import { ModalMipresComponent } from './smartity/modals/modal-mipres/modal-mipres.component';
 
 
 
@@ -217,7 +217,8 @@ import { ModalPurchaseOrdersListComponent } from './smartity/modals/modal-purcha
     ModalInventoryMovementTransfersComponent,
     ModalInventoryMovementTransfersListComponent,
     ModalPurchaseOrdersComponent,
-    ModalPurchaseOrdersListComponent
+    ModalPurchaseOrdersListComponent,
+    ModalMipresComponent
 
   ],
   providers: [
@@ -274,7 +275,8 @@ import { ModalPurchaseOrdersListComponent } from './smartity/modals/modal-purcha
     ModalPurchaseOrdersComponent,
     ModalPurchaseOrdersListComponent,
     ModalInventoryMovementTransfersComponent,
-    ModalInventoryMovementTransfersListComponent
+    ModalInventoryMovementTransfersListComponent,
+    ModalMipresComponent
   ]
 })
 
