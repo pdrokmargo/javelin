@@ -19,7 +19,7 @@ export class MipresActionComponent extends BaseModel  implements OnInit {
   sedes: any[] = [
     {"codsede": "PROV004656", "descsede": "MYE BARRANQUILLA"}, 
     {"codsede": "PROV004657", "descsede": "MYE CARTAGENA"}, 
-    {"codsede": "PROV004658", "descsede": "	MYE SANTA MARTA"}, 
+    {"codsede": "PROV004658", "descsede": "MYE SANTA MARTA"}, 
 ];
   @Input() role: String;
   addressingList: any[] = [];
@@ -182,7 +182,12 @@ private getCollection() {
   // });
 }
 private getSede(id){
- return this.sedes.find(x => x.codsede === id).descsede;
+  var descrip_sede = this.sedes.find(x => x.codsede === id);
+  if(descrip_sede){
+    return descrip_sede.descsede;
+  }else{
+    return id + "(Sede no activa)";
+  }
 }
 private getCUMSDescription(cums){
   var out_cums = this.products.find(x => x.cums === cums);

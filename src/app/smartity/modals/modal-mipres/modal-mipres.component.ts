@@ -11,7 +11,7 @@ export class ModalMipresComponent implements OnInit {
   sedes: any[] = [
     {"codsede": "PROV004656", "descsede": "MYE BARRANQUILLA"}, 
     {"codsede": "PROV004657", "descsede": "MYE CARTAGENA"}, 
-    {"codsede": "PROV004658", "descsede": "	MYE SANTA MARTA"}, 
+    {"codsede": "PROV004658", "descsede": "MYE SANTA MARTA"}, 
 ];
 entregaTotal: any[] = [
   {"codEntTotal": "0", "descEntTotal": "NO"}, 
