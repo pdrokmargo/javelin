@@ -57,6 +57,4 @@ export class HelperService {
         });
         return new RequestOptions({ headers: header });
     }
-
-
 }

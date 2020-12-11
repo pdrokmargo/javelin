@@ -51,9 +51,18 @@ patientInfo: String;
      }
 
   ngOnInit() {
-    console.log(this.data);
     if(this.data.template == 'delivery'){
       this.data.object.FecEntrega = new Date();
+       var cod_tipo_id = this.tipoIDs.find(x => x.codTipoID === this.data.object.TipoIDPaciente);
+       if(cod_tipo_id){
+        this.data.object.TipoIDRecibe = cod_tipo_id.codTipoID;
+        this.data.object.NoIDRecibe = this.data.object.NoIDPaciente;
+       }else{
+        this.data.object.TipoIDRecibe = "CC";
+        this.data.object.NoIDRecibe = "";
+       }
+      
+      
     }
 
     if(this.data.template == 'billing'){
@@ -61,8 +70,7 @@ patientInfo: String;
       this.data.object.Copago = '0';
     }
     
-    this.data.object.TipoIDRecibe = this.tipoIDs.find(x => x.codTipoID === this.data.object.TipoIDPaciente).codTipoID;
-    this.data.object.NoIDRecibe = this.data.object.NoIDPaciente;
+    
   }
   
 
@@ -121,7 +129,6 @@ patientInfo: String;
   }
   cancelDelivery(){
     this.loaderService.display(true);
-    // console.log("CancelProgramming" + JSON.stringify(this.data) );
     var delivery = {
       "IdEntrega": this.data.object.IDEntrega
     };

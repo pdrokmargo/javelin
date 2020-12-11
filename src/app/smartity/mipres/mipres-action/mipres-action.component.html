@@ -33,7 +33,7 @@
             <input matInput name="municipio" [(ngModel)]="prescriptionHeader.CodMunEnt" placeholder="Municipio">
         </mat-form-field>
     </div>
-    <div class="col-sm-12" *ngIf="role == 'delivery'">
+    <div class="col-sm-12" *ngIf="role == 'delivery' || role == 'admin'">
         <div class="flex margin-bottom">
             <div class="box-header no-padding-h">Direccionamientos</div>
             <span class="flex-spacer"></span>
@@ -71,7 +71,7 @@
                     <tr *ngFor="let item of addressingList">
                         <td>{{item.ID}}</td>
                         <td>{{item.FecDireccionamiento | date:'dd/MM/yyyy'}}</td>
-                        <td>{{item.CodSerTecAEntregar}}</td>
+                        <td>{{getCUMSDescription(item.CodSerTecAEntregar)}} <br> {{item.CodSerTecAEntregar}}</td>
                         <td>{{item.CantTotAEntregar}}</td>
                         <td>{{item.NoEntrega}}</td>
                         <td>{{item.FecMaxEnt | date:'dd/MM/yyyy'}}</td>
@@ -89,7 +89,7 @@
   
         
     </div>
-    <div class="col-sm-12" *ngIf="role == 'delivery'">
+    <div class="col-sm-12" *ngIf="role == 'delivery' || role == 'admin'">
         <div class="flex margin-bottom">
             <div class="box-header no-padding-h">Programados</div>
             <span class="flex-spacer"></span>
@@ -132,7 +132,7 @@
                         <td>{{item.ID}}</td>
                         <td>{{getSede(item.CodSedeProv)}}</td>
                         <td>{{item.FecProgramacion | date:'dd/MM/yyyy'}}</td>
-                        <td>{{item.CodSerTecAEntregar}}</td>
+                        <td>{{getCUMSDescription(item.CodSerTecAEntregar)}} <br> {{item.CodSerTecAEntregar}}</td>
                         <td>{{item.CantTotAEntregar}}</td>
                         <td>{{item.NoEntrega}}</td>
                         <td>{{item.FecMaxEnt | date:'dd/MM/yyyy'}}</td>
@@ -192,16 +192,16 @@
                         <td>{{item.ID}}</td>
                         <td>{{item.FecEntrega | date:'dd/MM/yyyy'}}</td>
                         <td>{{item.TipoIDRecibe}} {{item.NoIDRecibe}}</td>
-                        <td>{{item.CodSerTecEntregado}}</td>
+                        <td>{{getCUMSDescription(item.CodSerTecEntregado)}} <br> {{item.CodSerTecEntregado}}</td>
                         <td>{{item.CantTotEntregada}} {{item.EntTotal === 1 ? '(Total)' : (Parcial)}}</td>
                         <td>{{item.NoEntrega}}</td>
                         <td><span style="font-size:12px;" [ngClass]="{'badge-success':item.EstEntrega === 1, 'badge-primary':item.EstEntrega === 2, 'badge-danger':item.EstEntrega === 0}" class="badge badge-pill">{{item.EstEntrega === 1 ? 'Activo' : item.EstEntrega === 2 ? 'Procesado' : 'Anulado' + '(' + item.FecAnulacion + ')'}}</span></td>
-                        <td *ngIf="role == 'supplier'" class="w-40">
+                        <td *ngIf="role == 'supplier' || role == 'admin'" class="w-40">
                             <button type="button" [disabled]="item.EstEntrega != 1" [ngClass]="{'text-primary': item.EstEntrega == 1, 'text-default': item.EstEntrega != 1}" mat-icon-button (click)="openModalDeliveryReport(item)">
                                 <mat-icon>receipt_long</mat-icon>
                             </button>
                         </td>
-                        <td *ngIf="role == 'delivery'" class="w-40">
+                        <td *ngIf="role == 'delivery' || role == 'admin'" class="w-40">
                             <button type="button" [disabled]="item.EstEntrega != 1" [ngClass]="{'text-danger': item.EstEntrega == 1, 'text-default': item.EstEntrega != 1}" mat-icon-button (click)="openModalCancelDelivery(item)">
                                 <mat-icon>highlight_off</mat-icon>
                             </button>
@@ -211,7 +211,7 @@
             </table>
         </div>
     </div>
-    <div class="col-sm-12" *ngIf="role == 'supplier'">
+    <div class="col-sm-12" *ngIf="role == 'supplier' || role == 'admin'">
         <div class="flex margin-bottom">
             <div class="box-header no-padding-h">Reporte de Entregas</div>
             <span class="flex-spacer"></span>
@@ -222,6 +222,9 @@
                 <thead>
                     <tr>
                         <th>ID
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>ID Reporte Entrega
                             <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th>Fecha Entrega
@@ -252,9 +255,10 @@
                 <tbody>
                     <tr *ngFor="let item of deliveryReportList">
                         <td>{{item.ID}}</td>
+                        <td>{{item.IDReporteEntrega}}</td>
                         <td>{{item.FecEntrega}}</td>
                         <td>{{item.FecRepEntrega | date:'dd/MM/yyyy'}}</td>
-                        <td>{{item.CodTecEntregado}}</td>
+                        <td>{{getCUMSDescription(item.CodTecEntregado)}} <br> {{item.CodTecEntregado}}</td>
                         <td>{{item.CantTotEntregada}}</td>
                         <td>{{item.NoEntrega}}</td>
                         <td>${{item.ValorEntregado}}</td>
@@ -274,7 +278,7 @@
             </table>
         </div>
     </div>
-    <div class="col-sm-12" *ngIf="role == 'supplier'">
+    <div class="col-sm-12" *ngIf="role == 'supplier' || role == 'admin'">
         <div class="flex margin-bottom">
             <div class="box-header no-padding-h">Facturados</div>
             <span class="flex-spacer"></span>
@@ -285,6 +289,9 @@
                 <thead>
                     <tr>
                         <th>ID
+                            <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th>ID Facturación
                             <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                         </th>
                         <th># Factura
@@ -317,9 +324,10 @@
                 <tbody>
                     <tr *ngFor="let item of billingList">
                         <td>{{item.ID}}</td>
+                        <td>{{item.IDFacturacion}}</td>
                         <td>{{item.NoFactura}}</td>
                         <td>{{item.FecFacturacion | date:'dd/MM/yyyy'}}</td>
-                        <td>{{item.CodSerTecAEntregado}}</td>
+                        <td>{{getCUMSDescription(item.CodSerTecAEntregado)}} <br> {{item.CodSerTecAEntregado}}</td>
                         <td>{{item.CantUnMinDis}}</td>
                         <td>{{item.NoEntrega}}</td>
                         <td>${{item.ValorUnitFacturado}}</td>

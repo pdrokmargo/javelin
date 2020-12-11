@@ -27,6 +27,8 @@ export class MipresActionComponent extends BaseModel  implements OnInit {
   deliveryList: any[];
   deliveryReportList: any[];
   billingList: any[];
+  products: any[];
+  
   epsList: any[] = [
     {"CodEPS": "CCF007", "DescEPS":"CAJA DE COMPENSACIÓN FAMILIAR  DE CARTAGENA - COMFAMILIAR CARTAGENA"},
 {"CodEPS": "CCF009", "DescEPS":"CAJA DE COMPENSACIÓN FAMILIAR DE BOYACÁ - COMFABOY"},
@@ -182,12 +184,20 @@ private getCollection() {
 private getSede(id){
  return this.sedes.find(x => x.codsede === id).descsede;
 }
+private getCUMSDescription(cums){
+  var out_cums = this.products.find(x => x.cums === cums);
+  if(out_cums != undefined){
+    return this.products.find(x => x.cums === cums).description;
+  }
+  return "";
+}
 private getDataById(): void {
   this.loaderService.display(true);
   var prescriptionNumber = {"prescriptionNumber": this.numId};
   this.helperService.GET(`${this.urlApi}/getPrescriptionStatus/${this.helperService.secondToken}/${this.numId}/${this.role}`
       ).subscribe(rs => {
         const res = rs.json();
+        this.products = res.products;
         this.addressingList = res.data["addressing"];
         this.programmingList = res.data["programming"];
         this.deliveryList = res.data["delivery"];

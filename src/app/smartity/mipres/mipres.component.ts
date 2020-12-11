@@ -34,6 +34,7 @@ export class MipresComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
 }

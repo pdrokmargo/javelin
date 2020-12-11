@@ -24,9 +24,10 @@ export class MipresListComponent extends BaseList  implements OnInit {
      }
 
   ngOnInit() {
-    this.getSecondToken();
-    this.search = '20201001192023404869';
-    console.log(this.role);
+    if(this.helperService.secondToken == undefined){
+      this.getSecondToken();
+    }
+    // this.search = '20201001192023404869';
   }
   private getSecondToken(){
     this.helperService
@@ -63,9 +64,6 @@ export class MipresListComponent extends BaseList  implements OnInit {
       this.helperService.GET(`${this.urlApi}/prescriptionAddressing/${this.helperService.secondToken}/${this.search}`
       ).subscribe(rs => {
         const res = rs.json();
-        // res.data[0];
-        // var prescription = {"prescriptionNumber": res.data[0]["NoPrescripcion"], "patient": res.data[0]["TipoIDPaciente"] + res.data[0]["NoIDPaciente"], "EPS": res.data[0]["CodEPS"], "addressingDate": res.data[0]["FecDireccionamiento"]};
-        // this.list.push(prescription);
         this.loaderService.display(false);
     }, err => {
         this.snackBar.open('Error', err.message, { duration: 4000 });
@@ -80,8 +78,7 @@ export class MipresListComponent extends BaseList  implements OnInit {
       this.helperService.POST(`${this.urlApi}/prescriptions/${this.helperService.secondToken}`, prescriptionNumber
       ).subscribe(rs => {
         const res = rs.json();
-        console.log(res);
-        // res.data[0];
+        // console.log(res);
         var prescription = {"prescriptionNumber": res.data["NoPrescripcion"], "patient": res.data["TipoIDPaciente"] + res.data["NoIDPaciente"], "EPS": res.data["CodEPS"]};
         this.list.push(prescription);
         this.loaderService.display(false);
@@ -105,5 +102,4 @@ export class MipresListComponent extends BaseList  implements OnInit {
       this.getPrescriptions();
     }
   }
-
 }
