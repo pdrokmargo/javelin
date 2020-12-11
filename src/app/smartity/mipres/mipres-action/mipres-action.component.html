@@ -264,7 +264,7 @@
                         <td>${{item.ValorEntregado}}</td>
                         <td><span style="font-size:12px;" [ngClass]="{'badge-success':item.EstRepEntrega === 1, 'badge-primary':item.EstRepEntrega === 2, 'badge-danger':item.EstRepEntrega === 0}" class="badge badge-pill">{{item.EstRepEntrega === 1 ? 'Activo' : item.EstRepEntrega === 2 ? 'Procesado' : 'Anulado' + '(' + item.FecAnulacion + ')'}}</span></td>
                         <td class="w-40">
-                            <button type="button" [disabled]="item.EstRepEntrega != 1" [ngClass]="{'text-primary': item.EstRepEntrega == 1, 'text-default': item.EstRepEntrega != 1}" mat-icon-button (click)="openModalBilling(item)">
+                            <button type="button" [disabled]="item.EstRepEntrega > 2" [ngClass]="{'text-primary': item.EstRepEntrega == 1, 'text-default': item.EstRepEntrega != 1}" mat-icon-button (click)="openModalBilling(item)">
                                 <mat-icon>receipt_long</mat-icon>
                             </button>
                         </td>
