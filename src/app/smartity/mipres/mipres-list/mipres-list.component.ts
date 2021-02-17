@@ -13,6 +13,7 @@ import { MatSnackBar, MatDialogRef, MatDialog } from "@angular/material";
 })
 export class MipresListComponent extends BaseList  implements OnInit {
   respuesta: String = 'No';  
+  prescriptionDate: Date;
   @Input() role: String;
   constructor(public loaderService: LoaderService,
     public helperService: HelperService,
@@ -21,6 +22,7 @@ export class MipresListComponent extends BaseList  implements OnInit {
     private comp: MipresComponent) {
       super(loaderService, helperService);
       this.urlApi = '/api/mipres';
+      this.prescriptionDate = new Date();
      }
 
   ngOnInit() {
@@ -74,13 +76,23 @@ export class MipresListComponent extends BaseList  implements OnInit {
   private getPrescriptions(){
     this.loaderService.display(true);
     this.list = [];
-    var prescriptionNumber = {"prescriptionNumber": this.search};
-      this.helperService.POST(`${this.urlApi}/prescriptions/${this.helperService.secondToken}`, prescriptionNumber
+    var data = {};
+    if(this.search != ''){
+      data["prescriptionNumber"] = this.search;
+    }
+    data["prescriptionDate"] = this.prescriptionDate;
+    console.log(data);
+      this.helperService.POST(`${this.urlApi}/prescriptions/${this.helperService.secondToken}`, data
       ).subscribe(rs => {
         const res = rs.json();
-        // console.log(res);
-        var prescription = {"prescriptionNumber": res.data["NoPrescripcion"], "patient": res.data["TipoIDPaciente"] + res.data["NoIDPaciente"], "EPS": res.data["CodEPS"]};
-        this.list.push(prescription);
+        res.data.forEach(prescription => {
+          var pre = {"prescriptionNumber": prescription["NoPrescripcion"], "patient": prescription["TipoIDPaciente"] + prescription["NoIDPaciente"], "EPS": prescription["CodEPS"]};
+          var exist = this.list.find(x => x["prescriptionNumber"] === prescription["NoPrescripcion"]);
+          if(exist == undefined || exist == null || !exist){
+            this.list.push(pre);
+          }
+        });
+        
         this.loaderService.display(false);
     }, err => {
         this.snackBar.open('Error', err.message, { duration: 4000 });

@@ -1,5 +1,13 @@
 <!-- LIST -->
 <div class="row">
+    <div class='col-md-3'>
+        <mat-form-field>
+          <input matInput [matDatepicker]="prescriptionDatePck" placeholder="Fecha de Prescripción"
+            [(ngModel)]="prescriptionDate" name="prescriptionDatePck">
+          <mat-datepicker-toggle matSuffix [for]="prescriptionDatePck"></mat-datepicker-toggle>
+          <mat-datepicker #prescriptionDatePck></mat-datepicker>
+        </mat-form-field>
+      </div>
   <div class="col-md-6">
       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
           <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar" [(ngModel)]="search" (keydown)="enterRaw($event)">
@@ -10,6 +18,7 @@
           </div>
       </div>
   </div>
+  
   <!-- <div class="col-md-6">
       <button mat-raised-button  (click)="CUD('Guardar')" color="primary" class="btn-w-md no-margin-left btn-right">
         <mat-icon>add_circle_outline</mat-icon> Nuevo
