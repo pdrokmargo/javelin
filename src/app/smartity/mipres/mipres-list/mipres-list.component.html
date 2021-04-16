@@ -1,5 +1,17 @@
 <!-- LIST -->
 <div class="row">
+    <div *ngIf="nationalServiceState" class="col-md-3">
+        
+        <div class="callout callout-success">
+            <h4>Servicio Nacional Activo</h4>
+          </div>
+      </div>
+      <div *ngIf="!nationalServiceState" class="col-md-3">
+        
+        <div  class="callout callout-danger">
+            <h4>Servicio Nacional Inestable</h4>
+          </div>
+      </div>
     <div class='col-md-3'>
         <mat-form-field>
           <input matInput [matDatepicker]="prescriptionDatePck" placeholder="Fecha de Prescripción"
@@ -8,6 +20,7 @@
           <mat-datepicker #prescriptionDatePck></mat-datepicker>
         </mat-form-field>
       </div>
+      
   <div class="col-md-6">
       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
           <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar" [(ngModel)]="search" (keydown)="enterRaw($event)">

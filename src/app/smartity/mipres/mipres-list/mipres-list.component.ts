@@ -14,6 +14,7 @@ import { MatSnackBar, MatDialogRef, MatDialog } from "@angular/material";
 export class MipresListComponent extends BaseList  implements OnInit {
   respuesta: String = 'No';  
   prescriptionDate: Date;
+  nationalServiceState: Boolean = true;
   @Input() role: String;
   constructor(public loaderService: LoaderService,
     public helperService: HelperService,
@@ -32,21 +33,34 @@ export class MipresListComponent extends BaseList  implements OnInit {
     // this.search = '20201001192023404869';
   }
   private getSecondToken(){
+    this.loaderService.display(true);
     this.helperService
     .GET(`${this.urlApi}/generateToken`)
     .map((response: Response) => {
       const res = response.json();
-      this.helperService.secondToken = res;
+      this.helperService.secondToken = res.value;
+      // localStorage.setItem("mipresSecondToken", JSON.stringify({
+      //   token: res
+      // })); 
     })
     .subscribe(
-      (error) => {
-        this.loaderService.display(false);
-      },
-      (done) => {
+      done => {
         
         this.loaderService.display(false);
+        
+      },
+      error => {
+        console.log(error);
+        this.loaderService.display(false);
+        if(error.status == 500){
+          this.nationalServiceState = false;
+        }
+        this.snackBar.open('Servicio Nacional MiPRES', 'Inestabilidad en el servicio.', { duration: 4000 });
+        
       }
+      
     );
+  
   }
   private CUD(action:string, row?:any){
     this.comp.strAction = action;
@@ -74,6 +88,10 @@ export class MipresListComponent extends BaseList  implements OnInit {
     });
   }
   private getPrescriptions(){
+    if(this.helperService.secondToken == undefined){
+      this.getSecondToken();
+    }
+    this.nationalServiceState = this.helperService.secondToken == undefined ? false : true;
     this.loaderService.display(true);
     this.list = [];
     var data = {};
@@ -85,6 +103,12 @@ export class MipresListComponent extends BaseList  implements OnInit {
       this.helperService.POST(`${this.urlApi}/prescriptions/${this.helperService.secondToken}`, data
       ).subscribe(rs => {
         const res = rs.json();
+        if(res.data.length == 0 && res.status == 200){
+          this.snackBar.open('Error en prescripción', 'No existe información asociada.', { duration: 4000 });
+        }
+        if(res.status >= 400){
+          this.snackBar.open('Servicio Nacional MiPRES', 'Inestabilidad en el servicio.', { duration: 4000 });
+        }
         res.data.forEach(prescription => {
           var pre = {"prescriptionNumber": prescription["NoPrescripcion"], "patient": prescription["TipoIDPaciente"] + prescription["NoIDPaciente"], "EPS": prescription["CodEPS"]};
           var exist = this.list.find(x => x["prescriptionNumber"] === prescription["NoPrescripcion"]);
@@ -94,8 +118,10 @@ export class MipresListComponent extends BaseList  implements OnInit {
         });
         
         this.loaderService.display(false);
+        this.nationalServiceState = this.helperService.secondToken == undefined ? false : true;
     }, err => {
-        this.snackBar.open('Error', err.message, { duration: 4000 });
+         this.nationalServiceState = false;
+        this.snackBar.open('Servicio Nacional MiPRES', 'Inestabilidad en el servicio.', { duration: 4000 });
         console.log(err.message);
         this.loaderService.display(false);
     });

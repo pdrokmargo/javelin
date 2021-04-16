@@ -18,7 +18,8 @@ export class AuthenticationService {
 
   constructor(private http: Http) {
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    this.urlBase = 'https://javelinservice.herokuapp.com';
+    this.urlBase = 'http://javelin.myecolombia.com.co';
+    // this.urlBase = 'https://javelinservice.herokuapp.com';
     // this.urlBase = 'http://localhost/javelinservice/public';
 
     if (localStorage.getItem('currentUser') != null) {

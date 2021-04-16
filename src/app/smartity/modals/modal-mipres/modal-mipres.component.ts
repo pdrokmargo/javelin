@@ -161,8 +161,16 @@ patientInfo: String;
     this.helperService.POST(`${this.urlApi}/changePrescriptionState/${this.helperService.secondToken}/delivery`, delivery
       ).subscribe(rs => {
         const res = rs.json();
-        this.snackBar.open('Entrega Exitosa', 'El registro de entrega ha sido creado.', { duration: 4000 });
-        this.dialogRef.close(true);
+        console.log(res);
+        if(res.code == 422){
+          console.log(JSON.parse(res.message));
+          this.snackBar.open(JSON.parse(res.message)['Message'], '', { duration: 4000 });
+        }else if(res.code == 200){
+          this.snackBar.open('Entrega Exitosa', 'El registro de entrega ha sido creado.', { duration: 4000 });
+          this.dialogRef.close(true);
+        }else{
+          this.snackBar.open(JSON.parse(res.message)['Message'], '', { duration: 4000 });
+        }
         this.loaderService.display(false);
     }, err => {
         this.snackBar.open('Error', err.message, { duration: 4000 });
