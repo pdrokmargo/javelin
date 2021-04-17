@@ -16,6 +16,7 @@ export class MipresListComponent extends BaseList  implements OnInit {
   prescriptionDate: Date;
   nationalServiceState: Boolean = true;
   @Input() role: String;
+  addressingList: any[] = [];
   constructor(public loaderService: LoaderService,
     public helperService: HelperService,
     public router: Router,
@@ -70,6 +71,8 @@ export class MipresListComponent extends BaseList  implements OnInit {
             break;
         default:
             this.comp.id = row.prescriptionNumber;
+            this.comp.addressingList = this.addressingList;
+            // this.comp.products = this.addressingList;
             break;
     }
     this.comp.openActions();
@@ -103,14 +106,16 @@ export class MipresListComponent extends BaseList  implements OnInit {
       this.helperService.POST(`${this.urlApi}/prescriptions/${this.helperService.secondToken}`, data
       ).subscribe(rs => {
         const res = rs.json();
-        if(res.data.length == 0 && res.status == 200){
+        if(res.data.length == 0 && res.code == 200){
           this.snackBar.open('Error en prescripción', 'No existe información asociada.', { duration: 4000 });
         }
-        if(res.status >= 400){
+        if(res.code >= 400){
           this.snackBar.open('Servicio Nacional MiPRES', 'Inestabilidad en el servicio.', { duration: 4000 });
         }
+        this.comp.products = res.products;
         res.data.forEach(prescription => {
-          var pre = {"prescriptionNumber": prescription["NoPrescripcion"], "patient": prescription["TipoIDPaciente"] + prescription["NoIDPaciente"], "EPS": prescription["CodEPS"]};
+          this.addressingList.push(prescription);
+          var pre = {"prescriptionNumber": prescription["NoPrescripcion"], "patient": prescription["TipoIDPaciente"] + prescription["NoIDPaciente"], "EPS": prescription["CodEPS"]+ ":" + this.comp.epsList.find(element => element["CodEPS"] == prescription["CodEPS"])["DescEPS"]};
           var exist = this.list.find(x => x["prescriptionNumber"] === prescription["NoPrescripcion"]);
           if(exist == undefined || exist == null || !exist){
             this.list.push(pre);
