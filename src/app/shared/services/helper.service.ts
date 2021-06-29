@@ -10,6 +10,7 @@ export class HelperService {
 
     public baseUrl: string;
     public secondToken: String;
+    public expirationSecondToken: Date = new Date();
     constructor(
         public http: Http,
         private authService: AuthenticationService

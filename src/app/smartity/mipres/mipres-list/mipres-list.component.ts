@@ -17,6 +17,7 @@ export class MipresListComponent extends BaseList  implements OnInit {
   nationalServiceState: Boolean = true;
   @Input() role: String;
   addressingList: any[] = [];
+  headers: any;
   constructor(public loaderService: LoaderService,
     public helperService: HelperService,
     public router: Router,
@@ -28,8 +29,19 @@ export class MipresListComponent extends BaseList  implements OnInit {
      }
 
   ngOnInit() {
-    if(this.helperService.secondToken == undefined){
+
+    if (localStorage.getItem('currentUser') != null) {
+      this.headers = new Headers({
+        "Accept": "application/json",
+        "Authorization": "Bearer " + JSON.parse(localStorage.getItem('currentUser'))["access_token"]
+      });
+    
+    }
+    if(localStorage.getItem('secondToken') == undefined || localStorage.getItem('secondToken') ==  null || new Date().valueOf() > new Date(JSON.parse(localStorage.getItem('secondToken'))['expiration']).valueOf()){
       this.getSecondToken();
+    }else{
+      this.helperService.secondToken = localStorage.getItem('secondToken')['token'];
+      this.helperService.expirationSecondToken = localStorage.getItem('secondToken')['expiration'];
     }
     // this.search = '20201001192023404869';
   }
@@ -39,10 +51,14 @@ export class MipresListComponent extends BaseList  implements OnInit {
     .GET(`${this.urlApi}/generateToken`)
     .map((response: Response) => {
       const res = response.json();
-      this.helperService.secondToken = res.value;
-      // localStorage.setItem("mipresSecondToken", JSON.stringify({
-      //   token: res
-      // })); 
+      this.helperService.secondToken = res;
+      var dt = new Date();
+      dt.setHours(dt.getHours() + 6);
+      this.helperService.expirationSecondToken = dt;
+      localStorage.setItem("secondToken", JSON.stringify({
+        token: res,
+        expiration: dt
+      })); 
     })
     .subscribe(
       done => {
@@ -91,7 +107,7 @@ export class MipresListComponent extends BaseList  implements OnInit {
     });
   }
   private getPrescriptions(){
-    if(this.helperService.secondToken == undefined){
+    if(this.helperService.secondToken == undefined || new Date().valueOf() > this.helperService.expirationSecondToken.valueOf()){
       this.getSecondToken();
     }
     this.nationalServiceState = this.helperService.secondToken == undefined ? false : true;

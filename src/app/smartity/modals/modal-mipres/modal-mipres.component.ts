@@ -70,6 +70,7 @@ patientInfo: String;
       this.data.object.Copago = '0';
     }
     
+    console.log(this.data.object);
     
   }
   
