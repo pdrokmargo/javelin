@@ -1,0 +1,93 @@
+<!-- LIST -->
+<div class="row">
+    <div *ngIf="nationalServiceState" class="col-md-3">
+        
+        <div class="callout callout-success">
+            <h4>Servicio Nacional Activo</h4>
+          </div>
+      </div>
+      <div *ngIf="!nationalServiceState" class="col-md-3">
+        
+        <div  class="callout callout-danger">
+            <h4>Servicio Nacional Inestable</h4>
+          </div>
+      </div>
+    <div class='col-md-3'>
+        <mat-form-field>
+          <input matInput [matDatepicker]="prescriptionDatePck" placeholder="Fecha de Prescripción"
+            [(ngModel)]="prescriptionDate" name="prescriptionDatePck">
+          <mat-datepicker-toggle matSuffix [for]="prescriptionDatePck"></mat-datepicker-toggle>
+          <mat-datepicker #prescriptionDatePck></mat-datepicker>
+        </mat-form-field>
+      </div>
+      
+  <div class="col-md-6">
+      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Buscar" [(ngModel)]="search" (keydown)="enterRaw($event)">
+          <div style="width: 34px" class="input-group-addon">
+              <a style="cursor:pointer" (click)="getPrescriptions()">
+                  <i class="fa fa-search"></i>
+              </a>
+          </div>
+      </div>
+  </div>
+  
+  <!-- <div class="col-md-6">
+      <button mat-raised-button  (click)="CUD('Guardar')" color="primary" class="btn-w-md no-margin-left btn-right">
+        <mat-icon>add_circle_outline</mat-icon> Nuevo
+      </button>
+  </div> -->
+  <div class="col-sm-12">
+
+      <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+
+          <table class="mdl-data-table table-bordered table-striped cf no-margin">
+              <thead>
+                  <tr>
+                      <!-- <th class="noAuto" (click)="sort('w.id')">ID
+                          <span class="glyphicon sort-icon" *ngIf="key =='w.id'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th> -->
+                      <th># Prescripción
+                          <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                      <th>Paciente
+                          <span class="glyphicon sort-icon" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                      <!-- <th>Realizado por
+                          <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th> -->
+                      <th>EPS
+                          <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th>
+                      <!-- <th>Fecha Direccionamiento
+                          <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th> -->
+                      <!-- <th class="noAuto" (click)="sort('w.state')">Estado
+                          <span class="glyphicon sort-icon"  [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                      </th> -->
+                      <th *ngIf="actions[2].status" class="w-40"></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of list">
+                      <!-- <td class="noAuto">{{ item.id }}</td> -->
+                      <td>{{item.prescriptionNumber}}</td>
+                      <td>{{item.patient}}</td>
+                      <td>{{item.EPS}}</td>
+                      <!-- <td>{{item.addressingDate}}</td> -->
+                      <td *ngIf="actions[2].status" class="w-40">
+                          <button type="button" mat-icon-button class="text-primary" (click)="CUD('Actualizar',item)">
+                              <mat-icon>search</mat-icon>
+                          </button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+      </div>
+
+      <ngb-pagination [pageSize]="pageSize" [collectionSize]="paginationSize" [(page)]="advancedPagination" [maxSize]="maxSize"
+          [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="getAll()"></ngb-pagination>
+
+  </div>
+</div>

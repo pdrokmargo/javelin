@@ -3,6 +3,7 @@ import { Response } from '@angular/http';
 
 export abstract class BaseList {
   public list: any[] = [];
+  public rawData: any;
   public defaultPagination: number;
   public advancedPagination: number;
   public paginationSize: number;
@@ -36,6 +37,15 @@ export abstract class BaseList {
   public fillPagination(data: any) {
     this.paginationSize = data.total;
     this.pageSize = data.per_page;
+  }
+
+  public getRaw(url?: string): any{
+    // this.loaderService.display(true);
+    if(url == undefined){
+      url = '';
+    }
+    this.helperService
+    .GET(url);
   }
 
   public getAll(filter?: string) {

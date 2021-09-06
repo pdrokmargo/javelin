@@ -1,0 +1,305 @@
+<!-- Confirmation form -->
+<div *ngIf="data.template == 'confirmation'">
+  <h1 style="text-align: center;" mat-dialog-title>Anular</h1>
+  <mat-dialog-content style="text-align: center;">
+    Estás seguro que deseas anular la operación?
+  </mat-dialog-content>
+  <div class="row"><button mat-button mat-dialog-close>cancelar</button>
+    <button class="btn-w-md mat-raised-button mat-warn" color="warn" mat-button type="button"
+      (click)="cancelState(data.process)">Confirmar</button>
+  </div>
+</div>
+
+<!-- Programar entrega template -->
+<div *ngIf="data.template == 'programming'">
+  <h1 style="text-align: center;" mat-dialog-title>Programar Entrega</h1>
+  <br>
+  <form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="prescriptionID" [(ngModel)]="data.object.ID" placeholder="Identificador">
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="full-width">
+          <input matInput name="supplierID" [(ngModel)]="data.object.CodSerTecAEntregar"
+            placeholder="Servicio/Tecnología a Entregar">
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="qtyDeliver" [(ngModel)]="data.object.CantTotAEntregar"
+            placeholder="Cantidad a Entregar">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 margin-bottom">
+        <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Sede" name="sede" id="sede" [(ngModel)]="data.object.CodSedeProv">
+            <mat-option *ngFor="let sede of sedes" [value]="sede.codsede">{{sede.descsede}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class='col-md-3 margin-bottom'>
+        <mat-form-field>
+          <input matInput [matDatepicker]="maxDeliveryDate" placeholder="Fecha de Entrega Máxima"
+            [(ngModel)]="data.object.FecMaxEnt" name="maxDeliveryDate">
+          <mat-datepicker-toggle matSuffix [for]="maxDeliveryDate"></mat-datepicker-toggle>
+          <mat-datepicker #maxDeliveryDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" [class.btn-action-container]="booActive">
+        <button mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+          (click)="performProgramming()">Programar</button>
+        <button mat-button mat-dialog-close class="btn-w-md no-margin-left btn-right">Cancelar</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<!-- Realizar entrega template -->
+<div *ngIf="data.template == 'delivery'">
+  <h1 style="text-align: center;" mat-dialog-title>Realizar Entrega</h1>
+  <br>
+  <form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="prescriptionID" [(ngModel)]="data.object.ID" placeholder="Identificador">
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="supplierID" [(ngModel)]="data.object.CodSerTecAEntregar"
+            placeholder="Servicio/Tecnología a Entregar">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="qtyDeliver" [(ngModel)]="data.object.CantTotAEntregar"
+            placeholder="Cantidad a Entregar">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="batchNumber" [(ngModel)]="data.object.NoLote" placeholder="Lote">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field>
+          <input matInput [matDatepicker]="deliveryDate" placeholder="Fecha de Entrega"
+            [(ngModel)]="data.object.FecEntrega" name="deliveryDate">
+          <mat-datepicker-toggle matSuffix [for]="deliveryDate"></mat-datepicker-toggle>
+          <mat-datepicker #deliveryDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 margin-bottom">
+        <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Tipo Doc Recibe" name="tipoID" id="tipoID"
+            [(ngModel)]="data.object.TipoIDRecibe">
+            <mat-option *ngFor="let tipoID of tipoIDs" [value]="tipoID.codTipoID">{{tipoID.descTipoID}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="noIDRecibe" [(ngModel)]="data.object.NoIDRecibe" placeholder="Número Doc Recibe">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2 margin-bottom">
+        <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Entrega Total" name="entTotal" id="entTotal"
+            [(ngModel)]="data.object.EntTotal">
+            <mat-option *ngFor="let entTotal of entregaTotal" [value]="entTotal.codEntTotal">{{entTotal.descEntTotal}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 margin-bottom">
+        <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Causa No Entrega" name="causaNoEntrega" id="causaNoEntrega"
+            [(ngModel)]="data.object.CausaNoEntrega">
+            <mat-option *ngFor="let causaNoEntrega of causasNoEntrega" [value]="causaNoEntrega.codCausaNoEntrega">
+              {{causaNoEntrega.descCausaNoEntrega}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" [class.btn-action-container]="booActive">
+        <button mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+          (click)="performDelivery()">Realizar Entrega</button>
+        <button mat-button mat-dialog-close class="btn-w-md no-margin-left btn-right">Cancelar</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+<!-- Template Delivery Report POST -->
+<div *ngIf="data.template == 'delivery-report'">
+  <h1 style="text-align: center;" mat-dialog-title>Realizar Reporte de Entrega</h1>
+  <br>
+  <form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="prescriptionID" [(ngModel)]="data.object.ID" placeholder="Identificador">
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 margin-bottom">
+        <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Se entregó?" name="estadoEntrega" id="estadoEntrega"
+            [(ngModel)]="data.object.EstadoEntrega">
+            <mat-option *ngFor="let estadoEntrega of entregaTotal" [value]="estadoEntrega.codEntTotal">
+              {{estadoEntrega.descEntTotal}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 margin-bottom">
+        <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Causa No Entrega" name="causaNoEntrega" id="causaNoEntrega"
+            [(ngModel)]="data.object.CausaNoEntrega">
+            <mat-option *ngFor="let causaNoEntrega of causasNoEntrega" [value]="causaNoEntrega.codCausaNoEntrega">
+              {{causaNoEntrega.descCausaNoEntrega}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="amount" [(ngModel)]="data.object.ValorEntregado" placeholder="Valor Entregado">
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12" [class.btn-action-container]="booActive">
+        <button mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+          (click)="performDeliveryReport()">Reportar Entrega</button>
+        <button mat-button mat-dialog-close class="btn-w-md no-margin-left btn-right">Cancelar</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+<!-- Template Billing POST -->
+<div *ngIf="data.template == 'billing'">
+  <h1 style="text-align: center;" mat-dialog-title>Realizar Facturación</h1>
+  <br>
+  <form class="col-sm-12" #modelForm="ngForm" autocomplete="off">
+    <div class="row">
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="prescriptionID" [(ngModel)]="data.object.NoPrescripcion" placeholder="# Prescripción">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="NoIDEPS" [(ngModel)]="data.object.NoIDEPS" placeholder="Identificación EPS">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="CodEPSS" [(ngModel)]="data.object.CodEPS" placeholder="Código EPS">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="NoFactura" [(ngModel)]="data.object.NoFactura" placeholder="# Factura">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3 margin-bottom">
+        <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Tipo Tecnología/Servicio" name="tipoTec" id="tipoTec"
+            [(ngModel)]="data.object.TipoTec">
+            <mat-option *ngFor="let tipoTec of tipoTecnologias" [value]="tipoTec.codTipoTec">{{tipoTec.descTipoTec}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="ConTecC" [(ngModel)]="data.object.ConTec" placeholder="Consecutivo Tecnología/Servicio">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="CodSerTecAEntregadoO" [(ngModel)]="data.object.CodSerTecAEntregado"
+            placeholder="Código Servicio/Tecnología">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="NoEntrega" [(ngModel)]="data.object.NoEntrega" placeholder="# Entrega">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="CantUnMinDis" [(ngModel)]="data.object.CantUnMinDis" placeholder="Cantidad Entregada">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3 margin-bottom">
+        <mat-form-field class="full-width">
+          <mat-select class="full-width" placeholder="Tipo Documento" name="tipoIDPac" id="tipoID"
+            [(ngModel)]="data.object.TipoIDPaciente">
+            <mat-option *ngFor="let tipoID of tipoIDs" [value]="tipoID.codTipoID">{{tipoID.descTipoID}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field class="full-width">
+          <input matInput name="NoIDPaciente" [(ngModel)]="data.object.NoIDPaciente" placeholder="# Documento">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="ValorUnitFacturado" [(ngModel)]="data.object.ValorUnitFacturado"
+            placeholder="Valor Unitario">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="ValorTotFacturado" [(ngModel)]="data.object.ValorTotFacturado"
+            placeholder="Valor Total">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="CuotaModer" [(ngModel)]="data.object.CuotaModer" placeholder="Cuota Moderadora">
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field class="full-width">
+          <input matInput name="Copago" [(ngModel)]="data.object.Copago" placeholder="Copago">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" [class.btn-action-container]="booActive">
+        <button mat-raised-button color="primary" class="btn-w-md no-margin-left btn-right"
+          (click)="performBilling()">Facturación</button>
+        <button mat-button mat-dialog-close class="btn-w-md no-margin-left btn-right">Cancelar</button>
+      </div>
+    </div>
+
+  </form>
+</div>

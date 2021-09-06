@@ -1,0 +1,19 @@
+<section class="chapter">
+  <section class="hero">
+      <div class="hero-content">
+          <h1 class="hero-title">MiPRES</h1>
+      </div>
+      <p class="hero-tagline">{{route}}</p>
+  </section>
+  <article class="article padding-lg-v article-dark article-bordered">
+      <div class="container-fluid with-maxwidth">
+          <div class="box box-default">
+              <div class="box-body">
+                  <!-- <inventory-movements-entry-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction"></inventory-movements-entry-action-cmp> -->
+                  <mipres-action-cmp *ngIf="isOpenActions" [numId]="id" [strAction]="strAction" [role]="mipresRole"></mipres-action-cmp>
+                  <mipres-list-cmp [role]="mipresRole" *ngIf="isOpenList"></mipres-list-cmp>
+              </div>                 
+          </div>
+      </div>
+  </article>
+</section>         
