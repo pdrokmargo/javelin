@@ -15,7 +15,6 @@ import { filter } from 'rxjs/operators';
     templateUrl: './inventory-adjustments-action.component.html'
 })
 export class InventoryAdjustmentsActionComponent extends BaseModel implements OnInit {
-
     private modalStocks: MatDialogRef<ModalStocksComponent>;
     private modalWarehouse: MatDialogRef<ModalWarehouseComponent>;
     private inventory_adjustments: any[] = [];
@@ -33,6 +32,7 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
     }
 
     ngOnInit() {
+        this.clean();
         this.getCollection();
         if (this.numId != undefined) {
             this.getDataById();
@@ -41,8 +41,10 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
             this.model.adjustment_date = new Date();
             this.strAction = 'Guardar';
         }
-        this.clean();
-        console.log(this.model.warehouse.name);
+        console.log(this.numId);
+        
+        
+        // console.log(this.model.warehouse.name);
     }
     private getCollection() {
         this.loaderService.display(true);
@@ -58,6 +60,7 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
     private clean() {
         this.inventory_adjustments = [];
         this.inventory_adjustments_type = [];
+        // this.model = {};
         this.model = { "warehouse_id": -1, "stock": { "product": { "sku": "", "display_name": "", "averageunitcost": "" }, "warehouse": {"name":""} } };
     }
     private getDataById(): void {
@@ -115,6 +118,7 @@ export class InventoryAdjustmentsActionComponent extends BaseModel implements On
             .subscribe((data) => {
                 this.model.warehouse_id = data.id;
                 this.model.warehouse = data;
+                this.model.stock.warehouse = data;
 
                 this.model.new_adjustment_value = "";
                 this.model.current_adjustment_value = "";
