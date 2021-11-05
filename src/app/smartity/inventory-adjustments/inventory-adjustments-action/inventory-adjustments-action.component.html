@@ -87,7 +87,7 @@
         </div>
         <div class="col-md-2" *ngIf="model.inventory_adjustment_type_id == 187">
             <mat-form-field class="full-width">
-                <input readonly="numId != undefined" matInput type="text" placeholder="Lote nuevo" [(ngModel)]="model.new_adjustment_value"
+                <input matInput type="text" placeholder="Lote nuevo" [(ngModel)]="model.new_adjustment_value"
                     id="new_adjustment_value" name="new_adjustment_value" />
             </mat-form-field>
         </div>
@@ -100,7 +100,7 @@
         </div>
         <div class="col-md-2" *ngIf="model.inventory_adjustment_type_id == 188">
             <mat-form-field class="full-width">
-                <input readonly="numId != undefined" matInput type="text" placeholder="Ubicación nueva" [(ngModel)]="model.new_adjustment_value"
+                <input matInput type="text" placeholder="Ubicación nueva" [(ngModel)]="model.new_adjustment_value"
                     id="new_adjustment_value2" name="new_adjustment_value2" />
             </mat-form-field>
         </div>

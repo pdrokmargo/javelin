@@ -110,13 +110,18 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
   }
 
   private addProduct(product) {
+    console.log(product);
+    console.log(this.__product);
     if (this.__product.length == 0) {
       this.__product.push(product);
+      console.log('added at first');
     } else {
-      if (!this.__product.map(data => data.id === product.id)) {
+      if (!this.__product.find(data => data.id == product.id)) {
         this.__product.push(product);
+        console.log('added more');
       } else {
-        this.snackBar.open('El produccto ya se encuentra seleccionado', 'Productos', { duration: 4000 });
+        this.snackBar.open('El producto ya se encuentra seleccionado', 'Productos', { duration: 4000 });
+        console.log('equal');
       }
     }
   }
@@ -270,14 +275,14 @@ export class InventoryAuditActionComponent extends BaseModel implements OnInit {
       date,
       inventory_movement_entry_out_type_id: 175,
       details: details_entrada,
-      observations: `Ajuste realizando mediante la auditoría # realizada por el auditor: ${this.__user.fullname}`
+      observations: `Ajuste realizando mediante la auditoría realizada por el auditor: ${this.__user.fullname}`
     }
     let cabecera_salida = {
       warehouse_id,
       date,
       inventory_movement_entry_out_type_id: 181,
       details: details_salida,
-      observations: `Ajuste realizando mediante la auditoría # realizada por el auditor: ${this.__user.fullname}`
+      observations: `Ajuste realizando mediante la auditoría realizada por el auditor: ${this.__user.fullname}`
     }
 
     /*

@@ -43,7 +43,8 @@
                 <mat-datepicker #pickerInventoryMovementDate></mat-datepicker>
               </mat-form-field>
         </div>
-        <div class="col-md-12" *ngIf="numId == undefined && document_fullfilled_id != undefined">
+        <!-- <div class="col-md-12" *ngIf="numId == undefined && document_fullfilled_id != undefined"> -->
+        <div class="col-md-12">
             <button mat-raised-button (click)="openModalProducts()" color="primary" class="btn-w-md no-margin-left btn-right">
                 Añadir Producto
             </button>

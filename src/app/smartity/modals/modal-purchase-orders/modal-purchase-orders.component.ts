@@ -24,5 +24,6 @@ export class ModalPurchaseOrdersComponent implements OnInit {
 
   private select(row: any) {
     this.model = row;
+    console.log(row);
   }
 }

@@ -79,6 +79,7 @@ export class InventoryMovementsEntryActionComponent extends BaseModel implements
     this.modalPurchaseOrders.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
         this.model.document_fullfilled_id = data.id; 
         this.model.details = data.remaining;
+        console.log(data.remaining);
          this.remaining = JSON.parse(JSON.stringify(data.remaining));
          if(this.remaining.length == 0){
             this.snackBar.open('Todos los items de la orden de compra ' + data.document.prefix + '-' + data.consecutive + ' han sido ingresados.', 'Orden de compra cumplida', { duration: 7000 });
@@ -121,7 +122,7 @@ private checkUnits(units, index){
             "location": "",
             "expiration_date": "",
             "units":"",
-            "purchase_price":""
+            "purchase_price":0
         });
          this.model.details.push(movement);
     });

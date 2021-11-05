@@ -76,6 +76,7 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
         }else{
             this.today_date = new Date();
         }
+        console.log(this.model);
     }
 
     private getCollection() {
@@ -200,28 +201,29 @@ export class DeliveryContractsActionComponent extends BaseModel implements OnIni
             this._ips = this.model.ips;
 
             this.objEvent = JSON.parse(this.model.event);
-            this.booEvento = !(Object.keys(this.objEvent).length === 0);
+            this.booEvento = !(Object.keys(this.objEvent).length === 0);            
+            
             if (this.booEvento) {
                 this.contract_number = this.objEvent.contract_number;
                 this.contract_expiration_date = this.objEvent.contract_expiration_date;
                 this.contract_start_date = this.objEvent.contract_start_date;
             }
-
+            
             this.objPgp = JSON.parse(this.model.pgp);
             this.booPgp = !(Object.keys(this.objPgp).length === 0);
-            if (this.booPgp) {
-                this.contract_number = this.objPgp.contract_number;
-                this.contract_expiration_date = this.objPgp.contract_expiration_date;
-                this.contract_start_date = this.objPgp.contract_start_date;
-            }
+            // if (this.booPgp) {
+            //     this.contract_number = this.objPgp.contract_number;
+            //     this.contract_expiration_date = this.objPgp.contract_expiration_date;
+            //     this.contract_start_date = this.objPgp.contract_start_date;
+            // }
 
             this.objCapita = JSON.parse(this.model.capita);
             this.booCapita = !(Object.keys(this.objCapita).length === 0);
-            if (this.booCapita) {
-                this.contract_number = this.objCapita.contract_number;
-                this.contract_expiration_date = this.objCapita.contract_expiration_date;
-                this.contract_start_date = this.objCapita.contract_start_date;
-            }
+            // if (this.booCapita) {
+            //     this.contract_number = this.objCapita.contract_number;
+            //     this.contract_expiration_date = this.objCapita.contract_expiration_date;
+            //     this.contract_start_date = this.objCapita.contract_start_date;
+            // }
 
             this.loaderService.display(false);
         }, err => {
