@@ -47,10 +47,10 @@ export class MipresListComponent extends BaseList  implements OnInit {
   }
   private getSecondToken(): String{
     this.loaderService.display(true);
-    if(localStorage.getItem('secondToken') != undefined){
-      this.loaderService.display(false);
-      return JSON.parse(localStorage.getItem('secondToken'))['token'];
-    }
+    // if(localStorage.getItem('secondToken') != undefined){
+    //   this.loaderService.display(false);
+    //   return JSON.parse(localStorage.getItem('secondToken'))['token'];
+    // }
     this.helperService
     .GET(`${this.urlApi}/generateToken`)
     .map((response: Response) => {
@@ -77,11 +77,11 @@ export class MipresListComponent extends BaseList  implements OnInit {
           this.nationalServiceState = false;
         }
         this.snackBar.open('Servicio Nacional MiPRES', 'Inestabilidad en el servicio.', { duration: 4000 });
-        
+        return 'error';
       }
       
     );
-  
+    return JSON.parse(localStorage.getItem('secondToken')) != undefined ? JSON.parse(localStorage.getItem('secondToken'))['token'] : 'error';
   }
   private CUD(action:string, row?:any){
     this.comp.strAction = action;
@@ -113,6 +113,8 @@ export class MipresListComponent extends BaseList  implements OnInit {
   private getPrescriptions(){
     if(this.helperService.secondToken == undefined || new Date().valueOf() > this.helperService.expirationSecondToken.valueOf()){
       this.helperService.secondToken = this.getSecondToken();
+      console.log(new Date().valueOf());
+      console.log(this.helperService.expirationSecondToken.valueOf());
     }
     this.nationalServiceState = this.helperService.secondToken == undefined ? false : true;
     this.loaderService.display(true);
@@ -124,7 +126,7 @@ export class MipresListComponent extends BaseList  implements OnInit {
     data["prescriptionDate"] = this.prescriptionDate;
     console.log(this.helperService.secondToken);
     console.log(JSON.parse(localStorage.getItem('secondToken'))['token']);
-      this.helperService.POST(`${this.urlApi}/prescriptions/${this.helperService.secondToken}`, data
+      this.helperService.POST(`${this.urlApi}/prescriptions/${JSON.parse(localStorage.getItem('secondToken'))['token']}`, data
       ).subscribe(rs => {
         const res = rs.json();
         if(res.data.length == 0 && res.code == 200){
