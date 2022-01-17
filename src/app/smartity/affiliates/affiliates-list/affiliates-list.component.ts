@@ -40,4 +40,12 @@ export class AffiliatesListComponent extends BaseList implements OnInit {
         this.comp.openActions();
     }
 
+    getFullName(name1, name2, lastname1, lastname2){
+        var fullname = name1 ? name1 : '';
+        fullname = name2 ? fullname + ' ' + name2 : fullname + '';
+        fullname = lastname1 ? fullname + ' ' + lastname1 : fullname + '';
+        fullname = lastname2 ? fullname + ' ' + lastname2 : fullname + '';
+        return fullname;
+    }
+
 }

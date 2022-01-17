@@ -143,8 +143,17 @@ private save() {
                         this.helperService.POST(`/api/remission-goods`, this.model).subscribe(rs1 => {
                             const res1 = rs1.json();
                             if (res1.store) {
-                                this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
-                                this.goList();
+                                this.helperService.POST(`/api/billing`, this.model).subscribe(rs2 => {
+                                    const res2 = rs2.json();
+                                    if (res2.store) {
+                                        this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
+                                        this.goList();
+                                    }
+                                }, err => {
+                                    const err_rs = err.json();
+                                    this.loaderService.display(false);
+                                    this.snackBar.open(err_rs.message, 'Error', { duration: 4000 });
+                                });     
                             }
                         }, err => {
                             const err_rs = err.json();
@@ -307,13 +316,15 @@ private openModalProducts() {
     this.modalStocksProducts.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
         let movement = new Object( {
             "product_id": data.id,
-            "product": {"sku": data.sku, "display_name": data.display_name, "averageunitcost": data.averageunitcost, "units":data.units},
+            "product": {"sku": data.product.sku, "display_name": data.product.display_name, "averageunitcost": data.product.averageunitcost, "units":data.units},
             "batch": "",
+            "sales_price": "",
             "fraction": false,
             "location": "",
             "expiration_date": "",
             "units":"",
             "discount": this.customer.global_discount,
+            "tax": "",
             "unit_cost":"" 
         });
          this.model.details.push(movement);

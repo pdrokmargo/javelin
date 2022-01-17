@@ -147,9 +147,15 @@
                 <mat-form-field><input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.units"
                     name="units{{index}}" /></mat-form-field>
               </td>
-              <td *ngIf="detail.fraction == false">${{detail.product.averageunitcost * 1.2}}</td>
+              <td *ngIf="numId != undefined">{{detail.sales_price}}</td>
+              <td *ngIf="numId == undefined">
+                    <mat-form-field>
+                   <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.sales_price"
+                    name="sales_price{{index}}" /></mat-form-field>
+              </td>
+              <!-- <td *ngIf="detail.fraction == false">${{detail.product.averageunitcost * 1.2}}</td>
               <td *ngIf="detail.fraction == true">
-                ${{(detail.product.averageunitcost/detail.product.units)  * 1.2}}</td>
+                ${{(detail.product.averageunitcost/detail.product.units)  * 1.2}}</td> -->
 
                 <td *ngIf="numId != undefined">{{detail.discount}}</td>
               <td *ngIf="numId == undefined">
@@ -162,11 +168,17 @@
                       <span *ngIf="detail.fraction == true">(%{{100*(detail.discount/((detail.product.averageunitcost/detail.product.units)  * 1.2))}})</span></div>
               </td>
                 
+              <td *ngIf="numId != undefined">{{detail.tax}}</td>
+              <td *ngIf="numId == undefined">
+                    <mat-form-field>
+                    <span >%</span> <input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.tax"
+                    name="tax{{index}}" /></mat-form-field>
+              </td>
 
-              <td *ngIf="numId == undefined && model.inventory_movement_entry_out_type_id == 174">
+              <!-- <td *ngIf="numId == undefined && model.inventory_movement_entry_out_type_id == 174">
                 <mat-form-field>$<input (keyup)="totalCost()" matInput type="text" [(ngModel)]="detail.purchase_price"
                     name="purchase_price{{index}}" /></mat-form-field>
-              </td>
+              </td> -->
               <td *ngIf="detail.fraction == false">${{detail.product.averageunitcost * detail.units}}</td>
               <td *ngIf="detail.fraction == true">
                 ${{(detail.product.averageunitcost/detail.product.units) * detail.units}}</td>

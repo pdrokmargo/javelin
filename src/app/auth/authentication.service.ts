@@ -6,6 +6,7 @@ import {
   RequestOptions,
   URLSearchParams
 } from "@angular/http";
+import { Router } from '@angular/router';
 import { Observable } from "rxjs";
 import { AUTH_CONFIG } from "./auth0-variables";
 
@@ -16,11 +17,17 @@ export class AuthenticationService {
   public urlBase: string;
   public headers;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private router: Router) {
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
     // this.urlBase = 'http://javelin.myecolombia.com.co';
     this.urlBase = 'https://javelinservice.herokuapp.com';
     // this.urlBase = 'http://localhost/javelinservice/public';
+    const url: string = window.location.href;
+    if (url.includes('localhost')) { 
+      this.urlBase = 'https://javelinservice.herokuapp.com';
+    }else{
+      this.urlBase = url;
+    }
 
     if (localStorage.getItem('currentUser') != null) {
       this.headers = new Headers({
@@ -28,6 +35,7 @@ export class AuthenticationService {
         "Authorization": "Bearer " + JSON.parse(localStorage.getItem('currentUser'))["access_token"]
       });
     }
+    
   }
 
   login(username: string, password: string) {

@@ -138,6 +138,10 @@ export class AffiliatesActionComponent extends BaseModel implements OnInit {
                         this.clean();
                         this.loaderService.display(false);
                         this.comp.openList();
+                    }else if(res.duplicated){
+                        this.snackBar.open(res.message, '', { duration: 3500 });
+                        this.model.document_number = '';
+                        this.loaderService.display(false);
                     }
                 }, err => {
                     this.loaderService.display(false);

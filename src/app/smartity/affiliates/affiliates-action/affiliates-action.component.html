@@ -52,12 +52,12 @@
     </div>
     <div class="col-sm-12"></div>
     <!-- birthday -->
-    <div class='col-sm-12 col-md-6 col-lg-3 margin-bottom'>
-        <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="pickerIssueDate5" id="birthday" name="birthday" placeholder="Fecha de nacimiento" [(ngModel)]="model.birthday">
-            <!-- <button mdSuffix [matDatepicker]="pickerIssueDate5"></button> -->
-        </mat-form-field>
-        <mat-datepicker #pickerIssueDate5></mat-datepicker>
+    <div class="col-md-3 margin-bottom">
+        <mat-form-field>
+            <input matInput [matDatepicker]="pickerBirthday" placeholder="Fecha de nacimiento" [(ngModel)]="model.birthday" name="birthday">
+            <mat-datepicker-toggle matSuffix [for]="pickerBirthday"></mat-datepicker-toggle>
+            <mat-datepicker #pickerBirthday></mat-datepicker>
+          </mat-form-field>
     </div>
     <!-- gender_id -->
     <div class="col-sm-12 col-md-6 col-lg-3 margin-bottom">

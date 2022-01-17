@@ -55,7 +55,6 @@ export class MipresListComponent extends BaseList  implements OnInit {
     .GET(`${this.urlApi}/generateToken`)
     .map((response: Response) => {
       const res = response.json();
-      console.log(res);
       this.helperService.secondToken = res;
       var dt = new Date();
       dt.setHours(dt.getHours() + 6);
@@ -67,7 +66,7 @@ export class MipresListComponent extends BaseList  implements OnInit {
     })
     .subscribe(
       done => {
-        this.loaderService.display(false);
+          this.loaderService.display(false);
         return JSON.parse(localStorage.getItem('secondToken'))['token'];
       },
       error => {
@@ -111,10 +110,8 @@ export class MipresListComponent extends BaseList  implements OnInit {
     });
   }
   private getPrescriptions(){
-    if(this.helperService.secondToken == undefined || new Date().valueOf() > this.helperService.expirationSecondToken.valueOf()){
+    if(this.helperService.secondToken == undefined || (this.helperService.expirationSecondToken && new Date().valueOf() > this.helperService.expirationSecondToken.valueOf())){
       this.helperService.secondToken = this.getSecondToken();
-      console.log(new Date().valueOf());
-      console.log(this.helperService.expirationSecondToken.valueOf());
     }
     this.nationalServiceState = this.helperService.secondToken == undefined ? false : true;
     this.loaderService.display(true);
@@ -124,8 +121,6 @@ export class MipresListComponent extends BaseList  implements OnInit {
       data["prescriptionNumber"] = this.search;
     }
     data["prescriptionDate"] = this.prescriptionDate;
-    console.log(this.helperService.secondToken);
-    console.log(JSON.parse(localStorage.getItem('secondToken'))['token']);
       this.helperService.POST(`${this.urlApi}/prescriptions/${JSON.parse(localStorage.getItem('secondToken'))['token']}`, data
       ).subscribe(rs => {
         const res = rs.json();
@@ -150,7 +145,6 @@ export class MipresListComponent extends BaseList  implements OnInit {
     }, err => {
          this.nationalServiceState = false;
         this.snackBar.open('Servicio Nacional MiPRES', 'Inestabilidad en el servicio.', { duration: 4000 });
-        console.log(err.message);
         this.loaderService.display(false);
     });
   }

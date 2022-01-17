@@ -45,7 +45,7 @@
                 <tbody *ngIf="list.data">
                     <tr *ngFor="let item of list.data">
                         <td class="noAuto">{{ item.document_number }}</td>
-                        <td>{{ item.display_name }}</td>
+                        <td>{{ getFullName(item.firstname, item.middlename, item.lastname1, item.lastname2) }}</td>
                         <td>{{ item.contract }}</td>
                         <!--td>{{item.contracts_payment_method}}</td-->
                         <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>
