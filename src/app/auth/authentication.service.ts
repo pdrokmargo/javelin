@@ -20,13 +20,15 @@ export class AuthenticationService {
   constructor(private http: Http, private router: Router) {
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
     // this.urlBase = 'http://javelin.myecolombia.com.co';
-    this.urlBase = 'https://javelinservice.herokuapp.com';
+    // this.urlBase = 'https://javelinservice.herokuapp.com';
+    // this.urlBase = 'https://javelin-punto43b.herokuapp.com';
     // this.urlBase = 'http://localhost/javelinservice/public';
-    const url: string = window.location.href;
-    if (url.includes('localhost')) { 
-      this.urlBase = 'https://javelinservice.herokuapp.com';
+    const url: string = window.location.hostname;
+    if (url.includes('localhost') || url.includes('myecolombia') || url.includes('javelinservice')) { 
+      // this.urlBase = 'https://javelinservice.herokuapp.com';
+      this.urlBase = 'https://javelin-punto43b.herokuapp.com';
     }else{
-      this.urlBase = url;
+      this.urlBase = 'https://'+url;
     }
 
     if (localStorage.getItem('currentUser') != null) {

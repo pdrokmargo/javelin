@@ -82,7 +82,10 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
   private getAffiliateDeliveries() {
     this.helperService.GET(`/api/affiliate-deliveries/${this.affiliate.id}`).subscribe(rs => {
       let res = rs.json();
-      this.arrAffiliateDeliveries = res.affiliate_deliveries.data;
+      if(res.affiliate_deliveries.data){
+        this.arrAffiliateDeliveries = res.affiliate_deliveries.data;
+      }
+      
       this.groupAffiliateDeliveriesDetails();
     }, err => { });
   }
@@ -100,25 +103,25 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
 
   }
   private groupAffiliateDeliveriesDetails(): void {
-    let details = [];
-    let i = 0;
-    do {
-      let detail = {};
-      detail = this.arrAffiliateDeliveries[i];
-      let passed = false;
-      details.forEach(d => {
-        if (d.delivery_id == detail['delivery_id']) {
-          passed = true;
+    if(this.arrAffiliateDeliveries){
+      let details = [];
+      let i = 0;
+      do {
+        let detail = {};
+        detail = this.arrAffiliateDeliveries[i];
+        let passed = false;
+        details.forEach(d => {
+          if (d.delivery_id == detail['delivery_id']) {
+            passed = true;
+          }
+        });
+        if(!passed){
+          details.push(detail);
         }
-      });
-      if(!passed){
-        details.push(detail);
-      }
-      i++;
-    } while (this.arrAffiliateDeliveries.length > i);
-    this.arrAffiliateDeliveries = details;
-    console.log(this.arrAffiliateDeliveries);
-    console.log(details);
+        i++;
+      } while (this.arrAffiliateDeliveries.length > i);
+      this.arrAffiliateDeliveries = details;
+    }
   }
   private groupBatchs(): void {
     let details = [];

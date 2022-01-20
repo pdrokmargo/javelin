@@ -69,15 +69,15 @@
                     <tr *ngFor="let item of list.data">
                         <!-- <td class="noAuto">{{ item.id }}</td> -->
                         <td>{{item.warehouse.name}}</td>
-                        <td>{{item.product.sku}}</td>
-                        <td>{{item.product.name}}<span style="font-weight:bold;" *ngIf="item.product.comercial">({{item.product.comercial_name}})</span></td>
+                        <td>{{item.product?.sku}}</td>
+                        <td>{{item.product?.name}}<span style="font-weight:bold;" *ngIf="item.product?.comercial">({{item.product?.comercial_name}})</span></td>
                         <td>{{item.set_stock}}</td>
                         <td>{{item.fraction_stock}}</td>
                         <td>{{item.batch}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.expiration_date | date:'dd/MM/yyyy'}}</td>
-                        <td>${{item.product.averageunitcost}}</td>
-                        <td>${{(item.product.averageunitcost * item.set_stock) + ((item.product.averageunitcost/item.product.units) * item.fraction_stock)}}</td>
+                        <td>${{item.product?.averageunitcost}}</td>
+                        <td>${{(item.product?.averageunitcost * item.set_stock) + ((item.product?.averageunitcost/item.product?.units) * item.fraction_stock)}}</td>
                     </tr>
                 </tbody>
             </table>

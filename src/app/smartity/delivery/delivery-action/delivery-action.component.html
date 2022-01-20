@@ -123,13 +123,13 @@
             </thead>
             <tbody>
               <tr *ngFor="let detail of arrAffiliateDeliveries;let index = index;">
-                <td style="width:80px;">{{detail.delivery.consecutive}}</td>
-                <td>{{detail.product.sku}}</td>
-                <td>{{detail.product.name}}<span style="font-weight:bold;" *ngIf="detail.product.comercial">({{detail.product.comercial_name}})</span></td>
-                <td style="width:80px;"><span style="width:80px;">{{detail.requested_units}}</span></td>
-                <td style="width:80px;"><span style="width:80px;">{{detail.delivered_units}}</span></td>
-                <td style="width:80px;"><span style="width:80px;">{{detail.delivery.delivery_date | date:'dd/MM/yyyy'}}</span></td>
-                <td style="width:80px;"><span style="width:80px;">{{detail.delivery.date | date:'dd/MM/yyyy'}}</span></td>
+                <td style="width:80px;">{{detail?.delivery.consecutive}}</td>
+                <td>{{detail?.product.sku}}</td>
+                <td>{{detail?.product.name}}<span style="font-weight:bold;" *ngIf="detail?.product.comercial">({{detail?.product.comercial_name}})</span></td>
+                <td style="width:80px;"><span style="width:80px;">{{detail?.requested_units}}</span></td>
+                <td style="width:80px;"><span style="width:80px;">{{detail?.delivered_units}}</span></td>
+                <td style="width:80px;"><span style="width:80px;">{{detail?.delivery.delivery_date | date:'dd/MM/yyyy'}}</span></td>
+                <td style="width:80px;"><span style="width:80px;">{{detail?.delivery.date | date:'dd/MM/yyyy'}}</span></td>
               </tr>
             </tbody>
           </table>
@@ -252,10 +252,10 @@
           </thead>
           <tbody>
             <tr *ngFor="let detail of model.details;let index = index;">
-              <td>{{detail.product.sku}}</td>
-              <td>{{detail.product.name}}<span style="font-weight:bold;" *ngIf="detail.product.comercial">({{detail.product.comercial_name}})</span> <!-- <span *ngIf="detail.deliveryCovered"> Entrega 1 / {{detail.requested_units/detail.delivered_units}}</span>--></td>
-              <td style="width:80px;" *ngIf="numId != undefined">{{detail.requested_units}}</td><td style="width:80px;" *ngIf="numId == undefined"><mat-form-field style="width:50px;"><input matInput (input)="validateRequested(detail.requested_units, index, -1)" [disabled]="detail.stockSelected == undefined"  type="number" [(ngModel)]="detail.requested_units" name="requested_units{{index}}" /></mat-form-field></td>
-              <td style="width:80px;" *ngIf="numId != undefined">{{detail.delivered_units}}</td><td style="width:80px;" *ngIf="numId == undefined"><mat-form-field style="width:50px;"><input (input)="validateDelivered(detail.requested_units, detail.delivered_units, index)" [disabled]="detail.stockSelected == undefined" matInput type="number" [(ngModel)]="detail.delivered_units" name="delivered_units{{index}}" /></mat-form-field></td>
+              <td>{{detail?.product.sku}}</td>
+              <td>{{detail?.product.name}}<span style="font-weight:bold;" *ngIf="detail?.product.comercial">({{detail?.product.comercial_name}})</span> <!-- <span *ngIf="detail.deliveryCovered"> Entrega 1 / {{detail.requested_units/detail.delivered_units}}</span>--></td>
+              <td style="width:80px;" *ngIf="numId != undefined">{{detail?.requested_units}}</td><td style="width:80px;" *ngIf="numId == undefined"><mat-form-field style="width:50px;"><input matInput (input)="validateRequested(detail?.requested_units, index, -1)" [disabled]="detail.stockSelected == undefined"  type="number" [(ngModel)]="detail.requested_units" name="requested_units{{index}}" /></mat-form-field></td>
+              <td style="width:80px;" *ngIf="numId != undefined">{{detail?.delivered_units}}</td><td style="width:80px;" *ngIf="numId == undefined"><mat-form-field style="width:50px;"><input (input)="validateDelivered(detail?.requested_units, detail.delivered_units, index)" [disabled]="detail.stockSelected == undefined" matInput type="number" [(ngModel)]="detail.delivered_units" name="delivered_units{{index}}" /></mat-form-field></td>
               <!-- <td style="width:200px;" *ngIf="numId != undefined">{{detail.delivery_number}} / {{detail.total_deliveries}}</td><td style="width:100px;" *ngIf="numId == undefined"><mat-form-field style="width:30px;"><input [readonly]="true" matInput type="number" [(ngModel)]="detail.delivery_number" name="delivery_number{{index}}" /></mat-form-field> / <mat-form-field style="width:30px;"><input [readonly]="detail.delivered_units == detail.requested_units" [disabled]="detail.stockSelected == undefined" matInput type="number" [(ngModel)]="detail.total_deliveries" name="total_deliveries{{index}}" /></mat-form-field></td> -->
               
               <td colspan="3" *ngIf="numId == undefined">
