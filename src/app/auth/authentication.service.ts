@@ -25,7 +25,7 @@ export class AuthenticationService {
     // this.urlBase = 'http://localhost/javelinservice/public';
     const url: string = window.location.hostname;
     if (url.includes('localhost') || url.includes('myecolombia') || url.includes('javelinservice')) { 
-      // this.urlBase = 'https://javelinservice.herokuapp.com';
+      // this.urlBase = 'https://javelinservice-qa.herokuapp.com';
       this.urlBase = 'https://javelin-punto43b.herokuapp.com';
     }else{
       this.urlBase = 'https://'+url;

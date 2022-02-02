@@ -161,11 +161,11 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
   private getDataById(): void {
     this.loaderService.display(true);
     this.helperService.GET(`/api/deliveries/${this.numId}`).subscribe(rs => {
-      let res = rs.json();
+      const res = rs.json();
       this.model = res.data;
       this.groupBatchs();
       this.affiliate = this.model.affiliate;
-      this.arrIPS = this.affiliate.delivery_contract.ips;
+      this.arrIPS = JSON.parse(this.affiliate.delivery_contract.ips);
       this.pharmadrugs = JSON.parse(this.affiliate.delivery_contract.pharmadrugs);
       this.getScheduledDeliveries();
       this.getAffiliateDeliveries();
@@ -190,7 +190,7 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
     this.modalAffiliates.afterClosed().pipe(filter((data) => data)).subscribe((data) => {
       this.model.affiliate_id = data.id;
       this.affiliate = data;
-      this.arrIPS = this.affiliate.delivery_contract.ips;
+      this.arrIPS = JSON.parse(this.affiliate.delivery_contract.ips);
       this.pharmadrugs = JSON.parse(this.affiliate.delivery_contract.pharmadrugs);
       this.getScheduledDeliveries();
       this.getAffiliateDeliveries();
@@ -207,12 +207,18 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
       this.loaderService.display(true);
       this.helperService.GET(`/api/product/${data.id}`).subscribe(rs => {
         let res = rs.json();
-        let canBeDelivered = false;
+        var canBeDelivered = false;
+        
+        this.pharmadrugs = JSON.parse(this.pharmadrugs);
+        console.log(typeof(this.pharmadrugs));
+        console.log(this.pharmadrugs);
+
         this.pharmadrugs.forEach(element => {
           if (res.data.product_detail.pharmaceutical_drug_id == element.pharmaceutical_drug_id) {
             canBeDelivered = true;
           }
         });
+        canBeDelivered = true;
         if (canBeDelivered) {
           this.helperService.GET(`/api/stocks-products/${data.id}`).subscribe(rs => {
             let res = rs.json();
@@ -340,7 +346,7 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
     switch (this.strAction) {
       case 'Guardar':
         this.helperService.POST(`/api/deliveries`, this.model).subscribe(rs => {
-          let res = rs.json();
+          const res = rs.json();
           if (res.store) {
             this.snackBar.open(res.message, 'Guardado', { duration: 4000 });
             this.goList();
@@ -352,7 +358,7 @@ export class DeliveryActionComponent extends BaseModel implements OnInit {
         break;
       case 'Actualizar':
         this.helperService.PUT(`/api/deliveries/${this.numId}`, this.model).subscribe(rs => {
-          let res = rs.json();
+          const res = rs.json();
           if (res.update) {
             this.snackBar.open(res.message, 'Actualización', { duration: 4000 });
             this.goList();

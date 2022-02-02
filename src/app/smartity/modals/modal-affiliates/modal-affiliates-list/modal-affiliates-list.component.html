@@ -43,7 +43,7 @@
                 <tbody *ngIf="list.data">
                     <tr *ngFor="let item of list.data; let index = index" (click)="view(item); numItemSelected = index" [ngClass]="{'active': numItemSelected == index }">
                         <td class="noAuto">{{ item.document_number }}</td>
-                        <td>{{ item.display_name }}</td>
+                        <td>{{ item.firstname }}</td>
                         <td>{{ item.contract }}</td>
                         <!--td>{{item.contracts_payment_method}}</td-->
                         <td>{{ item.state ? 'Activo' : 'Inactiva' }}</td>

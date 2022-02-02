@@ -8,7 +8,7 @@
     <!-- Afiliado -->
     <div class="col-sm-12 col-md-9 margin-bottom">
       <mat-form-field class="full-width">
-        <input readonly matInput type="text" placeholder="Afiliado" [(ngModel)]="affiliate.display_name" id="affiliate"
+        <input readonly matInput type="text" placeholder="Afiliado" [(ngModel)]="affiliate.firstname" id="affiliate"
           name="affiliate" />
         <mat-icon matSuffix mdSuffix class="wh-24 pointer" (click)="openModalAffiliates()">search</mat-icon>
       </mat-form-field>
@@ -139,7 +139,7 @@
     <!-- Afiliado -->
     <div class="col-sm-12 col-md-12 margin-bottom"  *ngIf="numId == undefined">
         <mat-form-field class="full-width">
-          <input readonly matInput type="text" placeholder="Afiliado" [(ngModel)]="affiliate.display_name" id="affiliate2"
+          <input readonly matInput type="text" placeholder="Afiliado" [(ngModel)]="affiliate.firstname" id="affiliate2"
             name="affiliate2" />
         </mat-form-field>
       </div>  
